@@ -1,0 +1,6 @@
+.*pyc
+minitage.paste.egg-info/*
+dist/*
+build\/
+
+
