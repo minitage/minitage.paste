@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+# Copyright (C) 2008, Mathieu PASQUET <kiorky@cryptelium.net>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# inspired by gentoo/openrc init scripts.
+
+#echo 'source %s/share/postgresql/%s.env\n' % ($sys, $db_name)
+#echo "PID_FILE='%s/var/run/postgresql/%s.pid'\n" % ($sys, $db_name)
+
+# add /sbin 's when we run in user mode in the PATH
+export PATH=\$PATH:/sbin:/usr/sbin:/usr/local/sbin
+
+checkconfig() {
+    if [ ! -d "\$PGDATA" ] ; then
+        eerror "Directory not found: \$PGDATA"
+        eerror "Please make sure that PGDATA points to the right path."
+        eerror "You can run 'emerge postgresql --config' to setup a new database cluster."
+        return 1
+    fi
+}
+
+start() {
+    checkconfig || return 1
+    ebegin  "Starting PostgreSQL"
+    if [ -f "\$PID_FILE" ] ; then
+        ewarn "Deleting old pid file"
+        rm -f "\$PID_FILE"
+    fi
+    pg_ctl -s start
+
+    eend \$?
+}
+
+stop() {
+    ebegin "Stopping PostgreSQL"
+    # Note: we have to do --oknodo here, otherwise it will always fail
+    #       when there are open transactions. This bug has been corrected
+    #       in baselayout-1.13.0_alpha8.
+    pg_ctl -s stop
+    eend \$?
+}
+
+reload() {
+    ebegin 'Reloading PostgreSQL configuration'
+    pg_ctl -s reload
+    eend \$?
+}
+
+restart() {
+    ebegin "Restarting PostgreSQL"
+    # "stop/start" seems to behave better.
+    pg_ctl -s stop
+    einfo  "..."
+    pg_ctl -s start
+    eend \$?
+}
+
+status() {
+    ebegin "Status of PostgreSQL"
+    # "stop/start" seems to behave better.
+    pg_ctl -s status
+} 
+
+actions="status restart start stop checkconfig reload"
+for action in \$actions;do 
+    if [[ "\$1" == "\$action" ]];then
+        \$action
+    fi
+done
+
+

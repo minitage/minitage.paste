@@ -2,7 +2,7 @@ import os
 from setuptools import setup, find_packages
 setupdir = os.path.abspath(
     os.path.dirname(__file__)
-) 
+)
 os.chdir(setupdir)
 
 name='minitage.paste'
@@ -21,7 +21,7 @@ setup(
         read('README.txt')
         + '\n' +
         read('CHANGES.txt')
-        + '\n' 
+        + '\n'
     ),
     classifiers=[
         'Framework :: Buildout',
@@ -47,7 +47,7 @@ setup(
     #tests_require = ['zope.testing'],
     entry_points = {
         'paste.paster_create_template' : [
-            'minitage.pgsql = minitage.paste.profils.postgresql:Template',
+            'minitage.postgresql = minitage.paste.profils.postgresql:Template',
             'minitage.env = minitage.paste.profils.env:Template',
         ]
     },

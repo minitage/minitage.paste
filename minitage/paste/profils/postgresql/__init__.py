@@ -14,17 +14,107 @@
 
 __docformat__ = 'restructuredtext en'
 
+import os
+import stat
+import getpass
+import pwd
+import grp
 
+from minitage.paste.profils import common
+from minitage.core.common import remove_path
 from paste.script import templates
 
+class Template(common.Template):
 
-class Template(templates.Template):
+    summary = 'Template for creating a file '\
+            'to source to get the needed '\
+            'environnment variables relative '\
+            'to a minitage project.'
+    _template_dir = 'template'
+    use_cheetah = True
+    pg_present = False
 
-    egg_plugins = ['Framework']
-    summary = 'Template for creating a basic postgresl database and scripts in a minitage project.'
-    template_dir = 'template'
-    use_cheetah = True  
-    read_vars_from_templates=True
+    def pre(self, command, output_dir, vars):
+        common.Template.pre(self, command, output_dir, vars)
+        db_path =os.path.join(
+            vars['sys'],
+            'var',
+            'data',
+            'postgresql',
+            vars['db_name']
+        )
+        if not os.path.isdir(db_path):
+            os.makedirs(db_path)
 
+            # registering where we initdb
+            # which database do we createdb
+            os.environ['PGDATA'] = db_path
+            os.environ['PGUSER'] = vars['db_user']
+            os.environ['PGDATABASE'] = vars['db_name']
+            os.environ['PGHOST'] = vars['db_host']
+            os.environ['PGPORT'] = vars['db_port']
+            # default charsets C avoiding regional problems :)
+            os.environ['LANG'] = os.environ['LC_ALL'] = 'C'
+
+            # We are searching in the destination if we
+            # already have a postgresql installation.
+            # If we have, just register as already installed.
+            # and do not initdb.
+            # If no pgsql is installed, do initdb/createdb but
+            # remove files coming out by templates
+            # to be out of overwrite errors.
+            os.system("""
+                      source %s/share/minitage/minitage.env
+                      initdb  -E 'UTF-8'
+                      pg_ctl -w start -l /home/kiorky/tmp/foo/django/django/prout
+                      createdb 
+                      pg_ctl stop
+                      """ % (vars['sys'])
+                     )
+            for f in ('postgresql.conf',
+                      'pg_hba.conf',
+                      'pg_ident.conf' ):
+                fp = os.path.join(db_path, f)
+                if os.path.isfile(fp):
+                    remove_path(fp)
+
+    def post(self, command, output_dir, vars):
+        sys = vars['sys']
+        dirs = [os.path.join(sys, 'bin'),
+                os.path.join(sys, 'etc', 'init.d')]
+        for directory in dirs:
+            for filep in os.listdir(directory):
+                p = os.path.join(directory, filep)
+                os.chmod(p, stat.S_IRGRP|stat.S_IXGRP|stat.S_IRWXU)
+
+        # be nice, link some files
+        for filep in ('postgresql.conf',
+                     'pg_hba.conf', 'pg_ident.conf'):
+            dest = os.path.join(vars['sys'],
+                                'etc',
+                                'postgresql',
+                                '%s.%s' % (
+                                    vars['db_name'], filep)
+                               )
+            orig = os.path.join(vars['sys'],
+                                'var', 'data',
+                                'postgresql',
+                                vars['db_name'],
+                                filep)
+            if not os.path.exists(dest):
+                os.symlink(orig, dest)
+
+Template.required_templates = ['minitage.env']
+running_user = getpass.getuser()
+gid = pwd.getpwnam(running_user)[3]
+group = grp.getgrgid(gid)[0]
+Template.vars = common.Template.vars + \
+                [
+                templates.var('db_name', 'Database name', default = 'postgres'),
+                templates.var('db_user', 'Default user', default = running_user),
+                templates.var('db_group', 'Default group', default = group),
+                templates.var('db_host', 'Host to listen on', default = 'localhost'),
+                templates.var('db_port', 'Port to listen to', default = '5432'),
+            ]
 
 # vim:set et sts=4 ts=4 tw=80:

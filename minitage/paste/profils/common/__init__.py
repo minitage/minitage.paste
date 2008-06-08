@@ -40,11 +40,12 @@ class Template(templates.Template):
     summary = 'OVERRIDE ME'
     _template_dir = 'template'
     use_cheetah = True
+    read_vars_from_templates = True
 
     vars = [
-        templates.var('dependencies',
+        templates.var('project_dependencies',
                       'Dependencies (separated by comma)'),
-        templates.var('eggs',
+        templates.var('project_eggs',
                       'Python packages non-eggified like libxml2 '
                       'to be added to the python path '
                       '(separated by comma)'),
@@ -52,7 +53,6 @@ class Template(templates.Template):
 
     def __init__(self, name):
         templates.Template.__init__(self, name)
-
 
     def pre(self, command, output_dir, vars):
 
@@ -73,14 +73,14 @@ class Template(templates.Template):
         deps = [lmb for lmb in adeps if lmb.category == 'dependencies']
         eggs = [lmb for lmb in adeps if lmb.category == 'eggs']
 
-        mdeps =  vars.get('dependencies', '').split(',')
+        mdeps =  vars.get('project_dependencies', '').split(',')
         for d in mdeps:
             if d:
                 manual_dep = m.find_minibuild(d.strip())
                 if not manual_dep in deps:
                     deps.append(manual_dep)
 
-        meggs =  vars.get('eggs', '').split(',')
+        meggs =  vars.get('project_eggs', '').split(',')
         for d in meggs:
             if d:
                 manual_egg = m.find_minibuild(d.strip())
@@ -113,10 +113,38 @@ class Template(templates.Template):
         self.write_files(command, self.output_dir, vars)
         self.post(command, output_dir, vars)
 
+
+    def check_vars(self, vars, cmd):
+        """add mandatory check"""
+        cvars = templates.Template.check_vars(self, vars, cmd)
+        for var in cvars:
+            for mvar in self.vars:
+                if mvar.name == var:
+                    if getattr(mvar, 'mandatory', False)\
+                       and not cvars[var]:
+                        raise Exception('%s must be set' % var)
+
+        return cvars
+    
     def read_vars(self, command=None):
         print '\n\n\tWarning: All minitage templates come by default'\
                 ' with their dependencies. You ll not have to '\
                 'specify them.\n\n'
+
+        return templates.Template.read_vars(self, command)
+
+
+
+class var(templates.var):
+    """patch pastescript to have mandatory fields"""
+
+
+    def __init__(self, name, description,
+                 default='', should_echo=True,
+                mandatory = False):
+        templates.var.__init__(self, name, description,
+                                default='', should_echo=True)
+        self.mandatory = mandatory
 
 
 # vim:set et sts=4 ts=4 tw=80:
