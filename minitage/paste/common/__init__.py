@@ -53,53 +53,7 @@ class Template(templates.Template):
 
     def __init__(self, name):
         templates.Template.__init__(self, name)
-
-    def pre(self, command, output_dir, vars):
-
-        name = vars['project']
-
-        # either / or virtualenv prefix is the root
-        # of minitage in any cases.
-        # This is pointed out by sys.exec_prefix, hopefullly.
-        prefix = sys.exec_prefix
-        cfg = os.path.join(prefix, 'etc', 'minimerge.cfg')
-
-        # load the minimerge
-        m = core.Minimerge({'config': cfg})
-
-        # find the project minibuild
-        mb = m.find_minibuild(name)
-        adeps = m.compute_dependencies([name])
-        deps = [lmb for lmb in adeps if lmb.category == 'dependencies']
-        eggs = [lmb for lmb in adeps if lmb.category == 'eggs']
-
-        mdeps =  vars.get('project_dependencies', '').split(',')
-        for d in mdeps:
-            if d:
-                manual_dep = m.find_minibuild(d.strip())
-                if not manual_dep in deps:
-                    deps.append(manual_dep)
-
-        meggs =  vars.get('project_eggs', '').split(',')
-        for d in meggs:
-            if d:
-                manual_egg = m.find_minibuild(d.strip())
-                if not manual_egg in eggs:
-                    eggs.append(manual_egg)
-
-        # get the install path
-        path = m.get_install_path(mb)
-
-        # set the output dir
-        self.output_dir = os.path.join(path, 'sys')
-
-        # set templates variables
-        vars['eggs'] = eggs
-        vars['sys'] = self.output_dir
-        vars['path'] = path
-        vars['mt'] = prefix
-        vars['dependencies'] = deps
-        vars['header'] = __HEADER__ % {'comment': '#'}
+        self.output_dir = os.path.abspath('.')
 
     def run(self, command, output_dir, vars):
         self.pre(command, output_dir, vars)
@@ -112,7 +66,6 @@ class Template(templates.Template):
             raise Exception('%s is not a directory' % output_dir)
         self.write_files(command, self.output_dir, vars)
         self.post(command, output_dir, vars)
-
 
     def check_vars(self, vars, cmd):
         """add mandatory check"""
@@ -133,18 +86,14 @@ class Template(templates.Template):
 
         return templates.Template.read_vars(self, command)
 
-
-
 class var(templates.var):
     """patch pastescript to have mandatory fields"""
-
 
     def __init__(self, name, description,
                  default='', should_echo=True,
                 mandatory = False):
         templates.var.__init__(self, name, description,
-                                default='', should_echo=True)
+                                default, should_echo)
         self.mandatory = mandatory
-
 
 # vim:set et sts=4 ts=4 tw=80:
