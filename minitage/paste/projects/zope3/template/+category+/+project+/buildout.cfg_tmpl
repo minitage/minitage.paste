@@ -101,7 +101,7 @@ eggs =
     zope.traversing
 
 [scripts]
-recipe = zc.recipe.egg:scripts
+recipe = minitage.recipe:scripts
 eggs=
     $project
     \${minitageeggs:eggs}
