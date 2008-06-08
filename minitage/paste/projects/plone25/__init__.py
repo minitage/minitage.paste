@@ -20,7 +20,7 @@ from minitage.paste.common import var
 class Template(common.Template):
 
     summary = 'Template for creating a '\
-            'basic plone31 project inside minitage'
+            'basic plone25 project inside minitage'
 
 
     def pre(self, command, output_dir, vars):

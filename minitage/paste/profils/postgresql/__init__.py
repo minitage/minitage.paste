@@ -26,10 +26,9 @@ from paste.script import templates
 
 class Template(common.Template):
 
-    summary = 'Template for creating a file '\
-            'to source to get the needed '\
-            'environnment variables relative '\
-            'to a minitage project.'
+    summary = 'Template for creating an instance '\
+            'of postresql in the sys dir of '\
+            'a minitage project.'
     _template_dir = 'template'
     use_cheetah = True
     pg_present = False
