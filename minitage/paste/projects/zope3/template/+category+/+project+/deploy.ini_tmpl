@@ -1,0 +1,7 @@
+[app:main]
+use = egg:$project
+
+[server:main]
+use = egg:Paste#http
+host = $address
+port = $port

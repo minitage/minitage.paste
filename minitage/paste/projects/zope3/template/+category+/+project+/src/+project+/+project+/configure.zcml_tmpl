@@ -1,0 +1,27 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           i18n_domain="$project">
+
+  <include package="zope.security" file="meta.zcml" />
+  <include package="zope.app.zcmlfiles" file="meta.zcml" />
+
+  <include package="zope.publisher" />
+  <include package="zope.traversing" />
+  <include package="zope.traversing.browser" />
+  <include package="zope.app.zcmlfiles" />
+
+  <!-- The following packages aren't needed from the beginning, but
+       end up being used in most applications -->
+  <include package="zope.i18n" file="meta.zcml" />
+  <include package="zope.annotation" />
+  <include package="zope.copypastemove" />
+  <include package="zope.formlib" />
+  <include package="zope.i18n.locales" />
+  <include package="zope.app.authentication" />
+  <include package="zope.app.session" />
+  <include package="zope.app.intid" />
+  <include package="zope.app.keyreference" />
+  <include package="zope.app.catalog" />
+
+  <!-- Add your own component registrations here -->
+
+</configure>
