@@ -148,7 +148,6 @@ eggs =
     python-openid
     setuptools
     wicked
-    zc.recipe.egg
     zope.testing
 
 # url comes from the plone recipe.
