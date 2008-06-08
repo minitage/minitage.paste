@@ -6,7 +6,7 @@ setupdir = os.path.abspath(
 os.chdir(setupdir)
 
 name='minitage.paste'
-version = '0.0.1'
+version = '0.0.1_alpha1'
 
 def read(rnames):
     return open(
@@ -24,13 +24,12 @@ setup(
         + '\n'
     ),
     classifiers=[
-        'Framework :: Buildout',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU General Public License (GPL)',
         'Topic :: Software Development :: Build Tools',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
-    keywords='development buildout recipe',
+    keywords='PasteScripts minitage',
     author='Mathieu Pasquet',
     author_email='kiorky@cryptelium.net',
     url='http://cheeseshop.python.org/pypi/%s' % name,

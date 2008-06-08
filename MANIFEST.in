@@ -1,3 +1,6 @@
-include *.txt *.py 
+recursive-include minitage *.txt *.py *tmpl *cfg *ini
+recursive-include minitage/paste/*/*/template/ *
+recursive-include minitage/paste/*/*/template/ *
+recursive-include minitage/paste/*/*/template/ *
 
 
