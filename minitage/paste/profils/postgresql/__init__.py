@@ -20,7 +20,7 @@ import getpass
 import pwd
 import grp
 
-from minitage.paste import common
+from minitage.paste.profils import common
 from minitage.core.common import remove_path
 from paste.script import templates
 
