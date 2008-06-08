@@ -1,0 +1,164 @@
+###############################################################################
+# $project BUILDOUT
+# This buildout install zope and plone25
+################################################################################
+[project]
+# minitage variables
+directory=\${buildout:directory}/../../
+dependencies=\${buildout:directory}/../../dependencies
+du-directory=\${buildout:directory}/../../eggs
+
+# what to do
+parts =
+    minitageeggs
+    zope2
+    plone
+    instance
+    productdistros
+    zopepy
+
+# plone configuration
+dev-urls =
+    http://plone.org/products/clouseau/releases/0.7.1/Clouseau.0.7.1.zip
+    http://www.zope.org/Members/shh/DocFinderTab/1.0.2/DocFinderTab-1.0.2.tar.gz
+urls =
+    http://www.dieter.handshake.de/pyprojects/zope/AdvancedQuery.tgz
+    http://codespeak.net/z3/five/release/Five-1.4.4.tgz
+    http://\${mirrors:plone}/products/attachmentfield/releases/1.4.3/attachmentfield-1-4-3.tgz
+    http://\${mirrors:plone}/products/kupu/releases/1.4.7/kupu-1-4-7.tgz
+    http://\${mirrors:plone}/products/ploneformgen/releases/1.2.1/ploneformgen-1-2-1.tgz
+    http://\${mirrors:plone}/products/scriptablefields/releases/1.1/scriptablefields-1-1.tgz
+    http://\${mirrors:plone}/products/fckeditor/releases/2.4.7/fckeditor-plone_2-4-7.tgz
+    http://\${mirrors:plone}/products/smartcolorwidget/releases/1.0.2/smartcolorwidget-1-0-2.tgz
+nested-packages = CacheFu-1.1.tgz
+version-suffix-packages = SmartColorWidget-1.0.1.tar.gz
+
+# python stuff
+eggs-directory=\${buildout:directory}/../../eggs/cache
+develop-eggs-directory=\${buildout:directory}/../../eggs/develop-cache
+eggs = PILwoTK
+develop =
+develop-eggs =
+extra-paths =
+    \${libxml2:site-packages}
+    \${libxslt:site-packages}
+
+# zope server configuration
+http-address=$address:$port
+log-level = $loglevel
+debug = $debug
+session-timeout-minutes = 90
+# alternate products paths
+products=
+
+# site-packages
+[libxml2]
+site-packages=\${project:du-directory}/py-libxml2-2.6/parts/site-packages-2.4
+[libxslt]
+site-packages=\${project:du-directory}/py-libxslt-1.1/parts/site-packages-2.4
+
+[python2.4]
+executable=\${project:dependencies}/python-2.4/parts/part/bin/python
+name=python2.4
+
+[versions]
+minitage.core = 0.0.4
+minitage.recipe = 0.0.1
+plone.recipe.distros = 1.3
+plone.recipe.zope2install = 1.2
+plone.recipe.zope2instance = 1.3
+setuptools = 0.6c8
+zc.recipe.egg = 1.0.0
+zope.testing = 3.5.1
+elementtree = 1.2.7-20070827-preview
+lxml = 2.0.5
+PILwoTK  = 1.1.6.4
+
+[buildout]
+python = python2.4
+versions = versions
+executable = python2.4
+parts = \${project:parts}
+extra-paths=
+    \${project:extra-paths}
+find-links =
+    http://dist.plone.org
+    http://\${mirrors:zope}/ppix/
+    http://\${mirrors:zope}/distribution/
+    http://effbot.org/downloads
+# i re add setuptols there to ensure the eggs variable will not be null.
+# indeed, the instance recipe does not like at all empty eggs variables!!!
+eggs =
+    setuptools
+    \${project:eggs}
+    \${project:develop-eggs}
+develop =
+    \${project:develop}
+eggs-directory = \${project:eggs-directory}
+develop-eggs-directory = \${project:develop-eggs-directory}
+
+[minitageeggs]
+recipe = minitage.recipe:egg
+minitage-dependencies=openssl-0.9 libxml2-2.6 libxslt-1.1 zlib-1.2
+minitage-eggs = py-libxml2-2.6 py-libxslt-1.1
+executable=\${python2.4:executable}
+eggs =
+    \${project:eggs}
+    lxml
+    elementtree
+    PILwoTK
+
+[productdistros]
+recipe = plone.recipe.distros
+urls =
+    \${project:urls}
+nested-packages =
+    \${project:nested-packages}
+version-suffix-packages =
+    \${project:version-suffix-packages}
+
+[instance]
+recipe = plone.recipe.zope2instance
+http-address = \${project:http-address}
+zope2-location = \${zope2:location}
+user = admin:admin
+session-timeout-minutes = \${project:session-timeout-minutes}
+verbose-security = off
+debug-mode = \${project:debug}
+event-log-level=\${project:log-level}
+z2-log-level=\${project:log-level}
+eggs =
+    \${buildout:eggs}
+    \${minitageeggs:eggs}
+products =
+    \${buildout:directory}/Products
+    \${productdistros:location}
+    \${plone:location}
+    \${project:products}
+extra-paths=
+    \${buildout:extra-paths}
+
+[plone]
+recipe = plone.recipe.distros
+urls = http://\${mirrors:minitage}/Plone-2.5.5.tar.gz
+nested-packages = Plone-2.5.5.tar.gz
+version-suffix-packages = Plone-2.5.5.tar.gz
+
+[zope2]
+recipe = plone.recipe.zope2install
+url = http://\${mirrors:minitage}/Zope-2.9.8-final.tgz
+
+[zopepy]
+recipe = minitage.recipe:scripts
+eggs = \${instance:eggs}
+interpreter = python
+extra-paths = 
+    \${zope2:location}/lib/python 
+    \${project:extra-paths}
+
+[mirrors]
+sourceforge = dfn.dl.sourceforge.net
+minitage = distfiles.minitage.org/public/externals/minitage
+plone = plone.org
+zope = download.zope.org
+
