@@ -36,7 +36,6 @@ start() {
         rm -f "\$PID_FILE"
     fi
     pg_ctl -s start
-
     eend \$?
 }
 
