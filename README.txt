@@ -37,6 +37,8 @@ Use throught paster::
     easy_install minitage.paste 
     paster create -t [template_name] target_project [opt=n opt2=n]
 
+This will create a new project and a new minilay in your current minitage.
+
 Here must come as dependencies::
 
     minitage.core
