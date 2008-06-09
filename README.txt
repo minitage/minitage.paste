@@ -14,8 +14,10 @@ Projects templates
 ===================
     
     - minitage.zope3: A sample layout for a zope 3 application
-    - minitage.plone25: A sample layout for a plopne25 application 
+    - minitage.plone25: A sample layout for a plone 25 application 
     - minitage.plone31: A sample layout for a plone 31 application 
+    - minitage.django: A sample layout for a django application 
+    - minitage.geodjango: A sample layout for a geo-django application 
 
 Projects profiles
 ==================
@@ -29,9 +31,18 @@ Projects profiles
 Usage
 ======
 
+
 Use throught paster::
 
+    easy_install minitage.paste 
     paster create -t [template_name] target_project [opt=n opt2=n]
+
+Here must come as dependencies::
+
+    minitage.core
+    zc.buildout
+    PasteScripts
+    Cheetah
 
 
 Warning

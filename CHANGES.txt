@@ -1,6 +1,13 @@
 CHANGES
 ===========
 
+
+0.0.1_alpha2
+--------------
+- correct some labels and default values
+- add django template
+- add geo-django template
+ 
 0.0.1_alpha1
 --------------
 Initial release
