@@ -49,6 +49,7 @@ setup(
             'minitage.postgresql = minitage.paste.profils.postgresql:Template',
             'minitage.env = minitage.paste.profils.env:Template',
             'minitage.zope3 = minitage.paste.projects.zope3:Template',
+            'minitage.django = minitage.paste.projects.django:Template',
             'minitage.plone31 = minitage.paste.projects.plone31:Template',
             'minitage.plone25 = minitage.paste.projects.plone25:Template',
         ]
