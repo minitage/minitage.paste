@@ -29,7 +29,7 @@ group = grp.getgrgid(gid)[0]
 class Template(common.Template):
 
     summary = 'Template for creating a '\
-            'basic plone31 project inside minitage'
+            'basic zope3 project inside minitage'
 
 
     def pre(self, command, output_dir, vars):
