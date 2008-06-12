@@ -63,11 +63,11 @@ class Template(common.Template):
             # remove files coming out by templates
             # to be out of overwrite errors.
             os.system("""
-                      source %s/share/minitage/minitage.env
-                      initdb  -E 'UTF-8'
-                      pg_ctl -w start 
-                      createdb 
-                      pg_ctl stop
+                      bash -c "source %s/share/minitage/minitage.env;\
+                      initdb  -E 'UTF-8';\
+                      pg_ctl -w start ;\
+                      createdb ;\
+                      pg_ctl stop"
                       """ % (vars['sys'])
                      )
             for f in ('postgresql.conf',
@@ -109,7 +109,7 @@ gid = pwd.getpwnam(running_user)[3]
 group = grp.getgrgid(gid)[0]
 Template.vars = common.Template.vars + \
                 [
-                templates.var('db_name', 'Database name', default = 'postgres'),
+                templates.var('db_name', 'Database name', default = 'minitagedb'),
                 templates.var('db_user', 'Default user', default = running_user),
                 templates.var('db_group', 'Default group', default = group),
                 templates.var('db_host', 'Host to listen on', default = 'localhost'),
