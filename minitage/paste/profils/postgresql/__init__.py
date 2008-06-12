@@ -65,7 +65,7 @@ class Template(common.Template):
             os.system("""
                       source %s/share/minitage/minitage.env
                       initdb  -E 'UTF-8'
-                      pg_ctl -w start -l /home/kiorky/tmp/foo/django/django/prout
+                      pg_ctl -w start 
                       createdb 
                       pg_ctl stop
                       """ % (vars['sys'])

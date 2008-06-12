@@ -1,5 +1,11 @@
 CHANGES
 ===========
+0.0.1_alpha7
+-------------- 
+ - corret some logfiles for the postgresql template
+0.0.1_alpha6
+-------------- 
+ - Manifest upgrade
  0.0.1_alpha5
 -------------- 
  - corret dependencies for django project
