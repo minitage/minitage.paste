@@ -1,6 +1,8 @@
 CHANGES
 ===========
-
+ 0.0.1_alpha5
+-------------- 
+ - corret dependencies for django project
 
 0.0.1_alpha2
 --------------
