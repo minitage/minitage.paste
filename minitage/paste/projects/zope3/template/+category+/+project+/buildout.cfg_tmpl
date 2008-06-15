@@ -102,6 +102,7 @@ eggs =
 
 [scripts]
 recipe = minitage.recipe:scripts
+interpreter = zopepy
 eggs=
     $project
     \${minitageeggs:eggs}

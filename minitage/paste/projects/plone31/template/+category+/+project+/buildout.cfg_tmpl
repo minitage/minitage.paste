@@ -16,6 +16,7 @@ parts =
     instance
     productdistros
     zopepy
+    omelette
 
 # plone configuration
 dev-urls =
@@ -195,8 +196,20 @@ extra-paths=
 recipe = minitage.recipe:scripts
 executable=\${project:dependencies}/python-2.4/parts/part/bin/python
 eggs = \${instance:eggs}
-interpreter = python
-extra-paths = \${zope2:location}/lib/python \${project:extra-paths}
+interpreter = zopepy
+extra-paths = ${zope2:location}/lib/python
+     \${project:extra-paths}
+     \${instance:extra-paths}
+     \${plone:extra-paths}
+     \${plone:location}
+     \${zope2:extra-paths}
+
+
+[omelette]
+recipe = collective.recipe.omelette
+eggs = \${instance:eggs}
+products = \${instance:products}
+modules = \${zope2:location}/lib/python ./
 
 [mirrors]
 sourceforge = ovh.dl.sourceforge.net

@@ -82,7 +82,7 @@ eggs=
     Django
     \${minitageeggs:eggs}
     \${project:develop-eggs}
-interpreter = python
+interpreter = djangopy
 # django-admin.py will be automaticly installed there.
 # initialisation code, like os.environ.set('FOO') for gdal ;)
 #initialization =
