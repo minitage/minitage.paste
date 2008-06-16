@@ -186,6 +186,8 @@ products =
     \${project:products}
 extra-paths=
     \${buildout:extra-paths}
+zcml = 
+    \${project:develop}
 
 [plone]
 recipe = plone.recipe.plone
@@ -202,7 +204,6 @@ extra-paths = ${zope2:location}/lib/python
      \${instance:extra-paths}
      \${plone:extra-paths}
      \${plone:location}
-     \${zope2:extra-paths}
 
 
 [omelette]
