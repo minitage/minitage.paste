@@ -1,22 +1,48 @@
+
 CHANGES
 ===========
+<<<<<<< local
+=======
+0.0.1_alpha18
+---------------- 
+ - Rename python interpreter not to override the real one in path.
+>>>>>>> other
 
+<<<<<<< local
 0.0.1_alph7
 -------------- 
 - add dependency layout
 - add egg layout
 - add distutils layout
+=======
+0.0.1_alpha17
+----------------
+ - Add omelette to plone template
+
+0.0.1_alpha7
+--------------
+ - corret some logfiles for the postgresql template
+
+0.0.1_alpha6
+--------------
+ - Manifest upgrade
+>>>>>>> other
 
 0.0.1_alpha5
+<<<<<<< local
 -------------- 
+=======
+--------------
+>>>>>>> other
  - corret dependencies for django project
 
 0.0.1_alpha2
 --------------
+
 - correct some labels and default values
 - add django template
 - add geo-django template
- 
+
 0.0.1_alpha1
 --------------
 Initial release
