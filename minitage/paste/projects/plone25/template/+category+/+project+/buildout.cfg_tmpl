@@ -151,7 +151,7 @@ url = http://\${mirrors:minitage}/Zope-2.9.8-final.tgz
 [zopepy]
 recipe = minitage.recipe:scripts
 eggs = \${instance:eggs}
-interpreter = python
+interpreter = zopepy
 extra-paths = 
     \${zope2:location}/lib/python 
     \${project:extra-paths}
