@@ -52,6 +52,7 @@ setup(
             'minitage.django = minitage.paste.projects.django:Template',
             'minitage.geodjango = minitage.paste.projects.geodjango:Template',
             'minitage.plone31 = minitage.paste.projects.plone31:Template',
+            'minitage.dependency = minitage.paste.projects.dependency:Template',
             'minitage.plone25 = minitage.paste.projects.plone25:Template',
         ]
     },
