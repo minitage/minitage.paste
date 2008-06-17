@@ -66,7 +66,7 @@ url = $srcurl
 # noconfigure =
 
 # options to give to the configure
-#configure-options = --with-opts
+#configure-options = --with-opts --with-foo=\${anotherDep:location}
 
 # configure prefix separator (--prefix=/foo --prefix /foo)
 #prefix-separator= =

@@ -1,0 +1,113 @@
+################################################################################
+# MINITAGE EGG PROJECT BUILDOUT
+################################################################################
+[buildout]
+parts =
+    part
+versions = versions
+eggs-directory=\${buildout:directory}/../../eggs/cache
+develop-eggs-directory=\${buildout:directory}/../../eggs/develop-eggs
+
+[versions]
+minitage.core >= 0.0.4
+minitage.recipe >= 0.0.1
+setuptools = 0.6c8
+# egg1 = 9
+# egg2 = 10
+
+# think that the eggs version must be set in the versions section
+[part]
+recipe = minitage.recipe:egg
+
+#
+# EGGS TO BUILD if we use an index
+# 
+
+# eggs to get from the index if we are building classical eggs
+#eggs = egg1
+#    egg2
+
+# find links to seach for eggs sources
+#find-links =
+
+# pypi index replacement
+# index=
+
+# can eggs be marked as zip safe
+#zip-safe=
+
+#
+# URL & MD5 if we are building something that does not come 
+# from the python (or other) inddex
+#
+
+# where to fetch if we build an egg from an archive
+# url = http://foo
+
+#md5sum or the archive
+#md5sum = 508a937a78677110a83d2843ba2f8c1d
+
+#
+# SCM SUPPORT
+#
+
+#\if we check out something, the type of the scm
+#scm=svn
+
+# aditionnal arguments
+#scm-args = --ignore-externals
+
+#
+# COMPILATION DIRECTORY
+# 
+# sub directory where we can find a setup.py 
+# in non standart archives
+#eggname-build-dir=
+
+#
+# PATCHES
+#
+
+#patch command
+#eggname-patch-binary = patch
+
+# arguments for patch
+#eggname-patch-options = -p0
+
+# inconditionnal patches
+#eggname-patches = foo.diff
+
+# os specific paches
+#eggname-linux-patches = bar.diff
+#eggname-cygwin-patches = bar.diff
+#eggname-freebsd-patches = bar.diff
+#eggname-darwin-patches = bar.diff
+
+#
+# HOOKS
+#
+
+# when we install a static distribution (archive, not an egg)
+# this hooks happens just after the download.
+#post-download-hook=
+
+# execute the hook just before the egg 'eggname' setup.py easy_install call
+#eggname-pre-setup-hook=
+
+# execute the hook just after the egg 'eggname' setup.py easy_install call
+#eggname-post-setup-hook=
+
+#
+# INCLUDE AND LIBRARIES PATHS
+#
+
+# include directories
+#includes =
+
+# libraries to link directories
+#libraries =
+
+# paths to libraries to add for the runtime path
+#rpath =
+
+

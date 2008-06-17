@@ -1,6 +1,13 @@
 CHANGES
 ===========
- 0.0.1_alpha5
+
+0.0.1_alph7
+-------------- 
+- add dependency layout
+- add egg layout
+- add distutils layout
+
+0.0.1_alpha5
 -------------- 
  - corret dependencies for django project
 
