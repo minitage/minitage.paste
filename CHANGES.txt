@@ -2,6 +2,10 @@
 CHANGES
 ===========
 
+0.0.1_alpha20
+----------------
+ - merge release
+
 0.0.1_alpha19
 --------------
 - add dependency layout
