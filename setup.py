@@ -6,7 +6,11 @@ setupdir = os.path.abspath(
 os.chdir(setupdir)
 
 name='minitage.paste'
+<<<<<<< local
 version = '0.0.1_alpha18'
+=======
+version = '0.0.1_alpha19'
+>>>>>>> other
 
 def read(rnames):
     return open(
@@ -46,13 +50,16 @@ setup(
     #tests_require = ['zope.testing'],
     entry_points = {
         'paste.paster_create_template' : [
-            'minitage.postgresql = minitage.paste.profils.postgresql:Template',
-            'minitage.env = minitage.paste.profils.env:Template',
-            'minitage.zope3 = minitage.paste.projects.zope3:Template',
+            'minitage.dependency = minitage.paste.projects.dependency:Template',
             'minitage.django = minitage.paste.projects.django:Template',
+            'minitage.egg = minitage.paste.projects.egg:Template',
+            'minitage.distutils = minitage.paste.projects.distutils:Template',
+            'minitage.env = minitage.paste.profils.env:Template',
             'minitage.geodjango = minitage.paste.projects.geodjango:Template',
-            'minitage.plone31 = minitage.paste.projects.plone31:Template',
             'minitage.plone25 = minitage.paste.projects.plone25:Template',
+            'minitage.plone31 = minitage.paste.projects.plone31:Template',
+            'minitage.postgresql = minitage.paste.profils.postgresql:Template',
+            'minitage.zope3 = minitage.paste.projects.zope3:Template',
         ]
     },
 )

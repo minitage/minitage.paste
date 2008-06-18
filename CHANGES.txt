@@ -2,17 +2,20 @@
 CHANGES
 ===========
 
-0.0.1_alpha17
----------------- 
- - Fix and add zcml for instance part.
+0.0.1_alpha19
+--------------
+- add dependency layout
+- add egg layout
+- add distutils layout
 
 0.0.1_alpha18
----------------- 
+----------------
  - Rename python interpreter not to override the real one in path.
 
 0.0.1_alpha17
 ----------------
  - Add omelette to plone template
+ - Fix and add zcml for instance part.
 
 0.0.1_alpha7
 --------------
