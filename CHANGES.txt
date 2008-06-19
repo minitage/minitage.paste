@@ -2,6 +2,10 @@
 CHANGES
 ===========
 
+0.0.1_alpha21
+----------------
+ - improve environnment profile
+
 0.0.1_alpha20
 ----------------
  - merge release

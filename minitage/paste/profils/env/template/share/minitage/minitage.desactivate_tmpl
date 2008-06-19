@@ -1,0 +1,11 @@
+$header
+# # gentoo stolen stuff
+source $sys/share/gentoo/functions.sh
+#set ENVVAR='MINITAGE%s' % ( $project.replace('-', '').replace('_', '').replace('*', ''))
+if [[ -n \$$ENVVAR ]];then
+    export PATH=\$OLD_MINITAGE_PATH
+    export LD_LIBRARY_PATH=\$OLD_MINITAGE_LD_LIBRARY_PATH
+    export PS1=\$OLD_MINITAGE_PS1
+    unset $ENVVAR
+fi
+## vim: set ft=cheetah: 
