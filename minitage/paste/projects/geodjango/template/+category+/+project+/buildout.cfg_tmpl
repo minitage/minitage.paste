@@ -86,7 +86,7 @@ eggs=
 interpreter = djangopy
 # django-admin.py will be automaticly installed there.
 # initialisation code, like os.environ.set('FOO') for gdal ;)
-/bin/bash: :w: command not found
+#initialization =
 #    print 'test1'
 #    print 'test2'
 
