@@ -2,6 +2,10 @@
 CHANGES
 ===========
 
+0.0.1_alpha22
+----------------
+ - fix plone template
+
 0.0.1_alpha21
 ----------------
  - improve environnment profile

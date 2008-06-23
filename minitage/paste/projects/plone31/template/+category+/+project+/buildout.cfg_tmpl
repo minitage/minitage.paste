@@ -199,7 +199,7 @@ recipe = minitage.recipe:scripts
 executable=\${project:dependencies}/python-2.4/parts/part/bin/python
 eggs = \${instance:eggs}
 interpreter = zopepy
-extra-paths = ${zope2:location}/lib/python
+extra-paths = \${zope2:location}/lib/python
      \${project:extra-paths}
      \${instance:extra-paths}
      \${plone:extra-paths}
