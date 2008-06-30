@@ -1,0 +1,10 @@
+[minibuild]
+# get subversion into the path
+dependencies=python-2.5 subversion-1.4 twisted-8.1.0 collective-buildbot-0.4.1
+install_method=buildout
+src_uri=$uri
+src_type=$scm_type
+category=misc
+homepage=$homepage
+
+

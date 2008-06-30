@@ -6,7 +6,7 @@ setupdir = os.path.abspath(
 os.chdir(setupdir)
 
 name='minitage.paste'
-version = '0.0.1_alpha22'
+version = '0.0.1_alpha23'
 
 def read(rnames):
     return open(
@@ -48,6 +48,8 @@ setup(
         'paste.paster_create_template' : [
             'minitage.dependency = minitage.paste.projects.dependency:Template',
             'minitage.django = minitage.paste.projects.django:Template',
+            'minitage.buildbot-master = minitage.paste.projects.buildbotmaster:Template',
+            'minitage.buildbot-slave = minitage.paste.projects.buildbotslave:Template',
             'minitage.egg = minitage.paste.projects.egg:Template',
             'minitage.distutils = minitage.paste.projects.distutils:Template',
             'minitage.env = minitage.paste.profils.env:Template',

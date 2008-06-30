@@ -62,8 +62,8 @@ executable=\${project:dependencies}/python-2.4/parts/part/bin/python
 name=python2.4
 
 [versions]
-minitage.core = 0.0.4
-minitage.recipe = 0.0.1
+minitage.core >= 0.0.4
+minitage.recipe >= 0.0.1
 plone.recipe.distros = 1.3
 plone.recipe.zope2install = 1.2
 plone.recipe.zope2instance = 1.3

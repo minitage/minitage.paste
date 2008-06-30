@@ -66,7 +66,7 @@ name=python2.4
 # bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
 plone.recipe.plone >= 3.1.2
 zc.recipe.egg=1.0.0
-minitage.recipe = 0.0.1
+minitage.recipe >= 0.0.1
 setuptools=0.6c8
 elementtree = 1.2.7-20070827-preview
 lxml = 2.0.5

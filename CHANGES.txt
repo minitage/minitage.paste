@@ -3,7 +3,13 @@ CHANGES
 ===========
 
 0.0.1_alpha22
-----------------
+--------------- 
+ - update recipe versions
+ - add buildbot templates
+
+0.0.1_alpha22
+---------------
+ - comment corrections
  - fix plone template
 
 0.0.1_alpha21

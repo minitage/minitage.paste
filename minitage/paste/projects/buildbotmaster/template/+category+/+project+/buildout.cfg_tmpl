@@ -1,0 +1,116 @@
+# This buildout install buildbot
+[project]
+# minitage variables
+directory=\${buildout:directory}/../../
+scripts-directory=\${buildout:directory}/bin
+dependencies=\${buildout:directory}/../../dependencies
+du-directory=\${buildout:directory}/../../eggs/
+# Twisted-version
+Twisted-version=23915
+# what to do
+parts =
+    minitageeggs
+    scripts
+    master
+    pollers
+    tests-dev
+# python stuff
+eggs-directory=\${buildout:directory}/../../eggs/cache
+develop-eggs-directory=\${buildout:directory}/../../eggs/develop-cache
+eggs =
+    zope.interface
+    pycrypto
+    buildbot
+develop =
+develop-eggs =
+extra-paths =
+
+[python2.5]
+executable=\${project:dependencies}/python-2.5/parts/part/bin/python
+name=python2.5
+
+[versions]
+# bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
+minitage.recipe>=0.0.1
+minitage.core >= 0.0.4
+zc.recipe.zope3instance = 1.0.0a1
+setuptools = 0.6c8
+zc.recipe.egg = 1.0.0
+Twisted=8.1.0_r\${project:Twisted-version}
+collective.buildbot=0.4.1dev_r67028
+
+[buildout]
+python = python2.5
+versions = versions
+executable = python2.5
+parts = \${project:parts}
+extra-paths=
+    \${project:extra-paths}
+find-links =
+    http://\${mirrors:zope}/ppix/
+    http://\${mirrors:zope}/distribution/
+    http://effbot.org/downloads
+eggs =
+    setuptools
+    \${project:eggs}
+    \${project:develop-eggs}
+develop =
+    \${project:develop}
+eggs-directory = \${project:eggs-directory}
+develop-eggs-directory = \${project:develop-eggs-directory}
+
+[minitageeggs]
+xecutable=\${python2.5:executable}
+recipe=minitage.recipe:egg
+eggs=
+    \${project:eggs}
+
+[scripts]
+executable=\${python2.5:executable}
+recipe = minitage.recipe:scripts
+extra-paths=\${project:extra-paths}
+eggs=
+    Twisted
+    \${minitageeggs:eggs}
+    \${project:develop-eggs}
+interpreter = zopepy
+
+[master]
+recipe = collective.buildbot:master
+project-name = $project
+project-url = $uri
+public-html = \${buildout:directory}/static
+port = $master_port
+wport = $waterfall_port
+max-builds = 2
+url = $homepage
+slaves =
+    $slaves
+allow-force = true
+irc-host=$irc_server
+irc-channels=$irc_channel
+irc-nickname=$project|$irc_nickname
+
+#add pollers, maybe?
+[pollers]
+recipe = collective.buildbot:poller
+repositories =
+    \${v:repo}
+vcs = svn
+
+[tests-dev]
+recipe = collective.buildbot:project
+# a test instance, you can get one with minitage.buildbot-slave
+slave-names = linux
+#test sequence to test your project
+test-sequence=
+mail-host=
+# shell sequence to build your project
+build-sequence=
+
+[v]
+repo = $uri
+
+[mirrors]
+zope = download.zope.org
+
