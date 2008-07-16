@@ -1,6 +1,9 @@
 
 CHANGES
 ===========
+0.0.1_alpha25
+--------------- 
+ - add env. variables for convenience with zope projects
 
 0.0.1_alpha22
 --------------- 

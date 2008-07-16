@@ -65,6 +65,7 @@ class Template(common.Template):
         vars['eggs'] = eggs
         vars['sys'] = self.output_dir
         vars['path'] = path
+        vars['category'] = mb.category
         vars['mt'] = prefix
         vars['dependencies'] = deps
         vars['header'] = common.__HEADER__ % {'comment': '#'}
