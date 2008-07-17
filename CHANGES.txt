@@ -1,6 +1,10 @@
 
 CHANGES
 ===========
+0.0.1_alpha26
+---------------
+ - add login info to plone templates
+
 0.0.1_alpha25
 --------------- 
  - add env. variables for convenience with zope projects

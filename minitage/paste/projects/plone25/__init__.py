@@ -41,5 +41,11 @@ Template.vars = common.Template.vars \
            var('debug', 
                'Debug mode (on|off)', 
                default = 'on',),    
+           var('login', 
+               'Administrator login', 
+               default = 'admin',),     
+           var('password', 
+               'Password', 
+               default = 'admin',),     
           ]
 # vim:set et sts=4 ts=4 tw=80:
