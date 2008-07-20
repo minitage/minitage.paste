@@ -34,8 +34,8 @@ nested-packages = CacheFu-1.1.tgz
 version-suffix-packages = SmartColorWidget-1.0.1.tar.gz
 
 # python stuff
-eggs-directory=\${buildout:directory}/../../eggs/cache
-develop-eggs-directory=\${buildout:directory}/../../eggs/develop-cache
+eggs-directory=../../eggs/cache
+develop-eggs-directory=../../eggs/develop-cache
 eggs = PILwoTK
 develop =
 develop-eggs =

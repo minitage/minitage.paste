@@ -5,8 +5,8 @@
 parts =
     part
 versions = versions
-eggs-directory=\${buildout:directory}/../../eggs/cache
-develop-eggs-directory=\${buildout:directory}/../../eggs/develop-eggs
+eggs-directory=../../eggs/cache
+develop-eggs-directory=../../eggs/develop-eggs
 
 [versions]
 minitage.core >= 0.0.4

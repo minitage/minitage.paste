@@ -16,8 +16,8 @@ parts =
     scripts
 
 # python stuff
-eggs-directory=\${buildout:directory}/../../eggs/cache
-develop-eggs-directory=\${buildout:directory}/../../eggs/develop-cache
+eggs-directory=../../eggs/cache
+develop-eggs-directory=../../eggs/develop-cache
 eggs =
 develop =
     src/$project

@@ -32,8 +32,8 @@ nested-packages =
 version-suffix-packages = SmartColorWidget-1.0.2.tar.gz
 
 # python stuff
-eggs-directory=\${buildout:directory}/../../eggs/cache
-develop-eggs-directory=\${buildout:directory}/../../eggs/develop-cache
+eggs-directory=../../eggs/cache
+develop-eggs-directory=../../eggs/develop-cache
 eggs = 
     PILwoTK
 develop =
