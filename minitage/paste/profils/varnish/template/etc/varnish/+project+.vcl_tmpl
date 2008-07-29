@@ -1,0 +1,244 @@
+#if os.path.isfile($config)
+#echo open($config).read()
+#else
+#for index, backend in enumerate($backends.split())
+backend backend_${index} {
+#set $host, $port = $backend.split(':')
+    set backend.host = "$host";
+    set backend.port = "$port";
+}
+#end for
+acl purge {
+#for $purge in $purge_ips.split()
+    "$purge";
+#end for
+}
+
+sub vcl_recv {
+    /*
+     * vh-monster stuff
+     * Normalize host headers, and do rewriting for the zope sites.
+     */
+    if (!req.url) {
+        error 404 "Unknown host";
+    }
+    #set $host, $port = $host_address.split(':')
+    elsif (req.url ~ "^/VirtualHostBase/http/${vhost_vhm}:80${zope_path}/VirtualHostRoot") {
+        set req.backend = backend_0;
+    }
+    else {
+        error 404 "Unknown virtual host";
+    }
+
+    if (req.request == "PURGE") {
+        if (! client.ip ~ purge) {
+            error 405 "Not allowed";
+        }
+        lookup;
+    }
+
+    if (req.request != "GET" && req.request != "HEAD") {
+        pipe;
+    }
+
+    /* cache fu etags */
+    if (req.http.If-None-Match) {
+        pass;
+    }
+
+    /* Always cache images and multimedia */
+    if (req.url ~ "\.(jpg|jpeg|gif|png|tiff|tif|svg|swf|ico|mp3|mp4|m4a|ogg|mov|avi|wmv)$") {
+        remove req.http.Cookie;
+        lookup;
+    }
+
+    /* lookup plone/archetypes images */
+    if (req.http.content-type ~ "image.*" ) {
+        remove req.http.Cookie;
+        lookup;
+    }
+
+    /* Support htc */
+    if (req.url ~ "\.(htc)$") {
+        remove req.http.Cookie;
+        lookup;
+    }
+
+    /* Always cache CSS and javascript */
+    if (req.url ~ "\.(css|js)$") {
+        remove req.http.Cookie;
+     set    req.http.Foo = "bar";
+        lookup;
+    }
+
+    /* Always cache static files */
+    if (req.url ~ "\.(pdf|xls|vsd|doc|ppt|pps|vsd|doc|ppt|pps|xls|pdf|sxw|zip|gz|bz2|tgz|tar|rar|odc|odb|odf|odg|odi|odp|ods|odt|sxc|sxd|sxi|sxw|dmg|torrent|deb|msi|iso|rpm)$") {
+        remove req.http.Cookie;
+        lookup;
+    }
+
+    /* handle http compression. */
+    /*
+    if (req.http.Accept-Encoding) {
+        // Handle compression correctly. Varnish treats headers literally, not
+        // semantically. So it is very well possible that there are cache misses
+        // because the headers sent by different browsers aren't the same.
+        // For more info: http://varnish.projects.linpro.no/wiki/FAQ/Compression
+        if (req.http.Accept-Encoding ~ "gzip") {
+            // if the browser supports it, we'll use gzip
+            set req.http.Accept-Encoding = "gzip";
+        } elsif (req.http.Accept-Encoding ~ "deflate") {
+            // next, try deflate if it is supported
+            set req.http.Accept-Encoding = "deflate";
+        } else {
+            // unknown algorithm. Probably junk, remove it
+            remove req.http.Accept-Encoding;
+        }
+    }*/
+
+    if (req.http.Expect) {
+        pipe;
+    }
+
+    if (req.http.Authenticate || req.http.Authorization) {
+        pass;
+    }
+
+    if (req.http.Cookie && (req.http.Cookie ~ "__ac(_(name|password|persistent))?=")) {
+        pass;
+    }
+
+    /* by default, looking in the cache. */
+    lookup;
+}
+
+/* Deal with purge requests */
+sub vcl_hit {
+    if (req.request == "PURGE") {
+        set obj.ttl = 0s;
+        error 200 "Purged";
+    }
+    if (!obj.cacheable) {
+        pass;
+    }
+    deliver;
+}
+
+sub vcl_miss {
+    /* Varnish doesn't do IMS to backend, so if not in cache just pass it through */
+    /*
+    if (req.http.If-Modified-Since) {
+        pass;
+    }
+    */
+
+    if (req.request == "PURGE") {
+        error 404 "Not in cache";
+    }
+    fetch;
+}
+
+sub vcl_hash {
+    /*
+     * The hash subroutine is important
+     * It defines the "name" pattern of
+     * cache objects
+     * We will use url+host by default.
+     * In this way, different machines may
+     * share the same cache object.
+     */
+    set req.hash += req.url;
+    set req.hash += req.http.host;
+
+
+    /*
+     * You can also append cookie
+     * to the hash. In this way,
+     * varnish will fetch/insert a cache object for each
+     * machine.
+     */
+    if (!(req.url ~ "\.(css|js|png|gif|jpg|jpeg|tiff|doc|odt|pdf|htc)$")) {
+        if (req.http.Cookie && req.http.Cookie ~ "_ZopeId" ) {
+            set req.hash += req.http.Cookie;
+        }
+    }
+    hash;
+}
+
+sub vcl_fetch {
+    /*  Do not store errors in cache, as maybe they will be corrected soon :-) */
+    if (obj.status == 404 || obj.status == 500) {
+        pass;
+    }
+
+    /* dont cache unauthenticated errors stuff */
+    if (obj.status == 503) {
+        pass;
+    }
+
+    if (!obj.valid) {
+        error;
+    }
+    if (!obj.cacheable) {
+        pass;
+    }
+
+    /* force minimum ttl of $min_ttl seconds */
+    if (obj.ttl < ${min_ttl}s) {
+        set obj.ttl = ${min_ttl}s;
+    }
+
+    if (req.url ~ "\.(/search)$") {
+        insert;
+    }
+
+    if (obj.http.content-type ~ "image*" ) {
+        insert;
+    }
+
+    if (obj.http.content-type ~ "text/plain|text/xml" ) {
+        insert;
+    }
+
+    /* Always cache images and multimedia */
+    if (req.url ~ "\.(jpg|jpeg|gif|png|tiff|tif|svg|swf|ico|mp3|mp4|m4a|ogg|mov|avi|wmv)$") {
+        insert;
+    }
+
+    /* lookup plone/archetypes images */
+    if (obj.http.content-type ~ "image.*" ) {
+        insert;
+    }
+
+    /* Support htc */
+    if (req.url ~ "\.(htc)$") {
+        insert;
+    }
+
+    /* Always cache CSS and javascript */
+    if (req.url ~ "\.(css|js)$") {
+        insert;
+    }
+
+    /*  Always cache static files */
+    if (req.url ~ "\.(pdf|xls|vsd|doc|ppt|pps|vsd|doc|ppt|pps|xls|pdf|sxw|zip|gz|bz2|tgz|tar|rar|odc|odb|odf|odg|odi|odp|ods|odt|sxc|sxd|sxi|sxw|dmg|torrent|deb|msi|iso|rpm)$") {
+        insert;
+    }
+
+    /* Do not cache if request contains an Authorization header, unless response is 'public' */
+    if (req.http.Authorization && !obj.http.Cache-Control ~ "public") {
+        pass;
+    }
+
+    /* do not cache if we are setting a cookie */
+    if (obj.http.Set-Cookie) {
+        pass;
+    }
+
+    /* Do not cache if response contains any 'no cache' tokens */
+    if (obj.http.Cache-Control ~ "(private|no-cache|no-store)") {
+        pass;
+    }
+    insert;
+}
+#end if

@@ -1,6 +1,12 @@
 
 CHANGES
 ===========
+
+0.0.1_alpha26
+---------------
+ - add varnish profile
+ - fix some zc.buildout 1.1 related bugs
+
 0.0.1_alpha26
 ---------------
  - add login info to plone templates
