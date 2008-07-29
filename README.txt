@@ -20,11 +20,12 @@ Projects templates
     - minitage.geodjango: A sample layout for a geo-django application
     - minitage.dependency: A sample layout for a compiled dependency
     - minitage.egg: A sample layout for a egg dependency
-    - minitage.distutils A sample layout for a distutils dependency
 
 Projects profiles
 ==================
 
+    - minitage.varnish: create a varnish instance with or without a sample
+      configuration file toward zope/plone.
     - minitage.postgresql: create a postgresql instance in the sys dir of your
       project
     - minitage.env: create a `share/minitage/minitage.env` file inside the
