@@ -2,7 +2,11 @@
 CHANGES
 ===========
 
-0.0.1_alpha26
+0.0.1_alpha28
+---------------
+ - doc release
+
+0.0.1_alpha27
 ---------------
  - add varnish profile
  - fix some zc.buildout 1.1 related bugs
@@ -12,11 +16,11 @@ CHANGES
  - add login info to plone templates
 
 0.0.1_alpha25
---------------- 
+---------------
  - add env. variables for convenience with zope projects
 
 0.0.1_alpha22
---------------- 
+---------------
  - update recipe versions
  - add buildbot templates
 
