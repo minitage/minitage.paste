@@ -20,7 +20,7 @@ from minitage.paste.common import var
 class Template(common.Template):
 
     summary = 'Template for creating a '\
-            'basic plone31 project inside minitage'
+            'basic plone31 on zeoserver client/server  project inside minitage'
 
 
     def pre(self, command, output_dir, vars):
@@ -29,23 +29,26 @@ class Template(common.Template):
         common.Template.pre(self, command, output_dir, vars)
 
 Template.vars = common.Template.vars \
-        + [var('address', 
-               'Address to listen on', 
-               default = 'localhost',), 
-           var('port', 
-               'Port to listen to', 
-               default = '8080',),  
-           var('loglevel', 
-               'log level (DEBUG|INFO|WARNING|ERROR)', 
-               default = 'INFO',),   
-           var('debug', 
-               'Debug mode (on|off)', 
-               default = 'on',),    
-           var('login', 
-               'Administrator login', 
-               default = 'admin',),     
-           var('password', 
-               'Password', 
-               default = 'admin',),     
+        + [var('address',
+               'Address to listen on',
+               default = 'localhost',),
+           var('port',
+               'Port to listen to',
+               default = '8080',),
+           var('zeoaddress',
+               'Address for the zeoserver',
+               default = 'localhost:8100',),
+           var('loglevel',
+               'log level (DEBUG|INFO|WARNING|ERROR)',
+               default = 'INFO',),
+           var('debug',
+               'Debug mode (on|off)',
+               default = 'on',),
+           var('login',
+               'Administrator login',
+               default = 'admin',),
+           var('password',
+               'Password',
+               default = 'admin',),
           ]
 # vim:set et sts=4 ts=4 tw=80:

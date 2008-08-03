@@ -91,6 +91,7 @@ eggs =
     setuptools
     \${project:eggs}
     \${project:develop-eggs}
+zcml=
 develop =
     \${project:develop}
 eggs-directory = \${project:eggs-directory}
@@ -187,7 +188,7 @@ products =
 extra-paths=
     \${buildout:extra-paths}
 zcml = 
-    \${project:develop}
+    \${project:zcml}
 
 [plone]
 recipe = plone.recipe.plone

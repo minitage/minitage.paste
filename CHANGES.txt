@@ -1,6 +1,10 @@
 
 CHANGES
-===========
+
+0.0.1_alpha29
+---------------
+ - add zeo profile
+ - fix some typos in plone buildouts
 
 0.0.1_alpha28
 ---------------
