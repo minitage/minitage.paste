@@ -62,7 +62,7 @@ Template.vars = common.Template.vars + \
             templates.var('host_address', 'Host and port to listen on', default = 'localhost:9002'),
             templates.var('telnet_address', 'Telnet interface to listen on', default = 'localhost:9004'),
             templates.var('user', 'Default user', default = running_user),
-            templates.var('vhost_vhm', 'Virtualhost name if any', default = ''),
+            templates.var('vhost_vhm', 'Virtualhost name if any', default = 'www.host.tld:80'),
             templates.var('zope_path', 'Site  Path in zope', default = '/plone'),
             templates.var('worker_t', """[int][,int[,int]]
 # Number of worker threads

@@ -15,6 +15,15 @@ acl purge {
 }
 
 sub vcl_recv {
+
+    /* Purge stuff */
+    if (req.request == "PURGE") {
+        if (! client.ip ~ purge) {
+            error 405 "Not allowed";
+        }
+        lookup;
+    } 
+
     /*
      * vh-monster stuff
      * Normalize host headers, and do rewriting for the zope sites.
@@ -23,18 +32,11 @@ sub vcl_recv {
         error 404 "Unknown host";
     }
     #set $host, $port = $host_address.split(':')
-    elsif (req.url ~ "^/VirtualHostBase/http/${vhost_vhm}:80${zope_path}/VirtualHostRoot") {
+    elsif (req.url ~ "^/VirtualHostBase/http/${vhost_vhm}${zope_path}/VirtualHostRoot") {
         set req.backend = backend_0;
     }
     else {
         error 404 "Unknown virtual host";
-    }
-
-    if (req.request == "PURGE") {
-        if (! client.ip ~ purge) {
-            error 405 "Not allowed";
-        }
-        lookup;
     }
 
     if (req.request != "GET" && req.request != "HEAD") {
@@ -67,7 +69,6 @@ sub vcl_recv {
     /* Always cache CSS and javascript */
     if (req.url ~ "\.(css|js)$") {
         remove req.http.Cookie;
-     set    req.http.Foo = "bar";
         lookup;
     }
 
@@ -100,6 +101,8 @@ sub vcl_recv {
         pipe;
     }
 
+    /* do not cache default content for authenticated users */
+
     if (req.http.Authenticate || req.http.Authorization) {
         pass;
     }
@@ -125,13 +128,6 @@ sub vcl_hit {
 }
 
 sub vcl_miss {
-    /* Varnish doesn't do IMS to backend, so if not in cache just pass it through */
-    /*
-    if (req.http.If-Modified-Since) {
-        pass;
-    }
-    */
-
     if (req.request == "PURGE") {
         error 404 "Not in cache";
     }
@@ -149,7 +145,6 @@ sub vcl_hash {
      */
     set req.hash += req.url;
     set req.hash += req.http.host;
-
 
     /*
      * You can also append cookie
@@ -193,10 +188,6 @@ sub vcl_fetch {
     }
 
     if (obj.http.content-type ~ "image*" ) {
-        insert;
-    }
-
-    if (obj.http.content-type ~ "text/plain|text/xml" ) {
         insert;
     }
 
