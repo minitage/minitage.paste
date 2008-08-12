@@ -15,14 +15,13 @@ acl purge {
 }
 
 sub vcl_recv {
-
     /* Purge stuff */
     if (req.request == "PURGE") {
         if (! client.ip ~ purge) {
             error 405 "Not allowed";
         }
         lookup;
-    } 
+    }
 
     /*
      * vh-monster stuff
@@ -33,6 +32,15 @@ sub vcl_recv {
     }
     #set $host, $port = $host_address.split(':')
     elsif (req.url ~ "^/VirtualHostBase/http/${vhost_vhm}${zope_path}/VirtualHostRoot") {
+        /* uncomment this code to unify vhosts if you need to do */
+        // /* first: unify the host header */
+        // if (req.http.host ~ "^.*example.com") {
+        //     set req.http.host = "example.com";
+        // }
+
+        // /* zope specific: unify vhost_vhm url */
+        // set req.url = regsub(req.url, "^/VirtualHostBase/http/${vhost_vhm}", "/VirtualHostBase/http/example.com:80");
+
         set req.backend = backend_0;
     }
     else {
@@ -79,7 +87,6 @@ sub vcl_recv {
     }
 
     /* handle http compression. */
-    /*
     if (req.http.Accept-Encoding) {
         // Handle compression correctly. Varnish treats headers literally, not
         // semantically. So it is very well possible that there are cache misses
@@ -95,7 +102,7 @@ sub vcl_recv {
             // unknown algorithm. Probably junk, remove it
             remove req.http.Accept-Encoding;
         }
-    }*/
+    }
 
     if (req.http.Expect) {
         pipe;
@@ -135,32 +142,19 @@ sub vcl_miss {
 }
 
 sub vcl_hash {
-    /*
-     * The hash subroutine is important
-     * It defines the "name" pattern of
-     * cache objects
-     * We will use url+host by default.
-     * In this way, different machines may
-     * share the same cache object.
-     */
     set req.hash += req.url;
-    set req.hash += req.http.host;
+    if (req.http.host) {
+        set req.hash += req.http.host;
+    } else {
 
-    /*
-     * You can also append cookie
-     * to the hash. In this way,
-     * varnish will fetch/insert a cache object for each
-     * machine.
-     */
-    if (!(req.url ~ "\.(css|js|png|gif|jpg|jpeg|tiff|doc|odt|pdf|htc)$")) {
-        if (req.http.Cookie && req.http.Cookie ~ "_ZopeId" ) {
-            set req.hash += req.http.Cookie;
-        }
+        set req.hash += server.ip;
     }
     hash;
 }
 
 sub vcl_fetch {
+
+
     /*  Do not store errors in cache, as maybe they will be corrected soon :-) */
     if (obj.status == 404 || obj.status == 500) {
         pass;
@@ -232,4 +226,5 @@ sub vcl_fetch {
     }
     insert;
 }
+\# vim: set ft=c:
 #end if

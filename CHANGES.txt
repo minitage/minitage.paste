@@ -1,11 +1,25 @@
 ==============
 CHANGES
 ==============
-
-0.0.1_alpha29
+0.0.1_alpha34
 --------------- 
- - Improve varnish template
+ - fix init script
 
+0.0.1_alpha33
+--------------- 
+ - rename varnish binaries
+
+0.0.1_alpha32
+---------------
+    - Improve varnish default vcl
+
+0.0.1_alpha31
+---------------
+ - Improve varnish default vcl
+
+0.0.1_alpha30
+---------------
+ - Improve varnish template
 
 0.0.1_alpha29
 ---------------

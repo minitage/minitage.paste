@@ -29,9 +29,9 @@ start() {
         rm -f "\$PID_FILE"
     fi
     if [[ `whoami` == root ]];then
-        su \$effectiveuser -c "${sys}/bin/${project}_varnish-instance"
+        su \$effectiveuser -c "${sys}/bin/varnish-instance"
     else
-        ${sys}/bin/${project}_varnish-instance
+        ${sys}/bin/varnish-instance
     fi
     eend \$?
 }
