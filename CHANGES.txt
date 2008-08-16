@@ -1,6 +1,14 @@
 ==============
 CHANGES
 ==============
+0.0.1_alpha36
+---------------
+    - Improve varnish default vcl 
+
+0.0.1_alpha35
+---------------
+    - Improve varnish default vcl
+
 0.0.1_alpha34
 --------------- 
  - fix init script

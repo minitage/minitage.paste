@@ -20,7 +20,8 @@ sub vcl_recv {
         if (! client.ip ~ purge) {
             error 405 "Not allowed";
         }
-        lookup;
+        purge_url(req.url);
+        error 200 "Maybe purged.";
     }
 
     /*
@@ -58,12 +59,6 @@ sub vcl_recv {
 
     /* Always cache images and multimedia */
     if (req.url ~ "\.(jpg|jpeg|gif|png|tiff|tif|svg|swf|ico|mp3|mp4|m4a|ogg|mov|avi|wmv)$") {
-        remove req.http.Cookie;
-        lookup;
-    }
-
-    /* lookup plone/archetypes images */
-    if (req.http.content-type ~ "image.*" ) {
         remove req.http.Cookie;
         lookup;
     }
@@ -122,25 +117,6 @@ sub vcl_recv {
     lookup;
 }
 
-/* Deal with purge requests */
-sub vcl_hit {
-    if (req.request == "PURGE") {
-        set obj.ttl = 0s;
-        error 200 "Purged";
-    }
-    if (!obj.cacheable) {
-        pass;
-    }
-    deliver;
-}
-
-sub vcl_miss {
-    if (req.request == "PURGE") {
-        error 404 "Not in cache";
-    }
-    fetch;
-}
-
 sub vcl_hash {
     set req.hash += req.url;
     if (req.http.host) {
@@ -153,15 +129,18 @@ sub vcl_hash {
 }
 
 sub vcl_fetch {
-
-
     /*  Do not store errors in cache, as maybe they will be corrected soon :-) */
-    if (obj.status == 404 || obj.status == 500) {
+    if (obj.status == 404) {
         pass;
     }
 
-    /* dont cache unauthenticated errors stuff */
-    if (obj.status == 503) {
+    /* dont cache  500 Internal Server Error; 501 Not Implemented; 502 Bad Gateway; 503 Service Unavailable; 504 Gateway Timeout */
+    if (obj.status == 500 || obj.status ==  501 || obj.status == 502 || obj.status == 503 || obj.status == 504){
+        pass;
+    }
+
+    /* dont cache auth errors */
+    if (obj.status == 403) {
         pass;
     }
 
