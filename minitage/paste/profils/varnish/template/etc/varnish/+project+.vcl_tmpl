@@ -14,6 +14,7 @@ acl purge {
 #end for
 }
 
+/* incoming requests before asking the backend (zope) */
 sub vcl_recv {
     /* Purge stuff */
     if (req.request == "PURGE") {
@@ -117,6 +118,12 @@ sub vcl_recv {
     lookup;
 }
 
+/* add tags for easily management of cache
+ * For instance, you can invalidate cache only for one ip with
+ * url.purge .*#192.168.0.1 (telnet only)
+ *
+ * Cache markers are not cache keys but only tags!
+ */
 sub vcl_hash {
     set req.hash += req.url;
     if (req.http.host) {
@@ -128,6 +135,9 @@ sub vcl_hash {
     hash;
 }
 
+/*
+ * Hit when we just had hit the backend (zope)
+ */
 sub vcl_fetch {
     /*  Do not store errors in cache, as maybe they will be corrected soon :-) */
     if (obj.status == 404) {
@@ -135,7 +145,7 @@ sub vcl_fetch {
     }
 
     /* dont cache  500 Internal Server Error; 501 Not Implemented; 502 Bad Gateway; 503 Service Unavailable; 504 Gateway Timeout */
-    if (obj.status == 500 || obj.status ==  501 || obj.status == 502 || obj.status == 503 || obj.status == 504){
+    if (obj.status == 500 || obj.status == 501 || obj.status == 502 || obj.status == 503 || obj.status == 504){
         pass;
     }
 
@@ -147,45 +157,28 @@ sub vcl_fetch {
     if (!obj.valid) {
         error;
     }
-    if (!obj.cacheable) {
-        pass;
-    }
+
+    // if (!obj.cacheable) {
+    //     pass;
+    // }
 
     /* force minimum ttl of $min_ttl seconds */
-    if (obj.ttl < ${min_ttl}s) {
+    if ( obj.ttl < 1s) {
         set obj.ttl = ${min_ttl}s;
     }
 
-    if (req.url ~ "\.(/search)$") {
-        insert;
-    }
-
-    if (obj.http.content-type ~ "image*" ) {
-        insert;
-    }
-
-    /* Always cache images and multimedia */
-    if (req.url ~ "\.(jpg|jpeg|gif|png|tiff|tif|svg|swf|ico|mp3|mp4|m4a|ogg|mov|avi|wmv)$") {
-        insert;
-    }
-
-    /* lookup plone/archetypes images */
-    if (obj.http.content-type ~ "image.*" ) {
-        insert;
-    }
-
-    /* Support htc */
-    if (req.url ~ "\.(htc)$") {
-        insert;
-    }
-
-    /* Always cache CSS and javascript */
-    if (req.url ~ "\.(css|js)$") {
-        insert;
-    }
-
-    /*  Always cache static files */
-    if (req.url ~ "\.(pdf|xls|vsd|doc|ppt|pps|vsd|doc|ppt|pps|xls|pdf|sxw|zip|gz|bz2|tgz|tar|rar|odc|odb|odf|odg|odi|odp|ods|odt|sxc|sxd|sxi|sxw|dmg|torrent|deb|msi|iso|rpm)$") {
+    /*
+    * Always cache images and multimedia
+    * lookup plone/archetypes images
+    * Support htc
+    * Always cache CSS and javascript
+    * Always cache static files
+    */
+    if (obj.http.Content-Type ~ "image.*" || obj.http.content-type ~ "image.*" || req.url ~ "\.(jpg|jpeg|gif|png|tiff|tif|svg|swf|ico|mp3|mp4|m4a|ogg|mov|avi|wmv)$" || req.url ~ "\.(htc)$" || req.url ~ "\.(css|js)$" || req.url ~ "\.(pdf|xls|vsd|doc|ppt|pps|vsd|doc|ppt|pps|xls|pdf|sxw|zip|gz|bz2|tgz|tar|rar|odc|odb|odf|odg|odi|odp|ods|odt|sxc|sxd|sxi|sxw|dmg|torrent|deb|msi|iso|rpm)$") {
+        /* remove any cookie */
+        if (obj.http.Set-Cookie) {
+            remove obj.http.Set-Cookie;
+        }
         insert;
     }
 
@@ -194,16 +187,26 @@ sub vcl_fetch {
         pass;
     }
 
-    /* do not cache if we are setting a cookie */
-    if (obj.http.Set-Cookie) {
-        pass;
-    }
-
     /* Do not cache if response contains any 'no cache' tokens */
     if (obj.http.Cache-Control ~ "(private|no-cache|no-store)") {
         pass;
     }
+
+    /* do not store if we are authenticated */
+    if (req.http.Cookie && (req.http.Cookie ~ "__ac(_(name|password|persistent))?=")) {
+        pass;
+    } else {
+        /* do not cache if we are setting cookies needed for authentification */
+        if (obj.http.Set-Cookie && (obj.http.Set-Cookie ~ "__ac(_(name|password|persistent))?=")) {
+            pass;
+        }
+    }
+
+    /* by default, only insert request without any cookie */
+    if (obj.http.Set-Cookie) {
+        remove obj.http.Set-Cookie;
+    }
     insert;
 }
-\# vim: set ft=c:
+// vim:set ft=c sts=4 ts=4 et ai  :
 #end if

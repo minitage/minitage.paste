@@ -1,6 +1,10 @@
-==============
+
 CHANGES
 ==============
+0.0.1_alpha38
+---------------
+ - default vcl is improved thanks to guerir's makina-corpus project. Some
+   change from there are merged now inside this vcl.
 
 0.0.1_alpha37
 ---------------
@@ -8,18 +12,18 @@ CHANGES
 
 0.0.1_alpha36
 ---------------
-    - Improve varnish default vcl 
+    - Improve varnish default vcl
 
 0.0.1_alpha35
 ---------------
     - Improve varnish default vcl
 
 0.0.1_alpha34
---------------- 
+---------------
  - fix init script
 
 0.0.1_alpha33
---------------- 
+---------------
  - rename varnish binaries
 
 0.0.1_alpha32
