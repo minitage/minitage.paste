@@ -1,6 +1,11 @@
 ==============
 CHANGES
 ==============
+
+0.0.1_alpha37
+---------------
+    - Zope 3 maintenance
+
 0.0.1_alpha36
 ---------------
     - Improve varnish default vcl 
