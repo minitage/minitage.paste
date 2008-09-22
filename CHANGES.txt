@@ -1,6 +1,10 @@
 
 CHANGES
 ==============
+0.0.1_alpha39
+---------------
+ - Added Turbogears template
+
 0.0.1_alpha38
 ---------------
  - default vcl is improved thanks to guerir's makina-corpus project. Some
