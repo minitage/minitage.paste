@@ -1,6 +1,10 @@
 
 CHANGES
 ==============
+0.0.1_alpha40
+---------------
+ - Plone templates maintenance
+
 0.0.1_alpha39
 ---------------
  - Added Turbogears template

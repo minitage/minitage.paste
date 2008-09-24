@@ -34,8 +34,9 @@ version-suffix-packages = SmartColorWidget-1.0.2.tar.gz
 # python stuff
 eggs-directory=../../eggs/cache
 develop-eggs-directory=../../eggs/develop-cache
-eggs = 
+eggs =
     PILwoTK
+zcml=
 develop =
 #    foO
 develop-eggs =
@@ -71,7 +72,7 @@ setuptools=0.6c8
 elementtree = 1.2.7-20070827-preview
 lxml = 2.0.5
 PILwoTK  = 1.1.6.4
-python-openid=2.0.1
+python-openid>=2.0.1
 
 [buildout]
 python = python2.4
@@ -91,7 +92,6 @@ eggs =
     setuptools
     \${project:eggs}
     \${project:develop-eggs}
-zcml=
 develop =
     \${project:develop}
 eggs-directory = \${project:eggs-directory}
@@ -104,14 +104,15 @@ minitage-eggs = py-libxml2-2.6 py-libxslt-1.1
 executable=\${python2.4:executable}
 eggs =
     \${project:eggs}
+    lxml
+    elementtree
+    FeedParser
     archetypes.kss
     borg.localrole
-    elementtree
     five.customerize
     five.localsitemanager
     kss.core
     kss.demo
-    lxml
     plone.app.content
     plone.app.contentmenu
     plone.app.contentrules
@@ -187,17 +188,17 @@ products =
     \${project:products}
 extra-paths=
     \${buildout:extra-paths}
-zcml = 
+zcml =
     \${project:zcml}
 
 [plone]
-recipe = plone.recipe.plone
+recipe = plone.recipe.plone >=3.1.1, < 3.2dev
 extra-paths=
     \${buildout:extra-paths}
 
 [zopepy]
 recipe = minitage.recipe:scripts
-executable=\${project:dependencies}/python-2.4/parts/part/bin/python
+executable=\${python2.4:executable}
 eggs = \${instance:eggs}
 interpreter = zopepy
 extra-paths = \${zope2:location}/lib/python
