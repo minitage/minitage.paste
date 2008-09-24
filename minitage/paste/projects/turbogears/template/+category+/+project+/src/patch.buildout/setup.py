@@ -23,6 +23,7 @@ setup(
     entry_points = {
         'console_scripts': [
             'tgpostinstall = minitagetgpostinstall:main',
+            'tgbuildout = minitagetgpostinstall:tgbuildout',
         ],
     }
 

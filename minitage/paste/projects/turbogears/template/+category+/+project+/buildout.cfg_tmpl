@@ -103,6 +103,7 @@ scripts =
     cheetah
     cheetah-compile
     tgpostinstall
+    tgbuildout
     kid
     kidc
     tg-admin
@@ -116,6 +117,7 @@ executable=\${python2.5:executable}
 interpreter = tgpython
 eggs=
     \${minitageeggs:eggs}
+    foo
     \${project:develop-eggs}
 extra-paths=
     \${project:extra-paths}

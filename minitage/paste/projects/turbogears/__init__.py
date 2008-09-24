@@ -75,12 +75,12 @@ Template.vars = common.Template.vars \
                default = '%s@%s' % (running_user, 'localhost')),
            var('sqlachemy',
                'use SQLAlchemy instead of SQLObject y/n',
-               default = 'n'),
+               default = 'y'),
             var('sqlobject',
                'use SQLObject instead of SQLAlchemy y/n',
                default = 'n'),
            var('elixir',
                'use SQLAlchemy Elixir instead of SQLObject y/n',
-               default = 'y'),
+               default = 'n'),
           ]
 # vim:set et sts=4 ts=4 tw=80:
