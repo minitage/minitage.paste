@@ -1,7 +1,7 @@
 
 CHANGES
 ==============
-0.0.1_alpha41
+0.0.1_alpha42
 ---------------
  - add Pylons template
  - Renaming profils templates
