@@ -43,7 +43,7 @@ class Template(common.Template):
                 os.chmod(p, stat.S_IRGRP|stat.S_IXGRP|stat.S_IRWXU)
 
 
-Template.required_templates = ['minitage.env']
+Template.required_templates = ['minitage.profils.env']
 running_user = getpass.getuser()
 gid = pwd.getpwnam(running_user)[3]
 group = grp.getgrgid(gid)[0]

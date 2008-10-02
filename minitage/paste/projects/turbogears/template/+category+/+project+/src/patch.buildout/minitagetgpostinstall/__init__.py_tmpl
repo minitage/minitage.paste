@@ -53,7 +53,7 @@ def main():
         fic = re.sub(
             '.*server.socket_port.*',
             """server.socket_port = $port
-server.socket_host=\"$address\"""", 
+server.socket_host=\"$address\"""",
             fic
         )
         if '$autoreload' == 'on':
@@ -101,7 +101,7 @@ zc.buildout.easy_install.runsetup_template = \"\"\"%s\"\"\"
     open(buildoutwrapper, 'w').write(fic)
     if not patchonly:
         cmd = '%s %s %s' % (
-            sys.executable, 
+            sys.executable,
             buildoutwrapper, ' '.join(sys.argv[1:])
         )
         print "Wrapping: %s" % ' '.join(sys.argv)

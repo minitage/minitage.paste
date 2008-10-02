@@ -1,6 +1,11 @@
 
 CHANGES
 ==============
+0.0.1_alpha41
+---------------
+ - add Pylons template
+ - Renaming profils templates
+
 0.0.1_alpha40
 ---------------
  - Plone templates maintenance

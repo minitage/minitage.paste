@@ -1,0 +1,105 @@
+# Pylons basic project
+[project]
+directory=\${buildout:directory}/../../
+scripts-directory=\${buildout:directory}/bin
+dependencies=\${buildout:directory}/../../dependencies
+du-directory=\${buildout:directory}/../../eggs
+eggs-directory=../../eggs/cache
+develop-eggs-directory=../../eggs/develop-cache
+# what to do
+parts =
+    minitageeggs
+    scripts
+    postinstall
+# python stuff
+eggs =
+urls=
+develop =
+    src/${project}
+develop-eggs =
+   ${project}
+extra-paths =
+
+[python2.5]
+executable=\${project:dependencies}/python-2.5/parts/part/bin/python
+name=python2.5
+
+[versions]
+# bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
+zc.recipe.zope3instance = 1.0.0a1
+setuptools = 0.6c8
+zc.recipe.egg = 1.0.0
+pysqlite=2.4.1
+TurboGears=1.0.5
+Cheetah=2.0.1
+CherryPy=2.3.0
+configobj=4.5.3
+DecoratorTools=1.7
+Extremes=1.1
+Elixir>=0.4.0
+FormEncode=1.0.1
+kid=0.9.6
+Paste=1.7.1
+PasteDeploy=1.3.2
+PasteScript=1.6.3
+PyDispatcher=2.0.1
+PyProtocols=1.0a0dev_r2302
+pysqlite=2.4.1
+RuleDispatch=0.5a1.dev_r2506
+simplejson=1.9.2
+TurboCheetah=1.0
+TurboGears=1.0.5
+TurboJson=1.1.3
+TurboKid=1.0.4
+
+[buildout]
+python = python2.5
+versions = versions
+executable = python2.5
+parts = \${project:parts}
+extra-paths=
+    \${project:extra-paths}
+find-links =
+    http://effbot.org/downloads
+eggs =
+    setuptools
+    \${project:eggs}
+    \${project:develop-eggs}
+develop = \${project:develop}
+eggs-directory = \${project:eggs-directory}
+develop-eggs-directory = \${project:develop-eggs-directory}
+
+[minitageeggs]
+executable=\${python2.5:executable}
+recipe=minitage.recipe:egg
+url=\${project:urls}
+ez-dependencies=true
+eggs=
+    Pylons==0.9.6.2
+    \${project:eggs}
+
+[scripts]
+recipe = minitage.recipe:scripts
+executable=\${python2.5:executable}
+eggs=
+    setuptools
+    zc.buildout
+    minitagetgpostinstall
+    \${minitageeggs:eggs}
+    \${project:develop-eggs}
+interpreter = tgpython
+scripts =
+    buildout
+    easy_install
+    paster
+extra-paths=
+    \${project:extra-paths}
+
+[postinstall]
+recipe=iw.recipe.cmd
+on_install=true
+cmds=
+    cd \${buildout:directory}/src
+    ../bin/paster create -t pylons ${project}
+
+\# vim:set ft=dosini \#
