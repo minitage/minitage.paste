@@ -41,7 +41,7 @@ class Template(common.Template):
 
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
-        vars['category'] = 'misc'
+        vars['category'] = 'pylons'
         common.Template.pre(self, command, output_dir, vars)
 
 Template.vars = common.Template.vars \
