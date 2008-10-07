@@ -1,6 +1,12 @@
 
 CHANGES
 ==============
+0.0.1_alpha44
+---------------
+    - multiple fix for setuptools
+0.0.1_alpha43
+---------------
+    - zope and pylons fixes
 0.0.1_alpha42
 ---------------
  - add Pylons template
