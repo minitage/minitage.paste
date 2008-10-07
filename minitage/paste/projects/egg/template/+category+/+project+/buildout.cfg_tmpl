@@ -11,7 +11,7 @@ develop-eggs-directory=../../eggs/develop-eggs
 [versions]
 minitage.core >= 0.0.4
 minitage.recipe >= 0.0.1
-setuptools = 0.6c8
+setuptools = 0.6c9
 # egg1 = 9
 # egg2 = 10
 

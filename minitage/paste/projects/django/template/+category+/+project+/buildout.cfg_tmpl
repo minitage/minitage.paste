@@ -31,7 +31,7 @@ name=python2.5
 [versions]
 # bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
 zc.recipe.zope3instance = 1.0.0a1
-setuptools = 0.6c8
+setuptools = 0.6c9
 zc.recipe.egg = 1.0.0
 psycopg2=2.0.6
 GDAL=1.5.1

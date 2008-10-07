@@ -27,7 +27,7 @@ name=python2.5
 [versions]
 # bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
 zc.recipe.zope3instance = 1.0.0a1
-setuptools = 0.6c8
+setuptools = 0.6c9
 zc.recipe.egg = 1.0.0
 pysqlite=2.4.1
 TurboGears=1.0.5
@@ -84,10 +84,9 @@ executable=\${python2.5:executable}
 eggs=
     setuptools
     zc.buildout
-    minitagetgpostinstall
     \${minitageeggs:eggs}
     \${project:develop-eggs}
-interpreter = tgpython
+interpreter = pylonspy
 scripts =
     buildout
     easy_install
