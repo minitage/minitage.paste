@@ -52,11 +52,3 @@ Here must come as dependencies::
     Cheetah
 
 
-Warning
-========
-
-The sources are roughly fresh, and not yet unit tested. This will come but
-at the time, it is not. Feel free to poke for bugs. But, be aware it's
-pretty young stuff.
-
-
