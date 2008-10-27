@@ -1,6 +1,10 @@
 
 CHANGES
 ==============
+0.0.1_alpha45
+---------------
+    - remove omelette by default for plone3 templates
+
 0.0.1_alpha44
 ---------------
     - multiple fix for setuptools

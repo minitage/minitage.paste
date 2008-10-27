@@ -16,7 +16,6 @@ parts =
     instance
     productdistros
     zopepy
-    omelette
     zeoserver
 
 # plone configuration
