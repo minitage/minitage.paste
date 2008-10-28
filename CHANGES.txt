@@ -1,6 +1,11 @@
 
 CHANGES
 ==============
+0.0.1_alpha46
+---------------
+    - add zope2 project template
+    - remove unused product from plone31zeo
+
 0.0.1_alpha45
 ---------------
     - remove omelette by default for plone3 templates
