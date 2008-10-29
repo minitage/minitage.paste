@@ -2,6 +2,11 @@
 CHANGES
 ==============
 0.0.1_alpha46
+--------------- 
+     - add a INS env. variable pointing to the current project to minitage.env
+      profil. 
+
+0.0.1_alpha46
 ---------------
     - add zope2 project template
     - remove unused product from plone31zeo
@@ -37,7 +42,7 @@ CHANGES
    change from there are merged now inside this vcl.
 
 0.0.1_alpha37
----------------
+-------------
     - Zope 3 maintenance
 
 0.0.1_alpha36
