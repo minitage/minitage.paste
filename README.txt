@@ -20,7 +20,7 @@ Projects templates
     - minitage.django: A sample layout for a django application
     - minitage.geodjango: A sample layout for a geo-django application
     - minitage.dependency: A sample layout for a compiled dependency
-    - minitage.egg: A sample layout for a egg dependency
+    - minitage.egg: A sample layout for an egg dependency
     - minitage.pylons : A simple layout for a pylons project
 
 Projects profiles
