@@ -1,6 +1,12 @@
 
 CHANGES
 ==============
+
+
+0.1
+------------
+    - add plone32svn
+
 0.0.1_alpha46
 --------------- 
      - add a INS env. variable pointing to the current project to minitage.env
