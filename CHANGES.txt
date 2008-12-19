@@ -2,6 +2,9 @@
 CHANGES
 ==============
 
+0.2
+------------
+    - Improvments to the pgsql template due to pgsql 8.3 release changes.
 
 0.1
 ------------

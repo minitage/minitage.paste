@@ -44,7 +44,7 @@ ident_file = #echo "'%s/etc/postgresql/%s.pg_ident.conf' # ident configuration f
 					# (change requires restart)
 
 # If external_pid_file is not explicitly set, no extra PID file is written.
-external_pid_file = #echo "'%s/var/run/postgresql/%s.pid' # write an extra PID file " % ($sys, $db_name)	   
+external_pid_file = #echo "'%s/var/run/postgresql/%s/%s.pid' # write an extra PID file " % ($sys, $db_name, $db_name)	   
 					# (change requires restart)
 
 #------------------------------------------------------------------------------
@@ -221,8 +221,8 @@ max_fsm_pages = 153600		# min max_fsm_relations*16, 6 bytes each
 #---------------------------------------------------------------------------
 # ERROR REPORTING AND LOGGING
 #--------------------------------------------------------------------------- 
-#+#logging_collector = true      # Enable capturing of stderr and csvlog
-redirect_stderr = true
+#echo '%s = true' % $log_collector
+                    # Enable capturing of stderr and csvlog 
 					# into log files. Required to be on for
 					# csvlogs.
 					# (change requires restart)

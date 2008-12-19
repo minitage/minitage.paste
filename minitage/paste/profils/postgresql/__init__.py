@@ -19,10 +19,14 @@ import stat
 import getpass
 import pwd
 import grp
+import re
+import subprocess
 
 from minitage.paste.profils import common
 from minitage.core.common import remove_path
 from paste.script import templates
+
+re_flags = re.M|re.U|re.I|re.S
 
 class Template(common.Template):
 
@@ -54,6 +58,15 @@ class Template(common.Template):
             os.environ['PGPORT'] = vars['db_port']
             # default charsets C avoiding regional problems :)
             os.environ['LANG'] = os.environ['LC_ALL'] = 'C'
+
+            fic = open('%s/share/minitage/minitage.env' %(vars['sys'])).read()
+            pgre = re.compile('.*postgresql-([^\s]*)\s.*', re_flags)
+            m = pgre.match(fic)
+            if m:
+                vars['pg_version'] = m.groups()[0]
+            vars['log_collector'] = 'logging_collector'
+            if vars['pg_version'] == '8.2':
+                vars['log_collector'] = 'redirect_stderr'
 
             # We are searching in the destination if we
             # already have a postgresql installation.
@@ -114,6 +127,8 @@ Template.vars = common.Template.vars + \
                 templates.var('db_group', 'Default group', default = group),
                 templates.var('db_host', 'Host to listen on', default = 'localhost'),
                 templates.var('db_port', 'Port to listen to', default = '5432'),
-            ]
+                ]
+
+
 
 # vim:set et sts=4 ts=4 tw=80:
