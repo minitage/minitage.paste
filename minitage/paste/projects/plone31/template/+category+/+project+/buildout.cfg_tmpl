@@ -1,6 +1,5 @@
 ###############################################################################
-# $project BUILDOUT
-# This buildout install zope and plone25
+# This buildout install zope and plone31
 ################################################################################
 [project]
 # minitage variables
@@ -22,11 +21,6 @@ dev-urls =
     http://plone.org/products/clouseau/releases/0.8.1/clouseau-0-8-1.zip
     http://www.zope.org/Members/shh/DocFinderTab/1.0.2/DocFinderTab-1.0.2.tar.gz
 urls =
-    http://\${mirrors:plone}/products/attachmentfield/releases/1.4.3/attachmentfield-1-4-3.tgz
-    http://\${mirrors:plone}/products/ploneformgen/releases/1.2.1/ploneformgen-1-2-1.tgz
-    http://\${mirrors:plone}/products/scriptablefields/releases/1.1/scriptablefields-1-1.tgz
-    http://\${mirrors:plone}/products/fckeditor/releases/2.4.7/fckeditor-plone_2-4-7.tgz
-    http://plone.org/products/smartcolorwidget/releases/1.0.2/smartcolorwidget-1-0-2.tgz
 nested-packages =
 version-suffix-packages = SmartColorWidget-1.0.2.tar.gz
 

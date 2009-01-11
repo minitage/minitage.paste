@@ -11,6 +11,7 @@ du-directory=\${buildout:directory}/../../eggs/
 django-version=$djangorevision
 # what to do
 parts =
+    minitagecm
     minitagedjango
     minitageeggs
     scripts
@@ -19,7 +20,7 @@ eggs-directory=../../eggs/cache
 develop-eggs-directory=../../eggs/develop-cache
 eggs =
     psycopg2
-    cmemcache 
+    cmemcache
 develop =
 develop-eggs =
 extra-paths =
@@ -31,12 +32,9 @@ name=python2.5
 [versions]
 # bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
 zc.recipe.zope3instance = 1.0.0a1
-setuptools = 0.6c9
 zc.recipe.egg = 1.0.0
-psycopg2=2.0.6
+psycopg2=2.0.8
 GDAL=1.5.1
-cmemcache=0.91
-Django=${djangoversion}.dev-r\${project:django-version}
 
 [buildout]
 python = python2.5
@@ -49,6 +47,7 @@ find-links =
     http://\${mirrors:zope}/ppix/
     http://\${mirrors:zope}/distribution/
     http://effbot.org/downloads
+    http://gijsbert.org/downloads/cmemcache/
 eggs =
     setuptools
     \${project:eggs}
@@ -58,6 +57,11 @@ develop =
 eggs-directory = \${project:eggs-directory}
 develop-eggs-directory = \${project:develop-eggs-directory}
 
+[minitagecm]
+executable=\${python2.5:executable}
+recipe=minitage.recipe:egg
+url=http://gijsbert.org/downloads/cmemcache/cmemcache-0.95.tar.bz2
+ 
 [minitagedjango]
 executable=\${python2.5:executable}
 recipe=minitage.recipe:egg
@@ -73,7 +77,7 @@ executable=\${python2.5:executable}
 recipe=minitage.recipe:egg
 eggs=
     \${project:eggs}
-    
+
 [scripts]
 executable=\${python2.5:executable}
 recipe = minitage.recipe:scripts

@@ -1,6 +1,6 @@
 [minibuild]
 # get subversion into the path
-dependencies=python-2.5 subversion-1.4 postgresql-8.2  psycopg2-2.0.6 cmemcache-0.91
+dependencies=python-2.5 subversion-1.4 postgresql-8.2  psycopg2-2.0.6 cmemcache-0.91 libmemcache-1.4
 install_method=buildout
 src_uri=$uri
 src_type=$scm_type

@@ -6,7 +6,7 @@ setupdir = os.path.abspath(
 os.chdir(setupdir)
 
 name='minitage.paste'
-version = '0.3'
+version = '0.4'
 
 def read(rnames):
     return open(
@@ -44,6 +44,7 @@ setup(
                         'Cheetah',
                         'minitage.core'],
     #tests_require = ['zope.testing'],
+    # merged into django 'minitage.geodjango = minitage.paste.projects.geodjango:Template',
     entry_points = {
         'paste.paster_create_template' : [
             'minitage.buildbot-master = minitage.paste.projects.buildbotmaster:Template',
@@ -51,7 +52,6 @@ setup(
             'minitage.dependency = minitage.paste.projects.dependency:Template',
             'minitage.django = minitage.paste.projects.django:Template',
             'minitage.egg = minitage.paste.projects.egg:Template',
-            'minitage.geodjango = minitage.paste.projects.geodjango:Template',
             'minitage.plone25 = minitage.paste.projects.plone25:Template',
             'minitage.plone31 = minitage.paste.projects.plone31:Template',
             'minitage.plone31zeo = minitage.paste.projects.plone31zeo:Template',

@@ -40,13 +40,13 @@ class Template(common.Template):
 Template.vars = common.Template.vars \
         + [var('djangoversion', 
                'Django version', 
-               default = '0.97',), 
+               default = '1.0.2',), 
            var('djangorevision', 
                'Revision to check out', 
-               default = '7569',),  
+               default = '9503',),  
            var('djangourl', 
                'URL to checkout from the django code', 
-               default = 'http://code.djangoproject.com/svn/django/trunk',),   
+               default = 'http://code.djangoproject.com/svn/django/tags/releases/1.0.2',),   
            var('djangoscm', 
                'How to fetch the django code (static|svn|hg)',
                default = 'svn',)

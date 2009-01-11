@@ -1,6 +1,5 @@
 ###############################################################################
-# $project BUILDOUT
-# This buildout install zope and plone25
+# This buildout install zope and plone31
 ################################################################################
 [project]
 # minitage variables
