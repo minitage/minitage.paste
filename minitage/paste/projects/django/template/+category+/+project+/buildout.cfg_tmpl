@@ -17,7 +17,6 @@ parts =
     scripts
 # python stuff
 eggs-directory=../../eggs/cache
-develop-eggs-directory=../../eggs/develop-cache
 eggs =
     psycopg2
     cmemcache
@@ -55,7 +54,6 @@ eggs =
 develop =
     \${project:develop}
 eggs-directory = \${project:eggs-directory}
-develop-eggs-directory = \${project:develop-eggs-directory}
 
 [minitagecm]
 executable=\${python2.5:executable}
@@ -68,9 +66,6 @@ recipe=minitage.recipe:egg
 url=$djangourl
 scm=$djangoscm
 revision = \${project:django-version}
-# let the egg be versionned with the svn revision
-# this will be applied by a patch stored in /patches
-post-checkout-hook=\${buildout:directory}/hooks/egg.py:egg
 
 [minitageeggs]
 executable=\${python2.5:executable}
