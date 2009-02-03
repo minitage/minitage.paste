@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+source ${sys}/share/postgresql/${db_name}.env
+postgres $@
