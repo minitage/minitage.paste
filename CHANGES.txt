@@ -2,9 +2,13 @@
 CHANGES
 ==============
 
+0.6
+--------
+
+    - Adding wrappers for postgresql
 0.5
 --------
-    
+
     - Django maintenance
 
 0.2  - 0.4
