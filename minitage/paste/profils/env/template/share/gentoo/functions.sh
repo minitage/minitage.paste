@@ -2,111 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 
 
-# Check /etc/conf.d/rc for a description of these ...
-#  Notify bootsplash/splashutils/gensplash/whatever about
-#  important events.
-#
-splash() {
-	return 0
-}
-
-# void profiling(...)
-#
-#  Notify bootsplash/whatever about important events.
-#
-profiling() {
-	return 0
-}
-
-# void bootlog(...)
-#
-#  Notify bootlogger about important events.
-bootlog() {
-	return 0
-}
-
-# void get_bootconfig()
-#
-#    Get the BOOTLEVEL and SOFTLEVEL by setting
-#    'bootlevel' and 'softlevel' via kernel
-#    parameters.
-#
-get_bootconfig() {
-	local copt=
-	local newbootlevel=
-	local newsoftlevel=
-
-	if [[ -r /proc/cmdline ]] ; then
-		for copt in $(</proc/cmdline) ; do
-			case "${copt%=*}" in
-				bootlevel)
-					newbootlevel="${copt##*=}"
-					;;
-				softlevel)
-					newsoftlevel="${copt##*=}"
-					;;
-			esac
-		done
-	fi
-
-	if [[ -n ${newbootlevel} ]] ; then
-		export BOOTLEVEL="${newbootlevel}"
-	else
-		export BOOTLEVEL="boot"
-	fi
-
-	if [[ -n ${newsoftlevel} ]] ; then
-		export DEFAULTLEVEL="${newsoftlevel}"
-	else
-		export DEFAULTLEVEL="default"
-	fi
-
-	return 0
-}
-
-setup_defaultlevels() {
-	get_bootconfig
-
-	if get_bootparam "noconfigprofile" ; then
-		export RC_USE_CONFIG_PROFILE="no"
-
-	elif get_bootparam "configprofile" ; then
-		export RC_USE_CONFIG_PROFILE="yes"
-	fi
-
-	if [[ ${RC_USE_CONFIG_PROFILE} == "yes" && -n ${DEFAULTLEVEL} ]] && \
-	   [[ -d "/etc/runlevels/${BOOTLEVEL}.${DEFAULTLEVEL}" || \
-	      -L "/etc/runlevels/${BOOTLEVEL}.${DEFAULTLEVEL}" ]] ; then
-		export BOOTLEVEL="${BOOTLEVEL}.${DEFAULTLEVEL}"
-	fi
-
-	if [[ -z ${SOFTLEVEL} ]] ; then
-		if [[ -f "${svcdir}/softlevel" ]] ; then
-			export SOFTLEVEL=$(< "${svcdir}/softlevel")
-		else
-			export SOFTLEVEL="${BOOTLEVEL}"
-		fi
-	fi
-
-	return 0
-}
-
-# void get_libdir(void)
-#
-#    prints the current libdir {lib,lib32,lib64}
-#
-get_libdir() {
-	if [[ -n ${CONF_LIBDIR_OVERRIDE} ]] ; then
-		CONF_LIBDIR="${CONF_LIBDIR_OVERRIDE}"
-	elif [[ -x /usr/bin/portageq ]] ; then
-		CONF_LIBDIR="$(/usr/bin/portageq envvar CONF_LIBDIR)"
-	fi
-	echo "${CONF_LIBDIR:=lib}"
-}
-
-# void esyslog(char* priority, char* tag, char* message)
-#
-#    use the system logger to log a message
 #
 esyslog() {
 	local pri=
@@ -401,38 +296,7 @@ get_KV() {
 	return $?
 }
 
-# bool get_bootparam(param)
-#
-#   return 0 if gentoo=param was passed to the kernel
-#
-#   EXAMPLE:  if get_bootparam "nodevfs" ; then ....
-#
-get_bootparam() {
-	local x copt params retval=1
 
-	[[ ! -r /proc/cmdline ]] && return 1
-
-	for copt in $(< /proc/cmdline) ; do
-		if [[ ${copt%=*} == "gentoo" ]] ; then
-			params=$(gawk -v PARAMS="${copt##*=}" '
-				BEGIN {
-					split(PARAMS, nodes, ",")
-					for (x in nodes)
-						print nodes[x]
-				}')
-
-			# Parse gentoo option
-			for x in ${params} ; do
-				if [[ ${x} == "$1" ]] ; then
-#					echo "YES"
-					retval=0
-				fi
-			done
-		fi
-	done
-
-	return ${retval}
-}
 
 # Safer way to list the contents of a directory,
 # as it do not have the "empty dir bug".
@@ -693,7 +557,6 @@ if [[ -z ${EBUILD} ]] ; then
 		esac
 	done
 
-	setup_defaultlevels
 
 	# If we are not /sbin/rc then ensure that we cannot change level variables
 	if [[ -n ${BASH_SOURCE} \
