@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+source $sys/share/minitage/minitage.env
+exec $vp/bin/varnishadm "$@"

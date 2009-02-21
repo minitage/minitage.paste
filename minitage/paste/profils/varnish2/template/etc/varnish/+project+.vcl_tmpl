@@ -1,0 +1,210 @@
+#if os.path.isfile($config)
+#echo open($config).read()
+#else
+backend www {
+#set $host, $port = $backend.split(':')
+    .host = "$host";
+    .port = "$port";
+}
+acl purge {
+#for $purge in $purge_ips.split()
+    "$purge";
+#end for
+}
+
+/* incoming requests before asking the backend (zope) */
+sub vcl_recv {
+    /* Purge stuff */
+    if (req.request == "PURGE") {
+        if (! client.ip ~ purge) {
+            error 405 "Not allowed";
+        }
+        purge_url(req.url);
+        error 200 "Maybe purged.";
+    }
+
+    /*
+     * vh-monster stuff
+     * Normalize host headers, and do rewriting for the zope sites.
+     */
+    if (!req.url) {
+        error 404 "Unknown host";
+    }
+    #set $host, $port = $host_address.split(':')
+    elsif (req.url ~ "^/VirtualHostBase/http/${vhost_vhm}${zope_path}/VirtualHostRoot") {
+        /* uncomment this code to unify vhosts if you need to do */
+        // /* first: unify the host header */
+        // if (req.http.host ~ "^.*example.com") {
+        //     set req.http.host = "example.com";
+        // }
+
+        // /* zope specific: unify vhost_vhm url */
+        // set req.url = regsub(req.url, "^/VirtualHostBase/http/${vhost_vhm}", "/VirtualHostBase/http/example.com:80");
+
+        set req.backend = www;
+    }
+    else {
+        error 404 "Unknown virtual host";
+    }
+
+    if (req.request != "GET" && req.request != "HEAD") {
+        pipe;
+    }
+
+    /* cache fu etags */
+    if (req.http.If-None-Match) {
+        pass;
+    }
+
+    /* Always cache images and multimedia */
+    if (req.url ~ "\.(jpg|jpeg|gif|png|tiff|tif|svg|swf|ico|mp3|mp4|m4a|ogg|mov|avi|wmv)$") {
+        remove req.http.Cookie;
+        lookup;
+    }
+
+    /* Support htc */
+    if (req.url ~ "\.(htc)$") {
+        remove req.http.Cookie;
+        lookup;
+    }
+
+    /* Always cache CSS and javascript */
+    if (req.url ~ "\.(css|js)$") {
+        remove req.http.Cookie;
+        lookup;
+    }
+
+    /* Always cache static files */
+    if (req.url ~ "\.(pdf|xls|vsd|doc|ppt|pps|vsd|doc|ppt|pps|xls|pdf|sxw|zip|gz|bz2|tgz|tar|rar|odc|odb|odf|odg|odi|odp|ods|odt|sxc|sxd|sxi|sxw|dmg|torrent|deb|msi|iso|rpm)$") {
+        remove req.http.Cookie;
+        lookup;
+    }
+
+    /* handle http compression. */
+    if (req.http.Accept-Encoding) {
+        // Handle compression correctly. Varnish treats headers literally, not
+        // semantically. So it is very well possible that there are cache misses
+        // because the headers sent by different browsers aren't the same.
+        // For more info: http://varnish.projects.linpro.no/wiki/FAQ/Compression
+        if (req.http.Accept-Encoding ~ "gzip") {
+            // if the browser supports it, we'll use gzip
+            set req.http.Accept-Encoding = "gzip";
+        } elsif (req.http.Accept-Encoding ~ "deflate") {
+            // next, try deflate if it is supported
+            set req.http.Accept-Encoding = "deflate";
+        } else {
+            // unknown algorithm. Probably junk, remove it
+            remove req.http.Accept-Encoding;
+        }
+    }
+
+    if (req.http.Expect) {
+        pipe;
+    }
+
+    /* do not cache default content for authenticated users */
+
+    if (req.http.Authenticate || req.http.Authorization) {
+        pass;
+    }
+
+    if (req.http.Cookie && (req.http.Cookie ~ "__ac(_(name|password|persistent))?=")) {
+        pass;
+    }
+
+    /* by default, looking in the cache. */
+    lookup;
+}
+
+/* add tags for easily management of cache
+ * For instance, you can invalidate cache only for one ip with
+ * url.purge .*#192.168.0.1 (telnet only)
+ *
+ * Cache markers are not cache keys but only tags!
+ */
+sub vcl_hash {
+    set req.hash += req.url;
+    if (req.http.host) {
+        set req.hash += req.http.host;
+    } else {
+
+        set req.hash += server.ip;
+    }
+    hash;
+}
+
+/*
+ * Hit when we just had hit the backend (zope)
+ */
+sub vcl_fetch {
+    /*  Do not store errors in cache, as maybe they will be corrected soon :-) */
+    if (obj.status == 404) {
+        pass;
+    }
+
+    /* dont cache  500 Internal Server Error; 501 Not Implemented; 502 Bad Gateway; 503 Service Unavailable; 504 Gateway Timeout */
+    if (obj.status == 500 || obj.status == 501 || obj.status == 502 || obj.status == 503 || obj.status == 504){
+        pass;
+    }
+
+    /* dont cache auth errors */
+    if (obj.status == 403) {
+        pass;
+    }
+
+    if (!obj.cacheable) {
+        error;
+    }
+
+    // if (!obj.cacheable) {
+    //     pass;
+    // }
+
+    /* force minimum ttl of $min_ttl seconds */
+    if ( obj.ttl < 1s) {
+        set obj.ttl = ${min_ttl}s;
+    }
+
+    /*
+    * Always cache images and multimedia
+    * lookup plone/archetypes images
+    * Support htc
+    * Always cache CSS and javascript
+    * Always cache static files
+    */
+    if (obj.http.Content-Type ~ "image.*" || obj.http.content-type ~ "image.*" || req.url ~ "\.(jpg|jpeg|gif|png|tiff|tif|svg|swf|ico|mp3|mp4|m4a|ogg|mov|avi|wmv)$" || req.url ~ "\.(htc)$" || req.url ~ "\.(css|js)$" || req.url ~ "\.(pdf|xls|vsd|doc|ppt|pps|vsd|doc|ppt|pps|xls|pdf|sxw|zip|gz|bz2|tgz|tar|rar|odc|odb|odf|odg|odi|odp|ods|odt|sxc|sxd|sxi|sxw|dmg|torrent|deb|msi|iso|rpm)$") {
+        /* remove any cookie */
+        if (obj.http.Set-Cookie) {
+            remove obj.http.Set-Cookie;
+        }
+        deliver;
+    }
+
+    /* Do not cache if request contains an Authorization header, unless response is 'public' */
+    if (req.http.Authorization && !obj.http.Cache-Control ~ "public") {
+        pass;
+    }
+
+    /* Do not cache if response contains any 'no cache' tokens */
+    if (obj.http.Cache-Control ~ "(private|no-cache|no-store)") {
+        pass;
+    }
+
+    /* do not store if we are authenticated */
+    if (req.http.Cookie && (req.http.Cookie ~ "__ac(_(name|password|persistent))?=")) {
+        pass;
+    } else {
+        /* do not cache if we are setting cookies needed for authentification */
+        if (obj.http.Set-Cookie && (obj.http.Set-Cookie ~ "__ac(_(name|password|persistent))?=")) {
+            pass;
+        }
+    }
+
+    /* by default, only insert request without any cookie */
+    if (obj.http.Set-Cookie) {
+        remove obj.http.Set-Cookie;
+    }
+    deliver;
+}
+// vim:set ft=c sts=4 ts=4 et ai  :
+#end if

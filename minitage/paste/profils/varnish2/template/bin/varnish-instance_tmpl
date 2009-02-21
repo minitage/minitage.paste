@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+source $sys/share/minitage/minitage.env
+export  LD_LIBRARY_PATH=$vp/lib/
+exec $sys/bin/varnishd \
+    -f "$sys/etc/varnish/${project}.vcl" \
+    -P "$sys/var/run/varnish/${project}.pid" \
+    -a $host_address \
+    -T $telnet_address \
+    -s file,"$sys/var/data/varnish/${project}/storage",$cache_size \
+    -w$worker_t \
+    "$@"

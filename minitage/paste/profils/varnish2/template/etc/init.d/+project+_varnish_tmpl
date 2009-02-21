@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# Copyright (C) 2008, Mathieu PASQUET <kiorky@cryptelium.net>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# inspired by gentoo/openrc init scripts.
+
+#echo 'source %s/share/gentoo/functions.sh\n' % ($sys)
+#echo 'source %s/share/minitage/minitage.env\n' % ($sys)
+#echo "PID_FILE='%s/var/run/varnish/%s.pid'\n" % ($sys, $project)
+
+# add /sbin 's when we run in user mode in the PATH
+export PATH=\$PATH:/sbin:/usr/sbin:/usr/local/sbin
+
+effectiveuser=$user
+
+start() {
+    ebegin  "Starting varnish"
+    if [ -f "\$PID_FILE" ] ; then
+        ewarn "Deleting old pid file"
+        rm -f "\$PID_FILE"
+    fi
+    if [[ `whoami` == root ]];then
+        su \$effectiveuser -c "${sys}/bin/varnish-instance"
+    else
+        ${sys}/bin/varnish-instance
+    fi
+    eend \$?
+}
+
+stop() {
+    ebegin "Stopping varnish"
+    # Note: we have to do --oknodo here, otherwise it will always fail
+    #       when there are open transactions. This bug has been corrected
+    #       in baselayout-1.13.0_alpha8.
+    kill -9 `cat \${PID_FILE}` 
+    eend \$?
+}
+
+reload() {
+    ebegin 'Reloading varnish configuration'
+    kill -HUP `cat \${PID_FILE}` 
+    eend \$?
+}
+
+restart() {
+    ebegin "Restarting varnish"
+    stop
+    einfo  "..."
+    start
+    eend \$?
+}
+
+status() {
+    ebegin "Status of varnish"
+    ebegin "Not implemeneted"
+} 
+
+actions="status restart start stop checkconfig reload"
+for action in \$actions;do 
+    if [[ "\$1" == "\$action" ]];then
+        \$action
+    fi
+done
+
+
