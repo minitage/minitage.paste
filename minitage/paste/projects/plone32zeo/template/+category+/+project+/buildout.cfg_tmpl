@@ -1,0 +1,192 @@
+###############################################################################
+# $project BUILDOUT
+# This buildout install zope and plone32 from svn
+################################################################################
+[project]
+# minitage variables
+directory=\${buildout:directory}/../../
+dependencies=\${buildout:directory}/../../dependencies
+du-directory=\${buildout:directory}/../../eggs/
+
+# what to do
+parts =
+    minitageeggs
+    zope2
+    zopepy
+    productdistros
+    zeoserver
+    instance
+
+# plone configuration
+dev-urls =
+    http://plone.org/products/clouseau/releases/0.8.1/clouseau-0-8-1.zip
+    http://www.zope.org/Members/shh/DocFinderTab/1.0.2/DocFinderTab-1.0.2.tar.gz
+
+# python stuff
+eggs-directory=../../eggs/cache
+eggs =
+    PILwoTK
+    Plone
+zcml=
+develop =
+#    foO
+develop-eggs =
+#    src/foo
+extra-paths =
+    \${libxml2:site-packages}
+    \${libxslt:site-packages}
+
+# zope server configuration
+http-address=$address:$port
+log-level = ${loglevel}
+debug = $debug
+session-timeout-minutes = 90
+# alternate products paths
+products=
+
+# plone extra products
+urls =
+nested-packages =
+version-suffix-packages =
+ 
+# site-packages
+[libxml2]
+site-packages=\${project:du-directory}/py-libxml2-2.6/parts/site-packages-2.4
+[libxslt]
+site-packages=\${project:du-directory}/py-libxslt-1.1/parts/site-packages-2.4
+
+[python2.4]
+executable=\${project:dependencies}/python-2.4/parts/part/bin/python
+name=python2.4
+
+[versions]
+# bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
+setuptools>=0.6c9
+elementtree = 1.2.7-20070827-preview
+lxml = 2.0.5
+PILwoTK  = 1.1.6.4
+
+[buildout]
+extensions = buildout.eggtractor
+extends=etc/versions.cfg
+python = python2.4
+versions = versions
+executable = python2.4
+parts = \${project:parts}
+extra-paths=
+    \${project:extra-paths}
+find-links =
+    http://dist.plone.org/release/3.2
+    http://\${mirrors:zope}/ppix/
+    http://\${mirrors:zope}/distribution/
+    http://effbot.org/downloads
+# i re add setuptols there to ensure the eggs variable will not be null.
+# indeed, the instance recipe does not like at all empty eggs variables!!!
+eggs =
+    setuptools
+    \${project:eggs}
+    \${project:develop-eggs}
+develop =
+    \${project:develop}
+eggs-directory = \${project:eggs-directory}
+tractor-src-directory = \${buildout:directory}/src
+
+[minitageeggs]
+recipe = minitage.recipe:egg
+minitage-dependencies=openssl-0.9 libxml2-2.6 libxslt-1.1 zlib-1.2
+minitage-eggs = py-libxml2-2.6 py-libxslt-1.1
+executable=\${python2.4:executable}
+eggs =
+    \${project:eggs}
+    lxml
+    elementtree
+    python-openid
+    setuptools
+    wicked
+    zope.testing
+
+# url comes from the plone recipe.
+[zope2]
+recipe = plone.recipe.zope2install
+url = http://www.zope.org/Products/Zope/2.10.6/Zope-2.10.6-final.tgz
+fake-zope-eggs = true
+additional-fake-eggs =
+    ZConfig
+    pytz
+skip-fake-eggs =
+    zope.component
+
+[instance]
+recipe = plone.recipe.zope2instance
+http-address = \${project:http-address}
+zope2-location = \${zope2:location}
+user = $login:$password
+session-timeout-minutes = \${project:session-timeout-minutes}
+verbose-security = off
+debug-mode = \${project:debug}
+event-log-level=\${project:log-level}
+z2-log-level=\${project:log-level}
+zeo-client-cache-size = 80MB
+zeo-client = on
+zeo-address = $zeoaddress
+temporary-storage =
+    <zeoclient>
+        server $zeoaddress
+        storage temp
+        name zeostorage
+        var \${buildout:directory}/var
+    </zeoclient>
+    mount-point /temp_folder
+    container-class Products.TemporaryFolder.TemporaryContainer
+eggs =
+    \${buildout:eggs}
+    \${minitageeggs:eggs}
+products =
+    \${buildout:directory}/Products
+    \${project:products}
+extra-paths=
+    \${buildout:extra-paths}
+zcml =
+    \${project:zcml}
+
+[zopepy]
+recipe = minitage.recipe:scripts
+executable=\${python2.4:executable}
+eggs = \${instance:eggs}
+interpreter = zopepy
+extra-paths = \${zope2:location}/lib/python
+     \${project:extra-paths}
+     \${instance:extra-paths}
+
+[zeoserver]
+recipe = plone.recipe.zope2zeoserver
+zope2-location = \${zope2:location}
+zeo-address = $zeoaddress
+zeo-conf-additional =
+    %import tempstorage
+    <temporarystorage temp>
+        name temporary storage for sessioning
+    </temporarystorage>
+
+[productdistros]
+recipe = plone.recipe.distros
+urls =
+    \${project:urls}
+nested-packages =
+    \${project:nested-packages}
+version-suffix-packages =
+    \${project:version-suffix-packages} 
+
+[omelette]
+recipe = collective.recipe.omelette
+eggs = \${instance:eggs}
+products = \${instance:products}
+    \${productdistros:location}
+packages = \${zope2:location}/lib/python ./
+
+[mirrors]
+sourceforge = ovh.dl.sourceforge.net
+minitage = distfiles.minitage.org/public/externals/minitage
+plone = plone.org
+zope = download.zope.org
+
