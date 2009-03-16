@@ -1,10 +1,10 @@
 # Identify the component configuration used to define the site:
-site-definition site.zcml
+site-definition $path/zcml/site.zcml
 
 <zodb>
   # Standard Filestorage
   <filestorage>
-    path var/Data.fs
+    path $path/var/filestorage/Data.fs
   </filestorage>
 
 # Uncomment this if you want to connect to a ZEO server instead:
@@ -24,7 +24,7 @@ site-definition site.zcml
   # filesystem path or the tokens STDOUT or STDERR.
 
   <logfile>
-    path log/z3.log
+    path $path/var/log/z3.log
     formatter zope.exceptions.log.Formatter
   </logfile>
 

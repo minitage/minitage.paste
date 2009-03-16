@@ -5,20 +5,26 @@
 [project]
 # minitage variables
 minibuild_name=zope3
-directory=\${buildout:directory}/../../
+directory=$mt
 scripts-directory=\${buildout:directory}/bin
-dependencies=\${buildout:directory}/../../dependencies
-du-directory=\${buildout:directory}/../../eggs/
+dependencies=$mt/dependencies
+du-directory=$mt/eggs/
 
 # what to do
 parts =
-    minitageeggs
     scripts
 
 # python stuff
 eggs-directory=../../eggs/cache
 develop-eggs-directory=../../eggs/develop-cache
 eggs =
+    $project
+    ipython
+    Paste
+    PasteDeploy
+    PasteScript
+    zope.app.apidoc
+    z3c.evalexception>=2.0
 develop =
     src/$project
 develop-eggs =
@@ -29,31 +35,29 @@ extra-paths =
 
 # site-packages
 [libxml2]
-site-packages=\${project:du-directory}/py-libxml2-2.6/parts/site-packages-2.4
+site-packages=\${project:du-directory}/py-libxml2-2.6/parts/site-packages-2.5
 [libxslt]
-site-packages=\${project:du-directory}/py-libxslt-1.1/parts/site-packages-2.4
+site-packages=\${project:du-directory}/py-libxslt-1.1/parts/site-packages-2.5
 
-[python2.4]
-executable=\${project:dependencies}/python-2.4/parts/part/bin/python
-name=python2.4
+[python2.5]
+executable=\${project:dependencies}/python-2.5/parts/part/bin/python
+name=python2.5
 
 [versions]
 # bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
 # bin/buildout -Novvvvv |sed -ne 's/^Picked: //p' | sort | uniq
-#zc.recipe.filestorage = 1.0.1
-zc.recipe.zope3instance = 1.0.0a1
-zc.recipe.egg = 1.0.0
+minitage.recipe>=0.7
 
 [buildout]
-python = python2.4
+extensions=buildout.eggtractor
+python = python2.5
+extends=etc/versions.cfg
 versions = versions
-executable = python2.4
+executable = python2.5
 parts = \${project:parts}
 extra-paths=
     \${project:extra-paths}
 find-links =
-    http://\${mirrors:zope}/ppix/
-    http://\${mirrors:zope}/distribution/
     http://effbot.org/downloads
 eggs =
     setuptools
@@ -62,37 +66,22 @@ eggs =
 develop =
     \${project:develop}
 eggs-directory = \${project:eggs-directory}
-develop-eggs-directory = \${project:develop-eggs-directory}
-
-[data]
-recipe = zc.recipe.filestorage
-path = \${buildout:directory}/var/filestorage/Data.fs
-
-[minitageeggs]
-recipe=minitage.recipe:egg
-executable=\${python2.4:executable}
-eggs =
-    Paste
-    PasteDeploy
-    PasteScript
-    zope.app.zcmlfiles
-    zope.annotation
-    zope.formlib
-    zdaemon
-    zope.app.authentication
-    zope.app.session
-    zope.app.securitypolicy
-    zope.app.keyreference
-    zope.publisher
-    zope.traversing
 
 [scripts]
 recipe = minitage.recipe:scripts
-executable=\${python2.4:executable}
+scripts=
+    ${project}-ctl
+    ${project}-debug
+    ipython
+    paster
+executable=\${python2.5:executable}
 interpreter = zopepy
+extra-paths=
+    \${libxml2:site-packages}
+    \${libxslt:site-packages}
 eggs=
-    $project
-    \${minitageeggs:eggs}
+    \${buildout:eggs}
+    \${project:eggs}
 
 [mirrors]
 zope = download.zope.org

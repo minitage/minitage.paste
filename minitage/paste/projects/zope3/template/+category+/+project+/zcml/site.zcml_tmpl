@@ -5,7 +5,7 @@
 
   <!-- Remove this reference to disable the APIDoc tool.
        You should do this for production -->
-  <include file="apidoc.zcml" />
+  <include file="$path/zcml/apidoc.zcml" />
 
   <include package="zope.app.securitypolicy" file="meta.zcml" />
   <include package="zope.app.securitypolicy" />
