@@ -6,7 +6,7 @@ setupdir = os.path.abspath(
 os.chdir(setupdir)
 
 name='minitage.paste'
-version = '0.11'
+version = '0.12'
 
 def read(rnames):
     return open(
@@ -61,6 +61,7 @@ setup(
             'minitage.profils.postgresql = minitage.paste.profils.postgresql:Template',
             'minitage.profils.varnish = minitage.paste.profils.varnish:Template',
             'minitage.profils.varnish2 = minitage.paste.profils.varnish2:Template',
+            'minitage.profils.paste-initd = minitage.paste.profils.pasteinitd:Template',
             'minitage.pylons = minitage.paste.projects.pylons:Template',
             'minitage.tg = minitage.paste.projects.turbogears:Template',
             'minitage.zope2 = minitage.paste.projects.zope2:Template',

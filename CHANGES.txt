@@ -2,6 +2,12 @@
 CHANGES
 ==============
 
+0.12
+-------
+
+    - add the pasteinitd profil to create profils for paste init scripts.
+
+
 0.11
 -------
 

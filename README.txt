@@ -32,6 +32,8 @@ Projects profiles
       configuration file toward zope/plone.
     - minitage.profils.postgresql: create a postgresql instance in the sys dir of your
       project
+    - minitage.profils.paste-initd: create a paste initd file and logrotated
+      stuff in the sys dir of your project 
     - minitage.profils.env: create a `share/minitage/minitage.env` file inside the
       sysdir of the project. You ll can source it and have into your environment
       the path and libraries from the registred dependencies of your project.
