@@ -1,0 +1,11 @@
+# # be aware that postgresql needs copytruncate to keep his logfile (stderr) open
+#echo '%s/var/log/paste/%s/*.log {\n' % ($sys, $config)
+rotate 10
+daily
+create 660 $user $group
+notifempty
+size 10M
+sharedscripts
+missingok
+copytruncate
+}
