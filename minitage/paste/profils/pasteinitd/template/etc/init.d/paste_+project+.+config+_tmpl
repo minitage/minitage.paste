@@ -27,8 +27,9 @@ start() {
         ewarn "Deleting old pid file"
         rm -f "\$PID_FILE"
     fi
+    paster=`which paster`
     if [[ `whoami` == root ]];then
-        paster serve --user=$user --group=$group --daemon \$PASTER_OPTS
+        su $user -p -c "\$paster serve --daemon \$PASTER_OPTS"
     else
         paster serve --daemon \$PASTER_OPTS
     fi
