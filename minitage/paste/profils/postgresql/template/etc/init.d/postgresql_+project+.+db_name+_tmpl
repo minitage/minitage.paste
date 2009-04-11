@@ -18,6 +18,8 @@
 
 # add /sbin 's when we run in user mode in the PATH
 export PATH=\$PATH:/sbin:/usr/sbin:/usr/local/sbin
+pg_ctl=`which pg_ctl`
+effectiveuser=$db_user
 
 checkconfig() {
     if [ ! -d "\$PGDATA" ] ; then
@@ -28,6 +30,14 @@ checkconfig() {
     fi
 }
 
+wrap_pg_ctl() {
+    if [[ `whoami` == root ]];then
+        su \$effectiveuser -c "\$pg_ctl -s \$1"
+    else
+        \$pg_ctl -s \$1
+    fi 
+}
+
 start() {
     checkconfig || return 1
     ebegin  "Starting PostgreSQL"
@@ -35,7 +45,7 @@ start() {
         ewarn "Deleting old pid file"
         rm -f "\$PID_FILE"
     fi
-    pg_ctl -s start
+    wrap_pg_ctl start
     eend \$?
 }
 
@@ -44,29 +54,29 @@ stop() {
     # Note: we have to do --oknodo here, otherwise it will always fail
     #       when there are open transactions. This bug has been corrected
     #       in baselayout-1.13.0_alpha8.
-    pg_ctl -s stop
+    wrap_pg_ctl stop
     eend \$?
 }
 
 reload() {
     ebegin 'Reloading PostgreSQL configuration'
-    pg_ctl -s reload
+    wrap_pg_ctl reload
     eend \$?
 }
 
 restart() {
     ebegin "Restarting PostgreSQL"
     # "stop/start" seems to behave better.
-    pg_ctl -s stop
+    stop
     einfo  "..."
-    pg_ctl -s start
+    start
     eend \$?
 }
 
 status() {
     ebegin "Status of PostgreSQL"
     # "stop/start" seems to behave better.
-    pg_ctl -s status
+    wrap_pg_ctl status
 } 
 
 actions="status restart start stop checkconfig reload"

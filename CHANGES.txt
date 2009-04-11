@@ -1,6 +1,16 @@
 
 CHANGES
 ==============
+0.20->0.21
+-----------
+
+    - Fix in pgsql
+
+0.19
+-------
+
+    - Fix effective user on pgsql initd
+
 
 0.13->0.18
 -----------
