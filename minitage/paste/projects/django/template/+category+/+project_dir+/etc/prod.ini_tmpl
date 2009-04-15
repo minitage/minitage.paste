@@ -1,0 +1,39 @@
+#
+# $project WSGI CONFIGURATION FILE FOR PRODUCTION
+#
+
+[DEFAULT]
+debug=false
+test_url=false
+
+[composite:main]
+use=egg:Paste#urlmap
+/=$project
+
+[pipeline:$project]
+pipeline=
+    exc
+    ${project}app
+
+[app:${project}app]
+use = egg:dj.paste
+django_settings_module=${project}.${project}.settings
+
+[filter:exc]
+#if 'werkzeug' in $errorh:
+use=egg:dj.paste#debug
+#lelse
+#use=egg:dj.paste#debug
+#end if
+#if 'weberror' in $errorh:
+use=egg:WebError#evalerror
+#else
+#use=egg:WebError
+#end if
+
+[server:main]
+use = egg:Spawning
+host = $address
+port = $port
+
+ 

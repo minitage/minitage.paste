@@ -1,0 +1,34 @@
+<eventlog>
+  # This sets up logging to both a file (z3.log) and to standard
+  # output (STDOUT).  The "path" setting can be a relative or absolute
+  # filesystem path or the tokens STDOUT or STDERR.
+
+  <logfile>
+    path  \${buildout:directory}/var/log/zeo.log
+  </logfile>
+
+  <logfile>
+    path STDOUT
+  </logfile>
+</eventlog>
+
+<filestorage 1>
+  path  \${buildout:directory}/var/filestorage/Data.fs
+</filestorage>
+
+<zeo>
+  address $zeoaddress
+  transaction-timeout 300
+  read-only false
+  invalidation-queue-size 100
+  monitor-address $mzeoaddress
+  # transaction-timeout SECONDS
+</zeo>
+
+
+<runner>
+  program bin/runzeo -C \${buildout:directory}/etc/zeo.conf
+  daemon true
+</runner>
+
+

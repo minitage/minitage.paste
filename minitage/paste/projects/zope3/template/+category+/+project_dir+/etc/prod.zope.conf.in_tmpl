@@ -1,0 +1,81 @@
+# Identify the component configuration used to define the site:
+site-definition \${buildout:directory}/zcml/site.zcml
+
+#if 'relstorage' in $mode:
+%import relstorage
+#else
+#%import relstorage
+#end if
+<zodb>
+  # Standard Filestorage
+  #
+#if 'zodb' in $mode:
+  <filestorage>
+    path \${buildout:directory}/var/filestorage/Data.fs
+  </filestorage>
+#else
+#  <filestorage>
+#    path \${buildout:directory}/var/filestorage/Data.fs
+#  </filestorage>
+#end if
+
+  # RelStorage
+  #
+#if 'relstorage' in $mode:
+  <relstorage>
+      <postgresql>
+            # The dsn is optional, as are each of the parameters in the dsn.
+            dsn dbname='$dbname' user='$dbuser' host='$dbhost' port='$dbport' password='$dbpassword'
+      </postgresql>
+  </relstorage>
+#else
+#  <relstorage>
+#      <postgresql>
+#            # The dsn is optional, as are each of the parameters in the dsn.
+#            dsn dbname='$dbname' user='$dbuser' host='$dbhost' port='$dbport' password='$dbpassword'
+#      </postgresql>
+#  </relstorage>
+#end if
+
+   # ZEO server
+   #
+#if 'zeo' in $mode:
+  <zeoclient>
+    server $zeoaddress
+    storage 1
+    # ZEO client cache, in bytes
+    cache-size 20MB
+    # Uncomment to have a persistent disk cache
+    #client zeo1
+  </zeoclient>
+#else
+#  <zeoclient>
+#    server $zeoaddress
+#    storage 1
+#    # ZEO client cache, in bytes
+#    cache-size 20MB
+#    # Uncomment to have a persistent disk cache
+#    #client zeo1
+#  </zeoclient>
+#end if
+</zodb>
+
+<eventlog>
+  # This sets up logging to both a file and to standard output
+  # (STDOUT).  The "path" setting can be a relative or absolute
+  # filesystem path or the tokens STDOUT or STDERR.
+
+  <logfile>
+    path \${buildout:directory}/var/log/z3.log
+    formatter zope.exceptions.log.Formatter
+  </logfile>
+
+  <logfile>
+    path STDOUT
+    formatter zope.exceptions.log.Formatter
+  </logfile>
+</eventlog>
+
+# Comment this line to disable developer mode.  This should be done in
+# production
+devmode off

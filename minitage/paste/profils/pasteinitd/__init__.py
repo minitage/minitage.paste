@@ -30,8 +30,7 @@ re_flags = re.M|re.U|re.I|re.S
 
 class Template(common.Template):
 
-    summary = 'Template for creating init script for paster configs in '\
-            'a minitage project.'
+    summary = 'Template for creating init script for paster serve'
     _template_dir = 'template'
     use_cheetah = True
 
@@ -39,7 +38,8 @@ class Template(common.Template):
         common.Template.pre(self, command, output_dir, vars)
         config = vars['config']
         if not config.startswith('/'):
-            config = os.path.join(vars['path'], config)
+            if 'yes' in vars['inside_minitage']:
+                config = os.path.join(vars['path'], config)
         vars['configp'] = os.path.abspath(config)
 
         if config.endswith('/'):
@@ -52,8 +52,7 @@ class Template(common.Template):
 
     def post(self, command, output_dir, vars):
         sys = vars['sys']
-        dirs = [#os.path.join(sys, 'bin'),
-                os.path.join(sys, 'etc', 'init.d')]
+        dirs = [os.path.join(sys, 'etc', 'init.d')]
         for directory in dirs:
             for filep in os.listdir(directory):
                 p = os.path.join(directory, filep)

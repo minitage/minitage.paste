@@ -22,6 +22,7 @@ class Template(common.Template):
     summary = 'Template for creating a '\
             'basic plone25 project inside minitage'
 
+    python = 'python-2.4'
 
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
@@ -29,23 +30,23 @@ class Template(common.Template):
         common.Template.pre(self, command, output_dir, vars)
 
 Template.vars = common.Template.vars \
-        + [var('address', 
-               'Address to listen on', 
-               default = 'localhost',), 
-           var('port', 
-               'Port to listen to', 
-               default = '8080',),  
-           var('loglevel', 
-               'log level (DEBUG|INFO|WARNING|ERROR)', 
-               default = 'INFO',),   
-           var('debug', 
-               'Debug mode (on|off)', 
-               default = 'on',),    
-           var('login', 
-               'Administrator login', 
-               default = 'admin',),     
-           var('password', 
-               'Password', 
-               default = 'admin',),     
+        + [var('address',
+               'Address to listen on',
+               default = 'localhost',),
+           var('port',
+               'Port to listen to',
+               default = '8080',),
+           var('loglevel',
+               'log level (DEBUG|INFO|WARNING|ERROR)',
+               default = 'INFO',),
+           var('debug',
+               'Debug mode (on|off)',
+               default = 'on',),
+           var('login',
+               'Administrator login',
+               default = 'admin',),
+           var('password',
+               'Password',
+               default = 'admin',),
           ]
 # vim:set et sts=4 ts=4 tw=80:

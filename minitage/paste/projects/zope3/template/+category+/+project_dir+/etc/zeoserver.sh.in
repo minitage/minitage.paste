@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env bash
 
-# Copyright (C) 2008, Mathieu PASQUET <kiorky@cryptelium.net>
+# Copyright (C) 2009, Mathieu PASQUET <mpa@makina-corpus.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,17 +12,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-__docformat__ = 'restructuredtext en'
 
-from minitage.paste.profils import common
-
-class Template(common.Template):
-
-    summary = 'Template for creating a file '\
-            'to source to get the needed '\
-            'environnment variables for '\
-            'playing in the shell or for other templates'
-    _template_dir = 'template'
-    use_cheetah = True
+${buildout:directory}/bin/zeoctl -C ${buildout:directory}/parts/zeo.conf $@
 
 # vim:set et sts=4 ts=4 tw=80:

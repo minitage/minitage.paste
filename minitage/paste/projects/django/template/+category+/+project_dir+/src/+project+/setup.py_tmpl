@@ -1,0 +1,24 @@
+try:
+    from setuptools import setup, find_packages
+except ImportError:
+    from ez_setup import use_setuptools
+    use_setuptools()
+    from setuptools import setup, find_packages
+
+setup(
+    name='${project}',
+    version=0,
+    description= '',
+    author='',
+    author_email='',
+    include_package_data=True,
+    packages=find_packages('src'),
+    package_dir = {'': 'src'},
+    namespace_packages=['$project'],
+    entry_points = """
+    [console_scripts]
+    ${project}_manage =          ${project}.${project}.wrappers:manage
+    """
+
+
+)

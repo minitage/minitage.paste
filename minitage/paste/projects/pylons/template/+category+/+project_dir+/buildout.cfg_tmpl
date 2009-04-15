@@ -1,0 +1,106 @@
+#echo '##################################################################################\n'
+# $project buildout
+# A WSGI based pylons project
+#echo '#\n'
+# There are parts to do additionnal stuff:
+#  * kgs: make a version file to pin the version used by your project
+#  * omelette: build a local site-packages with all eggs unpackaged inside (symlinks). Its usefull for IDE and ctags.
+#echo '#\n'
+# The classical paster for Pylons will be done at the end of the first run
+# You need to answar yes for ocverwriting setup.py
+# Your resulting egg is installed in develop mode and is in src/$project.
+#echo '#\n'
+#echo '#\n'
+# You can generate init scripts for your paster configs with the minitage.profils.paste-initd template.
+#echo '#\n'
+# Spawning is added to the eggs, Spawninbg is a reliable and ultra performant WSGI server.
+# Just give it a try by inserting that on your paster configs:
+#  [server:main]
+#  use=egg:Spawning
+#  host=0.0.0.0
+#  port=xxxx
+#echo '###################################################################################'
+
+#if 'yes' in $inside_minitage:
+[minitage]
+location=$mt
+#end if
+
+[python]
+executable=$python
+name=python2.5
+
+# site-packages
+[libxml2]
+# the path to find the libxml2 python bindings, maybe your global site-packages?
+site-packages=$xml2
+[libxslt]
+site-packages=$xslt
+
+[versions]
+# bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
+
+[buildout]
+extensions = buildout.minitagificator mr.developer
+python = python
+versions = versions
+parts =
+    scripts
+    postinstall
+find-links =
+    http://effbot.org/downloads
+eggs =
+    SQLAlchemy
+    Spawning
+    ipython
+    Pylons
+    $project
+#if 'yes' in $psycopg2:
+    psycopg2
+#end if
+#if 'yes' in $mysqldb:
+    MySQL_python
+#end if
+develop =
+    src/${project}
+#if 'yes' in $inside_minitage:
+eggs-directory = \${buildout:directory}/../../eggs/caches
+#end if
+# see http://pypi.python.org/pypi/mr.developer for documentation
+sources = sources
+#auto-checkout = my.package
+extra-paths=
+    \${libxml2:site-packages}
+    \${libxslt:site-packages}
+
+[scripts]
+recipe = minitage.recipe:scripts
+executable=\${python:executable}
+eggs=
+    \${buildout:eggs}
+interpreter = pylonspy
+
+[postinstall]
+recipe=iw.recipe.cmd
+on_install=true
+cmds=
+    cd \${buildout:directory}/src
+    ../bin/paster create -t pylons ${project}
+
+[omelette]
+recipe = collective.recipe.omelette
+eggs = \${instance:eggs}
+packages =\${zopepy:extra-paths}
+
+[kgs]
+recipe=minitage.recipe:printer
+quiet=
+eggs=\${instance:eggs}
+file=${project}.cfg
+
+[sources]
+# see http://pypi.python.org/pypi/mr.developer for documentation
+#my.package = svn http://example.com/svn/my.package/trunk
+#some.other.package = git git://example.com/git/some.other.package.git
+
+\# vim:set ft=dosini \#

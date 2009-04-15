@@ -16,6 +16,7 @@ __docformat__ = 'restructuredtext en'
 
 import os
 import sys
+import shutil
 
 from paste.script import templates
 
@@ -49,6 +50,9 @@ class Template(templates.Template):
                       'Python packages non-eggified like libxml2 '
                       'to be added to the python path '
                       '(separated by comma)'),
+        templates.var('inside_minitage',
+                      'Are you inside a minitage environment: yes/no ?',
+                      default='yes'),
     ]
 
     def __init__(self, name):
@@ -78,13 +82,64 @@ class Template(templates.Template):
                         raise Exception('%s must be set' % var)
 
         return cvars
-    
-    def read_vars(self, command=None):
-        print '\n\n\tWarning: All minitage templates come by default'\
-                ' with their dependencies. You ll not have to '\
-                'specify them.\n\n'
 
+    def read_vars(self, command=None):
+        print "%s" % (
+            '\n\n'
+            '---------------------------------------------------------\n'
+            '\tMinitage support is now optionnal.\n'
+            '\tWarning: All minitage templates come by default '
+            'with their dependencies. You ll not have to '
+            'specify them.\n'
+            '\tMany of the variables are optionnal.\n'
+            '\tJust press enter to continue the process.\n'
+            '---------------------------------------------------------\n'
+        )
         return templates.Template.read_vars(self, command)
+
+    def pre(self, command, output_dir, vars):
+        # either / or virtualenv prefix is the root
+        # of minitage in any cases.
+        # This is pointed out by sys.exec_prefix, hopefullly.
+        prefix = os.path.join(os.getcwd(), vars['project'])
+        if 'yes' in vars['inside_minitage']:
+            prefix = sys.exec_prefix
+        self.output_dir = prefix
+        # find the project minibuild
+        deps = [d.strip()\
+                for d in vars.get('project_dependencies', '').split(',')]
+        eggs = [e.strip()
+                for e in vars.get('project_eggs', '').split(',')]
+        # set templates variables
+        vars['header'] = __HEADER__ % {'comment': '#'}
+        vars['eggs'] = eggs
+        vars['dependencies'] = deps
+        vars['minilay'] = vars['project']
+        if 'yes' in vars['inside_minitage']:
+            not_minitage = False
+            vars['project_dir'] = vars['project']
+            vars['mt'] = self.output_dir
+        else:
+            not_minitage = True
+
+        if not_minitage or not (os.path.exists(
+            os.path.join(vars['mt'], 'etc', 'minimerge.cfg')
+        )):
+            vars['inside_minitage'] = 'no'
+            vars['project_dir'] = ''
+            vars['mt'] = '/'
+
+    def post(self, command, output_dir, vars):
+        paths = []
+        minilays = os.path.join(self.output_dir, 'minilays')
+        if not ('yes'  in vars['inside_minitage']):
+            if os.path.isdir(minilays):
+                if 2 > len(os.listdir(minilays)):
+                    paths.append(minilays)
+        for p in paths:
+            fp = os.path.join(self.output_dir, p)
+            if os.path.exists(fp):
+                shutil.rmtree(fp)
 
 class var(templates.var):
     """patch pastescript to have mandatory fields"""

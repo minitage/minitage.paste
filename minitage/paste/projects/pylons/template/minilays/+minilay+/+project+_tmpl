@@ -1,0 +1,7 @@
+[minibuild]
+# get subversion into the path
+dependencies=sqlite-3.5 subversion-1.5 $opt_deps $python_minibuild
+install_method=buildout
+src_uri=$uri
+src_type=$scm_type
+category=pylons

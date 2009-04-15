@@ -1,0 +1,9 @@
+[minibuild]
+dependencies=openssl-0.9 libxml2-2.6 libxslt-1.1 zlib-1.2  py-libxml2-2.6 py-libxslt-1.1 $python_minibuild pilwotk-1.1.6.4 libiconv-1.12 $opt_deps 
+install_method=$install_method
+src_uri=$uri
+src_type=$scm_type
+category=$category
+homepage=$homepage
+description= a plone 3.1 buildout for $project
+

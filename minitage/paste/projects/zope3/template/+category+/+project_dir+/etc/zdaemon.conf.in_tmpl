@@ -1,0 +1,8 @@
+<runner>
+  program \${buildout:directory}/bin/paster serve \${buildout:directory}/etc/dev.ini
+  daemon on
+  transcript \${buildout:directory}/var/log/zdaemon.log
+  socket-name \${buildout:directory}/var/zdaemonsock
+  # Enable this to run the child process as a different user
+  # user zope
+</runner>

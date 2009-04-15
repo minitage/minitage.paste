@@ -1,0 +1,147 @@
+#echo '##############################################################################\n'
+# Django  '$project' BUILDOUT
+#echo '#\n'
+#echo '#\n'
+# An egg for django has been created for you to quickstart or port your
+# application to use eggified code.
+# it has been integrated tp WSGI configuration files tpp,
+# Neverrtheless  you have to do the neccessary steps
+# of post initialisation yourself like:
+# (see the postinstall part for more infos)
+#
+#       * bin/${project}_manage startapp NiceBlog
+#
+#   You have wrappers for classical scripts:
+#       * bin/${project}_manage
+#       * bin/django-admin.py
+#echo '#\n'
+# Useless to mention that this egg have namespaces enabled and that your
+# namespace is "$project" and the resulting code lives in
+# "src/$project/$project"
+# You certainly want also to finnish the setup.py in src/$project.
+#
+#   To run in WSGI, a long word to say how to start to serve your project:
+#      paster serve etc/dev.ini
+#      paster serve etc/prod.ini
+#echo '#\n'
+#   You can use the minitage.profils.paste-initd to generate init scripts
+#   wrappers for paste.
+#echo '#\n'
+#   the kgs part can generate a versions.cfg file to fix/pin your eggs versione.
+# In the dev mode, you have weberror or werkzeug 's DebuggedApplication which
+# enables you to debug your application through the web on exceptions.
+#echo '#\n'
+
+#   What is a KGS:
+#       * The known good set -- or in short KGS -- is a configuration of
+#       packages and their versions that are known to work well together. '
+#echo '#\n'
+#   the omelette part can help you to get a python path for all your eggs, see:
+#    http://pypi.python.org/pypi/collective.recipe.omelette
+#echo '#\n'
+#echo '##############################################################################\n'
+
+#if 'yes' in $inside_minitage:
+[minitage]
+location=\${buildout:directory}/../..
+#end if
+
+# site-packages
+[libxml2]
+# the path to find the libxml2 python bindings, maybe your global site-packages?
+site-packages=$xml2
+[libxslt]
+# the path to find the libxslt python bindings, maybe your global site-packages?
+site-packages=$xslt
+
+[python]
+executable=$python
+name=python
+
+[versions]
+# bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
+
+[buildout]
+extensions = buildout.minitagificator mr.developer
+python=python
+versions = versions
+extra-paths=
+    \${libxml2:site-packages}
+    \${libxslt:site-packages}
+find-links =
+    http://\${mirrors:zope}/ppix/
+    http://gijsbert.org/downloads/cmemcache/
+    http://\${mirrors:zope}/distribution/
+    http://effbot.org/downloads
+parts =
+    scripts
+    postinstall
+eggs =
+    ipython
+    cmemcache
+    $project
+    Django
+    Werkzeug
+    WebError
+    dj.paste
+    Spawning
+#if 'yes' in $sqlite:
+    pysqlite
+#end if
+#if 'yes' in $psycopg2:
+    psycopg2
+#end if
+#if 'yes' in $mysqldb:
+    MySQL_python
+#end if
+develop =
+    src/$project
+    django.paste
+#if 'yes' in $inside_minitage:
+eggs-directory=\${minitage:location}/eggs/cache
+#end if
+# see http://pypi.python.org/pypi/mr.developer for documentation
+sources = sources
+#auto-checkout = my.package
+
+[scripts]
+recipe=minitage.recipe:scripts
+interpreter = djangopy
+eggs=\${buildout:eggs}
+#if not 'official' in $official:
+url=$djangourl
+scm=$djangoscm
+revision = $djangorevision
+#else
+#url=$djangourl
+#scm=$djangoscm
+#revision = $djangorevision
+#end if
+
+[omelette]
+recipe = collective.recipe.omelette
+eggs = \${buildout:eggs}
+packages =\${buildout:extra-paths}
+
+[sources]
+# see http://pypi.python.org/pypi/mr.developer for documentation
+#my.package = svn http://example.com/svn/my.package/trunk
+#some.other.package = git git://example.com/git/some.other.package.git
+
+[kgs]
+recipe=minitage.recipe:printer
+quiet=
+eggs=\${buildout:eggs}
+file=${project}.cfg
+
+[postinstall]
+recipe=iw.recipe.cmd
+on_install=true
+on_update=true
+cmds=
+    cd \${buildout:directory}
+    \${buildout:executable} finnish_install.py
+
+[mirrors]
+zope = download.zope.org
+

@@ -1,0 +1,229 @@
+#echo '##############################################################################\n'
+# PLONE 3 BUILDOUT
+# Think you have the most important file of the buildout in etc/versions.cfg
+# For your convenience, just download it from :
+#     http://dist.plone.org/release/3.x.x/versions.cfg
+#     EG: http://dist.plone.org/release/3.2.2/versions.cfg  for this buildout
+# And add the custom verion in the following version part.
+# Think also that this versions file controls the zope2-url unless you make
+# changes.
+#echo '#\n'
+# FOR RELSTORAGE SUPPORT
+# * We use the ZODB as an egg which is patched during installation, please see
+# the zoopy section and also the minitage.recipe documentation on patching an
+# egg.
+# The egg is on your cache with a particular version, the classical ZODB3 egg
+# wont be touched if you have one.
+#echo '#\n'
+#  As we support WSGI, there is an important thing to know:
+#   'zopelib' is an egg from repoze where live the zope code, we
+#   totally do not NEED it, it's useless and make things buggy.
+#   We build zopelib as a fake egg, as we have already zope in our
+#   PYTHONPATH.
+#   If you raelly want zopelib as an egg, (un)comment things in the buildout(develop, patch). But i am use, you dont have to !
+#echo '#\n'
+#   TO run in wsgi:
+#      paster serve etc/dev.ini
+#      paster serve etc/prod.ini
+#echo '#\n'
+#   You can use the minitage.profils.paste-initd to generate init scripts
+#   wrappers for paste.
+#echo '#\n'
+#echo '##############################################################################\n'
+
+#if 'yes' in $inside_minitage:
+[minitage]
+location=\${buildout:directory}/../..
+#end if
+
+# site-packages
+[libxml2]
+# the path to find the libxml2 python bindings, maybe your global site-packages?
+site-packages=$xml2
+[libxslt]
+# the path to find the libxslt python bindings, maybe your global site-packages?
+site-packages=$xslt
+
+[python2.4]
+executable=$python
+name=python2.4
+
+[versions]
+# bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
+setuptools>=0.6c9
+python-openid>=2.0.1
+elementtree = 1.2.7-20070827-preview
+lxml = 2.0.5
+PILwoTK  = 1.1.6.4
+psycopg2=2.0.8
+# zope 2.10.7 compatible version of the ZODB where the RelStorage patch applies
+ZODB3 = 3.7.1
+
+[buildout]
+extensions = buildout.minitagificator mr.developer
+python=python2.4
+#executable=\${python2.4:executable}
+# the ${project}.cfg file can be generated via the kgs part, it will fix all
+# eggs versions used.
+extends=etc/versions.cfg
+    etc/${mode}.cfg
+#   ${project}.cfg
+#if $mode != 'zeo':
+#echo '#   etc/zeo.cfgr\n'
+#end if
+#if $mode != 'relstorage':
+#echo '#    etc/relstorage.cfg\n'
+#end if
+#if $mode != 'zodb':
+#echo '#    etc/zodb.cfg\n'
+#end if
+versions = versions
+parts =
+    zope2
+    zopepy
+    productdistros
+#if $mode == 'zeo':
+#echo '    zeoserver\n'
+#end if
+    instance
+extra-paths=
+    \${libxml2:site-packages}
+    \${libxslt:site-packages}
+#
+# on Upgrades
+# Think to change the plone release URL !!!
+#
+find-links =
+    http://dist.plone.org/release/3.2
+    http://\${mirrors:zope}/ppix/
+    http://\${mirrors:zope}/distribution/
+    http://effbot.org/downloads
+#if 'yes' in $wsgi_support:
+    http://dist.repoze.org/zope2/latest/
+#else
+#    http://dist.repoze.org/zope2/latest/
+#end if
+eggs =
+develop =fake-eggs/zopelib
+#if 'yes' in $inside_minitage:
+eggs-directory=\${minitage:location}/eggs/cache
+#end if
+dev-urls =
+    http://plone.org/products/clouseau/releases/0.8.1/clouseau-0-8-1.zip
+    http://www.zope.org/Members/shh/DocFinderTab/1.0.2/DocFinderTab-1.0.2.tar.gz
+# see http://pypi.python.org/pypi/mr.developer for documentation
+sources = sources
+#auto-checkout = my.package
+
+# Zope operating instances are created elsewhere.
+# For options see http://pypi.python.org/pypi/plone.recipe.zope2install
+[zope2]
+recipe = plone.recipe.zope2install
+# update zope by updating this URL:
+url = \${versions:zope2-url}
+# fake eggs are required to satisfy Zope dependencies while
+# zope is not yet eggified.
+fake-zope-eggs = true
+additional-fake-eggs =
+    ZConfig
+    pytz
+# to facillitate RelStorage Integration, we just install an egg version of the
+# ZODB
+skip-fake-eggs =
+    ZODB3
+
+[zopepy]
+recipe = minitage.recipe:scripts
+executable=\${python2.4:executable}
+minitage-dependencies=openssl-0.9 libxml2-2.6 libxslt-1.1 zlib-1.2
+minitage-eggs = py-libxml2-2.6 py-libxslt-1.1
+# Important for you to note the installation of the ZODB as an egg . We will not
+# use the zodb code from the zope source distribution !!!!!!!
+eggs =
+    \${buildout:eggs}
+    lxml
+    elementtree
+    wicked
+    PILwoTK
+    Plone
+#slurp
+#for $product in $plone_eggs.split():
+    ${product}
+#end for
+#if 'relstorage' in $mode:
+#echo '    RelStorage\n'
+#end if
+#if 'yes' in $psycopg2:
+#echo '    psycopg2\n'
+#end if
+#if 'yes' in $mysqldb:
+#echo '    MySQL_python\n'
+#end if
+#if 'yes' in $wsgi_support:
+    repoze.zope2
+    Spawning
+    Deliverance
+    ipython
+    ZODB3
+    Paste
+    PasteScript
+    PasteDeploy
+#zopelib-patche-options=-p0
+#else
+#    repoze.zope2
+#    Spawning
+#    Deliverance
+#    Paste
+#    PasteScript
+#    PasteDeploy
+#end if
+# if you really want zopelib un comment that:
+ZODB3-patches=\${buildout:directory}/patches/minitage.poll-invalidation-1-zodb-3-7-1.patch
+interpreter = zopepy
+extra-paths = \${zope2:location}/lib/python
+     \${buildout:extra-paths}
+
+[productdistros]
+recipe = plone.recipe.distros
+urls = #slurp
+#for $product in $plone_products.split():
+       ${product}
+#end for
+
+nested-packages = #slurp
+#for $product in $plone_np.split():
+       ${product}
+#end for
+
+version-suffix-packages = #slurp
+#for $product in $plone_vsp.split():
+       ${product}
+#end for
+
+[omelette]
+recipe = collective.recipe.omelette
+eggs = \${instance:eggs}
+products = \${instance:products}
+           \${productdistros:location}
+packages =\${zopepy:extra-paths}
+
+[mirrors]
+sourceforge = ovh.dl.sourceforge.net
+minitage = distfiles.minitage.org/public/externals/minitage
+plone = plone.org
+zope = download.zope.org
+
+[instance]
+extra-paths+=\${buildout:extra-paths}
+
+[sources]
+# see http://pypi.python.org/pypi/mr.developer for documentation
+#my.package = svn http://example.com/svn/my.package/trunk
+#some.other.package = git git://example.com/git/some.other.package.git
+
+[kgs]
+recipe=minitage.recipe:printer
+quiet=
+eggs=\${instance:eggs}
+file=${project}.cfg
+

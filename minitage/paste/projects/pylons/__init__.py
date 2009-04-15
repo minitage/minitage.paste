@@ -23,9 +23,6 @@ __docformat__ = 'restructuredtext en'
 import getpass
 import pwd
 import grp
-import os
-import sys
-import re
 
 from minitage.paste.projects import common
 from minitage.paste.common import var
@@ -57,5 +54,11 @@ Template.vars = common.Template.vars \
            var('description',
                'Description',
                default = 'project using pylons (description)'),
+            var('psycopg2',
+               'Postgresql python bindings support (yes or no)',
+               default = 'no',),
+            var('mysqldb',
+                'Python Mysql bindings support (yes or no)',
+                default = 'no',),
           ]
 # vim:set et sts=4 ts=4 tw=80:

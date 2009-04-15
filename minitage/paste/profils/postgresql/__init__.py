@@ -30,21 +30,15 @@ re_flags = re.M|re.U|re.I|re.S
 
 class Template(common.Template):
 
-    summary = 'Template for creating an instance '\
-            'of postresql in the sys dir of '\
-            'a minitage project.'
+    summary = 'Template for creating a postgresql instance'
     _template_dir = 'template'
     use_cheetah = True
     pg_present = False
 
     def pre(self, command, output_dir, vars):
         common.Template.pre(self, command, output_dir, vars)
-        db_path =os.path.join(
-            vars['sys'],
-            'var',
-            'data',
-            'postgresql',
-            vars['db_name']
+        db_path = os.path.join(
+            vars['sys'], 'var', 'data', 'postgresql', vars['db_name']
         )
         if not os.path.isdir(db_path):
             os.makedirs(db_path)
@@ -58,8 +52,9 @@ class Template(common.Template):
             os.environ['PGPORT'] = vars['db_port']
             # default charsets C avoiding regional problems :)
             os.environ['LANG'] = os.environ['LC_ALL'] = 'C'
-
-            fic = open('%s/share/minitage/minitage.env' %(vars['sys'])).read()
+            fic = open(
+                os.path.join(vars['sys'], 'share', 'minitage', 'minitage.env')
+            ).read()
             pgre = re.compile('.*postgresql-([^\s]*)\s.*', re_flags)
             m = pgre.match(fic)
             if m:
@@ -76,7 +71,7 @@ class Template(common.Template):
             # remove files coming out by templates
             # to be out of overwrite errors.
             os.system("""
-                      bash -c "source %s/share/minitage/minitage.env;\
+                      sh -c ". %s/share/minitage/minitage.env;\
                       initdb  -E 'UTF-8';\
                       pg_ctl -w start ;\
                       createdb ;\
@@ -127,8 +122,6 @@ Template.vars = common.Template.vars + \
                 templates.var('db_group', 'Default group', default = group),
                 templates.var('db_host', 'Host to listen on', default = 'localhost'),
                 templates.var('db_port', 'Port to listen to', default = '5432'),
+                templates.var('pg_version', 'Port to listen to', default = '8.3'),
                 ]
-
-
-
 # vim:set et sts=4 ts=4 tw=80:

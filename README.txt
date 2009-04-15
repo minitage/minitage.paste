@@ -15,9 +15,7 @@ Projects templates
 
     - minitage.zope3: A sample layout for a zope 3 application
     - minitage.plone25: A sample layout for a plone 25 application
-    - minitage.plone31: A sample layout for a plone 31 application
-    - minitage.plone32svn A sample layout for a plone 32 application
-    - minitage.plone32zeo A sample layout for a plone 32 from svn application
+    - minitage.plone3: A sample layout for a plone 3 application
     - minitage.tg: A sample layout for a turbogears application
     - minitage.django: A sample layout for a django application
     - minitage.geodjango: A sample layout for a geo-django application
