@@ -1,0 +1,18 @@
+
+[instance]
+recipe = plone.recipe.zope2instance
+http-address=$address:$port
+zope2-location = \${zope2:location}
+user = $login:$password
+session-timeout-minutes = 90
+verbose-security = off
+debug-mode=${debug}
+event-log-level=${loglevel}
+z2-log-level=${loglevel}
+eggs =
+    \${zopepy:eggs}
+products =
+    \${buildout:directory}/Products
+extra-paths=\${zope2:location}
+zcml =
+
