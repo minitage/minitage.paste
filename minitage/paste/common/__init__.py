@@ -17,6 +17,7 @@ __docformat__ = 'restructuredtext en'
 import os
 import sys
 import shutil
+import logging
 
 from paste.script import templates
 
@@ -36,6 +37,25 @@ __HEADER__ = """\
 %(comment)s MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 %(comment)s GNU General Public License for more details. """
 
+def boolify(d, boolean_values=None):
+    if not 'booleans' in d:
+        d['booleans'] = []
+    if not boolean_values:
+        boolean_values = [key
+                          for key in d
+                          if key.startswith('with_')
+                          and (not key in d['booleans'])]
+    if not 'inside_minitage' in boolean_values:
+            boolean_values.append('inside_minitage')
+    d['booleans'].extend(boolean_values)
+    for var in boolean_values:
+        if var in d:
+            if isinstance(d[var], str):
+                if 'y' in d[var].lower():
+                    d[var] = True
+                else:
+                    d[var] = False
+
 class Template(templates.Template):
 
     summary = 'OVERRIDE ME'
@@ -47,19 +67,23 @@ class Template(templates.Template):
         templates.var('project_dependencies',
                       'Dependencies (separated by comma)'),
         templates.var('project_eggs',
-                      'Python packages non-eggified like libxml2 '
+                      'minitage packages nn-eggified like libxml2-2.6 '
                       'to be added to the python path '
                       '(separated by comma)'),
         templates.var('inside_minitage',
-                      'Are you inside a minitage environment: yes/no ?',
-                      default='yes'),
+                      'Are you inside a minitage environment: y/n ?',
+                      default='y'),
     ]
+
+    def boolify(self, d, keys=None):
+        return boolify(d, keys)
 
     def __init__(self, name):
         templates.Template.__init__(self, name)
         self.output_dir = os.path.abspath('.')
 
     def run(self, command, output_dir, vars):
+        self.boolify(vars)
         self.pre(command, output_dir, vars)
         # may we have register variables ?
         if self.output_dir:
@@ -91,18 +115,21 @@ class Template(templates.Template):
             '\tWarning: All minitage templates come by default '
             'with their dependencies. You ll not have to '
             'specify them.\n'
-            '\tMany of the variables are optionnal.\n'
+            '\tMany of the variables are optionnal or have good defaults provided.\n'
             '\tJust press enter to continue the process.\n'
             '---------------------------------------------------------\n'
         )
         return templates.Template.read_vars(self, command)
 
     def pre(self, command, output_dir, vars):
+        self.boolify(vars)
+        vars['booleans'] = []
         # either / or virtualenv prefix is the root
         # of minitage in any cases.
         # This is pointed out by sys.exec_prefix, hopefullly.
+        vars['booleans'].append('inside_minitage')
         prefix = os.path.join(os.getcwd(), vars['project'])
-        if 'yes' in vars['inside_minitage']:
+        if vars['inside_minitage']:
             prefix = sys.exec_prefix
         self.output_dir = prefix
         # find the project minibuild
@@ -115,7 +142,7 @@ class Template(templates.Template):
         vars['eggs'] = eggs
         vars['dependencies'] = deps
         vars['minilay'] = vars['project']
-        if 'yes' in vars['inside_minitage']:
+        if vars['inside_minitage']:
             not_minitage = False
             vars['project_dir'] = vars['project']
             vars['mt'] = self.output_dir
@@ -125,14 +152,14 @@ class Template(templates.Template):
         if not_minitage or not (os.path.exists(
             os.path.join(vars['mt'], 'etc', 'minimerge.cfg')
         )):
-            vars['inside_minitage'] = 'no'
+            vars['inside_minitage'] = False
             vars['project_dir'] = ''
             vars['mt'] = '/'
 
     def post(self, command, output_dir, vars):
         paths = []
         minilays = os.path.join(self.output_dir, 'minilays')
-        if not ('yes'  in vars['inside_minitage']):
+        if not vars['inside_minitage']:
             if os.path.isdir(minilays):
                 if 2 > len(os.listdir(minilays)):
                     paths.append(minilays)

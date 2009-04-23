@@ -2,36 +2,37 @@
 # $project BUILDOUT
 # This buildout install zope3
 # You can have a look to the little kgs part which can generate all the eggs kfgs version for you.
-#
+#echo '#\n'
 # To start the zeoserver and control it, you have an init script:
 #     ./bin/zeoserver.sh
+#echo '#\n'
 #
 # You have too paster configuration files in etc/
 #    prod.ini for production
 #    dev.ini for production
 # You can use them like that:
 #    bin/paster serve CONF
-#
-#  Thz zope.conf for production and dev, the zdaemon's conf. and the zep.conf 
-#  are generated, 
+#echo '#\n'
+#  Thz zope.conf for production and dev, the zdaemon's conf. and the zep.conf
+#  are generated,
 #  The templates are in#  etc/*conf*.in
 #  When you edit them, regenerate with
 #  bin/buildout install [conf.in] where conf.in is your touched file.
 #  eg: biun/buildout install zope.conf
 #  The resulted files are in the parts/ folder
-#
+#echo '#\n'
 # You can generate init scripts with minitage.profils.paste-initd template or
 # use ZDadmon with those config files:
 # ./bin/$project-ctl -C conffile
 # ./bin/$project-ctl launch the application in production mode by default
-#
-#
-# ZODB Polling patch for RelSotrage support is done on the fly with the 
+#echo '#\n'
+#echo '#\n'
+# ZODB Polling patch for RelSotrage support is done on the fly with the
 # minitage.recipe:egg patch facillity, it will make a partciluar zodb egg
 # with the patch.avaiable on your eggs cache (see scripts part)
 ##################################################################################
 
-#if 'yes' in $inside_minitage:
+#if $inside_minitage:
 [minitage]
 location=$mt
 #end if
@@ -57,7 +58,19 @@ extends=etc/versions.cfg
 versions = versions
 # the ${project}.cfg file can be generated via the kgs part, it will fix all
 # eggs versions used.
-parts = scripts zope.conf prod.zope.conf zeo.conf zeoserver.sh zdaemon.conf prod.zdaemon.conf
+parts =
+    scripts
+    zope.conf
+    prod.zope.conf
+    zdaemon.conf
+    prod.zdaemon.conf
+ #if "zeo" in $mode:
+    zeo.conf
+    zeoserver
+#else
+#    zeo.conf
+#    zeoserver
+#end if
 extra-paths=
     \${libxml2:site-packages}
     \${libxslt:site-packages}
@@ -69,27 +82,30 @@ find-links =
 develop=
     src/$project
 eggs =
-    ipython
-    Spawning
-    Paste
-    PasteDeploy
-    PasteScript
-    zdaemon
-    zope.app.apidoc
-    z3c.evalexception>=2.0
-    $project
-#if 'yes' in $psycopg2:
-    psycopg2
+#for $product in $add_eggs.split():
+     ${product}
+#end for
+     ipython
+     Spawning
+     Paste
+     PasteDeploy
+     PasteScript
+     zdaemon
+     zope.app.apidoc
+     z3c.evalexception>=2.0
+     $project
+#if $with_psycopg2:
+     psycopg2
 #end if
-#if 'yes' in $mysqldb:
-    MySQL_python
+#if $with_mysqldb:
+     MySQL_python
 #end if
-#if 'yes' in $relstorage:
-    RelStorage
+#if 'relstorage' in $mode:
+     RelStorage
 #else
 #    RelStorage
 #end if
-#if 'yes' in $inside_minitage:
+#if $inside_minitage:
 eggs-directory=\${minitage:location}/eggs/cache
 #end if
 # see http://pypi.python.org/pypi/mr.developer for documentation
@@ -98,13 +114,6 @@ sources = sources
 
 [scripts]
 recipe = minitage.recipe:scripts
-scripts=
-#    ${project}-ctl
-#    ${project}-debug
-#    ipython
-#    paster
-#
-executable=\${python:executable}
 interpreter = zopepy
 extra-paths=
     \${libxml2:site-packages}
@@ -141,34 +150,31 @@ output=parts/zdaemon.conf
 
 [prod.zdaemon.conf]
 recipe = collective.recipe.template
-input = \${buildout:directory}/etc/prod.zdaemon.conf.in
-output=parts/prod.zdaemon.conf
+input =\${buildout:directory}/etc/prod.zdaemon.conf.in
+output=\${buildout:directory}/parts/prod.zdaemon.conf
 
 [zope.conf]
 recipe = collective.recipe.template
-input = \${buildout:directory}/etc/zope.conf.in
-output=parts/zope.conf
+input =\${buildout:directory}/etc/zope.conf.in
+output=\${buildout:directory}/parts/zope.conf
 
 [prod.zope.conf]
 recipe = collective.recipe.template
 input = \${buildout:directory}/etc/prod.zope.conf.in
-output=parts/prod.zope.conf
+output=\${buildout:directory}/parts/prod.zope.conf
 
 [zeo.conf]
 recipe = collective.recipe.template
-input = \${buildout:directory}/etc/zeo.conf.in
-output=parts/zeo.conf
+input =\${buildout:directory}/etc/zeo.conf.in
+output=\${buildout:directory}/parts/zeo.conf
 
-[zeoserver.sh]
-recipe = collective.recipe.template
-input = \${buildout:directory}/etc/zeoserver.sh.in
-output=bin/zeoserver.sh
-
-[chmod]
-recipe=iw.recipe.cmd
-on_install=true
-on_update=true
-cmds=chmod 750 bin/*
+[zeoserver]
+recipe =minitage.recipe:scripts
+initialization=args=sys.argv[:];args.pop(0)
+arguments=["-C", "\${zeo.conf:output}"]+args
+extra-paths=\${scripts:extra-paths}
+scripts=zeoctl=zeoserver
+eggs=\${scripts:eggs}
 
 [mirrors]
 zope = download.zope.org

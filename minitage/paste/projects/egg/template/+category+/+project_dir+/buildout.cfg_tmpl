@@ -1,27 +1,24 @@
 ################################################################################
 # MINITAGE EGG PROJECT BUILDOUT
+# see http://pypi.python.org/pypi/minitage.recipe for documentation
 ################################################################################
 [buildout]
 parts =
     part
 versions = versions
 eggs-directory=../../eggs/cache
-develop-eggs-directory=../../eggs/develop-eggs
 
 [versions]
-minitage.core >= 0.0.4
-minitage.recipe >= 0.0.1
-setuptools = 0.6c9
 # egg1 = 9
 # egg2 = 10
 
 # think that the eggs version must be set in the versions section
 [part]
-recipe = minitage.recipe:egg
+recipe = minitage.recipe:scripts
 
 #
 # EGGS TO BUILD if we use an index
-# 
+#
 
 # eggs to get from the index if we are building classical eggs
 #eggs = egg1
@@ -37,7 +34,7 @@ recipe = minitage.recipe:egg
 #zip-safe=
 
 #
-# URL & MD5 if we are building something that does not come 
+# URL & MD5 if we are building something that does not come
 # from the python (or other) inddex
 #
 
@@ -59,8 +56,8 @@ recipe = minitage.recipe:egg
 
 #
 # COMPILATION DIRECTORY
-# 
-# sub directory where we can find a setup.py 
+#
+# sub directory where we can find a setup.py
 # in non standart archives
 #eggname-build-dir=
 
@@ -84,6 +81,14 @@ recipe = minitage.recipe:egg
 #eggname-darwin-patches = bar.diff
 
 #
+# Scripts generation
+#
+scripts=
+entry-points=
+
+
+
+#
 # HOOKS
 #
 
@@ -102,12 +107,11 @@ recipe = minitage.recipe:egg
 #
 
 # include directories
-#includes =
+#includes-dirs =
 
 # libraries to link directories
-#libraries =
+#library-dirs =
 
 # paths to libraries to add for the runtime path
 #rpath =
-
 

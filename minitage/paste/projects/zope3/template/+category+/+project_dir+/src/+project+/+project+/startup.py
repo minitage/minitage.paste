@@ -53,15 +53,20 @@ class ControllerCommands(zdaemon.zdctl.ZDCmd):
         print "debug -- Initialize the application, providing a debugger"
         print "         object at an interactive Python prompt."
 
+def zdaemon_controller_dev():
+    return zdaemon_controller('zdaemon.conf')
 
-def zdaemon_controller():
+def zdaemon_controller(config=None):
+    if not config:
+        config = 'prod.zdaemon.conf'
     argv = sys.argv[:]
     argv.pop(0)
     launch_args = []
     if not '-C' in argv:
         launch_args.append('-C')
-        launch_args.append(find_zope_conf('prod.zdaemon.conf'))
+        launch_args.append(find_zope_conf(config))
     launch_args.extend(argv)
     zdaemon.zdctl.main(launch_args,
                        options=None,
                        cmdclass=ControllerCommands)
+

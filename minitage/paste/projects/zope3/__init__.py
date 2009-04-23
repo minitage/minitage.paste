@@ -23,7 +23,7 @@ import subprocess
 
 from minitage.paste.projects import common
 from minitage.paste.common import var
-from minitage.core.common import which
+from minitage.core.common import which, search_latest
 
 
 running_user = getpass.getuser()
@@ -47,6 +47,8 @@ class Template(common.Template):
         vars['category'] = 'zope'
         common.Template.pre(self, command, output_dir, vars)
         vars['mode'] = vars['mode'].lower().strip()
+        if vars['with_psycopg2']:
+            vars['opt_deps'] += ' %s' % search_latest('postgresql-\d.\d*', vars['minilays'])
         if not vars['mode'] in ['zodb', 'relstorage', 'zeo']:
             raise Exception('Invalid mode (not in zeo, zodb, relstorage')
 
@@ -57,12 +59,6 @@ Template.vars = common.Template.vars \
            var('port',
                'Port to listen to',
                default = '8080',),
-           var('loglevel',
-               'log level (DEBUG|INFO|WARNING|ERROR)',
-               default = 'INFO',),
-           var('debug',
-               'Debug mode (on|off)',
-               default = 'on',),
            var('zeoaddress',
                'Address for the zeoserver (zeo mode only)',
                default = 'localhost:8100',),
@@ -87,10 +83,10 @@ Template.vars = common.Template.vars \
            var('mode',
                'Mode to use: zodb|relstorage|zeo',
                default = 'zodb'),
-           var('relstorage',
-               'RelStorage support (yes|no)',
-               default = 'yes'),
-           var('plone_eggs',
+           var('with_relstorage',
+               'RelStorage support (y|n)',
+               default = 'y'),
+           var('add_eggs',
                'space separeted list of additionnal eggs to install',
                default = '',),
            var('dbtype',
@@ -111,11 +107,11 @@ Template.vars = common.Template.vars \
            var('dbpassword',
                'Relstorage password (only useful for relstorage mode)',
                default = 'admin',),
-           var('psycopg2',
-               'Postgresql python bindings support (yes or no)',
-               default = 'no',),
-            var('mysqldb',
-                'Python Mysql bindings support (yes or no)',
-                default = 'no',),
+           var('with_psycopg2',
+               'Postgresql python bindings support (y or n)',
+               default = 'n',),
+            var('with_mysqldb',
+                'Python Mysql bindings support (y or n)',
+                default = 'n',),
 ]
 # vim:set et sts=4 ts=4 tw=80:

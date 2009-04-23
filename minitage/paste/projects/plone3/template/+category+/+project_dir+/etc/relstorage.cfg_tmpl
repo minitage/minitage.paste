@@ -1,20 +1,6 @@
-
 [instance]
-recipe = plone.recipe.zope2instance
-http-address=$address:$port
-zope2-location = \${zope2:location}
-user = $login:$password
-session-timeout-minutes = 90
-verbose-security = off
-debug-mode=${debug}
-event-log-level=${loglevel}
-z2-log-level=${loglevel}
-eggs =
-    \${zopepy:eggs}
-products =
-    \${buildout:directory}/Products
-extra-paths=\${zope2:location}
-zcml =
+products=
+extra-paths=
 rel-storage =
     type $dbtype
     dbname $dbname
@@ -22,3 +8,9 @@ rel-storage =
     host $dbhost
     password $dbpassword
 
+[zopepy]
+#if 'relstorage' in $mode:
+ZODB3-patches=\${buildout:directory}/patches/minitage.poll-invalidation-1-zodb-3-7-1.patch
+#else
+#ZODB3-patches=\${buildout:directory}/patches/minitage.poll-invalidation-1-zodb-3-7-1.patch
+#end if

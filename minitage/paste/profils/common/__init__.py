@@ -28,7 +28,7 @@ class Template(common.Template):
         m = None
         eggs, deps = [], []
         path = self.output_dir
-        if 'yes' in vars['inside_minitage']:
+        if vars['inside_minitage']:
             # either / or virtualenv prefix is the root
             # of minitage in any cases.
             # This is pointed out by sys.exec_prefix, hopefullly.
@@ -40,7 +40,7 @@ class Template(common.Template):
             try:
                 mb = m.find_minibuild(vars['project'])
             except Exception , e:
-                vars['inside_minitage'] = 'no'
+                vars['inside_minitage'] = False
             else:
                 adeps = m.compute_dependencies([vars['project']])
                 deps = [lmb for lmb in adeps if lmb.category == 'dependencies']
@@ -49,7 +49,7 @@ class Template(common.Template):
                 vars['path'] = m.get_install_path(mb) 
                 vars['sys'] = os.path.join(vars['path'], 'sys')
 
-        if not('yes' in vars['inside_minitage']):
+        if not vars['inside_minitage']:
             self.output_dir = os.path.join(os.getcwd(), vars['project'])
             vars['category'] = ''
             vars['path'] = self.output_dir

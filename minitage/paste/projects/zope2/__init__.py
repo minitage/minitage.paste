@@ -32,7 +32,7 @@ class Template(common.Template):
         vars['category'] = 'zope'
         common.Template.pre(self, command, output_dir, vars)
         vars['mode'] = vars['mode'].lower().strip()
-        if not vars['inside_minitage'] == 'yes':
+        if not vars['inside_minitage']:
             interpreter = None
             try:
                 interpreter = which(vars['python'].strip())
@@ -120,11 +120,11 @@ Template.vars = common.Template.vars \
                'Relstorage password (only useful for relstorage mode)',
                default = 'admin',),
            var('psycopg2',
-               'Postgresql python bindings support (yes or no)',
-               default = 'no',),
+               'Postgresql python bindings support (y or n)',
+               default = 'n',),
            var('mysqldb',
-               'Python Mysql bindings support (yes or no)',
-               default = 'no',),
+               'Python Mysql bindings support (y or n)',
+               default = 'n',),
            var('plone_products',
                'space separeted list of adtionnal products to install: '
                'eg: file://a.tz file://b.tgz',
@@ -140,9 +140,9 @@ Template.vars = common.Template.vars \
                'space separeted list of versionned suffix packages '
                'for product distro part',
                default = '',),
-           var('wsgi_support',
-               'WSGI capabilities (yes|no))',
-               default = 'yes',),
+           var('with_wsgi_support',
+               'WSGI capabilities (y|n))',
+               default = 'y',),
            ]
 
 # vim:set et sts=4 ts=4 tw=80:

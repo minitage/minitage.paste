@@ -4,7 +4,7 @@
 # this is not a plone on steroids as 25 is preety old, this is a maintenance
 # buildout only.
 ################################################################################
-#if 'yes' in $inside_minitage:
+#if $inside_minitage:
 [minitage]
 location=\${buildout:directory}/../..
 #end if
@@ -50,7 +50,7 @@ eggs =
     lxml
     elementtree
 develop =
-#if 'yes' in $inside_minitage:
+#if $inside_minitage:
 eggs-directory=\${minitage:location}/eggs/cache
 #end if
 tractor-src-directory = \${buildout:directory}/src

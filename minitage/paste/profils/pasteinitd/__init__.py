@@ -38,7 +38,7 @@ class Template(common.Template):
         common.Template.pre(self, command, output_dir, vars)
         config = vars['config']
         if not config.startswith('/'):
-            if 'yes' in vars['inside_minitage']:
+            if vars['inside_minitage']:
                 config = os.path.join(vars['path'], config)
         vars['configp'] = os.path.abspath(config)
 

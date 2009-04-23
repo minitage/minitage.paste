@@ -38,19 +38,37 @@ class Template(common.Template):
         """register catogory, and roll in common,"""
         vars['category'] = 'django'
         common.Template.pre(self, command, output_dir, vars)
-        if 'yes' in vars['inside_minitage']:
+        if vars['inside_minitage']:
             minilays = os.path.join(self.output_dir, 'minilays')
             if not 'official' in vars['official']:
                 vars['opt_deps'] = search_latest('subversion-\d.\d', minilays)
-            if 'yes' in vars['psycopg2']:
+            if vars['with_psycopg2']:
                 vars['opt_deps'] += ' %s' % (
                     search_latest('postgresql-\d.\d', minilays),
                 )
-            if (not 'yes' in vars['psycopg2']) \
-               and (not 'yes' in vars['mysqldb']):
+            if (not vars['with_psycopg2']) \
+               and (not vars['mysqldb']):
                 vars['opt_deps'] += ' %s' % (
                     search_latest('sqlite-\d.\d', minilays),
                 )
+            if vars["with_gis"]:
+                deps = ['mapnik-\d.\d*',
+                        'libmemcache-\d.\d*',
+                        'libxml2-\d.\d*',
+                        'libxslt-1.\d*',
+                        'pilwotk-1.1.\d.\d*',
+                        'zlib-1.\d*',
+                        'pgrouting-1.\d*',
+                        'cairo-1.\d*',
+                        'freetype-2.\d*',
+                        'fontconfig-2.\d*',
+                        'gdal-\d.\d*',
+                        'libpng-1.\d*',
+                        'pixman-0.\d*',
+                       ]
+                for dep in deps:
+                    vars['opt_deps'] += ' %s' % search_latest(dep, minilays)
+
 
 Template.vars = common.Template.vars \
         + [var('djangoversion',
@@ -68,15 +86,18 @@ Template.vars = common.Template.vars \
            var('djangoscm',
                'How to fetch the django code (static|svn|hg)',
                default = 'svn',),
-           var('sqlite',
-               'SQLite python bindings support (yes or no)',
-               default = 'yes',),
-           var('psycopg2',
-               'Postgresql python bindings support (yes or no)',
-               default = 'no',),
-           var('mysqldb',
-               'Python Mysql bindings support (yes or no)',
-               default = 'no',),
+           var('with_sqlite',
+               'SQLite python bindings support (y or n)',
+               default = 'y',),
+           var('with_psycopg2',
+               'Postgresql python bindings support (y or n)',
+               default = 'n',),
+           var('with_gis',
+               'Enable Spatial capabilities (GeoDjango, GIS) (y or n)',
+               default = 'n',),
+           var('with_mysqldb',
+               'Python Mysql bindings support (y or n)',
+               default = 'n',),
            var('address',
                'Address to listen on',
                default = 'localhost',),

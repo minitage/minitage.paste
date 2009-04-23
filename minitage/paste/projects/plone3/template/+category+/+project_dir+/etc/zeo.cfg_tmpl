@@ -9,15 +9,8 @@ zeo-conf-additional =
     </temporarystorage>
 
 [instance]
-recipe = plone.recipe.zope2instance
-http-address=$address:$port
-zope2-location = \${zope2:location}
-user = $login:$password
-session-timeout-minutes = 90
-verbose-security = off
-debug-mode=${debug}
-event-log-level=${loglevel}
-z2-log-level=${loglevel}
+extra-paths=
+products=
 zeo-client-cache-size = 80MB
 zeo-client = on
 zeo-address = $zeoaddress
@@ -30,10 +23,7 @@ temporary-storage =
     </zeoclient>
     mount-point /temp_folder
     container-class Products.TemporaryFolder.TemporaryContainer
-eggs =
-    \${zopepy:eggs}
-products =
-    \${buildout:directory}/Products
-extra-paths=\${zope2:location}
-zcml =
+
+[zopepy]
+eggs=
 

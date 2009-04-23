@@ -1,17 +1,11 @@
 ################################################################################
 # MINITAGE LIBRARY PROJECT BUILDOUT
+# see http://pypi.python.org/pypi/minitage.recipe for documentation
 ################################################################################
 [buildout]
-parts =
-    part
+parts = part
 versions = versions
 eggs-directory=../../eggs/cache
-develop-eggs-directory=../../eggs/develop-eggs
-
-[versions]
-minitage.core >= 0.0.4
-minitage.recipe >= 0.0.1
-setuptools = 0.6c9
 
 [anotherDep]
 location=\${buildout:directory}/../../dependencies/anotherDep-ver/parts/part
@@ -35,9 +29,6 @@ url = $srcurl
 
 #\if we check out something, the type of the scm
 #scm=svn
-
-# aditionnal arguments
-#scm-args = --ignore-externals
 
 #
 # PATCHES
@@ -75,6 +66,9 @@ url = $srcurl
 # OPTIONS FOR  MAKE
 #
 
+# do not run configure
+# noconfigure = true
+
 # set and do not run the make step
 # nomake =
 
@@ -93,33 +87,23 @@ url = $srcurl
 # make install targets
 #make-install-targets = install
 
+# make a shared build
+# shared = true
+
 #
 # HOOKS
 #
 
+# see the documentation to view available hooks
 # do something prior to the configure
 #pre-configure-hook = \${buildout:directory}/hooks/hook.py:configurePatch
 
-# do something prior to the make step
-#pre-make-hook = \${buildout:directory}/hooks/hook.py:beforeMake
-
-# do something prior to the make install step
-#pending-make-install-hook = \${buildout:directory}/hooks/hook.py:install
-
-# do something  after the make install step
-#post-make-hook = \${buildout:directory}/hooks/hook.py:afterInstall
-
-#
-# INCLUDE AND LIBRARIES PATHS
-#
-
 # include directories
-#includes =
+#includes-dirs =
 
 # libraries to link directories
-#libraries =
+#library-dirs =
 
 # paths to libraries to add for the runtime path
 #rpath =
-
 

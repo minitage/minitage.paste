@@ -4,7 +4,7 @@ setup(name='$project',
       # Fill in project info below
       version='$version',
       description="a sample application with minitage",
-      long_description="",                          
+      long_description="",
       keywords='',
       author='$author',
       author_email='$email',
@@ -49,6 +49,7 @@ setup(name='$project',
       [console_scripts]
       $project-debug = ${project}.startup:interactive_debug_prompt
       $project-ctl =  ${project}.startup:zdaemon_controller
+      $project-dev =  ${project}.startup:zdaemon_controller_dev
       [paste.app_factory]
       main = ${project}.startup:application_factory
       """

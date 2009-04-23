@@ -41,7 +41,7 @@
 #echo '#\n'
 #echo '##############################################################################\n'
 
-#if 'yes' in $inside_minitage:
+#if $inside_minitage:
 [minitage]
 location=\${buildout:directory}/../..
 #end if
@@ -73,6 +73,8 @@ find-links =
     http://gijsbert.org/downloads/cmemcache/
     http://\${mirrors:zope}/distribution/
     http://effbot.org/downloads
+    http://gijsbert.org/downloads/cmemcache/
+    http://initd.org/pub/software/psycopg/PSYCOPG-2-0/
 parts =
     scripts
     postinstall
@@ -85,19 +87,25 @@ eggs =
     WebError
     dj.paste
     Spawning
-#if 'yes' in $sqlite:
+#if $with_sqlite:
     pysqlite
 #end if
-#if 'yes' in $psycopg2:
+#if $with_psycopg2:
     psycopg2
 #end if
-#if 'yes' in $mysqldb:
+#if $with_mysqldb:
     MySQL_python
+#end if
+#if $with_gis
+    TileCache
+    cmemcache
+    PILwoTk
+    GDal
 #end if
 develop =
     src/$project
     django.paste
-#if 'yes' in $inside_minitage:
+#if $inside_minitage:
 eggs-directory=\${minitage:location}/eggs/cache
 #end if
 # see http://pypi.python.org/pypi/mr.developer for documentation

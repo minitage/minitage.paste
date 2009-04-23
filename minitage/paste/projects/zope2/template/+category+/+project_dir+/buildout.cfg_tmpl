@@ -31,7 +31,7 @@
 #echo '#\n'
 #echo '##############################################################################\n'
 
-#if 'yes' in $inside_minitage:
+#if $inside_minitage:
 [minitage]
 location=\${buildout:directory}/../..
 #end if
@@ -97,14 +97,14 @@ find-links =
     http://\${mirrors:zope}/ppix/
     http://\${mirrors:zope}/distribution/
     http://effbot.org/downloads
-#if 'yes' in $wsgi_support:
+#if $with_wsgi_support:
     http://dist.repoze.org/zope2/latest/
 #else
 #    http://dist.repoze.org/zope2/latest/
 #end if
 eggs =
 develop =fake-eggs/zopelib
-#if 'yes' in $inside_minitage:
+#if $inside_minitage:
 eggs-directory=\${minitage:location}/eggs/cache
 #end if
 dev-urls =
@@ -151,13 +151,13 @@ eggs =
 #if 'relstorage' in $mode:
 #echo '    RelStorage\n'
 #end if
-#if 'yes' in $psycopg2:
+#if $psycopg2:
 #echo '    psycopg2\n'
 #end if
-#if 'yes' in $mysqldb:
+#if $mysqldb:
 #echo '    MySQL_python\n'
 #end if
-#if 'yes' in $wsgi_support:
+#if $with_wsgi_support:
     repoze.zope2
     Spawning
     Deliverance

@@ -7,7 +7,7 @@
 #  * omelette: build a local site-packages with all eggs unpackaged inside (symlinks). Its usefull for IDE and ctags.
 #echo '#\n'
 # The classical paster for Pylons will be done at the end of the first run
-# You need to answar yes for ocverwriting setup.py
+# You need to answar y for ocverwriting setup.py
 # Your resulting egg is installed in develop mode and is in src/$project.
 #echo '#\n'
 #echo '#\n'
@@ -21,7 +21,7 @@
 #  port=xxxx
 #echo '###################################################################################'
 
-#if 'yes' in $inside_minitage:
+#if $inside_minitage:
 [minitage]
 location=$mt
 #end if
@@ -55,15 +55,15 @@ eggs =
     ipython
     Pylons
     $project
-#if 'yes' in $psycopg2:
+#if $psycopg2:
     psycopg2
 #end if
-#if 'yes' in $mysqldb:
+#if $mysqldb:
     MySQL_python
 #end if
 develop =
     src/${project}
-#if 'yes' in $inside_minitage:
+#if $inside_minitage:
 eggs-directory = \${buildout:directory}/../../eggs/caches
 #end if
 # see http://pypi.python.org/pypi/mr.developer for documentation

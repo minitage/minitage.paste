@@ -21,7 +21,7 @@ django_settings_module=${project}.${project}.settings
 [filter:exc]
 #if 'werkzeug' in $errorh:
 use=egg:dj.paste#debug
-#lelse
+#else
 #use=egg:dj.paste#debug
 #end if
 #if 'weberror' in $errorh:

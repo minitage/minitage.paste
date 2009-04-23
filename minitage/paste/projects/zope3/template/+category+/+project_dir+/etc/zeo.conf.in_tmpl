@@ -25,9 +25,8 @@
   # transaction-timeout SECONDS
 </zeo>
 
-
 <runner>
-  program bin/runzeo -C \${buildout:directory}/etc/zeo.conf
+  program bin/runzeo -C \${buildout:directory}/parts/zeo.conf
   daemon true
 </runner>
 

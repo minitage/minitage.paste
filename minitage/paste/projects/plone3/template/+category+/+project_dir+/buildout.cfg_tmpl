@@ -1,5 +1,9 @@
 #echo '##############################################################################\n'
 # PLONE 3 BUILDOUT
+# To develop your application, run the dev.cfg buildout, it extends this one with
+# development tools.
+#echo '#\n'
+#echo '#\n'
 # Think you have the most important file of the buildout in etc/versions.cfg
 # For your convenience, just download it from :
 #     http://dist.plone.org/release/3.x.x/versions.cfg
@@ -31,7 +35,7 @@
 #echo '#\n'
 #echo '##############################################################################\n'
 
-#if 'yes' in $inside_minitage:
+#if $inside_minitage:
 [minitage]
 location=\${buildout:directory}/../..
 #end if
@@ -50,14 +54,14 @@ name=python2.4
 
 [versions]
 # bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
-setuptools>=0.6c9
-python-openid>=2.0.1
-elementtree = 1.2.7-20070827-preview
-lxml = 2.0.5
+# the one packaged in minitage !
 PILwoTK  = 1.1.6.4
-psycopg2=2.0.8
 # zope 2.10.7 compatible version of the ZODB where the RelStorage patch applies
 ZODB3 = 3.7.1
+#for $product, $version in $plone_versions:
+${product}=${version}
+Spawning=0.8.11-minitage
+#end for
 
 [buildout]
 extensions = buildout.minitagificator mr.developer
@@ -67,15 +71,19 @@ python=python2.4
 # eggs versions used.
 extends=etc/versions.cfg
     etc/${mode}.cfg
+#if $with_sgdcg:
+    etc/dancing.cfg
+#end if
 #   ${project}.cfg
+
 #if $mode != 'zeo':
-#echo '#   etc/zeo.cfgr\n'
+#   etc/zeo.cfg
 #end if
 #if $mode != 'relstorage':
-#echo '#    etc/relstorage.cfg\n'
+#    etc/relstorage.cfg
 #end if
 #if $mode != 'zodb':
-#echo '#    etc/zodb.cfg\n'
+#    etc/zodb.cfg
 #end if
 versions = versions
 parts =
@@ -83,7 +91,11 @@ parts =
     zopepy
     productdistros
 #if $mode == 'zeo':
-#echo '    zeoserver\n'
+    zeoserver
+#end if
+#if $with_fss:
+    create-fss-dirs
+    fss
 #end if
     instance
 extra-paths=
@@ -94,23 +106,21 @@ extra-paths=
 # Think to change the plone release URL !!!
 #
 find-links =
+    http://distfiles.minitage.org/public/externals/minitage/
     http://dist.plone.org/release/3.2
     http://\${mirrors:zope}/ppix/
     http://\${mirrors:zope}/distribution/
     http://effbot.org/downloads
-#if 'yes' in $wsgi_support:
+#if $with_wsgi_support:
     http://dist.repoze.org/zope2/latest/
 #else
 #    http://dist.repoze.org/zope2/latest/
 #end if
 eggs =
 develop =fake-eggs/zopelib
-#if 'yes' in $inside_minitage:
+#if $inside_minitage:
 eggs-directory=\${minitage:location}/eggs/cache
 #end if
-dev-urls =
-    http://plone.org/products/clouseau/releases/0.8.1/clouseau-0-8-1.zip
-    http://www.zope.org/Members/shh/DocFinderTab/1.0.2/DocFinderTab-1.0.2.tar.gz
 # see http://pypi.python.org/pypi/mr.developer for documentation
 sources = sources
 #auto-checkout = my.package
@@ -133,56 +143,28 @@ skip-fake-eggs =
     ZODB3
 
 [zopepy]
+python-openid-patch-options = -Np1
 recipe = minitage.recipe:scripts
 executable=\${python2.4:executable}
-minitage-dependencies=openssl-0.9 libxml2-2.6 libxslt-1.1 zlib-1.2
-minitage-eggs = py-libxml2-2.6 py-libxslt-1.1
 # Important for you to note the installation of the ZODB as an egg . We will not
 # use the zodb code from the zope source distribution !!!!!!!
-eggs =
+eggs +=
     \${buildout:eggs}
-    lxml
-    elementtree
-    wicked
+    ZODB3
     PILwoTK
     Plone
 #slurp
 #for $product in $plone_eggs.split():
     ${product}
 #end for
-#if 'relstorage' in $mode:
-#echo '    RelStorage\n'
-#end if
-#if 'yes' in $psycopg2:
-#echo '    psycopg2\n'
-#end if
-#if 'yes' in $mysqldb:
-#echo '    MySQL_python\n'
-#end if
-#if 'yes' in $wsgi_support:
-    repoze.zope2
-    Spawning
-    Deliverance
-    ipython
-    ZODB3
-    Paste
-    PasteScript
-    PasteDeploy
-#zopelib-patche-options=-p0
-#else
-#    repoze.zope2
-#    Spawning
-#    Deliverance
-#    Paste
-#    PasteScript
-#    PasteDeploy
-#end if
 # if you really want zopelib un comment that:
-ZODB3-patches=\${buildout:directory}/patches/minitage.poll-invalidation-1-zodb-3-7-1.patch
 interpreter = zopepy
 extra-paths = \${zope2:location}/lib/python
      \${buildout:extra-paths}
 
+#
+# Traditionnal Plone products to install
+#
 [productdistros]
 recipe = plone.recipe.distros
 urls = #slurp
@@ -200,30 +182,86 @@ version-suffix-packages = #slurp
        ${product}
 #end for
 
-[omelette]
-recipe = collective.recipe.omelette
-eggs = \${instance:eggs}
-products = \${instance:products}
-           \${productdistros:location}
-packages =\${zopepy:extra-paths}
-
-[mirrors]
-sourceforge = ovh.dl.sourceforge.net
-minitage = distfiles.minitage.org/public/externals/minitage
-plone = plone.org
-zope = download.zope.org
-
+#
+# here is defined the Zope instance running your plone site
+#
 [instance]
-extra-paths+=\${buildout:extra-paths}
+recipe = plone.recipe.zope2instance
+http-address=$address:$port
+zope2-location = \${zope2:location}
+user = $login:$password
+session-timeout-minutes = 90
+verbose-security = off
+debug-mode=OFF
+event-log-level=ERROR
+z2-log-level=ERROR
+# attacking zopepy:eggs make instance be built after zopepy
+# in any case thx to the buildout automatic parts sort.
+eggs =
+    \${zopepy:eggs}
+products+=\${buildout:directory}/Products
+    \${buildout:directory}/parts/productdistros
+extra-paths+=
+    \${zopepy:extra-paths}
+zcml = #slurp
+#for $product in $plone_zcml.split():
+       ${product}
+#end for
 
+
+#
+# auto tracked developement products
+#
 [sources]
 # see http://pypi.python.org/pypi/mr.developer for documentation
 #my.package = svn http://example.com/svn/my.package/trunk
 #some.other.package = git git://example.com/git/some.other.package.git
 
+#
+# KGS generation
+#
 [kgs]
 recipe=minitage.recipe:printer
 quiet=
 eggs=\${instance:eggs}
 file=${project}.cfg
 
+#
+# FSS Support
+# See: http://plone.org/products/filesystemstorage
+#
+#if $with_fss
+[create-fss-dirs]
+recipe = plone.recipe.command
+update-command = \${create-fss-dirs:command}
+command =
+    mkdir -p \${buildout:directory}/var/fss_storage_${project} ;
+    mkdir -p \${buildout:directory}/var/fss_backup_${project} ;
+
+[fss]
+recipe = iw.recipe.fss
+zope-instances=\${instance:location}
+storages =
+    global /
+    ${project} /${project} directory
+#else
+# [create-fss-dirs]
+# recipe = plone.recipe.command
+#zope-instances=\${instance:location}
+# update-command = \${create-fss-dirs:command}
+# command =
+#   mkdir -p \${buildout:directory}/var/fss_storage_${project} ;
+#   mkdir -p \${buildout:directory}/var/fss_backup_${project} ;
+#
+# [fss]
+# recipe = iw.recipe.fss
+# storages =
+#     global /
+#     ${project} /${project} directory
+#end if
+
+[mirrors]
+sourceforge = ovh.dl.sourceforge.net
+minitage = distfiles.minitage.org/public/externals/minitage
+plone = plone.org
+zope = download.zope.org

@@ -23,8 +23,13 @@ conf=%(here)s/../parts/zope.conf
 use = egg:z3c.evalexception#ajax
 
 [server:main]
+#if 'zodb' in $mode:
+use = egg:Paste#http
+# You cant use spawning with plain zodb
+#else
 use = egg:Spawning
+#end if
 host = $address
-port = $port 
+port = $port
 
 

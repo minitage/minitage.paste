@@ -55,10 +55,10 @@ Template.vars = common.Template.vars \
                'Description',
                default = 'project using pylons (description)'),
             var('psycopg2',
-               'Postgresql python bindings support (yes or no)',
-               default = 'no',),
+               'Postgresql python bindings support (y or n)',
+               default = 'n',),
             var('mysqldb',
-                'Python Mysql bindings support (yes or no)',
-                default = 'no',),
+                'Python Mysql bindings support (y or n)',
+                default = 'n',),
           ]
 # vim:set et sts=4 ts=4 tw=80:

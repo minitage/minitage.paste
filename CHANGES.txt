@@ -1,6 +1,16 @@
 
 CHANGES
 ==============
+
+1.0
+------
+
+    - Only the django, zope3, plone3, plone25, pylons templates remains
+    - paste-initd is a now comer
+    - all templates have now an optionnal support for minitage
+    - its stabilized with other minitage components
+    - templates are all documented on http://www.minitage.org
+
 0.22
 ------
 

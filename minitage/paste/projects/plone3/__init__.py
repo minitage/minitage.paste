@@ -14,11 +14,10 @@
 
 __docformat__ = 'restructuredtext en'
 
-
 import os
 from minitage.paste.projects import common
 from minitage.paste.common import var
-from minitage.core.common  import which
+from minitage.core.common  import which, search_latest
 import getpass
 import subprocess
 
@@ -32,45 +31,38 @@ class Template(common.Template):
         vars['category'] = 'zope'
         common.Template.pre(self, command, output_dir, vars)
         vars['mode'] = vars['mode'].lower().strip()
-        if not vars['inside_minitage'] == 'yes':
-            interpreter = None
-            try:
-                interpreter = which(vars['python'].strip())
-            except:
-                interpreter = which('python2.4')
-            if not interpreter:
-                raise Exception('Python interpreter not found')
+        if vars['with_psycopg2']:
+            vars['opt_deps'] += ' %s' % search_latest('postgresql-\d.\d*', vars['minilays'])
+        if vars['with_ldap'] and vars['inside_minitage']:
+            vars['opt_deps'] += ' %s' % search_latest('openldap-\d\.\d*', vars['minilays'])
+        vars['plone_eggs'] += ' ipython'
+        if 'relstorage' in vars['mode']:
+            vars['plone_eggs'] += ' RelStorage'
+        vars['plone_eggs'] += ' ZODB3'
+        eggs_mappings = {
+            'with_wsgi_support': ['repoze.zope2', 'Spawning', 'Deliverance',
+                             'ZODB3', 'Paste', 'PasteScript', 'PasteDeploy',],
+            'with_psycopg2': ['psycopg2'],
+            'with_mysqldb': ['MySQL_python'],
+            'with_fss': ['iw.fss'],
+            'with_pa': ['Products.PloneArticle'],
+            #'with_pboard': ['Products.SimpleAttachment'],
+            'with_sgdcg': ['collective.dancing'],
+            'with_truegall': ['collective.plonetruegallery'],
+            'with_lingua': ['Products.LinguaPlone'],
+            'with_cachesetup': ['Products.CacheSetup'],
+            'with_ldap': ['python-ldap',
+                          'Products.LDAPUserFolder',
+                          'Products.LDAPMultiPlugins',
+                          'Products.PloneLDAP',]
 
-            # which python version are we using ?
-            executable_version = os.popen(
-                '%s -c "%s"' % (
-                    interpreter,
-                    'import sys;print sys.version[:3]'
-                )
-            ).read().replace('\n', '')
-            if executable_version != '2.4':
-                print 'Try to find a python 2.4 installation, you didnt give a 2.4 python to paster'
-                interpreter = which('python2.4')
-                executable_version = os.popen(
-                    '%s -c "%s"' % (
-                        interpreter,
-                        'import sys;print sys.version[:3]'
-                    )
-                ).read().replace('\n', '')
-                if executable_version != '2.4':
-                    raise Exception('Incomptable python '
-                                    'version: (%s, %s)' % (interpreter,
-                                                          executable_version)
-                                   )
-            executable_prefix = os.path.abspath(
-                subprocess.Popen(
-                    [interpreter, '-c', 'import sys;print sys.prefix'],
-                    stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                    close_fds=True).stdout.read().replace('\n', '')
-            )
-            vars['xml2'] = os.path.join(executable_prefix, 'lib', 'python2.4', 'site-packages')
-            vars['xslt'] = os.path.join(executable_prefix, 'lib', 'python2.4', 'site-packages')
-            vars['python'] = interpreter
+        }
+        for var in [k for k in eggs_mappings if vars[k]]:
+            for egg in eggs_mappings[var]:
+                vars['plone_eggs'] += ' %s' % egg
+
+        versions = []
+        vars['plone_versions'] = versions
         if not vars['mode'] in ['zodb', 'relstorage', 'zeo']:
             raise Exception('Invalid mode (not in zeo, zodb, relstorage')
 
@@ -84,17 +76,11 @@ Template.vars = common.Template.vars \
                default = '8080',),
            var('mode',
                'Mode to use : zodb|relstorage|zeo',
-               default = 'zeo'
+               default = 'zodb'
               ),
            var('zeoaddress',
                'Address for the zeoserver (zeo mode only)',
                default = 'localhost:8100',),
-           var('loglevel',
-               'log level (DEBUG|INFO|WARNING|ERROR)',
-               default = 'INFO',),
-           var('debug',
-               'Debug mode (on|off)',
-               default = 'on',),
            var('login',
                'Administrator login',
                default = 'admin',),
@@ -119,18 +105,15 @@ Template.vars = common.Template.vars \
            var('dbpassword',
                'Relstorage password (only useful for relstorage mode)',
                default = 'admin',),
-           var('psycopg2',
-               'Postgresql python bindings support (yes or no)',
-               default = 'no',),
-           var('mysqldb',
-               'Python Mysql bindings support (yes or no)',
-               default = 'no',),
            var('plone_products',
                'space separeted list of adtionnal products to install: '
                'eg: file://a.tz file://b.tgz',
                default = '',),
            var('plone_eggs',
                'space separeted list of additionnal eggs to install',
+               default = '',),
+           var('plone_zcml',
+               'space separeted list of eggs to include for searching ZCML slugs',
                default = '',),
            var('plone_np',
                'space separeted list of nested packages for products '
@@ -140,9 +123,35 @@ Template.vars = common.Template.vars \
                'space separeted list of versionned suffix packages '
                'for product distro part',
                default = '',),
-           var('wsgi_support',
-               'WSGI capabilities (yes|no))',
-               default = 'yes',),
+           var('with_wsgi_support',
+               'WSGI capabilities (y/n))',
+               default = 'y',),
+           var('with_psycopg2',
+               'Postgresql python bindings support (y/n)',
+               default = 'n',),
+           var('with_mysqldb',
+               'Python Mysql bindings support (y/n)',
+               default = 'n',),
+           var('with_ldap',
+               'LDAP bindings support (y/n)',
+               default = 'n',),
+           var('with_fss',
+               'File System Storage support, see http://plone.org/products/filesystemstorage: y/n',
+               default = 'y',),
+           var('with_cpwkf', 'CMFPlacefulWorkflow, see http://plone.org/products/cmfplacefulworkflow/: y/n',
+               default='n'),
+           var('with_pa', 'Plone Article, see http://plone.org/products/plonearticle/: y/n',
+               default='n'),
+#           var('with_pboard', 'Plone Board, see  http://plone.org/products/ploneboard/: y/n',
+#               default='n'),
+           var('with_sgdcg', 'Singing & Dancing NewsLetter see http://plone.org/products/dancing/: y/n',
+               default='n'),
+           var('with_truegall', 'PloneTrueGallery see http://plone.org/products/plone-true-gallery/: y/n',
+               default='n'),
+           var('with_lingua', 'LinguaPlone support, see http://plone.org/products/linguaplone: y/n',
+               default='n'),
+           var('with_cachesetup', 'Cachefu caching Support, see http://plone.org/products/cachefu/: y/n',
+               default='y'),
            ]
 
 # vim:set et sts=4 ts=4 tw=80:
