@@ -24,6 +24,13 @@ setup(
         + '\n'
     ),
     classifiers=[
+        "Framework :: Django",
+        "Framework :: Pylons",
+        "Framework :: Paste",
+        "Framework :: Plone",
+        "Framework :: Zope2",
+        "Framework :: Zope3" ,
+        "Framework :: Buildout",
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU General Public License (GPL)',
         'Topic :: Software Development :: Build Tools',
