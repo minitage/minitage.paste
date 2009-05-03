@@ -63,6 +63,8 @@ class Template(common.Template):
 
         versions = []
         vars['plone_versions'] = versions
+        if vars['with_pa']:
+            vars['plone_versions'].append(('Products.PloneArticle', '4.1.2',))
         if not vars['mode'] in ['zodb', 'relstorage', 'zeo']:
             raise Exception('Invalid mode (not in zeo, zodb, relstorage')
 
