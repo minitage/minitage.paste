@@ -1,7 +1,13 @@
 
 CHANGES
 ==============
+ 
+1.2
+-------
 
+    - remove some useless variables on pgsql templates
+    - fix django url
+ 
 1.1
 -------
 

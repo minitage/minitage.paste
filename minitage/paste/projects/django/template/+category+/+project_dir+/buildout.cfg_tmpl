@@ -117,13 +117,9 @@ recipe=minitage.recipe:scripts
 interpreter = djangopy
 eggs=\${buildout:eggs}
 #if not 'official' in $official:
-url=$djangourl
-scm=$djangoscm
-revision = $djangorevision
+url=$djangourl|$djangoscm|$djangorevision
 #else
-#url=$djangourl
-#scm=$djangoscm
-#revision = $djangorevision
+#url=$djangourl|$djangoscm|$djangorevision
 #end if
 
 [omelette]

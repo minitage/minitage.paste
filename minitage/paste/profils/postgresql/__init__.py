@@ -114,12 +114,12 @@ class Template(common.Template):
 Template.required_templates = ['minitage.profils.env']
 running_user = getpass.getuser()
 gid = pwd.getpwnam(running_user)[3]
-group = grp.getgrgid(gid)[0]
+#group = grp.getgrgid(gid)[0]
 Template.vars = common.Template.vars + \
                 [
                 templates.var('db_name', 'Database name', default = 'minitagedb'),
                 templates.var('db_user', 'Default user', default = running_user),
-                templates.var('db_group', 'Default group', default = group),
+                #templates.var('db_group', 'Default group', default = group),
                 templates.var('db_host', 'Host to listen on', default = 'localhost'),
                 templates.var('db_port', 'Port to listen to', default = '5432'),
                 templates.var('pg_version', 'Port to listen to', default = '8.3'),

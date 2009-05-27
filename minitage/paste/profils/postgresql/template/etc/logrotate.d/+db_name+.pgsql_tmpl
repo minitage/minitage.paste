@@ -2,7 +2,7 @@
 #echo '%s/var/log/postgresql/%s/*.log {\n' % ($sys, $db_name) 
 rotate 10
 daily
-create 660 $db_user $db_group
+create 660 $db_user 
 notifempty
 size 10M
 sharedscripts

@@ -65,7 +65,7 @@ max_connections = 100			# (change requires restart)o
 # also need to raise shared_buffers to support more connections.
 #superuser_reserved_connections = 3	# (change requires restart)
 #echo "unix_socket_directory = '%s/var/run/postgresql/%s' # (change requires restart)\n" % ($sys, $db_name)
-unix_socket_group = '$db_group'			# (change requires restart)
+#unix_socket_group = '			# (change requires restart)
 unix_socket_permissions = 0770		# begin with 0 to use octal notation
 					# (change requires restart)
 #bonjour_name = ''			# defaults to the computer name
