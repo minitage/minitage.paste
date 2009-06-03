@@ -47,7 +47,7 @@ class Template(common.Template):
                     search_latest('postgresql-\d.\d', minilays),
                 )
             if (not vars['with_psycopg2']) \
-               and (not vars['mysqldb']):
+               and (not vars['with_mysqldb']):
                 vars['opt_deps'] += ' %s' % (
                     search_latest('sqlite-\d.\d', minilays),
                 )

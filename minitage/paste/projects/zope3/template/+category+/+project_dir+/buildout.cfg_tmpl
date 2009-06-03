@@ -129,13 +129,13 @@ ZODB3-patches=\${buildout:directory}/etc/poll-invalidation-1-zodb-3-8-0.patch
 
 [omelette]
 recipe = collective.recipe.omelette
-eggs = \${instance:eggs}
+eggs = \${scripts:eggs}
 packages =\${zopepy:extra-paths}
 
 [kgs]
 recipe=minitage.recipe:printer
 quiet=
-eggs=\${instance:eggs}
+eggs=\${scripts:eggs}
 file=${project}.cfg
 
 [sources]
