@@ -141,11 +141,15 @@ additional-fake-eggs =
 # ZODB
 skip-fake-eggs =
     ZODB3
+    zope.location
 
 [zopepy]
 python-openid-patch-options = -Np1
 recipe = minitage.recipe:scripts
 executable=\${python2.4:executable}
+#if $with_ldap:
+includes-dirs = $includesdirs
+#end if
 # Important for you to note the installation of the ZODB as an egg . We will not
 # use the zodb code from the zope source distribution !!!!!!!
 eggs +=

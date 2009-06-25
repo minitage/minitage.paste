@@ -29,12 +29,22 @@ class Template(common.Template):
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
         vars['category'] = 'zope'
+        vars['includesdirs'] = ''
         common.Template.pre(self, command, output_dir, vars)
         vars['mode'] = vars['mode'].lower().strip()
+        if vars['inside_minitage']:
+            for i in ['libxml2', 'libxslt', 'pilwotk', 'libiconv']:
+                vars['opt_deps'] += ' %s' %  search_latest('%s.*' % i, vars['minilays'])
         if vars['with_psycopg2']:
             vars['opt_deps'] += ' %s' % search_latest('postgresql-\d.\d*', vars['minilays'])
         if vars['with_ldap'] and vars['inside_minitage']:
             vars['opt_deps'] += ' %s' % search_latest('openldap-\d\.\d*', vars['minilays'])
+            cs = search_latest('cyrus-sasl-\d\.\d*', vars['minilays'])
+            vars['opt_deps'] += ' %s' % cs
+            vars['includesdirs'] = '\n    %s'%  os.path.join(
+                vars['mt'], cs, 'parts', 'part', 'include', 'sasl'
+            )
+
         vars['plone_eggs'] += ' ipython'
         if 'relstorage' in vars['mode']:
             vars['plone_eggs'] += ' RelStorage'
@@ -60,7 +70,6 @@ class Template(common.Template):
         for var in [k for k in eggs_mappings if vars[k]]:
             for egg in eggs_mappings[var]:
                 vars['plone_eggs'] += ' %s' % egg
-
         versions = []
         vars['plone_versions'] = versions
         if vars['with_pa']:

@@ -24,7 +24,7 @@ PG_PATH = os.environ.get('MPG_PATH',
                         )
 WRAPPE_TEMPLATE ="""\
 #!/usr/bin/env bash
-source ${sys}/share/postgresql/${db_name}.env
+. ${sys}/share/postgresql/${db_name}.env
 %s $@
 """
 

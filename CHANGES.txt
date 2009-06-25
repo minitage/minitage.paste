@@ -2,8 +2,14 @@
 CHANGES
 ==============
 
- 1.3
- ----
+UP
+---
+
+    - postgresql and plone3 maintenance
+
+
+1.3
+----
 
         - fix failed merge
 
