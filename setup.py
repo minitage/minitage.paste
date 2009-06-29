@@ -6,7 +6,7 @@ setupdir = os.path.abspath(
 os.chdir(setupdir)
 
 name='minitage.paste'
-version = '1.3.9'
+version = '1.3.10'
 
 def read(rnames):
     return open(
@@ -32,7 +32,7 @@ setup(
         "Framework :: Zope3" ,
         "Framework :: Buildout",
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: GNU General Public License (GPL)',
+        'License :: OSI Approved :: BSD License',
         'Topic :: Software Development :: Build Tools',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
