@@ -6,6 +6,7 @@ UP
 ---
 
     - postgresql and plone3 maintenance
+    - fix buildout part ordering
 
 
 1.3

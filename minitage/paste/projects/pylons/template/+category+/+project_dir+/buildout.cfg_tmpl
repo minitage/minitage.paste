@@ -81,6 +81,7 @@ eggs=
 interpreter = pylonspy
 
 [postinstall]
+order=\${scripts:recipe}
 recipe=iw.recipe.cmd
 on_install=true
 cmds=
@@ -88,11 +89,13 @@ cmds=
     ../bin/paster create -t pylons ${project}
 
 [omelette]
+order=\${scripts:recipe}
 recipe = collective.recipe.omelette
 eggs = \${instance:eggs}
 packages =\${zopepy:extra-paths}
 
 [kgs]
+order=\${scripts:recipe}
 recipe=minitage.recipe:printer
 quiet=
 eggs=\${instance:eggs}

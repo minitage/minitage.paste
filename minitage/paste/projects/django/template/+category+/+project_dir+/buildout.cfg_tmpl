@@ -123,6 +123,7 @@ url=$djangourl|$djangoscm|$djangorevision
 #end if
 
 [omelette]
+order=\${scripts:recipe}
 recipe = collective.recipe.omelette
 eggs = \${buildout:eggs}
 packages =\${buildout:extra-paths}
@@ -133,6 +134,7 @@ packages =\${buildout:extra-paths}
 #some.other.package = git git://example.com/git/some.other.package.git
 
 [kgs]
+order=\${scripts:recipe}
 recipe=minitage.recipe:printer
 quiet=
 eggs=\${buildout:eggs}

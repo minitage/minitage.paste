@@ -199,6 +199,7 @@ version-suffix-packages = #slurp
 #end for
 
 [omelette]
+order=\${zopepy:recipe}
 recipe = collective.recipe.omelette
 eggs = \${instance:eggs}
 products = \${instance:products}
@@ -212,6 +213,7 @@ plone = plone.org
 zope = download.zope.org
 
 [instance]
+order=\${zopepy:recipe}
 extra-paths+=\${buildout:extra-paths}
 
 [sources]
@@ -220,6 +222,7 @@ extra-paths+=\${buildout:extra-paths}
 #some.other.package = git git://example.com/git/some.other.package.git
 
 [kgs]
+order=\${zopepy:recipe}
 recipe=minitage.recipe:printer
 quiet=
 eggs=\${instance:eggs}

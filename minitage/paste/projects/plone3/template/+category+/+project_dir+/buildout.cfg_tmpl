@@ -190,6 +190,7 @@ version-suffix-packages = #slurp
 # here is defined the Zope instance running your plone site
 #
 [instance]
+order=\${zopepy:recipe}
 recipe = plone.recipe.zope2instance
 http-address=$address:$port
 zope2-location = \${zope2:location}
@@ -225,6 +226,8 @@ zcml = #slurp
 # KGS generation
 #
 [kgs]
+order=${zopepy:recipe}
+
 recipe=minitage.recipe:printer
 quiet=
 eggs=\${instance:eggs}
