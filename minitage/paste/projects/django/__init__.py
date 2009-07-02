@@ -58,6 +58,8 @@ class Template(common.Template):
             minilays = os.path.join(self.output_dir, 'minilays')
             if not 'official' in vars['official']:
                 vars['opt_deps'] = search_latest('subversion-\d.\d', minilays)
+            if vars['with_mysqldb']:
+                vars['opt_deps'] += ' %s' % search_latest('mysql-\d.\d*', vars['minilays'])
             if vars['with_psycopg2']:
                 vars['opt_deps'] += ' %s' % (
                     search_latest('postgresql-\d.\d', minilays),

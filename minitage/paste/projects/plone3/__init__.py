@@ -50,6 +50,8 @@ class Template(common.Template):
         if vars['inside_minitage']:
             for i in ['libxml2', 'libxslt', 'pilwotk', 'libiconv']:
                 vars['opt_deps'] += ' %s' %  search_latest('%s.*' % i, vars['minilays'])
+        if vars['with_mysqldb']:
+            vars['opt_deps'] += ' %s' % search_latest('mysql-\d.\d*', vars['minilays'])
         if vars['with_psycopg2']:
             vars['opt_deps'] += ' %s' % search_latest('postgresql-\d.\d*', vars['minilays'])
         if vars['with_ldap'] and vars['inside_minitage']:

@@ -62,6 +62,8 @@ class Template(common.Template):
         vars['category'] = 'zope'
         common.Template.pre(self, command, output_dir, vars)
         vars['mode'] = vars['mode'].lower().strip()
+        if vars['with_mysqldb']:
+            vars['opt_deps'] += ' %s' % search_latest('mysql-\d.\d*', vars['minilays']) 
         if vars['with_psycopg2']:
             vars['opt_deps'] += ' %s' % search_latest('postgresql-\d.\d*', vars['minilays'])
         if not vars['mode'] in ['zodb', 'relstorage', 'zeo']:
