@@ -226,7 +226,7 @@ zcml = #slurp
 # KGS generation
 #
 [kgs]
-order=${zopepy:recipe}
+order=\${zopepy:recipe}
 
 recipe=minitage.recipe:printer
 quiet=

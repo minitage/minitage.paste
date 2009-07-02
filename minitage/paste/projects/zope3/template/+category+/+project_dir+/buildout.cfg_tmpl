@@ -171,7 +171,7 @@ input =\${buildout:directory}/etc/zeo.conf.in
 output=\${buildout:directory}/parts/zeo.conf
 
 [zeoserver]
-order=${scripts:recipe}
+order=\${scripts:recipe}
 
 recipe =minitage.recipe:scripts
 initialization=args=sys.argv[:];args.pop(0)
