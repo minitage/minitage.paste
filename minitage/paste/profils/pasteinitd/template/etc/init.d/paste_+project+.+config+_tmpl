@@ -20,6 +20,14 @@ export PATH=\$PATH:/sbin:/usr/sbin:/usr/local/sbin
 . $sys/share/minitage/minitage.env
 CONFIG_PATH="$configp"
 PASTER_OPTS="--pid-file=\$PID_FILE \$CONFIG_PATH --log-file=${sys}/var/log/paste/${config}.log"
+#if $with_reload
+RELOAD="$with_reload"
+#else
+RELOAD=""
+#end if
+if [[ -n "\$RELOAD" ]];then
+    PASTER_OPTS="\$PASTER_OPTS --reload "
+fi
 
 start() {
     ebegin  "Starting $project using $config configuration"

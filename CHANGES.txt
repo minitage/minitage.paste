@@ -7,6 +7,7 @@ UP
 
     - postgresql and plone3 maintenance
     - fix buildout part ordering
+    - add --reload option for the pasteinitd profile
 
 
 1.3

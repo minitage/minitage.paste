@@ -80,6 +80,8 @@ group = grp.getgrgid(gid)[0]
 Template.vars = common.Template.vars + \
                 [
                 templates.var('config', 'The configuration file to use as a base for the init script', default = 'prod.ini'),
+                templates.var('with_reload', 'Enable auto reloading of the'
+                              'server on code changes. [y/n]', default= 'n'),
                 templates.var('user', 'Default user', default = running_user),
                 templates.var('group', 'Default group', default = group),
                 ]
