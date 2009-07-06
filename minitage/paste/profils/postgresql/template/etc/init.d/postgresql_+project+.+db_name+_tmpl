@@ -13,7 +13,7 @@
 
 # inspired by gentoo/openrc init scripts.
 
-#echo 'source %s/share/postgresql/%s.env\n' % ($sys, $db_name)
+#echo '. %s/share/postgresql/%s.env\n' % ($sys, $db_name)
 #echo "PID_FILE='%s/var/run/postgresql/%s.pid'\n" % ($sys, $db_name)
 
 # add /sbin 's when we run in user mode in the PATH

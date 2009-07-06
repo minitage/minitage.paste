@@ -86,7 +86,7 @@ class Template(common.Template):
             # remove files coming out by templates
             # to be out of overwrite errors.
             os.system("""
-                      sh -c ". %s/share/minitage/minitage.env;\
+                      bash -c ". %s/share/minitage/minitage.env;\
                       initdb  -E 'UTF-8';\
                       pg_ctl -w start ;\
                       createdb ;\

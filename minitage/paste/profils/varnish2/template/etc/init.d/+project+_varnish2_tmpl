@@ -13,8 +13,8 @@
 
 # inspired by gentoo/openrc init scripts.
 
-#echo 'source %s/share/gentoo/functions.sh\n' % ($sys)
-#echo 'source %s/share/minitage/minitage.env\n' % ($sys)
+#echo '. %s/share/gentoo/functions.sh\n' % ($sys)
+#echo '. %s/share/minitage/minitage.env\n' % ($sys)
 #echo "PID_FILE='%s/var/run/varnish/%s.pid'\n" % ($sys, $project)
 
 # add /sbin 's when we run in user mode in the PATH

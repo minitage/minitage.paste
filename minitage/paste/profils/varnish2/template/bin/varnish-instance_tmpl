@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source $sys/share/minitage/minitage.env
+. $sys/share/minitage/minitage.env
 export  LD_LIBRARY_PATH=$vp/lib/
 exec $sys/bin/varnishd \
     -f "$sys/etc/varnish/${project}.vcl" \

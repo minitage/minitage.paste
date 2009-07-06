@@ -1,6 +1,6 @@
 $header
 # # gentoo stolen stuff
-source $sys/share/gentoo/functions.sh
+. $sys/share/gentoo/functions.sh
 #set ENVVAR='MINITAGE%s' % ( $project.replace('-', '').replace('_', '').replace('*', ''))
 if [[ -n \$$ENVVAR ]];then
     export PATH=\$OLD_MINITAGE_PATH
