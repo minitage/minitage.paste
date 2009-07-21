@@ -137,6 +137,6 @@ Template.vars = common.Template.vars + \
                 #templates.var('db_group', 'Default group', default = group),
                 templates.var('db_host', 'Host to listen on', default = 'localhost'),
                 templates.var('db_port', 'Port to listen to', default = '5432'),
-                templates.var('pg_version', 'Version of postgresql to use', default = '8.3'),
+                templates.var('pg_version', 'Version of postgresql to use', default = '8.4'),
                 ]
 # vim:set et sts=4 ts=4 tw=80:
