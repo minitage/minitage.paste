@@ -8,7 +8,9 @@ UP
     - postgresql and plone3 maintenance
     - fix buildout part ordering
     - add --reload option for the pasteinitd profile
-
+    - pgsql 8.4 support
+    - better doc and output for paster questions
+    - zope3 python version upgraded
 
 1.3
 ----
