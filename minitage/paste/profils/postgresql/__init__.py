@@ -72,12 +72,6 @@ class Template(common.Template):
             ).read()
             pgre = re.compile('.*postgresql-([^\s]*)\s.*', re_flags)
             m = pgre.match(fic)
-            if m:
-                vars['pg_version'] = m.groups()[0]
-            vars['log_collector'] = 'logging_collector'
-            if vars['pg_version'] == '8.2':
-                vars['log_collector'] = 'redirect_stderr'
-
             # We are searching in the destination if we
             # already have a postgresql installation.
             # If we have, just register as already installed.
@@ -93,8 +87,12 @@ class Template(common.Template):
                       pg_ctl stop"
                       """ % (vars['sys'])
                      )
-            for f in ('postgresql.conf',
-                      'pg_hba.conf',
+            version = os.popen('initdb --version').read()
+            if '8.2' in version:
+                vars['lc'] = 'redirect_stderr'
+            else:
+                vars['lc'] = 'logging_collector'
+            for f in ('pg_hba.conf',
                       'pg_ident.conf' ):
                 fp = os.path.join(db_path, f)
                 if os.path.isfile(fp):
@@ -110,6 +108,11 @@ class Template(common.Template):
                 os.chmod(p, stat.S_IRGRP|stat.S_IXGRP|stat.S_IRWXU)
 
         # be nice, link some files
+        conf = os.path.join(vars['sys'],
+                            'var', 'data',
+                            'postgresql',
+                            vars['db_name'],
+                            'postgresql.conf')
         for filep in ('postgresql.conf',
                      'pg_hba.conf', 'pg_ident.conf'):
             dest = os.path.join(vars['sys'],
@@ -125,6 +128,22 @@ class Template(common.Template):
                                 filep)
             if not os.path.exists(dest):
                 os.symlink(orig, dest)
+            confc = open(conf).read()
+            if not 'MINITAGE LOGGING' in confc:
+                open(conf,'w').write(confc +
+                """
+# MINITAGE LOGGING
+log_directory = '%(sys)s/var/log/postgresql/coursorama'
+# directory where log files are written,
+# can be absolute or relative to PGDATA
+log_filename='postgresql-%(p)sY-%(p)sm-%(p)sd.log'
+%(lc)s=true
+                                 """ % {
+                                     'sys':vars['sys'], 'p':'%', 'lc': vars['lc']
+                                 })
+        print "\nYou can use pypgoptimizator to Tune automaticly your postgresl:"
+        print "\teasy_install pypgoptimizator"
+        print "\tpypgoptimizator -i %s -o %s\n" % (conf, conf)
 
 Template.required_templates = ['minitage.profils.env']
 running_user = getpass.getuser()
@@ -137,6 +156,5 @@ Template.vars = common.Template.vars + \
                 #templates.var('db_group', 'Default group', default = group),
                 templates.var('db_host', 'Host to listen on', default = 'localhost'),
                 templates.var('db_port', 'Port to listen to', default = '5432'),
-                templates.var('pg_version', 'Version of postgresql to use', default = '8.4'),
                 ]
 # vim:set et sts=4 ts=4 tw=80:
