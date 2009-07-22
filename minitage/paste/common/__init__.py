@@ -123,17 +123,24 @@ class Template(templates.Template):
         return cvars
 
     def read_vars(self, command=None):
+        python = '%s' % (
+            '\tMinitage will try to use a python from its built dependencies if you\n'
+            '\tare in a minitage environment. In other words, il will add it to your minibuild.\n'
+            '\tIf you are not inside a minitage,  it will try to find one installed on your system ($PATH).\n'
+        )
+        if getattr(self, 'python', None):
+            python +='\tThe selected paster indicate that you must use %s.\n' % self.python
         print "%s" % (
-            '\n\n'
             '---------------------------------------------------------\n'
             '\tMinitage support is now optionnal.\n'
             '\tWarning: All minitage templates come by default '
-            'with their dependencies. You ll not have to '
+            'with their dependencies (including xml parsing and databases). You ll not have to '
             'specify them.\n'
             '\tMany of the variables are optionnal or have good defaults provided.\n'
             '\tJust press enter to continue the process.\n'
+            '%s'
             '---------------------------------------------------------\n'
-        )
+        ) % python
         return templates.Template.read_vars(self, command)
 
     def pre(self, command, output_dir, vars):

@@ -165,7 +165,7 @@ Template.vars = common.Template.vars + \
                     '(only useful in a minitage)',
                     default = 'hg',),
          common.var('uri',
-                    'Url to checkout (only useful in a minitage)',
+                    'Url of the project to checkout (only useful in a minitage)',
                     default = 'http://hg.foo.net',),
          common.var('install_method',
                     'The install method of your minibuild '
@@ -176,7 +176,8 @@ Template.vars = common.Template.vars + \
                     '(only useful in a minitage)',
                     default = 'http://foo.net',),
          common.var('python',
-                    'the Python interpreter to use.',
+                    'the Python interpreter to use. (Only useful if you are not'
+                    'inside a minitage.',
                     default = sys.executable,)
         ]
 # vim:set et sts=4 ts=4 tw=80:

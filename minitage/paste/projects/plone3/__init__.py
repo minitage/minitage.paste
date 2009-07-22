@@ -41,6 +41,18 @@ class Template(common.Template):
     summary = 'Template for creating a plone3 project'
     python = 'python-2.4'
 
+    def read_vars(self, command=None):
+        print '%s' % (
+            '---------------------------------------------------------\n'
+            '\tPlone 3 needs a python 2.4 to run:\n'
+            '\t * if you do not fill anything, it will use minitage or system\'s one\n'
+            '\t * if you do not provide one explicitly, it will use minitage or' 'system\'s one\n'
+            '\tAditionnaly you ll got two buildouts for production (buildout.cfg) and develoment mode (dev.cfg).\n'
+            '\tYou can also activate or safely ignore questions about zeoserver and relstorage if you do not use them.\n'
+            '---------------------------------------------------------\n'
+        )
+        return common.Template.read_vars(self, command)
+
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
         vars['category'] = 'zope'
@@ -102,6 +114,8 @@ Template.vars = common.Template.vars \
            var('port',
                'Port to listen to',
                default = '8080',),
+           var('with_cachesetup', 'Cachefu caching Support, see http://plone.org/products/cachefu/: y/n',
+               default='y'), 
            var('mode',
                'Mode to use : zodb|relstorage|zeo',
                default = 'zodb'
@@ -122,7 +136,8 @@ Template.vars = common.Template.vars \
                'Relstorage database host (only useful for relstorage mode)',
                default = 'localhost',),
            var('dbport',
-               'Relstorage databse port (only useful for relstorage mode)',
+               'Relstorage databse port (only useful for relstorage mode).'
+               ' (postgresql : 5432, mysql : 3306)',
                default = '5432',),
            var('dbname',
                'Relstorage databse name (only useful for relstorage mode)',
@@ -172,14 +187,15 @@ Template.vars = common.Template.vars \
                default='n'),
 #           var('with_pboard', 'Plone Board, see  http://plone.org/products/ploneboard/: y/n',
 #               default='n'),
-           var('with_sgdcg', 'Singing & Dancing NewsLetter see http://plone.org/products/dancing/: y/n',
+           var('with_sgdcg', 'Singing & Dancing NewsLetter see'
+               'http://plone.org/products/dancing/: y/n.'
+               'S&D is known to lead to multiple buildout installation errors.'
+               'Be sure to activate it and debug the errors.',
                default='n'),
            var('with_truegall', 'PloneTrueGallery see http://plone.org/products/plone-true-gallery/: y/n',
                default='n'),
            var('with_lingua', 'LinguaPlone support, see http://plone.org/products/linguaplone: y/n',
                default='n'),
-           var('with_cachesetup', 'Cachefu caching Support, see http://plone.org/products/cachefu/: y/n',
-               default='y'),
            ]
 
 # vim:set et sts=4 ts=4 tw=80:
