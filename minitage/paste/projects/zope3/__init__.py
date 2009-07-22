@@ -49,7 +49,7 @@ class Template(common.Template):
     """A Zope3 template"""
 
     summary = 'Template for creating a basic zope3 project'
-    python = 'python-2.5'
+    python = 'python-2.6'
 
     def post(self, command, output_dir, vars):
         common.Template.post(self, command, output_dir, vars)
