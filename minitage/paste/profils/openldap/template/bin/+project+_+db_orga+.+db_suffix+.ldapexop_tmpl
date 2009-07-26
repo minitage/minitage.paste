@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+. ${sys}/share/openldap/${project}_${db_orga}.${db_suffix}.env
+ldapexop $@
