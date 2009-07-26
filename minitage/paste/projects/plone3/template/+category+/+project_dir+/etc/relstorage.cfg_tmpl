@@ -2,11 +2,27 @@
 products=
 extra-paths=
 rel-storage =
+#if $dbtype == 'oracle':
+    type $dbtype
+    dsn (DESCRIPTION=(ADDRESS=(HOST=$dbhost))(CONNECT_DATA=(SERVICE_NAME=$dbname)))
+    user $dbuser
+    password $dbpassword
+#elif $dbtype == 'mysql':
+    type $dbtype
+    dbname $dbname
+    user $dbuser
+    host $dbhost
+    passwd $dbpassword
+#elif $dbtype == 'postgresql':
+    type $dbtype
+    dsn  dbname='$dbname' user='$dbuser' host='$dbhost' password='$dbpassword'
+#else
     type $dbtype
     dbname $dbname
     user $dbuser
     host $dbhost
     password $dbpassword
+#end if
 
 [zopepy]
 #if 'relstorage' in $mode:

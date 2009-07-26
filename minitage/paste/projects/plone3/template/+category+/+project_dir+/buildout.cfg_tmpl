@@ -65,8 +65,8 @@ Spawning=0.8.11-minitage
 
 [buildout]
 extensions = buildout.minitagificator mr.developer
+# DESACTIVATE THIS IF YOU WANT TO USE YOUR VENV/SYSTEM PYTHON
 python=python2.4
-#executable=\${python2.4:executable}
 # the ${project}.cfg file can be generated via the kgs part, it will fix all
 # eggs versions used.
 extends=etc/versions.cfg
@@ -198,8 +198,8 @@ user = $login:$password
 session-timeout-minutes = 90
 verbose-security = off
 debug-mode=OFF
-event-log-level=ERROR
-z2-log-level=ERROR
+event-log-level=INFO
+z2-log-level=INFO
 # attacking zopepy:eggs make instance be built after zopepy
 # in any case thx to the buildout automatic parts sort.
 eggs =

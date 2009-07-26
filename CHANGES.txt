@@ -11,6 +11,7 @@ UP
     - pgsql 8.4 support
     - better doc and output for paster questions
     - zope3 python version upgraded
+    - add openldap profile
 
 1.3
 ----

@@ -35,7 +35,25 @@ from minitage.paste.common import var
 from minitage.core.common  import which, search_latest
 import getpass
 import subprocess
-
+easy_shop_eggs = ['easyshop.core',
+                  'easyshop.carts',
+                  'easyshop.catalog',
+                  'easyshop.checkout',
+                  'easyshop.criteria',
+                  'easyshop.customers',
+                  'easyshop.discounts',
+                  'easyshop.groups',
+                  'easyshop.information',
+                  'easyshop.kss',
+                  'easyshop.login',
+                  'easyshop.management',
+                  'easyshop.order',
+                  'easyshop.payment',
+                  'easyshop.shipping',
+                  'easyshop.shop',
+                  'easyshop.stocks',
+                  'easyshop.taxes',
+                 ]
 class Template(common.Template):
 
     summary = 'Template for creating a plone3 project'
@@ -77,6 +95,12 @@ class Template(common.Template):
         vars['plone_eggs'] += ' ipython'
         if 'relstorage' in vars['mode']:
             vars['plone_eggs'] += ' RelStorage'
+            if 'mysql' in vars['dbtype']:
+                vars['plone_eggs'] += ' psycopg2'
+            if 'postgresql' in vars['dbtype']:
+                vars['plone_eggs'] += ' psycopg2'
+            if 'oracle' in vars['dbtype']:
+                vars['plone_eggs'] += ' cx_Oracle'
         vars['plone_eggs'] += ' ZODB3'
         eggs_mappings = {
             'with_wsgi_support': ['repoze.zope2', 'Spawning', 'Deliverance',
@@ -90,15 +114,23 @@ class Template(common.Template):
             'with_truegall': ['collective.plonetruegallery'],
             'with_lingua': ['Products.LinguaPlone'],
             'with_cachesetup': ['Products.CacheSetup'],
+            'with_easyshop': easy_shop_eggs + ['zc.authorizedotnet'],
             'with_ldap': ['python-ldap',
                           'Products.LDAPUserFolder',
                           'Products.LDAPMultiPlugins',
                           'Products.PloneLDAP',]
-
+        }
+        zcml_mappings = {
+            'with_easyshop': easy_shop_eggs,
         }
         for var in [k for k in eggs_mappings if vars[k]]:
             for egg in eggs_mappings[var]:
-                vars['plone_eggs'] += ' %s' % egg
+                if not egg in vars['plone_eggs']:
+                    vars['plone_eggs'] += ' %s' % egg
+        for var in [k for k in zcml_mappings if vars[k]]:
+            for egg in zcml_mappings[var]:
+                if not egg in vars['plone_zcml']:
+                    vars['plone_zcml'] += ' %s' % egg
         versions = []
         vars['plone_versions'] = versions
         if vars['with_pa']:
@@ -115,7 +147,7 @@ Template.vars = common.Template.vars \
                'Port to listen to',
                default = '8080',),
            var('with_cachesetup', 'Cachefu caching Support, see http://plone.org/products/cachefu/: y/n',
-               default='y'), 
+               default='y'),
            var('mode',
                'Mode to use : zodb|relstorage|zeo',
                default = 'zodb'
@@ -184,6 +216,8 @@ Template.vars = common.Template.vars \
            var('with_cpwkf', 'CMFPlacefulWorkflow, see http://plone.org/products/cmfplacefulworkflow/: y/n',
                default='n'),
            var('with_pa', 'Plone Article, see http://plone.org/products/plonearticle/: y/n',
+               default='n'),
+           var('with_easyshop', 'Easy Shop, see http://www.geteasyshop.com: y/n',
                default='n'),
 #           var('with_pboard', 'Plone Board, see  http://plone.org/products/ploneboard/: y/n',
 #               default='n'),

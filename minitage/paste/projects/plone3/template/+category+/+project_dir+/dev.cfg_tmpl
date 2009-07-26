@@ -17,7 +17,6 @@ verbose-security = on
 debug-mode=ON
 event-log-level=INFO
 z2-log-level=INFO
-products+=\${buildout:directory}/parts/debugproducts
 #if $linux:
 #zcml+=collective.autorestart
 #end if
@@ -49,8 +48,6 @@ extra-paths = \${zope2:location}/lib/python
 scripts = ipython=ipzope
 
 [productdistros]
-urls += http://plone.org/products/clouseau/releases/0.8.1/clouseau-0-8-1.zip
-        http://www.zope.org/Members/shh/DocFinderTab/1.0.2/DocFinderTab-1.0.2.tar.gz
         http://www.dieter.handshake.de/pyprojects/zope/ZopeProfiler.tgz
 
 [zopepy]
@@ -58,6 +55,9 @@ urls += http://plone.org/products/clouseau/releases/0.8.1/clouseau-0-8-1.zip
 eggs+=
     plone.reload
     collective.releaser
+    Products.Clouseau
+    Products.DocFinderTab 
+    Products.ZopeProfiler
 #if $linux:
 # plone auto reloading facility relying on inotify.
 # Desactivated by default because it can lead to bugs when you
@@ -69,15 +69,6 @@ eggs+=
 #    ctypes
 #    collective.autorestart
 #end if
-
-
-[debugproducts]
-recipe=minitage.recipe:fetch
-urls = https://svn.infrae.com/PTProfiler/trunk|svn||PTProfiler
-     svn://svn.zope.org/repos/main/Products.enablesettrace/trunk|svn||enablesettrace
-     http://svn.plone.org/svn/collective/ZPTDebugger/trunk|svn||ZPTDebugger
-     http://svn.nuxeo.org/pub/Zope2/DeadlockDebugger/trunk|svn||DeadlockDebugger
-
 
 # not compatible with latest sphinx !
 # be aware not to have it on your site packages before enabling it !
