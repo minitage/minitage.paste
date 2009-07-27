@@ -36,6 +36,9 @@ import pwd
 import grp
 import re
 import subprocess
+import sha
+import md5
+import base64
 
 from minitage.paste.profils import common
 from minitage.core.common import remove_path
@@ -43,12 +46,27 @@ from paste.script import templates
 
 re_flags = re.M|re.U|re.I|re.S
 
+def SSHA_password ( password ):
+    p_ssha = sha.new( password )
+    p_ssha.update( password )
+    p_ssha_base64 = base64.encodestring(p_ssha.digest() + password + '' )
+    return '%s%s' %( '{SSHA}', p_ssha_base64 )
+def MD5_password ( password ):
+    p_md5 = md5.new( password )
+    return '%s%s' %( '{MD5}', base64.encodestring(p_md5.digest()))
+
+
+
+
 class Template(common.Template):
 
     summary = 'Template for creating a openldap instance'
     _template_dir = 'template'
     use_cheetah = True
     pg_present = False
+
+    def pre(self, command, output_dir, vars):
+        vars['db_password'] = MD5_password(vars['db_password'])
 
     def post(self, command, output_dir, vars):
         sys = vars['sys']
