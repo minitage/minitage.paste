@@ -1,0 +1,185 @@
+#!/usr/bin/env bash
+# Copyright (C) 2008, Mathieu PASQUET <kiorky@cryptelium.net>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# inspired by gentoo/openrc init scripts.
+
+. ${sys}/share/mysql/${db_name}.env
+
+DATADIR="$sys/var/data/mysql/$db_name"
+SOCKET="$sys/var/run/mysql/${db_name}.mysqld.sock"
+PID_FILE="$sys/var/run/mysql/${db_name}.mysqld.pid"
+CHROOT=""
+NICE=""
+TIMEUNIT=2
+STARTUPTIMEOUT=5
+STOPTIMEOUT=120
+mysqld=`which mysqld`
+
+# add /sbin 's when we run in user mode in the PATH
+export PATH=\$PATH:/sbin:/usr/sbin:/usr/local/sbin
+
+function in_list() {
+    local elem=\${1:-"none"}
+    local list=\${2:-","}
+
+    [[ "\${list}" == "\${list/,\${elem},/}" ]] \
+    && return 1 \
+    || return 0
+}
+
+checkconfig() {
+    local datadir="\${1}" pidfile="\${2}" socket="\${3}"
+
+    if [[ -n "\${NOCHECK}" ]] ; then
+        rm -f "\${pidfile}" "\${socket}"
+        return 0
+    fi
+
+    if [[ ! -d "\${datadir}" ]] ; then
+        eerror "MySQL datadir is empty or invalid"
+        eerror "Please check your my.cnf : \${MY_CNF}"
+        return 1
+    fi
+
+    if [[ ! -d "\${datadir}" ]] ; then
+        eerror "You don't appear to have the mysql database installed yet."
+        eerror "Please run /usr/bin/mysql_install_db to have this done..."
+        return 1
+    fi
+
+    if [[ -f "\${pidfile}" ]] ; then
+        kill -15 \$(< \${pidfile}) 2>/dev/null
+        if [[ \$? -eq 0 ]] ; then
+            # the process exist, we have a problem
+            eerror "\"\${pidfile}\" is still present and the process is running."
+            eerror "Please stop it \"kill \$(< \${pidfile})\" maybe ?"
+            return 1
+        else
+            rm -f "\${pidfile}"
+        fi
+    fi
+
+    if [[ -S "\${socket}" ]] ; then
+        ewarn "Strange, the socket file already exist in \"\${socket}\""
+        ewarn "it will be removed now and re-created by the MySQL server"
+        ewarn "BUT please make your checks."
+        rm -f "\${socket}"
+    fi
+    return 0
+}
+
+start() {
+    local retstatus="0" timeout
+    # server MUST NOT share same location for these
+    local ssd_thing=1
+    local mysqld_thing tmpnice
+    local socket datadir pidfile
+
+    ebegin "Starting MySQL from \$DATADIR."
+    # try to start each server
+
+    # checks
+    datadir=\$DATADIR
+    pidfile=\$PID_FILE
+    socket=\$SOCKET
+    MY_CNF=\$DATADIR/my.cnf
+    if ! checkconfig "\${datadir}" "\${pidfile}" "\${socket}" ; then
+        retstatus=2 ; continue
+    fi
+    if in_list "\${pidfile}" "\${pidfilelist}" ; then
+        eerror "Sorry, won't start with same pid-file: \${pidfile}"
+        retstatus=3 ; continue
+    fi
+    if in_list "\${datadir}" "\${datadirlist}" ; then
+        eerror "Sorry, won't start with same datadir: \${datadir}"
+        retstatus=4 ; continue
+    fi
+    if in_list "\${socket}" "\${socketlist}" ; then
+        eerror "Sorry, won't start with same socket: \${socket}"
+        retstatus=5 ; continue
+    fi
+
+    einfo "Starting using \${MY_CNF}"
+
+    mysqld_thing="--defaults-file="\${MY_CNF}""
+    mysqld_thing="\${mysqld_thing} --datadir=\${datadir}"
+    mysqld_thing="\${mysqld_thing} --pid-file=\${pidfile}"
+    mysqld_thing="\${mysqld_thing} --socket=\${socket}"
+
+    tmpnice="\${NICE:+"--nicelevel "}\${NICE}"
+    start-stop-daemon --quiet \${DEBUG/*/"--verbose"} --start \
+    --background \${tmpnice} --pidfile \${pidfile}\
+    --exec \$mysqld -- \${mysqld_thing} \
+    && sleep \${TIMEUNIT}
+    retstatus=\$?
+
+    # only the first run is done by start-stop-daemon
+    ssd_thing=""
+
+    # wait for socket creation
+    while ! [[ -S "\${socket}" || "\${STARTUPTIMEOUT}" -lt 1 || "\${retstatus}" -ne 0 ]] ; do
+        STARTUPTIMEOUT=\$(( STARTUPTIMEOUT - 1 ))
+        [[ \${DEBUG} -ge 1 ]] && echo -n "\${STARTUPTIMEOUT},"
+        sleep \${TIMEUNIT}
+    done
+    if [[ ! -S "\${socket}" ]] ; then
+        eerror "MySQL from \$DATADIR  NOT started (\${retstatus})"
+        retstatus=1
+    fi
+    eend \$retstatus
+}
+
+stop() {
+    local retstatus=0
+    ebegin "Stopping MySQL from \$DATADIR"
+    pidfile=\$PID_FILE
+    timeout=\${STOPTIMEOUT:-"120"}
+    PID=\$(< "\${pidfile}" )
+    einfo "Stopping mysqld (\$pidfile)"
+    start-stop-daemon --quiet \${DEBUG/*/"--verbose"} --stop --pidfile "\${pidfile}" &
+    while [[ -n "\$PID" ]] \
+        && \$( ps -Ao pid | grep -q "^ *\$PID\$" ) \
+        && [[ "\${timeout}" -ge 1 ]]
+    do
+        timeout=\$((\$timeout - 1))
+        [[ \${DEBUG} -ge 1 ]] && echo -n "\$(( \$STOPTIMEOUT - \$timeout )),"
+        sleep \${TIMEUNIT}
+    done
+    [[ "\${timeout}" -lt 1 ]] && retstatus=1
+    sleep \${TIMEUNIT}
+    eend \${retstatus}
+}
+
+restart() {
+    ebegin "Restarting PostgreSQL"
+    # "stop/start" seems to behave better.
+    stop
+    einfo  "..."
+    start
+    eend \$?
+}
+
+status() {
+    ebegin "Status of PostgreSQL"
+    # "stop/start" seems to behave better.
+    wrap_pg_ctl status
+}
+
+actions="status restart start stop checkconfig"
+for action in \$actions;do
+    if [[ "\$1" == "\$action" ]];then
+        \$action
+    fi
+done
+
+

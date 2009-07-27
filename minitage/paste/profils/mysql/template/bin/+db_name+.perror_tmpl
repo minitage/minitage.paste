@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+PATH=$mt/dependencies/mysql-$my_version/libexec:\$PATH
+. ${sys}/share/mysql/${db_name}.env
+perror --defaults-file=$sys/etc/mysql/${project}_${db_name}.my.cnf $@
