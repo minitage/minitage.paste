@@ -30,11 +30,20 @@
 __docformat__ = 'restructuredtext en'
 
 import os
+from ConfigParser import ConfigParser
+import getpass
+import subprocess
+import urllib2
+
+import pkg_resources
+
+from paste.script.command import run
+
 from minitage.paste.projects import common
 from minitage.paste.common import var
 from minitage.core.common  import which, search_latest
-import getpass
-import subprocess
+
+
 easy_shop_eggs = ['easyshop.core',
                   'easyshop.carts',
                   'easyshop.catalog',
@@ -108,6 +117,7 @@ class Template(common.Template):
             'with_psycopg2': ['psycopg2'],
             'with_mysqldb': ['MySQL_python'],
             'with_fss': ['iw.fss'],
+            'with_pil': ['PILwoTK'],
             'with_pa': ['Products.PloneArticle'],
             #'with_pboard': ['Products.SimpleAttachment'],
             'with_sgdcg': ['collective.dancing'],
@@ -137,13 +147,64 @@ class Template(common.Template):
             vars['plone_versions'].append(('Products.PloneArticle', '4.1.2',))
         if not vars['mode'] in ['zodb', 'relstorage', 'zeo']:
             raise Exception('Invalid mode (not in zeo, zodb, relstorage')
+        if not os.path.exists(self.output_dir):
+            os.makedirs(self.output_dir)
+        cwd = os.getcwd()
+        pargs = ['create', '-t', 'plone3_buildout', vars['project'],
+                 'zope2_install=""', 'debug_mode=off', 'verbose_security=off',
+                 'plone_products_install=""', '--no-interactive']
+        for var in vars:
+            pargs.append('%s=%s' % (var, vars[var]))
+        if not os.path.exists(self.output_dir):
+            self.makedirs(self.output_dir)
+        vars['plone_products_install'] = ''
+        vars['zope2_install'] = ''
+        vars['debug_mode'] = 'off'
+        vars['verbose_security'] = 'off'
+        # running plone 3 buildout and getting stuff from it.
+        try:
+            ep = pkg_resources.load_entry_point(
+                'ZopeSkel', 'paste.paster_create_template', 'plone3_buildout'
+            )
+            p3 = ep(self)
+            p3.check_vars(vars, command)
+            p3.run(command, vars['path'], vars)
+            try:
+                cfg = os.path.join(vars['path'], 'buildout.cfg')
+                dst = os.path.join(vars['path'],
+                                   'etc', 'plone3.buildout.cfg')
+                vdst = os.path.join(vars['path'],
+                                   'etc', 'plone3.versions.cfg')
+                open(vdst, 'w').write('')
+                p = ConfigParser()
+                p.read(dst)
+                ext = p._sections.get('buildout', {}).get('extends', '')
+                if ext:
+                    if ext.startswith('http') and ext.endswith('cfg'):
+                        try:
+                            open(vdst, 'w').write(urllib2.urlopen(ext).read())
+                        except Exception, e:
+                            print "%s" (
+                                "Versions have not been fixed, be ware. Are"
+                                "you connected to the internet(%s)" % e
+                            )
+                os.rename(cfg, dst)
+            except Exception, e:
+                print
+                print
+                print "%s" % ("Plone folks have changed their paster, we didnt get any"
+                               "buildout, %s" %e)
+                print
+                print
+        except Exception, e:
+            print 'Error executing plone3 buildout, %s'%e
 
 running_user = getpass.getuser()
 Template.vars = common.Template.vars \
         + [var('address',
                'Address to listen on',
                default = 'localhost',),
-           var('port',
+           var('http_port',
                'Port to listen to',
                default = '8080',),
            var('with_cachesetup', 'Cachefu caching Support, see http://plone.org/products/cachefu/: y/n',
@@ -155,10 +216,10 @@ Template.vars = common.Template.vars \
            var('zeoaddress',
                'Address for the zeoserver (zeo mode only)',
                default = 'localhost:8100',),
-           var('login',
+           var('zope_user',
                'Administrator login',
                default = 'admin',),
-           var('password',
+           var('zope_password',
                'Admin Password in the ZMI',
                default = 'admin',),
            var('dbtype',
@@ -210,6 +271,9 @@ Template.vars = common.Template.vars \
            var('with_ldap',
                'LDAP bindings support (y/n)',
                default = 'n',),
+           var('with_pil',
+               'Python imaging support (dangerous to disable) (y/n)',
+               default = 'y',),
            var('with_fss',
                'File System Storage support, see http://plone.org/products/filesystemstorage: y/n',
                default = 'y',),

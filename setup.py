@@ -6,7 +6,7 @@ setupdir = os.path.abspath(
 os.chdir(setupdir)
 
 name='minitage.paste'
-version = '1.3.18'
+version = '1.3.19'
 
 def read(rnames):
     return open(
@@ -47,6 +47,7 @@ setup(
     zip_safe=False,
     install_requires = ['setuptools',
                         'PasteScript',
+                        'ZopeSkel',
                         'zc.buildout',
                         'Cheetah',
                         'minitage.core'],
@@ -62,6 +63,7 @@ setup(
             'minitage.profils.env = minitage.paste.profils.env:Template',
             'minitage.profils.postgresql = minitage.paste.profils.postgresql:Template',
             'minitage.profils.openldap = minitage.paste.profils.openldap:Template',
+            'minitage.profils.mysql = minitage.paste.profils.mysql:Template',
             'minitage.profils.varnish = minitage.paste.profils.varnish:Template',
             'minitage.profils.varnish2 = minitage.paste.profils.varnish2:Template',
             'minitage.profils.paste-initd = minitage.paste.profils.pasteinitd:Template',

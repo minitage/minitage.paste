@@ -5,13 +5,17 @@ CHANGES
 UP
 ---
 
-    - postgresql and plone3 maintenance
-    - fix buildout part ordering
+    - postgresql maintenance and doc/UI improvment
+    - plone3 refactoring
+
+        - better separation between buildout logic and semantic
+        - fix buildout part ordering
+
     - add --reload option for the pasteinitd profile
     - pgsql 8.4 support
-    - better doc and output for paster questions
     - zope3 python version upgraded
     - add openldap profile
+    - add mysql profile
 
 1.3
 ----

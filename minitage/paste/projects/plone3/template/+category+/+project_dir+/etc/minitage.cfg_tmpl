@@ -1,0 +1,53 @@
+#if $inside_minitage:
+[minitage]
+location=\${buildout:directory}/../..
+#end if
+
+# site-packages
+[libxml2]
+# the path to find the libxml2 python bindings, maybe your global site-packages?
+site-packages=$xml2
+[libxslt]
+# the path to find the libxslt python bindings, maybe your global site-packages?
+site-packages=$xslt
+
+[python2.4]
+executable=$python
+name=python2.4
+
+[buildout]
+python=python2.4
+find-links +=
+    http://distfiles.minitage.org/public/externals/minitage/
+extra-paths+=
+    \${libxml2:site-packages}
+    \${libxslt:site-packages}
+#if $inside_minitage:
+eggs-directory=\${minitage:location}/eggs/cache
+#end if
+
+[versions]
+# bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
+# the one packaged in minitage !
+PILwoTK  = 1.1.6.4
+# plone32 hack to remove the bugged fixed version of buildout.
+zc.buildout -= 1.1.1
+# zope 2.10.7 compatible version of the ZODB where the RelStorage patch applies
+ZODB3 = 3.7.1
+#for $product, $version in $plone_versions:
+${product}=${version}
+#end for
+Spawning=0.8.11-minitage
+
+[zopepy]
+executable=\${python2.4:executable}
+#if $with_ldap:
+includes-dirs = $includesdirs
+#end if
+
+[mirrors]
+sourceforge = ovh.dl.sourceforge.net
+minitage = distfiles.minitage.org/public/externals/minitage
+plone = plone.org
+zope = download.zope.org
+

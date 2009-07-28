@@ -1,0 +1,134 @@
+# PROJECT SPECIFIC SETTINGS
+
+# add hand pinned version there
+[version]
+# $project=1.0
+
+[buildout]
+extensions += buildout.minitagificator mr.developer
+parts +=
+#if $mode == 'zeo':
+    zeoserver
+#end if
+#if $with_fss:
+    create-fss-dirs
+    fss
+#end if
+# on Upgrades
+# Think to change the plone release URL !!!
+find-links +=
+#if $with_wsgi_support:
+    http://dist.repoze.org/zope2/latest/
+#else
+#    http://dist.repoze.org/zope2/latest/
+#end if
+develop += fake-eggs/zopelib
+# see http://pypi.python.org/pypi/mr.developer for documentation
+versions = versions
+sources = sources
+#auto-checkout = my.package
+
+
+# auto tracked developement products
+[sources]
+# see http://pypi.python.org/pypi/mr.developer for documentation
+#my.package = svn http://example.com/svn/my.package/trunk
+#some.other.package = git git://example.com/git/some.other.package.git
+
+
+# Zope operating instances are created elsewhere.
+# For options see http://pypi.python.org/pypi/plone.recipe.zope2install
+[zope2]
+# fake eggs are required to satisfy Zope dependencies while
+# zope is not yet eggified.
+fake-zope-eggs = true
+additional-fake-eggs +=
+    ZConfig
+    pytz
+skip-fake-eggs +=
+    zope.location
+
+
+# eggs & scripts installation
+[zopepy]
+order=\${zope2:recipe}
+recipe = minitage.recipe:scripts
+# Important for you to note the installation of the ZODB as an egg . We will not
+# use the zodb code from the zope source distribution !!!!!!!
+eggs += \${instance:eggs}
+interpreter = zopepy
+extra-paths = \${instance:extra-paths}
+
+
+# here is defined the Zope instance running your plone site
+[instance]
+order=\${zopepy:recipe}
+order2=\${create-fss-dirs:recipe}
+http-address=$address:$http_port
+zope2-location = \${zope2:location}
+user = $zope_user:$zope_password
+session-timeout-minutes = 90
+verbose-security = off
+debug-mode=OFF
+event-log-level=INFO
+z2-log-level=INFO
+# attacking zopepy:eggs make instance be built after zopepy
+# in any case thx to the buildout automatic parts sort.
+eggs += \${buildout:eggs}
+    #slurp
+#for $product in $plone_eggs.split():
+    ${product}
+#end for
+extra-paths+=
+    \${zope2:location}/lib/python
+    \${buildout:extra-paths}
+zcml += #slurp
+#for $product in $plone_zcml.split():
+       ${product}
+#end for
+
+
+# KGS generation
+[kgs]
+order=\${zopepy:recipe}
+recipe=minitage.recipe:printer
+quiet=
+eggs=\${instance:eggs}
+file=\${buildout:directory}/etc/${project}-kgs.cfg
+
+
+# FSS Support
+# See: http://plone.org/products/filesystemstorage
+[create-fss-dirs]
+recipe = plone.recipe.command
+update-command = \${create-fss-dirs:command}
+command =
+    mkdir -p \${buildout:directory}/var/fss_storage_${project} ;
+    mkdir -p \${buildout:directory}/var/fss_backup_${project} ;
+
+[fss]
+recipe = iw.recipe.fss
+zope-instances=\${instance:location}
+storages =
+    global /
+    ${project} /${project} directory
+
+
+# Traditionnal Plone products to install
+[productdistros]
+order=\${zope2:recipe}
+recipe = plone.recipe.distros
+urls = #slurp
+#for $product in $plone_products.split():
+       ${product}
+#end for
+
+nested-packages = #slurp
+#for $product in $plone_np.split():
+       ${product}
+#end for
+
+version-suffix-packages = #slurp
+#for $product in $plone_vsp.split():
+       ${product}
+#end for

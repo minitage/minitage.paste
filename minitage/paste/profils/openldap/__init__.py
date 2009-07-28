@@ -66,6 +66,7 @@ class Template(common.Template):
     pg_present = False
 
     def pre(self, command, output_dir, vars):
+        common.Template.pre(self, command, output_dir, vars)
         vars['db_password'] = MD5_password(vars['db_password'])
 
     def post(self, command, output_dir, vars):
@@ -76,6 +77,59 @@ class Template(common.Template):
             for filep in os.listdir(directory):
                 p = os.path.join(directory, filep)
                 os.chmod(p, stat.S_IRGRP|stat.S_IXGRP|stat.S_IRWXU)
+
+        infos = "%s" % (
+            "    * You can look for wrappers to various openldap scripts located in %s. You must use them as they are configured to use some useful defaults to connect to your database.\n"
+            "    * A configuration file for your openldap instance has been created in %s.\n"
+            "    * A init script to start your server is available in %s.\n"
+            "    * A logrotate configuration file to handle your logs can be linked in global scope, it is available in %s.\n"
+            "    * The datadir is located under %s\n"
+            "" % (
+                '"%s'%os.path.join(
+                    vars['sys'], 'bin', '%s.%s.*" eg : %s.%s.ldapadd' % (
+                        vars['db_orga'],
+                        vars['db_suffix'],
+                        vars['db_orga'],
+                        vars['db_suffix']
+                    )
+                ),
+                os.path.join(
+                    vars['sys'], 'etc', 'openldap',
+                    '%s_%s.%s-slapd.conf' % (
+                        vars['project'],
+                        vars['db_orga'], vars['db_suffix']
+                    )
+                ),
+                os.path.join(
+                    vars['sys'], 'etc', 'init.d', 'openldap_%s_%s.%s' %(
+                        vars['project'], vars['db_orga'], vars['db_suffix']
+                    )
+                ),
+                os.path.join(
+                    vars['sys'], 'etc', 'logrotate.d', '%s_%s.%s.openldap' %(
+                        vars['project'], vars['db_orga'], vars['db_suffix']
+                    )
+                ),
+                os.path.join(
+                    vars['sys'], 'var', 'data',
+                    'openldap',
+                    '%s_%s.%s.' % (
+                        vars['project'], vars['db_orga'], vars['db_suffix']
+                    )
+                )
+            )
+        )
+        README = os.path.join(vars['path'],
+                              'README.openldap.%s-%s.%s' % (
+                                  vars['project'],
+                                  vars['db_orga'],
+                                  vars['db_suffix']
+                              )
+                             )
+        open(README, 'w').write(infos)
+        print "Installation is now finished."
+        print infos
+        print "Those informations have been saved in %s." % README
 
 Template.required_templates = ['minitage.profils.env']
 running_user = getpass.getuser()

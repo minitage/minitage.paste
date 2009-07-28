@@ -135,7 +135,7 @@ class Template(common.Template):
             confc = open(conf).read()
 
         infos = "%s" % (
-            "    * You can look for wrappers to various mysql scripts located in %s. You must use them as they are configured to use some usefull defaults to connect to your database.\n"
+            "    * You can look for wrappers to various mysql scripts located in %s. You must use them as they are configured to use some useful defaults to connect to your database.\n"
             "    * A configuration file for your mysql instance has been linked from %s to %s.\n"
             "    * A init script to start your server is available in %s.\n"
             "    * A logrotate configuration file to handle your logs can be linked in global scope, it is available in %s.\n"

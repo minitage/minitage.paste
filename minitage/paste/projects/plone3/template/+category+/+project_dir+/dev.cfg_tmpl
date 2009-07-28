@@ -2,13 +2,14 @@
 # It will install your plone in debug mode and a bunch of debug tools.
 # Launch it:
 # bin/buildout -c dev.cfg
+# look at the extenended buildout: ./buildout.cfg for other details of your plone3 installation
 
 # We want the production buildout + the debug bits.
 [buildout]
 extends=buildout.cfg
 parts+= omelette
         ipzope
-        debugproducts
+
 [versions]
 ctypes=1.0.2
 
@@ -20,6 +21,25 @@ z2-log-level=INFO
 #if $linux:
 #zcml+=collective.autorestart
 #end if
+#
+eggs+=
+    plone.reload
+    collective.releaser
+    Products.PDBDebugMode
+    Products.Clouseau
+    Products.DocFinderTab
+    Products.ZopeProfiler
+#if $linux:
+# plone auto reloading facility relying on inotify.
+# Desactivated by default because it can lead to bugs when you
+# launch your instance in foreground, there are cases where
+# you can't stop it with a  KeyboardInterrupt,
+# you must kill -SIGKILL :)
+# If you reactivate it, think to add also the zcml slug in the
+# [instance] part
+#    ctypes
+#    collective.autorestart
+#end if
 
 # Aggregate all python packages on one directory to have all in one directory
 # its really great after to have it for  your tags generator or your IDE
@@ -28,7 +48,6 @@ z2-log-level=INFO
 recipe = collective.recipe.omelette
 eggs = \${instance:eggs}
 products = \${productdistros:location}
-           \${debugproducts:location}
 packages =\${instance:extra-paths}
 
 # a IPython Shell for interactive use with zope running.
@@ -46,29 +65,6 @@ initialization =
         sys.argv[1:1] = "-p zope".split()
 extra-paths = \${zope2:location}/lib/python
 scripts = ipython=ipzope
-
-[productdistros]
-        http://www.dieter.handshake.de/pyprojects/zope/ZopeProfiler.tgz
-
-[zopepy]
-
-eggs+=
-    plone.reload
-    collective.releaser
-    Products.Clouseau
-    Products.DocFinderTab 
-    Products.ZopeProfiler
-#if $linux:
-# plone auto reloading facility relying on inotify.
-# Desactivated by default because it can lead to bugs when you
-# launch your instance in foreground, there are cases where
-# you can't stop it with a  KeyboardInterrupt,
-# you must kill -SIGKILL :)
-# If you reactivate it, think to add also the zcml slug in the
-# [instance] part
-#    ctypes
-#    collective.autorestart
-#end if
 
 # not compatible with latest sphinx !
 # be aware not to have it on your site packages before enabling it !

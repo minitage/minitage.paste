@@ -43,5 +43,5 @@ pipeline = egg:Paste#cgitb
 #use=egg:Spawning
 use=egg:Paste#http
 host=$address
-port=$port
+port=$http_port
 

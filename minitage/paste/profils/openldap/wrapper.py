@@ -54,7 +54,7 @@ WRAPPE_TEMPLATE ="""\
 def main():
     for p in LDAP_PATH, LDAP_PATHS, LDAP_PATHL:
         for f in os.listdir(p):
-            d = open(os.path.join(PATH, '+project+_+db_orga+.+db_suffix+.%s_tmpl' % f), 'w')
+            d = open(os.path.join(PATH, '+db_orga+.+db_suffix+.%s_tmpl' % f), 'w')
             d.write(WRAPPE_TEMPLATE % f)
             d.close()
 

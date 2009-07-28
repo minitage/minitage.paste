@@ -113,13 +113,23 @@ class Template(common.Template):
                             'postgresql',
                             vars['db_name'],
                             'postgresql.conf')
+        confa = os.path.join(vars['sys'],
+                            'var', 'data',
+                            'postgresql',
+                            vars['db_name'],
+                            'pg_hba.conf')
+        confi = os.path.join(vars['sys'],
+                            'var', 'data',
+                            'postgresql',
+                            vars['db_name'],
+                            'pg_ident.conf')
         for filep in ('postgresql.conf',
                      'pg_hba.conf', 'pg_ident.conf'):
             dest = os.path.join(vars['sys'],
                                 'etc',
                                 'postgresql',
-                                '%s.%s' % (
-                                    vars['db_name'], filep)
+                                '%s_%s.%s' % (
+                                    vars['project'],vars['db_name'], filep)
                                )
             orig = os.path.join(vars['sys'],
                                 'var', 'data',
@@ -141,9 +151,68 @@ log_filename='postgresql-%(p)sY-%(p)sm-%(p)sd.log'
                                  """ % {
                                      'sys':vars['sys'], 'p':'%', 'lc': vars['lc']
                                  })
-        print "\nYou can use pypgoptimizator to Tune automaticly your postgresl:"
-        print "\teasy_install pypgoptimizator"
-        print "\tpypgoptimizator -i %s -o %s\n" % (conf, conf)
+        infos = "%s" % (
+            "    * You can look for wrappers to various postgresql scripts located in %s. You must use them as they are configured to use some useful defaults to connect to your database.\n"
+            "    * A configuration file for your postgresql instance has been linked from %s to %s.\n"
+            "    * A pg_hba file for your postgresql instance has been linked from %s to %s.\n"
+            "    * A pg_ident file for your postgresql instance has been linked from %s to %s.\n"
+            "    * A init script to start your server is available in %s.\n"
+            "    * A logrotate configuration file to handle your logs can be linked in global scope, it is available in %s.\n"
+            "    *  The datadir is located under %s.\n"
+            "    *You can use pypgoptimizator to Tune automaticly your postgresql:\n"
+            "      easy_install pypgoptimizator\n"
+            "      pypgoptimizator -i %s -o %s\n"
+            "" % (
+                '"%s'%os.path.join(
+                    vars['sys'], 'bin', '%s.*" eg : %s.psql' % (
+                        vars['db_name'],
+                        vars['db_name']
+                    )
+                ),
+                conf,
+                os.path.join(
+                    vars['sys'], 'etc', 'postgresql', '%s_%s.%s' % (
+                        vars['project'], vars['db_name'], 'postgresql.conf'
+                    )
+                ),
+                confa,
+                os.path.join(
+                    vars['sys'], 'etc', 'postgresql', '%s_%s.%s' % (
+                        vars['project'], vars['db_name'], 'pg_hba.conf'
+                    )
+                ),
+                confi,
+                os.path.join(
+                    vars['sys'], 'etc', 'postgresql', '%s_%s.%s' % (
+                        vars['project'], vars['db_name'], 'pg_ident.conf'
+                    )
+                ),
+                os.path.join(
+                    vars['sys'], 'etc', 'init.d', 'postgresql_%s.%s' %(
+                        vars['project'], vars['db_name']
+
+                    )
+                ),
+                os.path.join(
+                    vars['sys'], 'etc', 'logrotate.d', '%s_%s.postgresql' %(
+                        vars['project'], vars['db_name']
+                    )
+                ),
+                os.path.dirname(conf),
+                conf, conf
+            )
+        )
+        README = os.path.join(vars['path'],
+                              'README.postgresql.%s-%s' % (
+                                  vars['project'],
+                                  vars['db_name']
+                              )
+                             )
+        open(README, 'w').write(infos)
+        print "Installation is now finished."
+        print infos
+        print "Those informations have been saved in %s." % README
+
 
 Template.required_templates = ['minitage.profils.env']
 running_user = getpass.getuser()
