@@ -31,6 +31,7 @@ __docformat__ = 'restructuredtext en'
 
 import os
 from ConfigParser import ConfigParser
+import shutil
 import getpass
 import subprocess
 import urllib2
@@ -63,6 +64,7 @@ easy_shop_eggs = ['easyshop.core',
                   'easyshop.stocks',
                   'easyshop.taxes',
                  ]
+packaged_version = '3.2.1'
 class Template(common.Template):
 
     summary = 'Template for creating a plone3 project'
@@ -170,6 +172,9 @@ class Template(common.Template):
             p3.check_vars(vars, command)
             p3.run(command, vars['path'], vars)
             try:
+                etc = os.path.join(vars['path'], 'etc')
+                if not os.path.isdir(etc):
+                    os.makedirs(etc)
                 cfg = os.path.join(vars['path'], 'buildout.cfg')
                 dst = os.path.join(vars['path'],
                                    'etc', 'plone3.buildout.cfg')
@@ -182,18 +187,35 @@ class Template(common.Template):
                 if ext:
                     if ext.startswith('http') and ext.endswith('cfg'):
                         try:
-                            open(vdst, 'w').write(urllib2.urlopen(ext).read())
+                            open(vdst, 'w').write(
+                                urllib2.urlopen(ext).read()
+                            )
                         except Exception, e:
-                            print "%s" (
+                            shutil.copy2(
+                                pkg_resources.resource_filename(
+                                    'minitage.paste',
+                                    'projects/plone3/versions.cfg'
+                                ),
+                                vdst
+                            )
+                            self.lastlogs.append(
                                 "Versions have not been fixed, be ware. Are"
-                                "you connected to the internet(%s)" % e
+                                " you connected to the internet (%s).\n" % e
+                            )
+                            self.lastlogs.append(
+                                "%s" % (
+                                    'As a default, we will take an already'
+                                    ' downloaded versions.cfg matching plone'
+                                    ' %s.\n' %
+                                    packaged_version
+                                )
                             )
                 os.rename(cfg, dst)
             except Exception, e:
                 print
                 print
                 print "%s" % ("Plone folks have changed their paster, we didnt get any"
-                               "buildout, %s" %e)
+                               " buildout, %s" %e)
                 print
                 print
         except Exception, e:

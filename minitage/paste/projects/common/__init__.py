@@ -33,7 +33,7 @@ import sys
 import os
 import re
 import subprocess
-import sys
+import pkg_resources
 
 from minitage.paste import common
 from minitage.core.common import which, search_latest
@@ -41,6 +41,61 @@ from minitage.core.common import which, search_latest
 
 class Template(common.Template):
     """Common template"""
+
+    def post(self, command, output_dir, vars):
+        self.lastlogs.append(
+            '* A project has been created in %s.\n' % vars['path']
+        )
+        minilay = os.path.join(vars['mt_fp'], 'minilays', vars['project'])
+        if vars['inside_minitage']:
+            self.lastlogs.append(
+                '* A minilay has been installed in %s.\n'
+                '* It contains those minilbuilds:'
+                '\n\t- %s \n'
+                '\n'
+                '* Think to finish the versionning stuff and put this minilay and'
+                ' the projet under revision control.\n'
+                '* The project must be archived here \'%s\' using \'%s\' or change the minibuild '
+                'src_uri/scm_type.\n'
+                '* Install your project running: \n\t\tminimerge -v %s'
+                ''% (
+                    minilay,
+                    '\n\t- '.join(os.listdir(minilay)),
+                    vars['uri'], vars['scm_type'],
+                    vars['project']
+                )
+            )
+        self.lastlogs.append(
+            '* You can additionnaly create related databases or configuration or'
+            ' other stuff using minitage profils '
+            ' (http://minitage.org/paster/profils/index.html)\n'
+            '* Available profils are: \n'
+            '\t- %s\n'
+            '* Run a profil with: \n'
+            ' \tpaster create -t minitage.profils.PROFIL project\n'
+            '\n' % (
+                '\n\t- '.join(
+                    ["%s (%s)" % (
+                        a,
+                        pkg_resources.load_entry_point('minitage.paste',
+                                         'paste.paster_create_template',
+                                         a
+                                        ).summary
+                    )
+                        for a in pkg_resources.get_entry_map(
+                            'minitage.paste'
+                        )['paste.paster_create_template']
+                        if 'minitage.profils' in a]
+                )
+            )
+
+        )
+        README = os.path.join(vars['path'],'README.%s.txt' % vars['project'])
+        open(README, 'w').write('\n'.join(self.lastlogs))
+        self.lastlogs.append(
+            'Those informations have been writed to %s.' % README
+        )
+        return common.Template.post(self, command, output_dir, vars)
 
     def pre(self, command, output_dir, vars):
         common.Template.pre(self, command, output_dir, vars)

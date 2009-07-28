@@ -141,6 +141,7 @@ class Template(templates.Template):
             '%s'
             '---------------------------------------------------------\n'
         ) % python
+        self.lastlogs=[]
         return templates.Template.read_vars(self, command)
 
     def pre(self, command, output_dir, vars):
@@ -177,6 +178,7 @@ class Template(templates.Template):
             vars['inside_minitage'] = False
             vars['project_dir'] = ''
             vars['mt'] = '/'
+        vars['mt_fp'] = vars['mt']
 
     def post(self, command, output_dir, vars):
         paths = []
@@ -189,6 +191,15 @@ class Template(templates.Template):
             fp = os.path.join(self.output_dir, p)
             if os.path.exists(fp):
                 shutil.rmtree(fp)
+
+        if self.lastlogs:
+            print
+            print
+            print
+            print 'PASTER MESSAGES'
+            print
+            for log in self.lastlogs:
+                print log
 
 class var(templates.var):
     """patch pastescript to have mandatory fields"""
