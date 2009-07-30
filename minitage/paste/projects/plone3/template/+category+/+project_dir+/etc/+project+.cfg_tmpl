@@ -5,7 +5,16 @@
 # $project=1.0
 
 [buildout]
-extensions += buildout.minitagificator mr.developer
+extensions = buildout.minitagificator mr.developer
+extends=
+    plone3.buildout.cfg
+    plone3.versions.cfg
+    ${project}-kgs.cfg
+# this allow you to run buildout on offline mode and to use only the downloaded plonev3.versions.cfg
+extends -= http://dist.plone.org/release/${plone_version}/versions.cfg
+#if $with_sgdcg:
+    etc/dancing.cfg
+#end if
 parts +=
 #if $mode == 'zeo':
     zeoserver
@@ -16,11 +25,10 @@ parts +=
 #end if
 # on Upgrades
 # Think to change the plone release URL !!!
-find-links +=
 #if $with_wsgi_support:
-    http://dist.repoze.org/zope2/latest/
+find-links += http://dist.repoze.org/zope2/latest/
 #else
-#    http://dist.repoze.org/zope2/latest/
+#find-links += http://dist.repoze.org/zope2/latest/
 #end if
 develop += fake-eggs/zopelib
 # see http://pypi.python.org/pypi/mr.developer for documentation
@@ -55,7 +63,7 @@ order=\${zope2:recipe}
 recipe = minitage.recipe:scripts
 # Important for you to note the installation of the ZODB as an egg . We will not
 # use the zodb code from the zope source distribution !!!!!!!
-eggs += \${instance:eggs}
+eggs = \${instance:eggs}
 interpreter = zopepy
 extra-paths = \${instance:extra-paths}
 

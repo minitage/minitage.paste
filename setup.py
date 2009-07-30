@@ -6,7 +6,7 @@ setupdir = os.path.abspath(
 os.chdir(setupdir)
 
 name='minitage.paste'
-version = '1.3.20'
+version = '1.3.30'
 
 def read(rnames):
     return open(
@@ -49,6 +49,7 @@ setup(
                         'PasteScript',
                         'ZopeSkel',
                         'zc.buildout',
+                        'iniparse',
                         'Cheetah',
                         'minitage.core'],
     #tests_require = ['zope.testing'],

@@ -33,12 +33,13 @@ import os
 import stat
 import getpass
 import pwd
+import sys
 import grp
 import re
 import subprocess
 
 from minitage.paste.profils import common
-from minitage.core.common import remove_path
+from minitage.core.common import remove_path, which
 from paste.script import templates
 
 re_flags = re.M|re.U|re.I|re.S
@@ -55,8 +56,14 @@ class Template(common.Template):
         db_path = os.path.join(
             vars['sys'], 'var', 'data', 'postgresql', vars['db_name']
         )
-        if not os.path.isdir(db_path):
-            os.makedirs(db_path)
+        conf = os.path.join(vars['sys'],
+                            'var', 'data',
+                            'postgresql',
+                            vars['db_name'],
+                            'postgresql.conf') 
+        if not os.path.exists(conf):
+            if not os.path.exists(db_path):
+                os.makedirs(db_path)
 
             # registering where we initdb
             # which database do we createdb
@@ -79,7 +86,7 @@ class Template(common.Template):
             # If no pgsql is installed, do initdb/createdb but
             # remove files coming out by templates
             # to be out of overwrite errors.
-            os.system("""
+            ret = os.system("""
                       bash -c ". %s/share/minitage/minitage.env;\
                       initdb  -E 'UTF-8';\
                       pg_ctl -w start ;\
@@ -87,6 +94,14 @@ class Template(common.Template):
                       pg_ctl stop"
                       """ % (vars['sys'])
                      )
+            if ret>0:
+                print  "\n\n%s" % (
+                    'Error while initiliasing the database.\n'
+                    'More likely Postgresql binaries were not found in your path. Do you have'
+                    ' built postgresql somewhere or launched minimerge to build it'
+                    ' after adding postgresql-x.x to your project minibuild?.'
+                )
+                sys.exit(1) 
             version = os.popen('initdb --version').read()
             if '8.2' in version:
                 vars['lc'] = 'redirect_stderr'
@@ -138,9 +153,9 @@ class Template(common.Template):
                                 filep)
             if not os.path.exists(dest):
                 os.symlink(orig, dest)
-            confc = open(conf).read()
-            if not 'MINITAGE LOGGING' in confc:
-                open(conf,'w').write(confc +
+        confc = open(conf).read()
+        if not 'MINITAGE LOGGING' in confc:
+            open(conf,'w').write(confc +
                 """
 # MINITAGE LOGGING
 log_directory = '%(sys)s/var/log/postgresql/coursorama'

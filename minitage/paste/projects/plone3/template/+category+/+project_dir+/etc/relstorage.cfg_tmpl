@@ -1,6 +1,4 @@
 [instance]
-products=
-extra-paths=
 rel-storage =
 #if $dbtype == 'oracle':
     type $dbtype
@@ -30,3 +28,7 @@ ZODB3-patches=\${buildout:directory}/patches/minitage.poll-invalidation-1-zodb-3
 #else
 #ZODB3-patches=\${buildout:directory}/patches/minitage.poll-invalidation-1-zodb-3-7-1.patch
 #end if
+
+[versions]
+ZODB3 = 3.7.1
+

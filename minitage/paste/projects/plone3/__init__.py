@@ -30,7 +30,6 @@
 __docformat__ = 'restructuredtext en'
 
 import os
-from ConfigParser import ConfigParser
 import shutil
 import getpass
 import subprocess
@@ -39,6 +38,7 @@ import urllib2
 import pkg_resources
 
 from paste.script.command import run
+from iniparse import ConfigParser
 
 from minitage.paste.projects import common
 from minitage.paste.common import var
@@ -108,8 +108,10 @@ class Template(common.Template):
             vars['plone_eggs'] += ' RelStorage'
             if 'mysql' in vars['dbtype']:
                 vars['plone_eggs'] += ' psycopg2'
+                vars['opt_deps'] += ' %s' % search_latest('mysql-\d\.\d*', vars['minilays'])
             if 'postgresql' in vars['dbtype']:
                 vars['plone_eggs'] += ' psycopg2'
+                vars['opt_deps'] += ' %s' % search_latest('postgresql-\d\.\d*', vars['minilays'])
             if 'oracle' in vars['dbtype']:
                 vars['plone_eggs'] += ' cx_Oracle'
         vars['plone_eggs'] += ' ZODB3'
@@ -180,37 +182,49 @@ class Template(common.Template):
                                    'etc', 'plone3.buildout.cfg')
                 vdst = os.path.join(vars['path'],
                                    'etc', 'plone3.versions.cfg')
-                open(vdst, 'w').write('')
-                p = ConfigParser()
-                p.read(dst)
-                ext = p._sections.get('buildout', {}).get('extends', '')
+                bc = ConfigParser()
+                bc.read(cfg)
+                ext = ''
+                try:
+                    ext = bc.get('buildout', 'extends')
+                except:
+                    pass
                 if ext:
-                    if ext.startswith('http') and ext.endswith('cfg'):
-                        try:
-                            open(vdst, 'w').write(
-                                urllib2.urlopen(ext).read()
+                    try:
+                        open(vdst, 'w').write(
+                            urllib2.urlopen(ext).read()
+                        )
+                    except Exception, e:
+                        shutil.copy2(
+                            pkg_resources.resource_filename(
+                                'minitage.paste',
+                                'projects/plone3/versions.cfg'
+                            ),
+                            vdst
+                        )
+                        self.lastlogs.append(
+                            "Versions have not been fixed, be ware. Are"
+                            " you connected to the internet (%s).\n" % e
+                        )
+                        self.lastlogs.append(
+                            "%s" % (
+                                'As a default, we will take an already'
+                                ' downloaded versions.cfg matching plone'
+                                ' %s.\n' %
+                                packaged_version
                             )
-                        except Exception, e:
-                            shutil.copy2(
-                                pkg_resources.resource_filename(
-                                    'minitage.paste',
-                                    'projects/plone3/versions.cfg'
-                                ),
-                                vdst
-                            )
-                            self.lastlogs.append(
-                                "Versions have not been fixed, be ware. Are"
-                                " you connected to the internet (%s).\n" % e
-                            )
-                            self.lastlogs.append(
-                                "%s" % (
-                                    'As a default, we will take an already'
-                                    ' downloaded versions.cfg matching plone'
-                                    ' %s.\n' %
-                                    packaged_version
-                                )
-                            )
+                        )
                 os.rename(cfg, dst)
+                # remove the extends bits in the plone3 buildout
+                if not bc.has_section('buildout'):
+                    bc.add_section('buildout')
+
+                bc.set(
+                    'buildout',
+                    'extends',
+                    'plone3.versions.cfg'
+                )
+                bc.write(open(dst, 'w'))
             except Exception, e:
                 print
                 print

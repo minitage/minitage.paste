@@ -32,8 +32,7 @@ eggs-directory=\${minitage:location}/eggs/cache
 PILwoTK  = 1.1.6.4
 # plone32 hack to remove the bugged fixed version of buildout.
 zc.buildout -= 1.1.1
-# zope 2.10.7 compatible version of the ZODB where the RelStorage patch applies
-ZODB3 = 3.7.1
+zc.recipe.egg -= 1.1.0
 #for $product, $version in $plone_versions:
 ${product}=${version}
 #end for

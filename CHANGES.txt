@@ -16,6 +16,8 @@ UP
     - zope3 python version upgraded
     - add openldap profile
     - add mysql profile
+    - fix on postgresql template for database initialization
+    - plone3 fix for offline run
 
 1.3
 ----

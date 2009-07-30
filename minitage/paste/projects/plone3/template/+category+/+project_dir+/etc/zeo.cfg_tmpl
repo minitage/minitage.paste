@@ -9,8 +9,6 @@ zeo-conf-additional =
     </temporarystorage>
 
 [instance]
-extra-paths=
-products=
 zeo-client-cache-size = 80MB
 zeo-client = on
 zeo-address = $zeoaddress
@@ -23,7 +21,4 @@ temporary-storage =
     </zeoclient>
     mount-point /temp_folder
     container-class Products.TemporaryFolder.TemporaryContainer
-
-[zopepy]
-eggs=
 
