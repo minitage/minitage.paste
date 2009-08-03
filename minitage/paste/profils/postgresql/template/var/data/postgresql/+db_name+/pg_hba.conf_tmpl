@@ -68,8 +68,14 @@
 # TYPE  DATABASE    USER        CIDR-ADDRESS          METHOD
 
 # "local" is for Unix domain socket connections only
-local   all         all                               trust
+local   all                 $running_user                     trust
+local   $db_name            $db_user                          trust
+local   all                 all                               md5
 # IPv4 local connections:
-host    all         all         127.0.0.1/32          trust
+host    all                 $running_user     127.0.0.1/32    trust
+host    $db_name            $db_user          127.0.0.1/32    trust
+host    all                 all               0.0.0.0/0       md5
 # IPv6 local connections:
-host    all         all         ::1/128               trust
+host    all                 $running_user     ::1/128         trust
+
+

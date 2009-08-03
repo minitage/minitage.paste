@@ -19,7 +19,7 @@
 # add /sbin 's when we run in user mode in the PATH
 export PATH=\$PATH:/sbin:/usr/sbin:/usr/local/sbin
 pg_ctl=`which pg_ctl`
-effectiveuser=$db_user
+effectiveuser=$running_user
 
 checkconfig() {
     if [ ! -d "\$PGDATA" ] ; then
@@ -35,7 +35,7 @@ wrap_pg_ctl() {
         su \$effectiveuser -c "\$pg_ctl -s \$1"
     else
         \$pg_ctl -s \$1
-    fi 
+    fi
 }
 
 start() {
@@ -77,10 +77,10 @@ status() {
     ebegin "Status of PostgreSQL"
     # "stop/start" seems to behave better.
     wrap_pg_ctl status
-} 
+}
 
 actions="status restart start stop checkconfig reload"
-for action in \$actions;do 
+for action in \$actions;do
     if [[ "\$1" == "\$action" ]];then
         \$action
     fi

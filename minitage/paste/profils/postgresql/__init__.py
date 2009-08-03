@@ -43,6 +43,7 @@ from minitage.core.common import remove_path, which
 from paste.script import templates
 
 re_flags = re.M|re.U|re.I|re.S
+running_user = getpass.getuser()
 
 class Template(common.Template):
 
@@ -53,6 +54,7 @@ class Template(common.Template):
 
     def pre(self, command, output_dir, vars):
         common.Template.pre(self, command, output_dir, vars)
+        vars['running_user'] = running_user
         db_path = os.path.join(
             vars['sys'], 'var', 'data', 'postgresql', vars['db_name']
         )
@@ -60,7 +62,7 @@ class Template(common.Template):
                             'var', 'data',
                             'postgresql',
                             vars['db_name'],
-                            'postgresql.conf') 
+                            'postgresql.conf')
         if not os.path.exists(conf):
             if not os.path.exists(db_path):
                 os.makedirs(db_path)
@@ -68,7 +70,7 @@ class Template(common.Template):
             # registering where we initdb
             # which database do we createdb
             os.environ['PGDATA'] = db_path
-            os.environ['PGUSER'] = vars['db_user']
+            os.environ['PGUSER'] = running_user
             os.environ['PGDATABASE'] = vars['db_name']
             os.environ['PGHOST'] = vars['db_host']
             os.environ['PGPORT'] = vars['db_port']
@@ -86,22 +88,49 @@ class Template(common.Template):
             # If no pgsql is installed, do initdb/createdb but
             # remove files coming out by templates
             # to be out of overwrite errors.
-            ret = os.system("""
-                      bash -c ". %s/share/minitage/minitage.env;\
-                      initdb  -E 'UTF-8';\
-                      pg_ctl -w start ;\
-                      createdb ;\
-                      pg_ctl stop"
-                      """ % (vars['sys'])
-                     )
-            if ret>0:
-                print  "\n\n%s" % (
-                    'Error while initiliasing the database.\n'
-                    'More likely Postgresql binaries were not found in your path. Do you have'
-                    ' built postgresql somewhere or launched minimerge to build it'
-                    ' after adding postgresql-x.x to your project minibuild?.'
-                )
-                sys.exit(1) 
+            bash_init = '. %s/share/minitage/minitage.env' % ( vars['sys'],)
+            init_db = ';'.join(
+                [bash_init,
+                'initdb  -E \'UTF-8\';'
+                'pg_ctl -w start ;'
+                'createdb ;']
+            )
+            create_user = ';'.join(
+                [bash_init,
+                "echo CREATE USER %s"
+                "      WITH ENCRYPTED PASSWORD \\'%s\\'|psql" % (
+                    vars['db_user'],
+                    vars['db_password'],
+                )]
+            )
+            grant = ';'.join(
+                [bash_init,
+                "echo GRANT ALL PRIVILEGES"
+                "      ON DATABASE %s"
+                "      to %s WITH GRANT OPTION|psql" % (
+                    vars['db_name'],
+                    vars['db_user'],
+                )]
+
+            )
+            server_stop = ';'.join(
+                [bash_init,
+                'pg_ctl stop']
+            )
+            for cmd in (init_db,
+                        create_user,
+                        grant,
+                        server_stop,
+                       ):
+                ret = os.system('bash -c "%s"' % cmd)
+                if ret>0:
+                    print  "\n\n%s" % (
+                        'Error while initiliasing the database.\n'
+                        'More likely Postgresql binaries were not found in your path. Do you have'
+                        ' built postgresql somewhere or launched minimerge to build it'
+                        ' after adding postgresql-x.x to your project minibuild?.'
+                    )
+                    sys.exit(1)
             version = os.popen('bash -c ". %s/share/minitage/minitage.env;initdb --version').read()
             if '8.2' in version:
                 vars['lc'] = 'redirect_stderr'
@@ -173,8 +202,10 @@ log_filename='postgresql-%(p)sY-%(p)sm-%(p)sd.log'
             "    * A pg_ident file for your postgresql instance has been linked from %s to %s.\n"
             "    * A init script to start your server is available in %s.\n"
             "    * A logrotate configuration file to handle your logs can be linked in global scope, it is available in %s.\n"
-            "    *  The datadir is located under %s.\n"
-            "    *You can use pypgoptimizator to Tune automaticly your postgresql:\n"
+            "    * By default, the user who created the database (%s) is now also superuser on it, only via localhost connections or via socket.\n"
+            "    * By default, you can connect to your database with the user '%s' and the supplied password Please note that you are also trusted on localhost.\n"
+            "    * The datadir is located under %s.\n"
+            "    * You can use pypgoptimizator to Tune automaticly your postgresql:\n"
             "      easy_install pypgoptimizator\n"
             "      pypgoptimizator -i %s -o %s\n"
             "" % (
@@ -213,6 +244,8 @@ log_filename='postgresql-%(p)sY-%(p)sm-%(p)sd.log'
                         vars['project'], vars['db_name']
                     )
                 ),
+                vars['running_user'],
+                vars['db_user'],
                 os.path.dirname(conf),
                 conf, conf
             )
@@ -228,16 +261,23 @@ log_filename='postgresql-%(p)sY-%(p)sm-%(p)sd.log'
         print infos
         print "Those informations have been saved in %s." % README
 
+    def read_vars(self, command=None):
+        vars = templates.Template.read_vars(self, command)
+        for i, var in enumerate(vars[:]):
+            if var.name in ['db_user', 'db_name']:
+                vars[i].default = command.args[0]
+        return vars
+
+
 
 Template.required_templates = ['minitage.profils.env']
-running_user = getpass.getuser()
 gid = pwd.getpwnam(running_user)[3]
 #group = grp.getgrgid(gid)[0]
 Template.vars = common.Template.vars + \
                 [
                 templates.var('db_name', 'Database name', default = 'minitagedb'),
-                templates.var('db_user', 'Default user', default = running_user),
-                #templates.var('db_group', 'Default group', default = group),
+                templates.var('db_user', 'Default user',  default = 'minitageuser'),
+                templates.var('db_password', 'Default user password', default = 'secret'),
                 templates.var('db_host', 'Host to listen on', default = 'localhost'),
                 templates.var('db_port', 'Port to listen to', default = '5432'),
                 ]

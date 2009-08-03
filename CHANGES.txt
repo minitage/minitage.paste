@@ -18,6 +18,7 @@ UP
     - add mysql profile
     - fix on postgresql template for database initialization
     - plone3 fix for offline run
+    - add running_user/dbuser distinction in the postgresql profile.
 
 1.3
 ----
