@@ -102,7 +102,7 @@ class Template(common.Template):
                     ' after adding postgresql-x.x to your project minibuild?.'
                 )
                 sys.exit(1) 
-            version = os.popen('initdb --version').read()
+            version = os.popen('bash -c ". %s/share/minitage/minitage.env;initdb --version').read()
             if '8.2' in version:
                 vars['lc'] = 'redirect_stderr'
             else:
