@@ -76,9 +76,8 @@ class Template(common.Template):
             os.environ['PGPORT'] = vars['db_port']
             # default charsets C avoiding regional problems :)
             os.environ['LANG'] = os.environ['LC_ALL'] = 'C'
-            fic = open(
-                os.path.join(vars['sys'], 'share', 'minitage', 'minitage.env')
-            ).read()
+            env_file = os.path.join(vars['sys'], 'share', 'minitage', 'minitage.env')
+            fic = open(env_file).read()
             pgre = re.compile('.*postgresql-([^\s]*)\s.*', re_flags)
             m = pgre.match(fic)
             # We are searching in the destination if we
@@ -88,7 +87,7 @@ class Template(common.Template):
             # If no pgsql is installed, do initdb/createdb but
             # remove files coming out by templates
             # to be out of overwrite errors.
-            bash_init = '. %s/share/minitage/minitage.env' % ( vars['sys'],)
+            bash_init = '. %s' % (env_file,)
             init_db = ';'.join(
                 [bash_init,
                 'initdb  -E \'UTF-8\';'
@@ -131,7 +130,12 @@ class Template(common.Template):
                         ' after adding postgresql-x.x to your project minibuild?.'
                     )
                     sys.exit(1)
-            version = os.popen('bash -c ". %s/share/minitage/minitage.env;initdb --version').read()
+            version = os.popen(
+                'bash -c "'
+                '%s;'
+                'initdb --version'
+                '"' % bash_init
+            ).read()
             if '8.2' in version:
                 vars['lc'] = 'redirect_stderr'
             else:
@@ -204,6 +208,7 @@ log_filename='postgresql-%(p)sY-%(p)sm-%(p)sd.log'
             "    * A logrotate configuration file to handle your logs can be linked in global scope, it is available in %s.\n"
             "    * By default, the user who created the database (%s) is now also superuser on it, only via localhost connections or via socket.\n"
             "    * By default, you can connect to your database with the user '%s' and the supplied password Please note that you are also trusted on localhost.\n"
+            "    * For security rezasons, PostGreSQL only listens on localhost, change it in the configuration file if you want it to listen to other adresses.\n"
             "    * The datadir is located under %s.\n"
             "    * You can use pypgoptimizator to Tune automaticly your postgresql:\n"
             "      easy_install pypgoptimizator\n"
