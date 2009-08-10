@@ -91,16 +91,23 @@ class Template(common.Template):
             init_db = ';'.join(
                 [bash_init,
                 'initdb  -E \'UTF-8\';'
-                'pg_ctl -w start ;'
-                'createdb ;']
+                'pg_ctl -w start ;']
             )
             create_user = ';'.join(
                 [bash_init,
                 "echo CREATE USER %s"
-                "      WITH ENCRYPTED PASSWORD \\'%s\\'|psql" % (
+                "      WITH ENCRYPTED PASSWORD \\'%s\\'|psql template1" % (
                     vars['db_user'],
                     vars['db_password'],
                 )]
+            )
+            create_db = ';'.join(
+                [bash_init,
+                 'createdb -O %s %s ;' % (
+                     vars['db_user'],
+                     vars['db_name'],
+                 )
+                ]
             )
             grant = ';'.join(
                 [bash_init,
@@ -118,6 +125,7 @@ class Template(common.Template):
             )
             for cmd in (init_db,
                         create_user,
+                        create_db,
                         grant,
                         server_stop,
                        ):
@@ -191,13 +199,15 @@ class Template(common.Template):
             open(conf,'w').write(confc +
                 """
 # MINITAGE LOGGING
-log_directory = '%(sys)s/var/log/postgresql/coursorama'
+log_directory = '%(sys)s/var/log/postgresql/%(project)s'
 # directory where log files are written,
 # can be absolute or relative to PGDATA
 log_filename='postgresql-%(p)sY-%(p)sm-%(p)sd.log'
 %(lc)s=true
                                  """ % {
-                                     'sys':vars['sys'], 'p':'%', 'lc': vars['lc']
+                                     'sys':vars['sys'], 'p':'%',
+                                     'lc': vars['lc'],
+                                     'project': vars['project']
                                  })
         infos = "%s" % (
             "    * You can look for wrappers to various postgresql scripts located in %s. You must use them as they are configured to use some useful defaults to connect to your database.\n"
