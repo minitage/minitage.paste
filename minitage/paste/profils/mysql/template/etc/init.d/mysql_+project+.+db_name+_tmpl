@@ -18,15 +18,42 @@
 DATADIR="$sys/var/data/mysql/$db_name"
 SOCKET="$sys/var/run/mysql/${db_name}.mysqld.sock"
 PID_FILE="$sys/var/run/mysql/${db_name}.mysqld.pid"
+pid_file=\$PID_FILE
 CHROOT=""
 NICE=""
 TIMEUNIT=2
 STARTUPTIMEOUT=5
 STOPTIMEOUT=120
 mysqld=`which mysqld`
+MYSQLD=\$mysqld
 
 # add /sbin 's when we run in user mode in the PATH
 export PATH=\$PATH:/sbin:/usr/sbin:/usr/local/sbin
+# Don't run killproc -TERM, as it could send a SIGKILL as well, possibly
+# resulting in database corruption. Run kill -TERM manually instead,  wait
+# approximately 300 seconds and fail if mysql doesn't respond. This will at
+# least prevent the SIGKILL when doing 'rcmysql stop' manually. During system
+# shutdown, we are out of luck...
+# See https://bugzilla.novell.com/show_bug.cgi?id=223209
+kill_mysql ()
+{
+  local pid exe
+  test -e "\$PID_FILE" || return 7  # not running
+  pid=`cat "\$PID_FILE"` || return 4  # insufficient privileges
+  test -L "/proc/\$pid/exe" || return 7
+  exe=`readlink "/proc/\$pid/exe"` || return 4
+  test "`echo "\$exe" | grep "^\$MYSQLD"`" || return 7
+  kill -STOP "\$pid"
+  kill -TERM "\$pid" || return 4 # suboptimal
+  kill -CONT "\$pid"
+  for i in `seq 3000`; do
+    # mysqld removes its pid file
+    test -e "\$pid_file" || return 0
+    LC_ALL=C sleep 0.1
+  done
+  test -e "\$pid_file" || return 0
+  return 1
+}
 
 function in_list() {
     local elem=\${1:-"none"}
@@ -117,10 +144,8 @@ start() {
     mysqld_thing="\${mysqld_thing} --socket=\${socket}"
 
     tmpnice="\${NICE:+"--nicelevel "}\${NICE}"
-    start-stop-daemon --quiet \${DEBUG/*/"--verbose"} --start \
-    --background \${tmpnice} --pidfile \${pidfile}\
-    --exec \$mysqld -- \${mysqld_thing} \
-    && sleep \${TIMEUNIT}
+    \$mysqld  \${mysqld_thing}&
+    sleep \${TIMEUNIT}
     retstatus=\$?
 
     # only the first run is done by start-stop-daemon
@@ -138,30 +163,16 @@ start() {
     fi
     eend \$retstatus
 }
-
 stop() {
     local retstatus=0
     ebegin "Stopping MySQL from \$DATADIR"
-    pidfile=\$PID_FILE
-    timeout=\${STOPTIMEOUT:-"120"}
-    PID=\$(< "\${pidfile}" )
     einfo "Stopping mysqld (\$pidfile)"
-    start-stop-daemon --quiet \${DEBUG/*/"--verbose"} --stop --pidfile "\${pidfile}" &
-    while [[ -n "\$PID" ]] \
-        && \$( ps -Ao pid | grep -q "^ *\$PID\$" ) \
-        && [[ "\${timeout}" -ge 1 ]]
-    do
-        timeout=\$((\$timeout - 1))
-        [[ \${DEBUG} -ge 1 ]] && echo -n "\$(( \$STOPTIMEOUT - \$timeout )),"
-        sleep \${TIMEUNIT}
-    done
-    [[ "\${timeout}" -lt 1 ]] && retstatus=1
-    sleep \${TIMEUNIT}
-    eend \${retstatus}
+    retstatus=\$(kill_mysql)
+    eend \$retstatus
 }
 
 restart() {
-    ebegin "Restarting PostgreSQL"
+    ebegin "Restarting MySQL"
     # "stop/start" seems to behave better.
     stop
     einfo  "..."
@@ -170,9 +181,33 @@ restart() {
 }
 
 status() {
-    ebegin "Status of PostgreSQL"
-    # "stop/start" seems to behave better.
-    wrap_pg_ctl status
+  ebegin "Status of MySQL"
+  local restatus=0
+  # NOTE: checkproc returns LSB compliant status values,
+  #       but it checks for running binary first and only
+  #       if it doesn't find running process with proper
+  #       name it checks pidfile. So we can't use it because
+  #       akonadi runs it's own database.
+  if [ -f "\$pid_file" ]; then
+    pid="`cat "\$pid_file"`"
+    if [ -d "/proc/\$pid" ]; then
+      if exe=`readlink "/proc/\$pid/exe"`; then
+        if [ "`echo "\$exe" | grep "^\$MYSQLD"`" ]; then
+          retstatus=0
+        else
+          retstatus=1
+        fi
+      else
+        retstatus=1
+      fi
+    else
+      retstatus= 1
+    fi
+  else
+    retstatus=3
+  fi
+  # "stop/start" seems to behave better.
+  eend \$retstatus
 }
 
 actions="status restart start stop checkconfig"

@@ -20,6 +20,7 @@ UP
     - plone3 fix for offline run
     - add running_user/dbuser distinction in the postgresql profile.
     - move some scripts for global coherence
+    - mysqld init script portable
 
 1.3
 ----
