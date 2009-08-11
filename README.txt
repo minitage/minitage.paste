@@ -23,8 +23,8 @@ Projects templates
     - minitage.egg: A sample layout for an egg dependency
     - minitage.pylons : A simple layout for a pylons project
 
-Projects profiles
-==================
+Projects  instances
+=======================
 
     - minitage.instances.varnish: create a varnish instance with or without a sample
       configuration file toward zope/plone.
