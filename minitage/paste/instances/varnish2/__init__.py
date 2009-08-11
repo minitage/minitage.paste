@@ -32,7 +32,7 @@ __docformat__ = 'restructuredtext en'
 
 import os
 import sys
-from minitage.paste.profils import varnish as common
+from minitage.paste.instances import varnish as common
 from paste.script import templates
 
 class Template(common.Template):

@@ -29,7 +29,7 @@
 
 __docformat__ = 'restructuredtext en'
 
-from minitage.paste.profils import common
+from minitage.paste.instances import common
 
 class Template(common.Template):
 

@@ -38,7 +38,7 @@ import grp
 import re
 import subprocess
 
-from minitage.paste.profils import common
+from minitage.paste.instances import common
 from minitage.core.common import remove_path, which
 from paste.script import templates
 
@@ -285,7 +285,7 @@ log_filename='postgresql-%(p)sY-%(p)sm-%(p)sd.log'
 
 
 
-Template.required_templates = ['minitage.profils.env']
+Template.required_templates = ['minitage.instances.env']
 gid = pwd.getpwnam(running_user)[3]
 #group = grp.getgrgid(gid)[0]
 Template.vars = common.Template.vars + \

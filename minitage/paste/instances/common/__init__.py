@@ -36,7 +36,7 @@ import os
 from minitage.core import core
 
 class Template(common.Template):
-    '''A template for minitage profils/'''
+    '''A template for minitage.instances/'''
 
     def pre(self, command, output_dir, vars):
         common.Template.pre(self, command, output_dir, vars)

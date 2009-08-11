@@ -22,6 +22,7 @@ UP
     - move some scripts for global coherence
     - mysqld init script portable
     - db_user is also owner of the created database
+    - profils -> instances
 
 
 1.3
@@ -101,6 +102,7 @@ UP
 --------
 
     - Adding wrappers for postgresql
+
 0.5
 --------
 
@@ -120,8 +122,9 @@ UP
 
 0.0.1_alpha46
 ---------------
+
      - add a INS env. variable pointing to the current project to minitage.env
-      profil.
+       profil.
 
 0.0.1_alpha46
 ---------------

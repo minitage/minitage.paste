@@ -40,7 +40,7 @@ import sha
 import md5
 import base64
 
-from minitage.paste.profils import common
+from minitage.paste.instances import common
 from minitage.core.common import remove_path
 from paste.script import templates
 
@@ -131,7 +131,7 @@ class Template(common.Template):
         print infos
         print "Those informations have been saved in %s." % README
 
-Template.required_templates = ['minitage.profils.env']
+Template.required_templates = ['minitage.instances.env']
 running_user = getpass.getuser()
 gid = pwd.getpwnam(running_user)[3]
 #group = grp.getgrgid(gid)[0]

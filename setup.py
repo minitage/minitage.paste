@@ -1,4 +1,4 @@
-import os
+import os, sys
 from setuptools import setup, find_packages
 setupdir = os.path.abspath(
     os.path.dirname(__file__)
@@ -6,23 +6,27 @@ setupdir = os.path.abspath(
 os.chdir(setupdir)
 
 name='minitage.paste'
-version = '1.3.38'
+version = '1.3.41'
 
 def read(rnames):
     return open(
         os.path.join(setupdir, rnames)
     ).read()
 
+long_description = (
+    read('README.txt')
+    + '\n' +
+    read('CHANGES.txt')
+    + '\n'
+)
+if 'RST_TEST' in os.environ:
+    print long_description
+    sys.exit(0)
 setup(
     name=name,
     version=version,
     description='PasteScripts to facilitate use of minitage and creation of minitage based projects.',
-    long_description= (
-        read('README.txt')
-        + '\n' +
-        read('CHANGES.txt')
-        + '\n'
-    ),
+    long_description = long_description,
     classifiers=[
         "Framework :: Django",
         "Framework :: Pylons",
@@ -42,7 +46,7 @@ setup(
     url='http://cheeseshop.python.org/pypi/%s' % name,
     license='BSD',
     packages=find_packages(exclude=['ez_setup']),
-    namespace_packages=['minitage', name],
+    namespace_packages=['minitage', name, '%s.instances' % name, '%s.projects' % name],
     include_package_data=True,
     zip_safe=False,
     install_requires = ['setuptools',
@@ -61,13 +65,13 @@ setup(
             'minitage.egg = minitage.paste.projects.egg:Template',
             'minitage.plone25 = minitage.paste.projects.plone25:Template',
             'minitage.plone3 = minitage.paste.projects.plone3:Template',
-            'minitage.profils.env = minitage.paste.profils.env:Template',
-            'minitage.profils.postgresql = minitage.paste.profils.postgresql:Template',
-            'minitage.profils.openldap = minitage.paste.profils.openldap:Template',
-            'minitage.profils.mysql = minitage.paste.profils.mysql:Template',
-            'minitage.profils.varnish = minitage.paste.profils.varnish:Template',
-            'minitage.profils.varnish2 = minitage.paste.profils.varnish2:Template',
-            'minitage.profils.paste-initd = minitage.paste.profils.pasteinitd:Template',
+            'minitage.instances.env = minitage.paste.instances.env:Template',
+            'minitage.instances.postgresql = minitage.paste.instances.postgresql:Template',
+            'minitage.instances.openldap = minitage.paste.instances.openldap:Template',
+            'minitage.instances.mysql = minitage.paste.instances.mysql:Template',
+            'minitage.instances.varnish = minitage.paste.instances.varnish:Template',
+            'minitage.instances.varnish2 = minitage.paste.instances.varnish2:Template',
+            'minitage.instances.paste-initd = minitage.paste.instances.pasteinitd:Template',
             'minitage.pylons = minitage.paste.projects.pylons:Template',
             'minitage.zope2 = minitage.paste.projects.zope2:Template',
             'minitage.zope3 = minitage.paste.projects.zope3:Template',
