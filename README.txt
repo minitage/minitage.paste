@@ -30,6 +30,8 @@ Projects profiles
       configuration file toward zope/plone.
     - minitage.instances.postgresql: create a postgresql instance in the sys dir of your
       project
+    - minitage.instances.mysql: create a mysql instance in the sys dir of your
+      project 
     - minitage.instances.openldap: create a openldap instance in the sys dir of your
       project
     - minitage.instances.paste-initd: create a paste initd file and logrotated
@@ -37,6 +39,16 @@ Projects profiles
     - minitage.instances.env: create a `share/minitage/minitage.env` file inside the
       sysdir of the project. You ll can source it and have into your environment
       the path and libraries from the registred dependencies of your project.
+
+
+
+CAS
+=====
+
+    - separated package because it relies on pyopenssl.
+      It would allow you to install a CAS Server
+
+      see ``minitage.paste.instances.cas`` on Pypi..
 
 Usage
 ======
