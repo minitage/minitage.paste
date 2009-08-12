@@ -32,8 +32,7 @@ Projects  instances
       project
     - minitage.instances.mysql: create a mysql instance in the sys dir of your
       project
-    - minitage.instances.openldap: create a openldap instance in the sys dir of your
-      project
+
     - minitage.instances.paste-initd: create a paste initd file and logrotated
       stuff in the sys dir of your project
     - minitage.instances.env: create a `share/minitage/minitage.env` file inside the
@@ -42,13 +41,16 @@ Projects  instances
 
 
 
-CAS
-=====
+Extras
+==============
+Those templates that need intrusives dependencies as pyopenssl that need to be
+compiled. That why there are not inlcude in the main package.
 
-    - separated package because it relies on pyopenssl.
-      It would allow you to install a CAS Server
+See ``minitage.paste.instances.extras`` on Pypi..
 
-      see ``minitage.paste.instances.cas`` on Pypi..
+     - minitage.instances.openldap: create a openldap instance in the sys dir of your
+      project
+     - minitage.instances.cas: create a CAS server instance in the sys dir of your project
 
 Usage
 ======
