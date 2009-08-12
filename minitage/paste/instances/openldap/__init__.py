@@ -91,6 +91,13 @@ class Template(common.Template):
                 vars['db_orga'], vars['db_suffix']
             )
         )
+        vars["ldapconf"] = os.path.join(
+            vars['sys'], 'etc', 'openldap',
+            '%s_%s.%s-ldap.conf' % (
+                vars['project'],
+                vars['db_orga'], vars['db_suffix']
+            )
+        )
 
     def post(self, command, output_dir, vars):
         sys = vars['sys']
@@ -103,7 +110,8 @@ class Template(common.Template):
 
         infos = "%s" % (
             "    * You can look for wrappers to various openldap scripts located in %s. You must use them as they are configured to use some useful defaults to connect to your database.\n"
-            "    * A configuration file for your openldap instance has been created in %s.\n"
+            "    * A configuration file for your openldap'slapd  instance has been created in %s.\n"
+            "    * A configuration file for your openldap clients has been created in %s.\n"
             "    * A init script to start your server is available in %s.\n"
             "    * A logrotate configuration file to handle your logs can be linked in global scope, it is available in %s.\n"
             "    * The datadir is located under %s\n"
@@ -119,6 +127,7 @@ class Template(common.Template):
                     )
                 ),
                 vars['slapdconf'],
+                vars['ldapconf'],
                 os.path.join(
                     vars['sys'], 'etc', 'init.d', 'openldap_%s_%s.%s' %(
                         vars['project'], vars['db_orga'], vars['db_suffix']
