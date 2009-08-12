@@ -2,7 +2,7 @@
 #echo '%s/var/log/openldap/%s_%s.%s/*.log {\n' % ($sys, $project, $db_orga, $db_suffix)
 rotate 10
 daily
-create 660 $db_user
+create 660 $running_user
 notifempty
 size 10M
 sharedscripts

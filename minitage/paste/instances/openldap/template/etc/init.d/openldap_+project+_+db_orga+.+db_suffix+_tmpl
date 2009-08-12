@@ -13,8 +13,9 @@
 
 # inspired by gentoo/openrc init scripts.
 
-. ${sys}/share/openldap/${db_orga}.${db_suffix}.env
-PID_FILE='${sys}/var/run/openldap/${project}.${db_orga}.${db_suffix}.slapd.pid'
+. ${sys}/share/openldap/${project}_${db_orga}.${db_suffix}.env
+
+PID_FILE='$pid_file'
 
 # add /sbin 's when we run in user mode in the PATH
 export PATH=\$PATH:/sbin:/usr/sbin:/usr/local/sbin
@@ -59,5 +60,4 @@ for action in \$actions;do
         \$action
     fi
 done
-
 

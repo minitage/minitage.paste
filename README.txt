@@ -31,7 +31,7 @@ Projects  instances
     - minitage.instances.postgresql: create a postgresql instance in the sys dir of your
       project
     - minitage.instances.mysql: create a mysql instance in the sys dir of your
-      project 
+      project
     - minitage.instances.openldap: create a openldap instance in the sys dir of your
       project
     - minitage.instances.paste-initd: create a paste initd file and logrotated

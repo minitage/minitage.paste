@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 . ${sys}/share/openldap/${project}_${db_orga}.${db_suffix}.env
-slapauth $@
+# do not borrow LD LINKS from minitage as we can have more than one db in
+# environment and it can fuck up OpenLDAP binaries !
+unset LD_LIBRARY_PATH
+slapauth -f '$slapdconf' \$@

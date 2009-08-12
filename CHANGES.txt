@@ -23,6 +23,8 @@ UP
     - mysqld init script portable
     - db_user is also owner of the created database
     - profils -> instances
+    - openldap got better arguements for its wrappers. Also, now it uses
+      SIMPLE authentication for connection to the slapd server.
 
 
 1.3

@@ -16,12 +16,9 @@ include        $sys/etc/openldap/schema/${project}_${db_orga}.${db_suffix}/pmi.s
 include        $sys/etc/openldap/schema/${project}_${db_orga}.${db_suffix}/ppolicy.schema
 #\include        $sys/etc/openldap/schema/${project}_${db_orga}.${db_suffix}/nadf.schema
 
-#echo '#######################################################################\n'
-# SLAPD Configuration
-#echo '#######################################################################\n'
-pidfile     ${sys}/var/run/openldap/${project}.${db_orga}.${db_suffix}.slapd.pid
-argsfile    ${sys}/var/run/openldap/${project}.${db_orga}.${db_suffix}.slapd.args
-logfile     ${sys}/var/log/openldap/${project}.${db_orga}.${db_suffix}/slapd.log
+pidfile     $pid_file
+argsfile    ${sys}/var/run/openldap/${project}_${db_orga}.${db_suffix}.slapd.args
+logfile     ${sys}/var/log/openldap/${project}_${db_orga}.${db_suffix}/slapd.log
 loglevel    8
 
 # Load dynamic backend modules:
@@ -29,6 +26,9 @@ loglevel    8
 # moduleload    back_bdb.la
 # moduleload    back_hdb.la
 # moduleload    back_ldap.la
+
+# disable sasl by default
+sasl-secprops none
 
 #echo '#######################################################################\n'
 # BDB database definitions
@@ -64,7 +64,7 @@ index objectClass,entryUUID,entryCSN eq
 #echo '#######################################################################\n'
 # ROOT ACCESS
 #echo '#######################################################################\n'
-rootdn          "cn=$db_user,dc=${db_orga},dc=${db_suffix}"
+rootdn        "$root_dn"
 rootpw        $db_password
 #echo '#######################################################################\n'
 # SECURITY

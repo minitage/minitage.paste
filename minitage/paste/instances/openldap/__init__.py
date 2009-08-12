@@ -45,6 +45,7 @@ from minitage.core.common import remove_path
 from paste.script import templates
 
 re_flags = re.M|re.U|re.I|re.S
+running_user = getpass.getuser()
 
 def SSHA_password ( password ):
     p_ssha = sha.new( password )
@@ -55,9 +56,6 @@ def MD5_password ( password ):
     p_md5 = md5.new( password )
     return '%s%s' %( '{MD5}', base64.encodestring(p_md5.digest()))
 
-
-
-
 class Template(common.Template):
 
     summary = 'Template for creating a openldap instance'
@@ -67,7 +65,32 @@ class Template(common.Template):
 
     def pre(self, command, output_dir, vars):
         common.Template.pre(self, command, output_dir, vars)
+        vars['pid_file'] = os.path.join(
+            vars['sys'], 'var', 'run', 'openldap',
+            '%s_%s.%s.slapd.pid' % (
+                vars['project'],
+                vars['db_orga'],
+                vars['db_suffix']
+            )
+        )
         vars['db_password'] = MD5_password(vars['db_password'])
+        vars['running_user'] = running_user
+        vars['root_dn'] = 'cn=%s, dc=%s, dc=%s' % (
+            vars['db_user'],
+            vars['db_orga'],
+            vars['db_suffix'],
+        )
+        vars['dn'] = 'dc=%s, dc=%s' % (
+            vars['db_orga'],
+            vars['db_suffix'],
+        )
+        vars["slapdconf"] = os.path.join(
+            vars['sys'], 'etc', 'openldap',
+            '%s_%s.%s-slapd.conf' % (
+                vars['project'],
+                vars['db_orga'], vars['db_suffix']
+            )
+        )
 
     def post(self, command, output_dir, vars):
         sys = vars['sys']
@@ -84,6 +107,8 @@ class Template(common.Template):
             "    * A init script to start your server is available in %s.\n"
             "    * A logrotate configuration file to handle your logs can be linked in global scope, it is available in %s.\n"
             "    * The datadir is located under %s\n"
+            "    * You can bind to the OpenLDAP with the following DN: \"%s\".\n"
+            "    * You can start filling your directory under \"%s\".\n"
             "" % (
                 '"%s'%os.path.join(
                     vars['sys'], 'bin', '%s.%s.*" eg : %s.%s.ldapadd' % (
@@ -93,13 +118,7 @@ class Template(common.Template):
                         vars['db_suffix']
                     )
                 ),
-                os.path.join(
-                    vars['sys'], 'etc', 'openldap',
-                    '%s_%s.%s-slapd.conf' % (
-                        vars['project'],
-                        vars['db_orga'], vars['db_suffix']
-                    )
-                ),
+                vars['slapdconf'],
                 os.path.join(
                     vars['sys'], 'etc', 'init.d', 'openldap_%s_%s.%s' %(
                         vars['project'], vars['db_orga'], vars['db_suffix']
@@ -116,8 +135,11 @@ class Template(common.Template):
                     '%s_%s.%s.' % (
                         vars['project'], vars['db_orga'], vars['db_suffix']
                     )
-                )
+                ),
+                vars['root_dn'],
+                vars['dn'],
             )
+
         )
         README = os.path.join(vars['path'],
                               'README.openldap.%s-%s.%s' % (
@@ -132,7 +154,6 @@ class Template(common.Template):
         print "Those informations have been saved in %s." % README
 
 Template.required_templates = ['minitage.instances.env']
-running_user = getpass.getuser()
 gid = pwd.getpwnam(running_user)[3]
 #group = grp.getgrgid(gid)[0]
 Template.vars = common.Template.vars + \

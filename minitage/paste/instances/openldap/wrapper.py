@@ -43,19 +43,42 @@ LDAP_PATHS = os.environ.get('MLDAP_PATHS',
 LDAP_PATHL = os.environ.get('MLDAP_PATHL',
                          os.path.expanduser('~/minitage/dependencies/openldap-2.4/parts/part/libexec')
                         )
-WRAPPE_TEMPLATE ="""\
+WRAPPER_TEMPLATE ="""\
 #!/usr/bin/env bash
 . ${sys}/share/openldap/${project}_${db_orga}.${db_suffix}.env
-%s $@
+# do not borrow LD LINKS from minitage as we can have more than one db in
+# environment and it can fuck up OpenLDAP binaries !
+unset LD_LIBRARY_PATH
+for a in \$@;do
+    if [[ \$a == -w* ]];then
+        passwordsupplied=True
+    fi
+    ARGS="\$ARGS \$a"
+done
+if [[ -z \$passwordsupplied ]];then
+    ARGS=" \$ARGS -W"
+fi
+ARGS=" \$ARGS -x "
+%s \$ARGS
 """
 
-
+SLAP_WRAPPER_TEMPLATE ="""\
+#!/usr/bin/env bash
+. ${sys}/share/openldap/${project}_${db_orga}.${db_suffix}.env
+# do not borrow LD LINKS from minitage as we can have more than one db in
+# environment and it can fuck up OpenLDAP binaries !
+unset LD_LIBRARY_PATH
+%s -f '$slapdconf' \$@
+"""
 
 def main():
     for p in LDAP_PATH, LDAP_PATHS, LDAP_PATHL:
         for f in os.listdir(p):
+            template = WRAPPER_TEMPLATE
+            if f.startswith('slap'):
+                template = SLAP_WRAPPER_TEMPLATE
             d = open(os.path.join(PATH, '+db_orga+.+db_suffix+.%s_tmpl' % f), 'w')
-            d.write(WRAPPE_TEMPLATE % f)
+            d.write(template % (f))
             d.close()
 
 if __name__ == '__main__':
