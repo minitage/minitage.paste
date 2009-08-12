@@ -160,6 +160,7 @@ def generate_prefixed_ssl_bundle(vars, name):
         os.path.join(spath, 'private', '%s-ca.key' % (name)),
         os.path.join(spath, 'certs', '%s-server.crt' % (name)),
         os.path.join(spath, 'private', '%s-server.key' % (name)),
+        vars=vars
     )
 
 def make_certificate(
@@ -219,6 +220,8 @@ def make_certificate(
     dump_write(dump_certificate(FILETYPE_PEM, s_cert),
                server_crt_path)
     print "Generated Server certificate in %s" % server_crt_path
+    for p in [ca_key_path, server_key_path]:
+        os.chmod(p, 0600)
 
 SSL_VARS = [
     templates.var('ssl_ca_C', 'SSL Ca Country', default = 'FR'),

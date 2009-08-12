@@ -25,6 +25,7 @@ UP
     - profils -> instances
     - openldap got better arguements for its wrappers. Also, now it uses
       SIMPLE authentication for connection to the slapd server.
+    - add SSL certificate generators
 
 
 1.3
