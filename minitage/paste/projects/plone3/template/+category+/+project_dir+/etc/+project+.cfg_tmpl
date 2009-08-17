@@ -3,6 +3,8 @@
 # add hand pinned version there
 [version]
 # $project=1.0
+# plone.reload > 1 is not compatible with plone3 (depends on Zope2, eggigied)
+plone.reload=0.11
 
 [buildout]
 extensions = buildout.minitagificator mr.developer
