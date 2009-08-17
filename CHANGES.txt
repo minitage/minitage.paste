@@ -28,6 +28,8 @@ UP
     - add SSL certificate generators
     - fix plone.reload version for compatibility with plone3
     - wrong dependency on pyopenssl fixed and moved inside .extras
+    - remove special chars from default database name for postgresql instance
+    - add entries for ipv6 connections for postgresql instance 
 
 
 1.3

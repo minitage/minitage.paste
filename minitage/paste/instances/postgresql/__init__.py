@@ -44,6 +44,7 @@ from paste.script import templates
 
 re_flags = re.M|re.U|re.I|re.S
 running_user = getpass.getuser()
+special_chars_re = re.compile('[-_@|{(\[|)\]}]', re_flags)
 
 class Template(common.Template):
 
@@ -278,9 +279,10 @@ log_filename='postgresql-%(p)sY-%(p)sm-%(p)sd.log'
 
     def read_vars(self, command=None):
         vars = templates.Template.read_vars(self, command)
+        myname = special_chars_re.sub('', command.args[0])
         for i, var in enumerate(vars[:]):
             if var.name in ['db_user', 'db_name']:
-                vars[i].default = command.args[0]
+                vars[i].default = myname
         return vars
 
 Template.required_templates = ['minitage.instances.env']

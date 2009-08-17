@@ -77,5 +77,7 @@ host    $db_name            $db_user          127.0.0.1/32    trust
 host    all                 all               0.0.0.0/0       md5
 # IPv6 local connections:
 host    all                 $running_user     ::1/128         trust
+host    $db_name            $db_user          ::1/128         trust
+host    all                 all               ::1/128         md5
 
 
