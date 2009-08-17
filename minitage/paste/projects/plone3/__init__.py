@@ -80,7 +80,11 @@ class Template(common.Template):
             '\tYou can also activate or safely ignore questions about zeoserver and relstorage if you do not use them.\n'
             '---------------------------------------------------------\n'
         )
-        return common.Template.read_vars(self, command)
+        vars = common.Template.read_vars(self, command)
+        for i, var in enumerate(vars[:]):
+            if var.name in ['dbuser', 'dbname']:
+                vars[i].default = command.args[0]
+        return vars
 
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
@@ -276,7 +280,7 @@ Template.vars = common.Template.vars \
                default = running_user),
            var('dbpassword',
                'Relstorage password (only useful for relstorage mode)',
-               default = 'admin',),
+               default = 'secret',),
            var('plone_products',
                'space separeted list of adtionnal products to install: '
                'eg: file://a.tz file://b.tgz',

@@ -283,8 +283,6 @@ log_filename='postgresql-%(p)sY-%(p)sm-%(p)sd.log'
                 vars[i].default = command.args[0]
         return vars
 
-
-
 Template.required_templates = ['minitage.instances.env']
 gid = pwd.getpwnam(running_user)[3]
 #group = grp.getgrgid(gid)[0]

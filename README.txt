@@ -28,6 +28,8 @@ Projects  instances
 
     - minitage.instances.varnish: create a varnish instance with or without a sample
       configuration file toward zope/plone.
+    - minitage.instances.varnish2: create a varnish2 instance with or without a sample
+      configuration file toward zope/plone. 
     - minitage.instances.postgresql: create a postgresql instance in the sys dir of your
       project
     - minitage.instances.mysql: create a mysql instance in the sys dir of your
@@ -43,13 +45,13 @@ Projects  instances
 
 Extras
 ==============
-Those templates that need intrusives dependencies as pyopenssl that need to be
-compiled. That why there are not inlcude in the main package.
+Those templates that need intrusives dependencies like pyopenssl that need to be
+compiled. That why there are not included in the main package.
 
 See ``minitage.paste.instances.extras`` on Pypi..
 
      - minitage.instances.openldap: create a openldap instance in the sys dir of your
-      project
+       project
      - minitage.instances.cas: create a CAS server instance in the sys dir of your project
 
 Usage

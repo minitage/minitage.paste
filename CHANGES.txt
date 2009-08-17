@@ -26,6 +26,8 @@ UP
     - openldap got better arguements for its wrappers. Also, now it uses
       SIMPLE authentication for connection to the slapd server.
     - add SSL certificate generators
+    - fix plone.reload version for compatibility with plone3
+    - wrong dependency on pyopenssl fixed and moved inside .extras
 
 
 1.3
