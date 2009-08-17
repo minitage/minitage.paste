@@ -8,6 +8,7 @@ os.chdir(setupdir)
 name='minitage.paste'
 version = '1.3.48'
 
+
 def read(rnames):
     return open(
         os.path.join(setupdir, rnames)
