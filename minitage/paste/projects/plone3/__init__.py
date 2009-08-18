@@ -32,6 +32,7 @@ __docformat__ = 'restructuredtext en'
 import os
 import shutil
 import getpass
+import re
 import subprocess
 import urllib2
 
@@ -238,6 +239,10 @@ class Template(common.Template):
                 print
         except Exception, e:
             print 'Error executing plone3 buildout, %s'%e
+
+        # be sure our special python is in priority
+        vars['opt_deps'] = re.sub('\s*%s\s*' % self.python, ' ', vars['opt_deps'])
+        vars['opt_deps'] += " %s" % self.python
 
 running_user = getpass.getuser()
 Template.vars = common.Template.vars \

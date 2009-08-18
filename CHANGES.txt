@@ -29,7 +29,11 @@ UP
     - fix plone.reload version for compatibility with plone3
     - wrong dependency on pyopenssl fixed and moved inside .extras
     - remove special chars from default database name for postgresql instance
-    - add entries for ipv6 connections for postgresql instance 
+    - add entries for ipv6 connections for postgresql instance
+    - Change PATH priorities in .env (minitage come in last, just before
+      system PATH
+    - make python2.4 at highest priority on plone3 template
+    - make direct dependencies at higher priority in minitage.instances.env
 
 
 1.3

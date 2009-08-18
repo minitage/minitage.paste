@@ -65,6 +65,16 @@ class Template(common.Template):
                 vars['category'] = mb.category
                 vars['path'] = m.get_install_path(mb)
                 vars['sys'] = os.path.join(vars['path'], 'sys')
+                # reorder dependencies to let the direct dependencies be at most
+                # priority
+                def sortmb(m1, m2):
+                    if m1.name in mb.dependencies:
+                        return 1
+                    if m2.name in mb.dependencies:
+                        return -1
+                    return 0
+                deps.sort(sortmb)
+                vars['dependencies'] = deps
 
         if not vars['inside_minitage']:
             self.output_dir = os.path.join(os.getcwd(), vars['project'])
@@ -90,5 +100,6 @@ class Template(common.Template):
         # set templates variables
         vars['eggs'] = eggs
         vars['dependencies'] = deps
+
 
 # vim:set et sts=4 ts=4 tw=80:
