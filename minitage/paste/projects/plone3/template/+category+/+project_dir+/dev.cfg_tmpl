@@ -26,6 +26,8 @@ eggs+=
     Products.PDBDebugMode
     Products.Clouseau
     Products.DocFinderTab
+    Products.Gloworm
+    Products.DocFinderTab
     Products.ZopeProfiler
 #if $linux:
 # plone auto reloading facility relying on inotify.

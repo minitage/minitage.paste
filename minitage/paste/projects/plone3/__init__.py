@@ -65,7 +65,7 @@ easy_shop_eggs = ['easyshop.core',
                   'easyshop.stocks',
                   'easyshop.taxes',
                  ]
-packaged_version = '3.2.1'
+packaged_version = '3.3'
 class Template(common.Template):
 
     summary = 'Template for creating a plone3 project'
