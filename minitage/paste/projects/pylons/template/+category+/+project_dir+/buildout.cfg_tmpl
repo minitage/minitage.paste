@@ -74,7 +74,7 @@ extra-paths=
     \${libxslt:site-packages}
 
 [scripts]
-recipe = minitage.recipe:scripts
+recipe = minitage.recipe.scripts
 executable=\${python:executable}
 eggs=
     \${buildout:eggs}
@@ -96,7 +96,7 @@ packages =\${zopepy:extra-paths}
 
 [kgs]
 order=\${scripts:recipe}
-recipe=minitage.recipe:printer
+recipe=minitage.recipe.printer
 quiet=
 eggs=\${instance:eggs}
 file=${project}.cfg

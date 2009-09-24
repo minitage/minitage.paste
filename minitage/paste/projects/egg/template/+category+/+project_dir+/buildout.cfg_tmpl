@@ -14,7 +14,7 @@ eggs-directory=../../eggs/cache
 
 # think that the eggs version must be set in the versions section
 [part]
-recipe = minitage.recipe:scripts
+recipe = minitage.recipe.scripts
 
 #
 # EGGS TO BUILD if we use an index

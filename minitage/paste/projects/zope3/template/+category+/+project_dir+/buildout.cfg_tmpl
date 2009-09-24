@@ -28,7 +28,7 @@
 #echo '#\n'
 #echo '#\n'
 # ZODB Polling patch for RelSotrage support is done on the fly with the
-# minitage.recipe:egg patch facillity, it will make a partciluar zodb egg
+# minitage.recipe.egg patch facillity, it will make a partciluar zodb egg
 # with the patch.avaiable on your eggs cache (see scripts part)
 ##################################################################################
 
@@ -113,7 +113,7 @@ sources = sources
 #auto-checkout = my.package
 
 [scripts]
-recipe = minitage.recipe:scripts
+recipe = minitage.recipe.scripts
 interpreter = zopepy
 extra-paths=
     \${libxml2:site-packages}
@@ -135,7 +135,7 @@ packages =\${zopepy:extra-paths}
 
 [kgs]
 order=\${scripts:recipe}
-recipe=minitage.recipe:printer
+recipe=minitage.recipe.printer
 quiet=
 eggs=\${scripts:eggs}
 file=${project}.cfg
@@ -173,7 +173,7 @@ output=\${buildout:directory}/parts/zeo.conf
 [zeoserver]
 order=\${scripts:recipe}
 
-recipe =minitage.recipe:scripts
+recipe =minitage.recipe.scripts
 initialization=args=sys.argv[:];args.pop(0)
 arguments=["-C", "\${zeo.conf:output}"]+args
 extra-paths=\${scripts:extra-paths}

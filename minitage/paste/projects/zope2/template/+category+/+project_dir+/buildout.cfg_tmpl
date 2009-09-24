@@ -132,7 +132,7 @@ skip-fake-eggs =
     ZODB3
 
 [zopepy]
-recipe = minitage.recipe:scripts
+recipe = minitage.recipe.scripts
 executable=\${python2.4:executable}
 minitage-dependencies=openssl-0.9 libxml2-2.6 libxslt-1.1 zlib-1.2
 minitage-eggs = py-libxml2-2.6 py-libxslt-1.1
@@ -223,7 +223,7 @@ extra-paths+=\${buildout:extra-paths}
 
 [kgs]
 order=\${zopepy:recipe}
-recipe=minitage.recipe:printer
+recipe=minitage.recipe.printer
 quiet=
 eggs=\${instance:eggs}
 file=${project}.cfg

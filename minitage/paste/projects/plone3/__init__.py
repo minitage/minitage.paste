@@ -130,10 +130,12 @@ class Template(common.Template):
             'with_pa': ['Products.PloneArticle'],
             #'with_pboard': ['Products.SimpleAttachment'],
             'with_sgdcg': ['collective.dancing'],
-            'with_truegall': ['collective.plonetruegallery'],
+            'with_truegall': ['collective.plonetruegallery', 'gdata', 'flickrapi'],
             'with_lingua': ['Products.LinguaPlone'],
             'with_cachesetup': ['Products.CacheSetup'],
             'with_easyshop': easy_shop_eggs + ['zc.authorizedotnet'],
+            'with_quills': ['Products.Quills', 'quills.remoteblogging'],
+            'with_quillsenabled': ['Products.QuillsEnabled', 'quills.remoteblogging'],
             'with_ldap': ['python-ldap',
                           'Products.LDAPUserFolder',
                           'Products.LDAPMultiPlugins',
@@ -141,15 +143,19 @@ class Template(common.Template):
         }
         zcml_mappings = {
             'with_easyshop': easy_shop_eggs,
+            'with_truegall': ['collective.plonetruegallery',],
+            'with_quills': ['Products.Quills'],
+            'with_fss': ['iw.fss',   'iw.fss-meta'],
+            'with_quillsenabled': ['Products.QuillsEnabled', 'quills.remoteblogging'],
         }
         for var in [k for k in eggs_mappings if vars[k]]:
             for egg in eggs_mappings[var]:
-                if not egg in vars['plone_eggs']:
-                    vars['plone_eggs'] += ' %s' % egg
+                if not '%s\n' % egg in vars['plone_eggs']:
+                    vars['plone_eggs'] += ' %s\n' % egg
         for var in [k for k in zcml_mappings if vars[k]]:
             for egg in zcml_mappings[var]:
-                if not egg in vars['plone_zcml']:
-                    vars['plone_zcml'] += ' %s' % egg
+                if not '%s\n' % egg in vars['plone_zcml']:
+                    vars['plone_zcml'] += ' %s\n' % egg
         versions = []
         vars['plone_versions'] = versions
         if vars['with_pa']:
@@ -176,8 +182,11 @@ class Template(common.Template):
                 'ZopeSkel', 'paste.paster_create_template', 'plone3_buildout'
             )
             p3 = ep(self)
+            coo = command.options.overwrite
+            command.options.overwrite = True
             p3.check_vars(vars, command)
             p3.run(command, vars['path'], vars)
+            command.options.overwrite = coo
             try:
                 etc = os.path.join(vars['path'], 'etc')
                 if not os.path.isdir(etc):
@@ -322,6 +331,11 @@ Template.vars = common.Template.vars \
            var('with_fss',
                'File System Storage support, see http://plone.org/products/filesystemstorage: y/n',
                default = 'y',),
+           var('fss_strategy',
+               'File System Storage strategy, see'
+               ' http://pypi.python.org/pypi/iw.fss/#storage-strategies'
+               ' (directory, flat, site1, site2)',
+               default = 'directory',),
            var('with_cpwkf', 'CMFPlacefulWorkflow, see http://plone.org/products/cmfplacefulworkflow/: y/n',
                default='n'),
            var('with_pa', 'Plone Article, see http://plone.org/products/plonearticle/: y/n',
@@ -337,6 +351,8 @@ Template.vars = common.Template.vars \
                default='n'),
            var('with_truegall', 'PloneTrueGallery see http://plone.org/products/plone-true-gallery/: y/n',
                default='n'),
+           var('with_quills',   'Quills see http://pypi.python.org/pypi/Products.Quills/: y/n', default='n'),
+           var('with_quillsenabled',   'Quills Enabled see http://pypi.python.org/pypi/Products.QuillsEnabled/: y/n', default='n'),
            var('with_lingua', 'LinguaPlone support, see http://plone.org/products/linguaplone: y/n',
                default='n'),
            ]

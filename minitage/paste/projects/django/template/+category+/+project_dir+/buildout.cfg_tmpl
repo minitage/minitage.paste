@@ -113,7 +113,7 @@ sources = sources
 #auto-checkout = my.package
 
 [scripts]
-recipe=minitage.recipe:scripts
+recipe=minitage.recipe.scripts
 interpreter = djangopy
 eggs=\${buildout:eggs}
 #if not 'official' in $official:
@@ -135,7 +135,7 @@ packages =\${buildout:extra-paths}
 
 [kgs]
 order=\${scripts:recipe}
-recipe=minitage.recipe:printer
+recipe=minitage.recipe.printer
 quiet=
 eggs=\${buildout:eggs}
 file=${project}.cfg

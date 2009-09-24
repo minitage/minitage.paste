@@ -55,7 +55,7 @@ packages =\${instance:extra-paths}
 # https://svn.plone.org/svn/collective/dotipython/trunk/ipy_profile_zope.py
 # to your \$HOME/.ipython directory for the following to work.
 [ipzope]
-recipe = minitage.recipe:scripts
+recipe = minitage.recipe.scripts
 eggs = ipython
         \${instance:eggs}
 initialization =

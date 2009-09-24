@@ -67,12 +67,14 @@ class Template(common.Template):
             )
         self.lastlogs.append(
             '* You can additionnaly create related databases or configuration or'
-            ' other stuff using minitage profils '
-            ' (http://minitage.org/paster/profils/index.html)\n'
-            '* Available profils are: \n'
+            ' other stuff using minitage instances '
+            ' (http://minitage.org/paster/instances/index.html)\n'
+            '* Available instances are: \n'
             '\t- %s\n'
-            '* Run a profil with: \n'
-            ' \tpaster create -t minitage.profils.PROFIL project\n'
+            '* Some extra instances are contained inside the'
+            '\'minitage.paste.extras package\', install it as a classical egg.\n'
+            '* Run an instance with: \n'
+            ' \tpaster create -t minitage.instances.PROFIL project\n'
             '\n' % (
                 '\n\t- '.join(
                     ["%s (%s)" % (
@@ -85,7 +87,7 @@ class Template(common.Template):
                         for a in pkg_resources.get_entry_map(
                             'minitage.paste'
                         )['paste.paster_create_template']
-                        if 'minitage.profils' in a]
+                        if 'minitage.instances' in a]
                 )
             )
 

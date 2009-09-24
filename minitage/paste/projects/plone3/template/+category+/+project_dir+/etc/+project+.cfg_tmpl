@@ -62,7 +62,7 @@ skip-fake-eggs +=
 # eggs & scripts installation
 [zopepy]
 order=\${zope2:recipe}
-recipe = minitage.recipe:scripts
+recipe = minitage.recipe.scripts
 # Important for you to note the installation of the ZODB as an egg . We will not
 # use the zodb code from the zope source distribution !!!!!!!
 eggs = \${instance:eggs}
@@ -101,7 +101,7 @@ zcml += #slurp
 # KGS generation
 [kgs]
 order=\${zopepy:recipe}
-recipe=minitage.recipe:printer
+recipe=minitage.recipe.printer
 quiet=
 eggs=\${instance:eggs}
 file=\${buildout:directory}/etc/${project}-kgs.cfg
@@ -113,6 +113,8 @@ file=\${buildout:directory}/etc/${project}-kgs.cfg
 recipe = plone.recipe.command
 update-command = \${create-fss-dirs:command}
 command =
+    mkdir -p \${buildout:directory}/var/fss_storage_global ;
+    mkdir -p \${buildout:directory}/var/fss_backup_global ;
     mkdir -p \${buildout:directory}/var/fss_storage_${project} ;
     mkdir -p \${buildout:directory}/var/fss_backup_${project} ;
 
@@ -121,7 +123,7 @@ recipe = iw.recipe.fss
 zope-instances=\${instance:location}
 storages =
     global /
-    ${project} /${project} directory
+    ${project} /${project} $fss_strategy \${buildout:directory}/var/fss_storage_${project} \${buildout:directory}/var/fss_backup_${project}
 
 
 # Traditionnal Plone products to install
