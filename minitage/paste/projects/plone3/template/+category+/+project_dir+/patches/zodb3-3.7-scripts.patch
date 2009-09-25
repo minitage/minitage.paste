@@ -1,0 +1,34 @@
+Index: 3.7/setup.py
+===================================================================
+--- setup.py	(révision 104538)
++++ setup.py	(copie de travail)
+@@ -174,8 +174,9 @@
+ # need to convert early versions of Zope3 databases to ZODB3.
+ 
+ packages = ["BTrees", "BTrees.tests",
+-            "ZEO", "ZEO.auth", "ZEO.zrpc", "ZEO.tests",
++            "ZEO", "ZEO.auth", "ZEO.zrpc", "ZEO.tests", "ZEO.scripts",
+             "ZODB", "ZODB.FileStorage", "ZODB.tests",
++                    "ZODB.scripts",
+             "persistent", "persistent.tests",
+             "transaction", "transaction.tests",
+             "ThreadedAsync",
+@@ -187,12 +188,18 @@
+     # into a package just like .py files.
+     extensions = ["*.conf", "*.xml", "*.txt", "*.sh", "*.txt"]
+     directories = [
++        "BTrees",
+         "transaction",
+         "transaction/tests",
+         "persistent/tests",
+         "ZEO",
++        "ZEO/scripts",
++        "ZEO/tests",
+         "ZODB",
++        "ZODB/scripts",
+         "ZODB/tests",
++        "ZODB/Blobs",
++        "ZODB/Blobs/tests",
+         ]
+     for dir in directories:
+         exts = extensions

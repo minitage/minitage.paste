@@ -1,7 +1,7 @@
 [zeoserver]
 recipe = plone.recipe.zope2zeoserver
 zope2-location = \${zope2:location}
-zeo-address = $zeoaddress
+zeo-address = $zeo_address
 zeo-conf-additional =
     %import tempstorage
     <temporarystorage temp>
@@ -11,10 +11,10 @@ zeo-conf-additional =
 [instance]
 zeo-client-cache-size = 80MB
 zeo-client = on
-zeo-address = $zeoaddress
+zeo-address = $zeo_address
 temporary-storage =
     <zeoclient>
-        server $zeoaddress
+        server $zeo_address
         storage temp
         name zeostorage
         var \${buildout:directory}/var

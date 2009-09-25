@@ -12,11 +12,20 @@ site-packages=$xml2
 site-packages=$xslt
 
 [python2.4]
+#if $inside_minitage:
 executable=$python
+#else
+#executable=$python
+#end if
+python=python2.4
 name=python2.4
 
 [buildout]
+#if $inside_minitage:
 python=python2.4
+#else
+#python=python2.4
+#end if
 find-links +=
     http://distfiles.minitage.org/public/externals/minitage/
 extra-paths+=
@@ -30,17 +39,15 @@ eggs-directory=\${minitage:location}/eggs/cache
 # bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
 # the one packaged in minitage !
 PILwoTK  = 1.1.6.4
-# plone32 hack to remove the bugged fixed version of buildout.
-zc.buildout -= 1.1.1
-zc.recipe.egg -= 1.1.0
-#for $product, $version in $plone_versions:
-${product}=${version}
-#end for
 Spawning=0.8.11-minitage
 
 [zopepy]
+#if $inside_minitage:
 executable=\${python2.4:executable}
-#if $with_ldap:
+#else
+#executable=\${python2.4:executable}
+#end if
+#if $with_binding_ldap:
 includes-dirs = $includesdirs
 #end if
 

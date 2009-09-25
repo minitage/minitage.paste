@@ -1,0 +1,88 @@
+# Plone 3  production buildout
+# It will install your plone and additional crontabs and backup scripts
+# Launch it:
+# bin/buildout -c buildout-prod.cfg
+# minimerge -NuUvR ${project}-prod
+# look at the extenended buildout: ./buildout.cfg for other details of your plone3 installation
+
+# crontabs are:
+# make an incremental backup per day
+# make a full backup per week
+# pack datafs everyday
+# restart zope instance every night
+#if $with_ploneproduct_fss:
+# backup FSS every day
+#end if
+
+[buildout]
+extends=buildout.cfg
+parts+=zopepackdaily
+    zoperestartdaily
+#if not 'relstorage' in $mode:
+    repozodaily
+    repozoweekly
+#else
+#    repozodaily
+#    repozoweekly
+#end if
+#if $with_ploneproduct_fss:
+    fssdailycron
+#end if
+    chmodcron
+    backupdirs
+
+# make an incremental backup per day
+[repozodaily]
+recipe = z3c.recipe.usercrontab
+times = 05 1 * * *
+command = \${buildout:directory}/bin/backup
+
+# make a full backup per week
+[repozoweekly]
+recipe = z3c.recipe.usercrontab
+times = 10 1 * * 6
+command = \${buildout:directory}/bin/snapshotbackup
+
+# pack datafs everyday
+# eventually, change wget to your platform CLI http browser
+[zopepackdaily]
+recipe = z3c.recipe.usercrontab
+times = 15 1 * * *
+command = wget "http://$zope_user:$zope_password@$address:$http_port/Control_Panel/Database/main/manage_main/manage_pack?days%3Afloat=0&submit=Pack"
+
+# restart zope instance every night
+[zoperestartdaily]
+recipe = z3c.recipe.usercrontab
+times = 30 1 * * *
+command = \${buildout:directory}/bin/instance restart
+
+[chmodcron]
+order=\${fssdaily:recipe}
+recipe = plone.recipe.command
+update-command = \${chmodcron:command}
+command =
+    chmod -v 750 \${buildout:directory}/cron_scripts//*.sh
+
+[backupdirs]
+order=\${fssdaily:recipe}
+recipe = plone.recipe.command
+update-command = \${chmodcron:command}
+command =
+    mkdir -pv \${buildout:directory}/var/backups
+    mkdir -pv \${buildout:directory}/var/snapshotbackups
+
+# if $with_ploneproduct_fss:
+# please edit the .in file to fit your needs if you change the fss storage layout.
+[fssdaily]
+recipe = collective.recipe.template
+input =\${buildout:directory}/cron_scripts/fss_daily.sh.in
+output =\${buildout:directory}/cron_scripts//fss_daily.sh
+backuppath=\${buildout:directory}/var/fssbackups
+
+# backup FSS every day
+[fssdailycron]
+recipe = z3c.recipe.usercrontab
+times = 15 1 * * *
+command =  \${buildout:directory}/cron_scripts/fss_daily.sh
+# end if
+

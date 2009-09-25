@@ -1,34 +1,24 @@
 [instance]
 rel-storage =
-#if $dbtype == 'oracle':
-    type $dbtype
-    dsn (DESCRIPTION=(ADDRESS=(HOST=$dbhost))(CONNECT_DATA=(SERVICE_NAME=$dbname)))
-    user $dbuser
-    password $dbpassword
-#elif $dbtype == 'mysql':
-    type $dbtype
-    dbname $dbname
-    user $dbuser
-    host $dbhost
+#if $relstorage_type == 'oracle':
+    type $relstorage_type
+    dsn (DESCRIPTION=(ADDRESS=(HOST=$relstorage_host))(CONNECT_DATA=(SERVICE_NAME=$relstorage_dbname)))
+    user $relstorage_dbuser
+    password $relstorage_password
+#elif $relstorage_type == 'mysql':
+    type $relstorage_type
+    dbname $relstorage_dbname
+    user $relstorage_dbuser
+    host $relstorage_host
     passwd $dbpassword
-#elif $dbtype == 'postgresql':
-    type $dbtype
-    dsn  dbname='$dbname' user='$dbuser' host='$dbhost' password='$dbpassword'
+#elif $relstorage_type == 'postgresql':
+    type $relstorage_type
+    dsn  dbname='$relstorage_dbname' user='$relstorage_dbuser' host='$relstorage_host' password='$relstorage_password'
 #else
-    type $dbtype
-    dbname $dbname
-    user $dbuser
-    host $dbhost
-    password $dbpassword
+    type $relstorage_type
+    dbname $relstorage_dbname
+    user $relstorage_dbuser
+    host $relstorage_host
+    password $relstorage_password
 #end if
-
-[zopepy]
-#if 'relstorage' in $mode:
-ZODB3-patches=\${buildout:directory}/patches/minitage.poll-invalidation-1-zodb-3-7-1.patch
-#else
-#ZODB3-patches=\${buildout:directory}/patches/minitage.poll-invalidation-1-zodb-3-7-1.patch
-#end if
-
-[versions]
-ZODB3 = 3.7.1
 

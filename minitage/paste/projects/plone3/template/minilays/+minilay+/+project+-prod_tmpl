@@ -6,4 +6,4 @@ src_type=$scm_type
 category=$category
 homepage=$homepage
 description= a plone 3.1 buildout for $project
-buildout_config=buildout.cfg
+buildout_config=buildout-prod.cfg

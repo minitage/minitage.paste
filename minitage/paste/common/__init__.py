@@ -154,6 +154,7 @@ class Template(templates.Template):
         prefix = os.path.join(os.getcwd(), vars['project'])
         if vars['inside_minitage']:
             prefix = sys.exec_prefix
+        self.old_output_dir = getattr(self, 'output_dir', None)
         self.output_dir = prefix
         # find the project minibuild
         deps = [d.strip()\
