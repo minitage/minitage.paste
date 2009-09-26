@@ -2,6 +2,15 @@
 # PLONE 3 BUILDOUT
 #echo '#\n'
 #echo '#\n'
+# WARNING ABOUT BUILOOUT BOOTSTRAP WARNING
+# ---------------------------------------
+# If you are using the standalone (choose to answer inside_minitage=no), you must ensure to do the
+# \$python bootstrap.py dance with a python compatible with the targeted zope installation (python 2.4 AFAIK)
+# eg: cd $project && python2.4 bootstrap.py && bin/buildout -vvvvvv
+#echo '#\n'
+#echo '#\n'
+# Minitage users, don't worry about that, all is setted for you.
+#echo '#\n'
 # DEVELOP MODE
 # ---------------
 # To develop your application, run the buildout-dev.cfg buildout, it extends this one but:
