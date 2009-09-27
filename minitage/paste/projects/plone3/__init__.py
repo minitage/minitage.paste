@@ -173,7 +173,7 @@ class Template(common.Template):
         )
         vars = common.Template.read_vars(self, command)
         for i, var in enumerate(vars[:]):
-            if var.name in ['relstorage_dbname', 'relstorage_dbuser']:
+            if var.name in ['relstorage_dbname', 'relstorage_dbuser'] and command:
                 vars[i].default = command.args[0]
         return vars
 
