@@ -86,7 +86,7 @@ class Template(templates.Template):
                       'to be added to the python path '
                       '(separated by comma)'),
         templates.var('inside_minitage',
-                      'Are you inside a minitage environment: y/n ?',
+                      'Are you inside a minitage environment y/n',
                       default='y'),
     ]
 

@@ -72,7 +72,7 @@ eggs_mappings = {
     'with_database_oracle': ['cx_Oracle'],
     'with_database_postgresql': ['psycopg2'],
     'with_tool_ipython': ['ipython'],
-    'with_imaging_pil': ['PILwoTK'],
+    'with_binding_pil': ['PILwoTK'],
     'with_ploneproduct_cachesetup': ['Products.CacheSetup'],
     'with_ploneproduct_easyshop': easy_shop_eggs + ['zc.authorizedotnet'],
     'with_ploneproduct_fss': ['iw.fss', 'atreal.patchfss'],
@@ -357,9 +357,9 @@ class Template(common.Template):
 
 running_user = getpass.getuser()
 sd_str = '%s' % (
-    'Singing & Dancing NewsLetter see http://plone.org/products/dancing/: y/n.'
+    'Singing & Dancing NewsLetter, see http://plone.org/products/dancing'
     ' S&D is known to lead to multiple buildout installation errors.'
-    ' Be sure to activate it and debug the errors.'
+    ' Be sure to activate it and debug the errors. y/n'
 )
 Template.vars = common.Template.vars \
         + [var('plone_version', 'Plone version, default is the one supported and packaged', default = '3.3.1',),
@@ -387,7 +387,7 @@ Template.vars = common.Template.vars \
            var('with_database_mysql', 'Mysql python bindings support y/n', default = 'n',),
            var('with_database_oracle', 'Oracle python bindings support y/n', default = 'n',),
            var('with_database_postgresql', 'Postgresql python bindings support y/n', default = 'n',),
-           var('with_imaging_pil', 'Python imaging support (dangerous to disable) y/n', default = 'y',),
+           var('with_binding_pil', 'Python imaging support (dangerous to disable) y/n', default = 'y',),
            var('with_tool_ipython', 'ipython support http://ipython.scipy.org/ y/n', default = 'y',),
            var('with_tool_zopeskel', 'ZopeSkel http://pypi.python.org/pypi/ZopeSkel', default = 'y',),
            var('with_wsgi_support', 'WSGI capabilities y/n', default = 'y',),
@@ -411,12 +411,12 @@ Template.vars = common.Template.vars \
            var('with_ploneproduct_ploneboard', 'Plone Board, see http://plone.org/products/ploneboard/ y/n', default='n'),
            var('with_ploneproduct_ploneformgen', 'PloneFormGen, see http://plone.org/products/ploneformgen y/n', default='n'),
            var('with_ploneproduct_plonesurvey', 'PloneSurvey, see http://plone.org/products/plone-survey/releases/1.3.0 y/n', default='n'),
-           var('with_ploneproduct_quillsenabled', 'Quills Enabled see http://pypi.python.org/pypi/Products.QuillsEnabled/ y/n', default='n'),
-           var('with_ploneproduct_quills', 'Quills see http://pypi.python.org/pypi/Products.Quills/ y/n', default='n'),
+           var('with_ploneproduct_quillsenabled', 'Quills Enabled, see http://pypi.python.org/pypi/Products.QuillsEnabled/ y/n', default='n'),
+           var('with_ploneproduct_quills', 'Quills, see http://pypi.python.org/pypi/Products.Quills/ y/n', default='n'),
            var('with_ploneproduct_schematuning', 'Schematuning patch, see http://pypi.python.org/pypi/archetypes.schematuning/ y/n', default='n'),
            var('with_ploneproduct_sgdcg', sd_str, default='n'),
            var('with_ploneproduct_tal_portlet', 'Tal Portlet, see http://pypi.python.org/pypi/collective.portlet.tal y/n', default='n'),
-           var('with_ploneproduct_truegallery', 'PloneTrueGallery see http://plone.org/products/plone-true-gallery/ y/n', default='n'),
+           var('with_ploneproduct_truegallery', 'PloneTrueGallery, see http://plone.org/products/plone-true-gallery/ y/n', default='n'),
            var('with_ploneproduct_vaporisation', 'Vaporisation, see http://plone.org/products/vaporisation/ y/n', default='n'),
            var('with_ploneproduct_wc_dd_menu', 'WebCouturier Dropdown Menu, see http://plone.org/products/webcouturier-dropdownmenu y/n', default='n'),
            ]
