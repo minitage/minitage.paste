@@ -68,6 +68,8 @@ def boolify(d, boolean_values=None):
             if isinstance(d[var], str):
                 if 'y' in d[var].lower():
                     d[var] = True
+                elif 'true' == d[var].lower().strip():
+                    d[var] = True
                 else:
                     d[var] = False
 
@@ -130,30 +132,35 @@ class Template(templates.Template):
         )
         if getattr(self, 'python', None):
             python +='\tThe selected paster indicate that you must use %s.\n' % self.python
-        print "%s" % (
-            '---------------------------------------------------------\n'
-            '\tMinitage support is now optionnal.\n'
-            '\tWarning: All minitage templates come by default '
-            'with their dependencies (including xml parsing and databases). You ll not have to '
-            'specify them.\n'
-            '\tMany of the variables are optionnal or have good defaults provided.\n'
-            '\tJust press enter to continue the process.\n'
-            '%s'
-            '---------------------------------------------------------\n'
-        ) % python
+        if command:
+            if not command.options.quiet:
+                print "%s" % (
+                    '---------------------------------------------------------\n'
+                    '\tMinitage support is now optionnal.\n'
+                    '\tWarning: All minitage templates come by default '
+                    'with their dependencies (including xml parsing and databases). You ll not have to '
+                    'specify them.\n'
+                    '\tMany of the variables are optionnal or have good defaults provided.\n'
+                    '\tJust press enter to continue the process.\n'
+                    '%s'
+                    '---------------------------------------------------------\n'
+                ) % python
         self.lastlogs=[]
         return templates.Template.read_vars(self, command)
 
     def pre(self, command, output_dir, vars):
         self.boolify(vars)
         vars['booleans'] = []
+        special_output_dir = not(command.options.output_dir.strip() in ['', '.'])
         # either / or virtualenv prefix is the root
         # of minitage in any cases.
         # This is pointed out by sys.exec_prefix, hopefullly.
         vars['booleans'].append('inside_minitage')
-        prefix = os.path.join(os.getcwd(), vars['project'])
-        if vars['inside_minitage']:
+        prefix = os.path.join(command.options.output_dir)
+        if vars['inside_minitage'] and not special_output_dir:
             prefix = sys.exec_prefix
+        if not vars['inside_minitage'] and not special_output_dir:
+            prefix = os.path.join(command.options.output_dir, vars['project'])
         self.old_output_dir = getattr(self, 'output_dir', None)
         self.output_dir = prefix
         # find the project minibuild
@@ -168,7 +175,8 @@ class Template(templates.Template):
         vars['minilay'] = vars['project']
         if vars['inside_minitage']:
             not_minitage = False
-            vars['project_dir'] = vars['project']
+            if not special_output_dir:
+                vars['project_dir'] = vars['project']
             vars['mt'] = self.output_dir
         else:
             not_minitage = True
@@ -193,7 +201,7 @@ class Template(templates.Template):
             if os.path.exists(fp):
                 shutil.rmtree(fp)
 
-        if self.lastlogs:
+        if self.lastlogs and not command.options.quiet:
             print
             print
             print

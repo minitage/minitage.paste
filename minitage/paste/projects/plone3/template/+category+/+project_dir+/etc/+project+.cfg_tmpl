@@ -45,11 +45,11 @@ parts += #slurp
 #if $mode == 'zeo':
     zeoserver
 #end if
+    backup
 #if $with_ploneproduct_fss:
 # disabled as the iw.recipe.fss do that for us :  create-fss-dirs
     fss
 #end if
-    backup
 # on Upgrades
 # Think to change the plone release URL !!!
 #if $with_wsgi_support:
@@ -104,6 +104,9 @@ ZODB3-patches=
 #end if
 Markdown-2.0.1-patches=\${buildout:directory}/patches/mardown-elementtree.patch
 Markdown-patch-options=-Np1
+atreal.patchfss-patches=\${buildout:directory}/patches/atreal.patchfss-setuppy.patch
+atreal.patchfss-patch-options=-Np1
+
 # Scripts generated filtering
 scripts+=
 #zope2

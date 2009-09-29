@@ -9,6 +9,8 @@ CHANGES
     * fix plone3 default buildout code
     * switch recipe names to new minitage.recipe recipes
     * plone3 template refactoring
+    * atreal.patchfss fix
+    * paster quiet option handled correctly
 
 1.3.51
 -------

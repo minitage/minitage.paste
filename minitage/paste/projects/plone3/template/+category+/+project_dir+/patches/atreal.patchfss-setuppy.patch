@@ -1,0 +1,13 @@
+diff -ur atreal.patchfss-1.0.0/setup.py atreal.patchfss-1.0.0.new/setup.py
+--- atreal.patchfss-1.0.0/setup.py	2009-09-16 12:41:14.000000000 +0200
++++ atreal.patchfss-1.0.0.new/setup.py	2009-09-29 20:57:02.981939508 +0200
+@@ -6,8 +6,7 @@
+ setup(name='atreal.patchfss',
+       version=version,
+       description="Patch __init.py__ for iw.fss package",
+-      long_description=open("README.txt").read() + "\n" +
+-                       open(os.path.join("docs", "HISTORY.txt")).read(),
++      long_description=open("README.txt").read() + "\n",
+       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
+       classifiers=[
+         "Framework :: Plone",

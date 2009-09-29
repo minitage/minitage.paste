@@ -161,16 +161,18 @@ class Template(common.Template):
     python = 'python-2.4'
 
     def read_vars(self, command=None):
-        print '%s' % (
-            '---------------------------------------------------------\n'
-            '\tPlone 3 needs a python 2.4 to run:\n'
-            '\t * if you do not fill anything, it will use minitage or system\'s one\n'
-            '\t * if you do not provide one explicitly, it will use minitage or system\'s one\n'
-            '\t * Bindings will be automaticly included when you choose for example relstorage/mysql or plone ldap support.\n'
-            '\tAditionnaly you ll got two buildouts for production (buildout.cfg) and develoment mode (dev.cfg).\n'
-            '\tYou can also activate or safely ignore questions about zeoserver and relstorage if you do not use them.\n'
-            '---------------------------------------------------------\n'
-        )
+        if command:
+            if not command.options.quiet:
+                print '%s' % (
+                    '---------------------------------------------------------\n'
+                    '\tPlone 3 needs a python 2.4 to run:\n'
+                    '\t * if you do not fill anything, it will use minitage or system\'s one\n'
+                    '\t * if you do not provide one explicitly, it will use minitage or system\'s one\n'
+                    '\t * Bindings will be automaticly included when you choose for example relstorage/mysql or plone ldap support.\n'
+                    '\tAditionnaly you ll got two buildouts for production (buildout.cfg) and develoment mode (dev.cfg).\n'
+                    '\tYou can also activate or safely ignore questions about zeoserver and relstorage if you do not use them.\n'
+                    '---------------------------------------------------------\n'
+                )
         vars = common.Template.read_vars(self, command)
         for i, var in enumerate(vars[:]):
             if var.name in ['relstorage_dbname', 'relstorage_dbuser'] and command:
@@ -196,7 +198,7 @@ class Template(common.Template):
         # databases
         minitage_dbs = ['mysql', 'postgresql']
         for db in minitage_dbs:
-            if vars['with_database_%s' % db]:
+            if vars['with_database_%s' % db] and vars['inside_minitage']:
                 vars['opt_deps'] += ' %s' % search_latest('%s-\d\.\d*'% db, vars['minilays'])
 
         # openldap
@@ -286,6 +288,9 @@ class Template(common.Template):
             p3 = ep(self)
             coo = command.options.overwrite
             command.options.overwrite = True
+            def null(a, b, c):
+                pass
+            p3.post = null
             p3.check_vars(vars, command)
             p3.run(command, vars['path'], vars)
             command.options.overwrite = coo
