@@ -50,6 +50,7 @@ parts += #slurp
 # disabled as the iw.recipe.fss do that for us :  create-fss-dirs
     fss
 #end if
+    plonesite
 # on Upgrades
 # Think to change the plone release URL !!!
 #if $with_wsgi_support:
@@ -59,12 +60,12 @@ find-links += http://pypi.python.org/simple/ZODB3
 #find-links += http://dist.repoze.org/zope2/latest/
 #end if
 eggs += zopelib
-develop = \${buildout:directory}/fake-eggs/zopelib
+develop += \${buildout:directory}/src.mrdeveloper/zopelib
 # see http://pypi.python.org/pypi/mr.developer for documentation
 versions = versions
 sources = sources
 auto-checkout =
-sources-dir=\${buildout:directory}/src.others
+sources-dir=\${buildout:directory}/src.mrdeveloper
 #my.package
 
 
@@ -238,7 +239,6 @@ storages =
     global /
     ${project} /${project} $fss_strategy \${buildout:directory}/var/fss_storage_${project} \${buildout:directory}/var/fss_backup_${project}
 
-
 [backup]
 recipe = collective.recipe.backup
 
@@ -259,3 +259,15 @@ version-suffix-packages = #slurp
 #for $product in $plone_vsp.split():
        ${product}
 #end for
+
+[plonesite]
+recipe = collective.recipe.plonesite
+site-id = $project
+instance = instance
+#if 'zeoserver' in $mode:
+zeoserver = zeoserver
+#else
+#zeoserver = zeoserver
+#end if
+
+# vim:set ft=cfg:
