@@ -88,7 +88,4 @@
 #echo '##############################################################################\n'
 
 [buildout]
-extends= etc/${project}.cfg
-    etc/${mode}.cfg
-    etc/minitage.cfg
-
+extends= etc/${project}.cfg etc/${mode}.cfg etc/minitage.cfg

@@ -27,14 +27,14 @@ $version[0] = $version[1]
 
 [buildout]
 extensions = buildout.minitagificator mr.developer
+extends-cache = \${buildout:directory}/etc/cache
 # this allow you to run buildout on offline mode and to use only the downloaded plonev3.versions.cfg
 extends -= http://dist.plone.org/1elease/${plone_version}/versions.cfg
-extends= plone3.versions.cfg
-    ${project}-kgs.cfg
-    plone3.buildout.cfg
+extends = plone3.versions.cfg $project-kgs.cfg plone3.buildout.cfg #slurp
 #if $with_ploneproduct_sgdcg:
     dancing.cfg
 #end if
+
 parts += #slurp
 #if $with_ploneproduct_plomino:
     plomino
@@ -58,11 +58,13 @@ find-links += http://pypi.python.org/simple/ZODB3
 #else
 #find-links += http://dist.repoze.org/zope2/latest/
 #end if
-develop += fake-eggs/zopelib
+eggs += zopelib
+develop = \${buildout:directory}/fake-eggs/zopelib
 # see http://pypi.python.org/pypi/mr.developer for documentation
 versions = versions
 sources = sources
 auto-checkout =
+sources-dir=\${buildout:directory}/src.others
 #my.package
 
 
@@ -106,6 +108,7 @@ Markdown-2.0.1-patches=\${buildout:directory}/patches/mardown-elementtree.patch
 Markdown-patch-options=-Np1
 atreal.patchfss-patches=\${buildout:directory}/patches/atreal.patchfss-setuppy.patch
 atreal.patchfss-patch-options=-Np1
+
 
 # Scripts generated filtering
 scripts+=

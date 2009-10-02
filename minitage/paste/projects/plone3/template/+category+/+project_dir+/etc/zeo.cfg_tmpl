@@ -1,3 +1,6 @@
+[buildout]
+storage-mode=$mode
+
 [zeoserver]
 recipe = plone.recipe.zope2zeoserver
 zope2-location = \${zope2:location}

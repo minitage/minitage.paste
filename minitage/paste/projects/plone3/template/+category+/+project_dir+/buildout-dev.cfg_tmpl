@@ -21,8 +21,7 @@ debug-mode=ON
 #zcml+=collective.autorestart
 #end if
 #
-eggs+=
-    plone.reload
+eggs+= plone.reload
     collective.releaser
     Products.PDBDebugMode
     Products.Clouseau
