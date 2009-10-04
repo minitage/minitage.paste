@@ -6,7 +6,7 @@ setupdir = os.path.abspath(
 os.chdir(setupdir)
 
 name='minitage.paste'
-version = '1.3.77'
+version = '1.3.79'
 
 
 def read(rnames):
@@ -55,7 +55,7 @@ setup(
                         'ZopeSkel',
                         'zc.buildout',
                         'iniparse',
-                        'Cheetah',
+                        'Cheetah>1.0,<=2.2.1',
                         'minitage.core'],
     #tests_require = ['zope.testing'],
     # merged into django 'minitage.geodjango = minitage.paste.projects.geodjango:Template',

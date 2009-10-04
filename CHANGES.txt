@@ -12,6 +12,7 @@ CHANGES
     * atreal.patchfss fix
     * paster quiet option handled correctly
     * distribute instead of setuptools
+    * cheetah requirement fix because of ugly zopeskel version pinning
 
 1.3.51
 -------
