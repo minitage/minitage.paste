@@ -65,13 +65,9 @@ easy_shop_eggs = ['easyshop.core',
                   'easyshop.taxes',
                  ]
 
-
-
 plone_np_mappings = {
-    'with_ploneproduct_maps': ['foo'],
 }
 plone_vsp_mappings = {
-    'with_ploneproduct_maps': ['bar'],
 }
 
 urls_mappings = {
