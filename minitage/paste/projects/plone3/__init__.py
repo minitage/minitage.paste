@@ -70,7 +70,7 @@ eggs_mappings = {
     'with_ploneproduct_ldap': ['python-ldap', 'Products.LDAPUserFolder', 'Products.LDAPMultiPlugins', 'Products.PloneLDAP',],
     'with_database_mysql': ['MySQL_python'],
     'with_database_oracle': ['cx_Oracle'],
-    'with_database_postgresql': ['psycopg2'],
+    'with_database_postgresql': ['psycopg2', 'egenix-mx-base'],
     'with_tool_ipython': ['ipython'],
     'with_binding_pil': ['PILwoTK'],
     'with_ploneproduct_cachesetup': ['Products.CacheSetup'],
@@ -81,6 +81,7 @@ eggs_mappings = {
     'with_ploneproduct_p4a_vid': ['p4a.common', 'p4a.z2utils', 'p4a.fileimage', 'p4a.video', 'p4a.plonevideo', 'p4a.plonevideoembed',],
     'with_ploneproduct_plonearticle': ['Products.PloneArticle'],
     'with_ploneproduct_ploneboard': ['Products.Ploneboard', 'Products.SimpleAttachment'],
+    'with_ploneproduct_facultystaff': ['Products.FacultyStaffDirectory',],
     'with_ploneproduct_plonesurvey': ['Products.PloneSurvey '],
     'with_ploneproduct_quillsenabled': ['Products.QuillsEnabled', 'quills.remoteblogging'],
     'with_ploneproduct_quills': ['Products.Quills', 'quills.remoteblogging'],
@@ -116,7 +117,9 @@ zcml_mappings = {
 }
 
 versions_mappings = {
-    'RelStorage': [('ZODB3', '3.7.2')]
+    'RelStorage': [('ZODB3', '3.7.2')],
+    # avoid VersionConflict: (psycopg2 2.0.13 (/tmp/fd/eggs/psycopg2-2.0.13-py2.4-linux-i686.egg), Requirement.parse('psycopg2==2.0.13-rc1'))
+    'psycopg2 temporary pin as =2.0.13-rc1 is not well packaged': [('psycopg2', '2.0.12')]
 }
 p4a = [('p4a.subtyper', '1.1.0'),
        ('p4a.z2utils', '1.0.2'),
@@ -143,6 +146,7 @@ checked_versions_mappings = {
     'with_ploneproduct_lingua': [('Products.LinguaPlone', '3.0a3'),
                                  ('Products.PloneLanguageTool', '3.0.2'),
                                 ],
+    'with_ploneproduct_facultystaff': [('Products.FacultyStaffDirectory', '2.1.1.2'),],
     'with_ploneproduct_ldap': [('Products.LDAPUserFolder', '2.12'),
                                ('Products.LDAPMultiPlugins', '1.7'),
                                ('Products.PloneLDAP', '1.1'),
@@ -401,6 +405,7 @@ Template.vars = common.Template.vars \
            var('with_ploneproduct_atbackref', 'ATBAckRef, see http://pypi.python.org/pypi/Products.ATBackRef y/n', default='n'),
            var('with_ploneproduct_cachesetup', 'Cachefu caching Support, see http://plone.org/products/cachefu/ y/n', default='y'),
            var('with_ploneproduct_collage', 'Collage, see http://pypi.python.org/pypi/Products.Collage/ y/n', default='n'),
+           var('with_ploneproduct_facultystaff', 'FalcultyStaff, see http://plone.org/products/faculty-staff-directory y/n', default='n'),
            var('with_ploneproduct_contentlicensing', 'Content Licensing, see http://pypi.python.org/pypi/collective.contentlicensing y/n', default='n'),
            var('with_ploneproduct_cpwkf', 'CMFPlacefulWorkflow, see http://plone.org/products/cmfplacefulworkflow/ y/n', default='n'),
            var('with_ploneproduct_csvreplica', 'CSV Replicata, see http://pypi.python.org/pypi/Products.csvreplicata (makina users, do not untick) y/n', default='y'),
