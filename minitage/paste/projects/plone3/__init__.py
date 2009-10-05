@@ -65,6 +65,19 @@ easy_shop_eggs = ['easyshop.core',
                   'easyshop.taxes',
                  ]
 
+
+
+plone_np_mappings = {
+    'with_ploneproduct_maps': ['foo'],
+}
+plone_vsp_mappings = {
+    'with_ploneproduct_maps': ['bar'],
+}
+
+urls_mappings = {
+    'with_ploneproduct_maps': ['http://plone.org/products/maps/releases/1.1/maps-1-1.tgz'],
+}
+
 eggs_mappings = {
     'with_binding_ldap': ['python-ldap'],
     'with_ploneproduct_ldap': ['python-ldap', 'Products.LDAPUserFolder', 'Products.LDAPMultiPlugins', 'Products.PloneLDAP',],
@@ -119,7 +132,7 @@ zcml_mappings = {
 versions_mappings = {
     'RelStorage': [('ZODB3', '3.7.2')],
     # avoid VersionConflict: (psycopg2 2.0.13 (/tmp/fd/eggs/psycopg2-2.0.13-py2.4-linux-i686.egg), Requirement.parse('psycopg2==2.0.13-rc1'))
-    'psycopg2 temporary pin as =2.0.13-rc1 is not well packaged': [('psycopg2', '2.0.12')]
+    #'psycopg2 temporary pin as =2.0.13-rc1 is not well packaged': [('psycopg2', '2.0.12')]
 }
 p4a = [('p4a.subtyper', '1.1.0'),
        ('p4a.z2utils', '1.0.2'),
@@ -158,6 +171,13 @@ checked_versions_mappings = {
     'with_ploneproduct_truegallery': [('collective.plonetruegallery', '0.7rc1')],
 }
 
+sections_mappings = {
+    'additional_eggs': eggs_mappings,
+    'plone_zcml': zcml_mappings,
+    'plone_products': urls_mappings,
+    'plone_np': plone_np_mappings,
+    'plone_vsp': plone_vsp_mappings,
+}
 packaged_version = '3.3.1'
 class Template(common.Template):
 
@@ -191,8 +211,11 @@ class Template(common.Template):
         vars['mode'] = vars['mode'].lower().strip()
 
         # transforming eggs requirements as lists
-        vars['additional_eggs'] = [a.strip() for a in vars['additional_eggs'].split(',')]
-        vars['plone_zcml'] = [a.strip() for a in vars['plone_zcml'].split(',')]
+        for var in sections_mappings:
+            vars[var] = [a.strip() for a in vars[var].split(',')]
+        # ZODB3 from egg
+        vars['additional_eggs'].append('#ZODB3 is installed as an EGG!')
+        vars['additional_eggs'].append('ZODB3')
 
         # plone system dependencies
         if vars['inside_minitage']:
@@ -233,26 +256,6 @@ class Template(common.Template):
                     if db in minitage_dbs and vars['inside_minitage']:
                         vars['opt_deps'] += ' %s' % search_latest('%s-\d\.\d*'% db, vars['minilays'])
 
-        # ZODB3 from egg
-        vars['additional_eggs'].append('#ZODB3 is installed as an EGG!')
-        vars['additional_eggs'].append('ZODB3')
-
-        # plone eggs selections
-        for var in [k for k in eggs_mappings if vars[k]]:
-            vars['additional_eggs'].append('#%s'%var)
-            for egg in eggs_mappings[var]:
-                if not '%s\n' % egg in vars['additional_eggs']:
-                    if not egg in vars['additional_eggs']:
-                        vars['additional_eggs'].append(egg)
-
-        # associated zcml slugs
-        for var in [k for k in zcml_mappings if vars[k]]:
-            vars['plone_zcml'].append('#%s'%var)
-            for egg in zcml_mappings[var]:
-                if not '%s\n' % egg in vars['plone_zcml']:
-                    if not egg in vars['plone_zcml']:
-                        vars['plone_zcml'].append(egg)
-
         # do we need some pinned version
         vars['plone_versions'] = []
         for var in versions_mappings:
@@ -272,8 +275,13 @@ class Template(common.Template):
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir)
 
-        if vars['with_ploneproduct_maps']:
-            vars['plone_products'] += ' %s' % 'http://plone.org/products/maps/releases/1.1/maps-1-1.tgz'
+        for section in sections_mappings:
+            for var in [k for k in sections_mappings[section] if vars[k]]:
+                vars[section].append('#%s'%var)
+                for item in sections_mappings[section][var]:
+                    if not '%s\n' % item in vars[section]:
+                        if not item in vars[section]:
+                            vars[section].append(item)
 
         cwd = os.getcwd()
         if not os.path.exists(self.output_dir):
@@ -387,11 +395,11 @@ Template.vars = common.Template.vars \
            #http://pypi.python.org/pypi/atreal.patchfss/1.0.0
            var('with_ploneproduct_fss', 'File System Storage support, see http://plone.org/products/filesystemstorage y/n', default = 'y',),
            var('fss_strategy', 'File System Storage strategy, see http://pypi.python.org/pypi/iw.fss/#storage-strategies (directory, flat, site1, site2)', default = 'directory',),
-           var('plone_products', 'space separeted list of adtionnal products to install: eg: file://a.tz file://b.tgz', default = '',),
+           var('plone_products', 'comma separeted list of adtionnal products to install: eg: file://a.tz file://b.tgz', default = '',),
            var('additional_eggs', 'comma separeted list of additionnal eggs to install', default = '',),
            var('plone_zcml', 'comma separeted list of eggs to include for searching ZCML slugs', default = '',),
-           var('plone_np', 'space separeted list of nested packages for products distro part', default = '',),
-           var('plone_vsp', 'space separeted list of versionned suffix packages for product distro part', default = '',),
+           var('plone_np', 'comma separeted list of nested packages for products distro part', default = '',),
+           var('plone_vsp', 'comma separeted list of versionned suffix packages for product distro part', default = '',),
            var('with_binding_ldap', 'LDAP bindings support y/n', default = 'n',),
            var('with_database_mysql', 'Mysql python bindings support y/n', default = 'n',),
            var('with_database_oracle', 'Oracle python bindings support y/n', default = 'n',),

@@ -246,18 +246,30 @@ recipe = collective.recipe.backup
 [productdistros]
 recipe = plone.recipe.distros
 urls = #slurp
-#for $product in $plone_products.split():
-       ${product}
+#for $product in $plone_products:
+#if product.startswith('#'):
+${product}
+#else:
+    ${product}
+#end if
 #end for
 
 nested-packages = #slurp
-#for $product in $plone_np.split():
-       ${product}
+#for $product in $plone_np:
+#if product.startswith('#'):
+${product}
+#else:
+    ${product}
+#end if
 #end for
 
 version-suffix-packages = #slurp
-#for $product in $plone_vsp.split():
-       ${product}
+#for $product in $plone_vsp:
+#if product.startswith('#'):
+${product}
+#else:
+    ${product}
+#end if
 #end for
 
 [plonesite]
