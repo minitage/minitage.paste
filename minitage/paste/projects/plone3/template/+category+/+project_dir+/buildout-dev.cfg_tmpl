@@ -55,6 +55,9 @@ packages =\${instance:extra-paths}
 # to your \$HOME/.ipython directory for the following to work.
 [ipzope]
 recipe = minitage.recipe.scripts
+# make the completyion work
+ipython-patches=\${zopepy:ipython-patches}
+ipython-patch-options=\${zopepy:ipython-patch-options}
 eggs = ipython
         \${instance:eggs}
 initialization =

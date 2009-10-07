@@ -11,7 +11,7 @@ ZopeSkel=
 Markdown=
 # $project=1.0
 # plone.reload > 1 is not compatible with plone3 (depends on Zope2, eggigied)
-plone.reload=0.11
+#plone.reload=0.11
 #if $plone_version < '3.3':
 \#http://plone.org/products/plone/security/advisories/cve-2009-0662
 Products.PlonePAS = 3.9
@@ -49,6 +49,7 @@ parts += #slurp
 #if $with_ploneproduct_fss:
 # disabled as the iw.recipe.fss do that for us :  create-fss-dirs
     fss
+    testsfss-command
 #end if
     plonesite
 # on Upgrades
@@ -95,6 +96,9 @@ recipe = minitage.recipe.scripts
 # use the zodb code from the zope source distribution !!!!!!!
 eggs = \${instance:eggs}
 interpreter = zopepy
+# make the completyion work
+ipython-patches=\${buildout:directory}/patches/ipython.readline.patch
+ipython-patch-options= -Np0
 extra-paths = \${instance:extra-paths}
 # first patch is for maintenance scripts inclusion bug
 # second is for relstorage
@@ -238,6 +242,16 @@ zope-instances=\${instance:location}
 storages =
     global /
     ${project} /${project} $fss_strategy \${buildout:directory}/var/fss_storage_${project} \${buildout:directory}/var/fss_backup_${project}
+
+
+# Command below is important
+# if not, fss tests fail
+[testsfss-command] 
+recipe = plone.recipe.command
+update-command = \${testsfss-command:command}
+command =
+    mkdir -pv \${buildout:directory}/parts/instance/var/fss_storage;
+    mkdir -pv \${buildout:directory}/parts/instance/var/fss_backup;
 
 [backup]
 recipe = collective.recipe.backup

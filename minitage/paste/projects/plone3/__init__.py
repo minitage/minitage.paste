@@ -25,8 +25,6 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-
-
 __docformat__ = 'restructuredtext en'
 
 import os
@@ -35,6 +33,7 @@ import getpass
 import re
 import subprocess
 import urllib2
+from xml.dom.minidom import parse, parseString
 
 import pkg_resources
 
@@ -45,128 +44,184 @@ from minitage.paste.projects import common
 from minitage.paste.common import var
 from minitage.core.common  import which, search_latest
 
-easy_shop_eggs = ['easyshop.core',
-                  'easyshop.carts',
-                  'easyshop.catalog',
-                  'easyshop.checkout',
-                  'easyshop.criteria',
-                  'easyshop.customers',
-                  'easyshop.discounts',
-                  'easyshop.groups',
-                  'easyshop.information',
-                  'easyshop.kss',
-                  'easyshop.login',
-                  'easyshop.management',
-                  'easyshop.order',
-                  'easyshop.payment',
-                  'easyshop.shipping',
-                  'easyshop.shop',
-                  'easyshop.stocks',
-                  'easyshop.taxes',
-                 ]
+reflags = re.M|re.U|re.S
+UNSPACER = re.compile('\s+|\n', reflags)
+running_user = getpass.getuser()
 
-plone_np_mappings = {
-}
-plone_vsp_mappings = {
-}
+default_config = pkg_resources.resource_filename(
+    'minitage.paste',
+    'projects/plone3/minitage.plone3.xml')
+user_config = os.path.join(
+    os.path.expanduser('~'),
+    '.minitage.plone3.xml'
+)
 
-urls_mappings = {
-    'with_ploneproduct_maps': ['http://plone.org/products/maps/releases/1.1/maps-1-1.tgz'],
-}
+# plone quickinstaller option/names mappings
+qi_mappings = {}
+# eggs registered as Zope2 packages
+z2packages, z2products = {}, {}
+# variables discovered via configuration
+addons_vars = []
+# mappings option/eggs to install
+eggs_mappings = {}
+# mappings option/zcml to install
+zcml_loading_order = {}
+zcml_mappings = {}
+# mappings option/versions to pin
+versions_mappings = {}
+# mappings option/versions to pin if the user wants really stable sets
+checked_versions_mappings = {}
+# mappings option/productdistros to install
+urls_mappings = {}
+# mappings option/nested packages/version suffix packages  to install
+plone_np_mappings = {}
+plone_vsp_mappings = {}
 
-eggs_mappings = {
-    'with_binding_ldap': ['python-ldap'],
-    'with_ploneproduct_ldap': ['python-ldap', 'Products.LDAPUserFolder', 'Products.LDAPMultiPlugins', 'Products.PloneLDAP',],
-    'with_database_mysql': ['MySQL_python'],
-    'with_database_oracle': ['cx_Oracle'],
-    'with_database_postgresql': ['psycopg2', 'egenix-mx-base'],
-    'with_tool_ipython': ['ipython'],
-    'with_binding_pil': ['PILwoTK'],
-    'with_ploneproduct_cachesetup': ['Products.CacheSetup'],
-    'with_ploneproduct_easyshop': easy_shop_eggs + ['zc.authorizedotnet'],
-    'with_ploneproduct_fss': ['iw.fss', 'atreal.patchfss'],
-    'with_ploneproduct_lingua': ['Products.LinguaPlone'],
-    'with_ploneproduct_p4a_cal': ['p4a.plonecalendar', 'p4a.ploneevent',],
-    'with_ploneproduct_p4a_vid': ['p4a.common', 'p4a.z2utils', 'p4a.fileimage', 'p4a.video', 'p4a.plonevideo', 'p4a.plonevideoembed',],
-    'with_ploneproduct_plonearticle': ['Products.PloneArticle'],
-    'with_ploneproduct_ploneboard': ['Products.Ploneboard', 'Products.SimpleAttachment'],
-    'with_ploneproduct_facultystaff': ['Products.FacultyStaffDirectory',],
-    'with_ploneproduct_plonesurvey': ['Products.PloneSurvey '],
-    'with_ploneproduct_quillsenabled': ['Products.QuillsEnabled', 'quills.remoteblogging'],
-    'with_ploneproduct_quills': ['Products.Quills', 'quills.remoteblogging'],
-    'with_ploneproduct_sgdcg': ['collective.dancing'],
-    'with_ploneproduct_truegallery': ['collective.plonetruegallery', 'gdata', 'flickrapi'],
-    'with_ploneproduct_wc_dd_menu': ['webcouturier.dropdownmenu'],
-    'with_ploneproduct_ploneboard': ['Products.Ploneboard',],
-    'with_ploneproduct_collage': ['Products.Collage',],
-    'with_ploneproduct_flowplayer': ['collective.flowplayer',],
-    'with_ploneproduct_ploneformgen': ['Products.PloneFormGen',],
-    'with_tool_zopeskel': ['ZopeSkel',],
-    'with_ploneproduct_tal_portlet': ['collective.portlet.tal',],
-    'with_ploneproduct_contentlicensing': ['collective.contentlicensing',],
-    'with_ploneproduct_csvreplica': ['Products.csvreplicata',],
-    'with_ploneproduct_schematuning': ['archetypes.schematuning',],
-    'with_ploneproduct_atbackref': ['Products.ATBackRef'],
-    'with_wsgi_support': ['repoze.zope2', 'Spawning', 'Deliverance', 'ZODB3', 'Paste', 'PasteScript', 'PasteDeploy',],
-}
-zcml_mappings = {
-    'with_ploneproduct_contentlicensing': ['collective.contentlicensing',],
-    'with_ploneproduct_easyshop': easy_shop_eggs,
-    'with_ploneproduct_flowplayer': ['collective.flowplayer',],
-    #http://pypi.python.org/pypi/atreal.patchfss/1.0.0
-    'with_ploneproduct_fss': ['iw.fss-meta', 'atreal.patchfss'],#'iw.fss',
-    'with_ploneproduct_p4a_cal': ['p4a.plonecalendar', 'p4a.plonecalendar-meta', 'p4a.ploneevent',],
-    'with_ploneproduct_p4a_vid': [ 'p4a.plonevideo', 'p4a.plonevideoembed', 'p4a.fileimage',],
-    'with_ploneproduct_quillsenabled': ['Products.QuillsEnabled', 'quills.remoteblogging'],
-    'with_ploneproduct_quills': ['Products.Quills'],
-    'with_ploneproduct_sgdcg': ['collective.dancing'],
-    'with_ploneproduct_tal_portlet': ['collective.portlet.tal',],
-    'with_ploneproduct_truegallery': ['collective.plonetruegallery',],
-    'with_ploneproduct_wc_dd_menu': ['webcouturier.dropdownmenu'],
-}
+def parse_xmlconfig(xml):
+    # discover  additionnal configuration options
+    discovered_options = []
+    optsnodes = xml.getElementsByTagName('options')
+    if optsnodes:
+        for elem in optsnodes:
+            opts = elem.getElementsByTagName('option')
+            for o in opts:
+                oattrs = dict(o.attributes.items())
+                order = int(oattrs.get('order', 99999))
+                # be sure not to have unicode params there because paster will swallow them up
+                discovered_options.append(
+                    (order,
+                    var(oattrs.get('name'),
+                        UNSPACER.sub(' ', oattrs.get('description', '').strip()),
+                        default=oattrs.get('default')
+                       )
+                    )
+                )
+    discovered_options.sort(lambda x, y: x[0] - y[0])
+    noecho = [addons_vars.append(o[1]) for o in discovered_options]
 
-versions_mappings = {
-    'RelStorage': [('ZODB3', '3.7.2')],
-    # avoid VersionConflict: (psycopg2 2.0.13 (/tmp/fd/eggs/psycopg2-2.0.13-py2.4-linux-i686.egg), Requirement.parse('psycopg2==2.0.13-rc1'))
-    #'psycopg2 temporary pin as =2.0.13-rc1 is not well packaged': [('psycopg2', '2.0.12')]
-}
-p4a = [('p4a.subtyper', '1.1.0'),
-       ('p4a.z2utils', '1.0.2'),
-       ('p4a.common', '1.0.3'),
-      ]
-checked_versions_mappings = {
-    'with_ploneproduct_plonearticle': [('Products.PloneArticle', '4.1.4',)],
-    'with_ploneproduct_p4a_vid': [('hachoir-parser', '1.2.1'),
-                                  ('hachoir-metadata', '1.2.1'),
-                                  ('hachoir-core', '1.2.1'),
-                                  ('p4a.fileimage', '1.0.2'),
-                                  ('p4a.video', '1.1.1'),
-                                  ('p4a.plonevideo', '1.1.1'),
-                                  ('p4a.plonevideoembed', '1.1'),
-                                 ]+p4a,
-    'with_ploneproduct_p4a_cal' : [('p4a.plonecalendar',  '2.0a2'),
-                                   ('p4a.calendar',  '2.0a1'),
-                                   ('python_dateutil',  '1.4.1'),
-                                   ('p4a.ploneevent',  '0.5'),
-                                   ('dateable.chronos',  '0.4'),
-                                   ('dateable.kalends',  '0.4'),
-                                  ]+p4a,
+    # discover KGS version
+    cvs = xml.getElementsByTagName('checkedversions')
+    #'with_ploneproduct_plonearticle': [('Products.PloneArticle', '4.1.4',)],
+    if cvs:
+        for elem in cvs:
+            for e in elem.getElementsByTagName('version'):
+                oattrs = dict(e.attributes.items())
+                for option in oattrs['options'].split(','):
+                    option = option.strip()
+                    if not option in checked_versions_mappings:
+                        checked_versions_mappings[option] = []
+                    item = (oattrs['p'], oattrs['v'])
+                    if not item in checked_versions_mappings[option]:
+                        checked_versions_mappings[option].append(item)
 
-    'with_ploneproduct_lingua': [('Products.LinguaPlone', '3.0a3'),
-                                 ('Products.PloneLanguageTool', '3.0.2'),
-                                ],
-    'with_ploneproduct_facultystaff': [('Products.FacultyStaffDirectory', '2.1.1.2'),],
-    'with_ploneproduct_ldap': [('Products.LDAPUserFolder', '2.12'),
-                               ('Products.LDAPMultiPlugins', '1.7'),
-                               ('Products.PloneLDAP', '1.1'),
-                              ],
-    'with_ploneproduct_fss': [('iw.fss', '2.7.6'),
-                              ('iw.recipe.fss', '0.2.1'),
-                             ],
-    'with_ploneproduct_ploneboard': [('Products.SimpleAttachment', '3.0.2')],
-    'with_ploneproduct_truegallery': [('collective.plonetruegallery', '0.7rc1')],
-}
+    # discover andatory versions pinning
+    vs = xml.getElementsByTagName('versions')
+    # versions_mappings = {RelStorage': [('ZODB3', '3.7.2')],}
+    if vs:
+        for elem in vs:
+            for e in elem.getElementsByTagName('version'):
+                oattrs = dict(e.attributes.items())
+                for option in oattrs['name'].split(','):
+                    option = option.strip()
+                    if not option in checked_versions_mappings:
+                        versions_mappings[option] = []
+                    item = (oattrs['p'], oattrs['v'])
+                    if not item in versions_mappings[option]:
+                        versions_mappings[option].append(item)
 
+    # quickinstaller mappings discovery
+    qi = xml.getElementsByTagName('qi')
+    if qi:
+        for elem in qi:
+            for e in elem.getElementsByTagName('product'):
+                oattrs = dict(e.attributes.items())
+                for option in oattrs['options'].split(','):
+                    option = option.strip()
+                    if not option in qi_mappings:
+                        qi_mappings[option] = []
+                    if not oattrs['name'] in qi_mappings:
+                        qi_mappings[option].append(oattrs['name'])
+
+    # eggs/zcml discovery
+    eggs = xml.getElementsByTagName('eggs')
+    if eggs:
+        for elem in eggs:
+            for e in elem.getElementsByTagName('egg'):
+                oattrs = dict(e.attributes.items())
+                for option in oattrs['options'].split(','):
+                    option = option.strip()
+                    if not option in eggs_mappings:
+                        eggs_mappings[option] = []
+                    if not oattrs['name'] in eggs_mappings[option]:
+                        eggs_mappings[option].append(oattrs['name'])
+                    if 'zcml' in oattrs:
+                        if not option in zcml_mappings:
+                            zcml_mappings[option] = []
+                        for slug in oattrs['zcml'].split(','):
+                            item = (oattrs['name'], slug.strip())
+                            if not item in zcml_mappings[option]:
+                                zcml_mappings[option].append(item)
+                                zcml_loading_order[item] = int(oattrs.get('zcmlorder', '50000'))
+                    for d, package in [(z2packages, 'zpackage'), (z2products, 'zproduct')]:
+                        if package in oattrs:
+                            v = oattrs[package]
+                            if not option in d:
+                                d[option] = []
+                            if v == 'y':
+                                if not oattrs['name'] in d[option]:
+                                    d[option].append(oattrs['name'])
+                            else:
+                                #d[option].append('#%s' % oattrs['name'])
+                                zp = [z.strip() for z in oattrs[package].split(',')]
+                                noecho = [d[option].append(z) for z in zp if not z in d[option]]
+    # misc product discovery
+    miscproducts = xml.getElementsByTagName('miscproducts')
+    if miscproducts:
+        for elem in miscproducts:
+            for e in elem.getElementsByTagName('product'):
+                oattrs = dict(e.attributes.items())
+                for option in oattrs['options'].split(','):
+                    option = option.strip()
+                    if 'zcml' in oattrs:
+                        if not option in zcml_mappings:
+                            zcml_mappings[option] = []
+                        for slug in oattrs['zcml'].split(','):
+                            item = (oattrs['name'], slug.strip())
+                            if not item in zcml_mappings[option]:
+                                zcml_mappings[option].append(item)
+                                zcml_loading_order[item] = int(oattrs.get('zcmlorder', '50000'))
+                    for d, package in [(z2packages, 'zpackage'), (z2products, 'zproduct')]:
+                        if package in oattrs:
+                            v = oattrs[package]
+                            if not option in d:
+                                d[option] = []
+                            if v == 'y':
+                                if not oattrs[package] in d[option]:
+                                    d[option].append(oattrs[package])
+                            else:
+                                #d[option].append('#%s' % oattrs['name'])
+                                zp = [z.strip() for z in oattrs[package].split(',')]
+                                noecho = [d[option].append(z) for z in zp if not z in d[option]]
+
+    # productdistros handling
+    productsdistros = xml.getElementsByTagName('productdistros')
+    if productsdistros:
+        for elem in productsdistros:
+            for e in elem.getElementsByTagName('productdistro'):
+                oattrs = dict(e.attributes.items())
+                for option in oattrs['options'].split(','):
+                    option = option.strip()
+                    if not option in urls_mappings:
+                        urls_mappings[option] = []
+                    urls_mappings[option].append(oattrs['url'])
+
+def init_vars():
+    for config in user_config, default_config:
+        if os.path.exists(config):
+            xml = parseString(open(config).read())
+            parse_xmlconfig(xml)
+            break
+init_vars()
 sections_mappings = {
     'additional_eggs': eggs_mappings,
     'plone_zcml': zcml_mappings,
@@ -174,6 +229,7 @@ sections_mappings = {
     'plone_np': plone_np_mappings,
     'plone_vsp': plone_vsp_mappings,
 }
+
 packaged_version = '3.3.1'
 class Template(common.Template):
 
@@ -209,6 +265,7 @@ class Template(common.Template):
         # transforming eggs requirements as lists
         for var in sections_mappings:
             vars[var] = [a.strip() for a in vars[var].split(',')]
+
         # ZODB3 from egg
         vars['additional_eggs'].append('#ZODB3 is installed as an EGG!')
         vars['additional_eggs'].append('ZODB3')
@@ -273,11 +330,45 @@ class Template(common.Template):
 
         for section in sections_mappings:
             for var in [k for k in sections_mappings[section] if vars[k]]:
-                vars[section].append('#%s'%var)
+                if not section == 'plone_zcml':
+                    vars[section].append('#%s'%var)
                 for item in sections_mappings[section][var]:
+                    if section == 'plone_zcml':
+                        item = '-'.join(item)
                     if not '%s\n' % item in vars[section]:
                         if not item in vars[section]:
                             vars[section].append(item)
+        package_slug_re = re.compile('(.*)-(meta|configure|overrides)', reflags)
+        def zcmlsort(obja, objb):
+            obja = re.sub('^#', '', obja).strip()
+            objb = re.sub('^#', '', objb).strip()
+            ma, mb = package_slug_re.match(obja), package_slug_re.match(objb)
+            if not obja:
+                return 1
+            if not objb:
+                return -1
+            apackage, aslug = (obja, 'configure')
+            if ma:
+                apackage, aslug = ma.groups()
+            bpackage, bslug = (objb, 'configure')
+            if mb:
+                bpackage, bslug = mb.groups()
+            aorder = zcml_loading_order.get((apackage, aslug), 50000)
+            border = zcml_loading_order.get((bpackage, bslug), 50000)
+            return aorder - border
+
+        # order zcml
+        vars["plone_zcml"].sort(zcmlsort)
+        vars["plone_zcml"] = [a for a in  vars["plone_zcml"] if a.strip()]
+
+        # add option marker
+        for option in zcml_mappings:
+            for p in zcml_mappings[option]:
+                id = '-'.join(p)
+                if id in vars['plone_zcml']:
+                    i = vars['plone_zcml'].index(id)
+                    vars['plone_zcml'][i:i] = ['#%s' % option]
+        vars['plone_zcml'][0:0] = ['']
 
         cwd = os.getcwd()
         if not os.path.exists(self.output_dir):
@@ -368,7 +459,6 @@ class Template(common.Template):
         vars['opt_deps'] = re.sub('\s*%s\s*' % self.python, ' ', vars['opt_deps'])
         vars['opt_deps'] += " %s" % self.python
 
-running_user = getpass.getuser()
 sd_str = '%s' % (
     'Singing & Dancing NewsLetter, see http://plone.org/products/dancing'
     ' S&D is known to lead to multiple buildout installation errors.'
@@ -377,7 +467,7 @@ sd_str = '%s' % (
 Template.vars = common.Template.vars \
         + [var('plone_version', 'Plone version, default is the one supported and packaged', default = '3.3.1',),
            var('address', 'Address to listen on', default = 'localhost',),
-           var('http_port', 'Port to listen to', default = '8080',),
+           var('http_port', 'Port to listen to', default = '8081',),
            var('mode', 'Mode to use : zodb|relstorage|zeo', default = 'zodb'),
            var('zeo_address', 'Address for the zeoserver (zeo mode only)', default = 'localhost:8100',),
            var('zope_user', 'Administrator login', default = 'admin',),
@@ -388,51 +478,12 @@ Template.vars = common.Template.vars \
            var('relstorage_dbname', 'Relstorage databse name (only useful for relstorage mode)', default = 'minitagedb',),
            var('relstorage_dbuser', 'Relstorage user (only useful for relstorage mode)', default = running_user),
            var('relstorage_password', 'Relstorage password (only useful for relstorage mode)', default = 'secret',),
-           #http://pypi.python.org/pypi/atreal.patchfss/1.0.0
-           var('with_ploneproduct_fss', 'File System Storage support, see http://plone.org/products/filesystemstorage y/n', default = 'y',),
-           var('fss_strategy', 'File System Storage strategy, see http://pypi.python.org/pypi/iw.fss/#storage-strategies (directory, flat, site1, site2)', default = 'directory',),
            var('plone_products', 'comma separeted list of adtionnal products to install: eg: file://a.tz file://b.tgz', default = '',),
            var('additional_eggs', 'comma separeted list of additionnal eggs to install', default = '',),
            var('plone_zcml', 'comma separeted list of eggs to include for searching ZCML slugs', default = '',),
            var('plone_np', 'comma separeted list of nested packages for products distro part', default = '',),
            var('plone_vsp', 'comma separeted list of versionned suffix packages for product distro part', default = '',),
-           var('with_binding_ldap', 'LDAP bindings support y/n', default = 'n',),
-           var('with_database_mysql', 'Mysql python bindings support y/n', default = 'n',),
-           var('with_database_oracle', 'Oracle python bindings support y/n', default = 'n',),
-           var('with_database_postgresql', 'Postgresql python bindings support y/n', default = 'n',),
-           var('with_binding_pil', 'Python imaging support (dangerous to disable) y/n', default = 'y',),
-           var('with_tool_ipython', 'ipython support http://ipython.scipy.org/ y/n', default = 'y',),
-           var('with_tool_zopeskel', 'ZopeSkel http://pypi.python.org/pypi/ZopeSkel', default = 'y',),
-           var('with_wsgi_support', 'WSGI capabilities y/n', default = 'y',),
-           var('plomino_revision', 'Plomino Revision to checkout, see http://plone.org/products/plomino/ y/n', default='HEAD'),
-           var('with_checked_versions', 'Use product validated versions that interact well together (can be outdated, please check [versions] in buildout.', default = 'n',),
-           var('with_ploneproduct_atbackref', 'ATBAckRef, see http://pypi.python.org/pypi/Products.ATBackRef y/n', default='n'),
-           var('with_ploneproduct_cachesetup', 'Cachefu caching Support, see http://plone.org/products/cachefu/ y/n', default='y'),
-           var('with_ploneproduct_collage', 'Collage, see http://pypi.python.org/pypi/Products.Collage/ y/n', default='n'),
-           var('with_ploneproduct_facultystaff', 'FalcultyStaff, see http://plone.org/products/faculty-staff-directory y/n', default='n'),
-           var('with_ploneproduct_contentlicensing', 'Content Licensing, see http://pypi.python.org/pypi/collective.contentlicensing y/n', default='n'),
-           var('with_ploneproduct_cpwkf', 'CMFPlacefulWorkflow, see http://plone.org/products/cmfplacefulworkflow/ y/n', default='n'),
-           var('with_ploneproduct_csvreplica', 'CSV Replicata, see http://pypi.python.org/pypi/Products.csvreplicata (makina users, do not untick) y/n', default='y'),
-           var('with_ploneproduct_easyshop', 'Easy Shop, see http://www.geteasyshop.com y/n', default='n'),
-           var('with_ploneproduct_flowplayer', 'FlowPlayer, see http://plone.org/products/collective-flowplayer/ y/n', default='n'),
-           var('with_ploneproduct_ldap', 'Plone LDAP support, see http://plone.org/products/ploneldap/ y/n', default='n'),
-           var('with_ploneproduct_lingua', 'LinguaPlone support, see http://plone.org/products/linguaplone y/n', default='n'),
-           var('with_ploneproduct_maps', 'Maps, see http://plone.org/products/maps/ y/n',default='n'),
-           var('with_ploneproduct_p4a_cal', 'p4a Calendar, see http://pypi.python.org/pypi/p4a.calendar y/n', default='n'),
-           var('with_ploneproduct_p4a_vid', 'p4a Video, see http://www.plone4artists.org/products/plone4artistsvideo y/n', default='n'),
-           var('with_ploneproduct_plomino', 'Plomino, see http://plone.org/products/plomino/ y/n', default='n'),
-           var('with_ploneproduct_plonearticle', 'Plone Article, see http://plone.org/products/plonearticle/ y/n', default='n'),
-           var('with_ploneproduct_ploneboard', 'Plone Board, see http://plone.org/products/ploneboard/ y/n', default='n'),
-           var('with_ploneproduct_ploneformgen', 'PloneFormGen, see http://plone.org/products/ploneformgen y/n', default='n'),
-           var('with_ploneproduct_plonesurvey', 'PloneSurvey, see http://plone.org/products/plone-survey/releases/1.3.0 y/n', default='n'),
-           var('with_ploneproduct_quillsenabled', 'Quills Enabled, see http://pypi.python.org/pypi/Products.QuillsEnabled/ y/n', default='n'),
-           var('with_ploneproduct_quills', 'Quills, see http://pypi.python.org/pypi/Products.Quills/ y/n', default='n'),
-           var('with_ploneproduct_schematuning', 'Schematuning patch, see http://pypi.python.org/pypi/archetypes.schematuning/ y/n', default='n'),
-           var('with_ploneproduct_sgdcg', sd_str, default='n'),
-           var('with_ploneproduct_tal_portlet', 'Tal Portlet, see http://pypi.python.org/pypi/collective.portlet.tal y/n', default='n'),
-           var('with_ploneproduct_truegallery', 'PloneTrueGallery, see http://plone.org/products/plone-true-gallery/ y/n', default='n'),
-           var('with_ploneproduct_vaporisation', 'Vaporisation, see http://plone.org/products/vaporisation/ y/n', default='n'),
-           var('with_ploneproduct_wc_dd_menu', 'WebCouturier Dropdown Menu, see http://plone.org/products/webcouturier-dropdownmenu y/n', default='n'),
-           ]
+           var('with_checked_versions', 'Use product versions that interact well together (can be outdated, check [versions] in buildout.', default = 'n',),
+           ] + addons_vars
 
 # vim:set et sts=4 ts=4 tw=0:

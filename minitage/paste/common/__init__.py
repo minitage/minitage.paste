@@ -65,10 +65,10 @@ def boolify(d, boolean_values=None):
     d['booleans'].extend(boolean_values)
     for var in boolean_values:
         if var in d:
-            if isinstance(d[var], str):
-                if 'y' in d[var].lower():
+            if isinstance(d[var], basestring):
+                if u'y' in d[var].lower():
                     d[var] = True
-                elif 'true' == d[var].lower().strip():
+                elif u'true' == d[var].lower().strip():
                     d[var] = True
                 else:
                     d[var] = False

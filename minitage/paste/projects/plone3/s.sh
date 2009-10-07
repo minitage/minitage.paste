@@ -32,8 +32,7 @@
 
 
 
-cd $(dirname $0)
-$MT/bin/paster create -t minitage.plone3 p3 inside_minitage=${1:-yes}\
+bin/paster create -t minitage.plone3 p3 inside_minitage=${1:-yes}\
 mode=relstorage                             \
 with_ploneproduct_fss=y                     \
 with_ploneproduct_atbackref=y               \
@@ -43,6 +42,7 @@ with_ploneproduct_contentlicensing=y        \
 with_ploneproduct_cpwkf=y                   \
 with_ploneproduct_csvreplica=y              \
 with_ploneproduct_easyshop=y                \
+inside_minitage=n                \
 with_ploneproduct_flowplayer=y              \
 with_ploneproduct_ldap=y                    \
 with_ploneproduct_lingua=y                  \
@@ -62,7 +62,6 @@ with_ploneproduct_truegallery=y             \
 with_ploneproduct_vaporisation=y            \
 with_ploneproduct_wc_dd_menu=y              \
 with_checked_versions=y              \
-prout=rprout --no-interactive 
 
 
  # vim:set et sts=4 ts=4 tw=80:

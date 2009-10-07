@@ -14,6 +14,7 @@ CHANGES
     * distribute instead of setuptools
     * cheetah requirement fix because of ugly zopeskel version pinning
     * add facultystaff to plone3
+    * make plone3 paster customizable via configuration files (xml)
 
 1.3.51
 -------
