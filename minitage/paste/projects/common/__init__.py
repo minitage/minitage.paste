@@ -25,8 +25,6 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-
-
 __docformat__ = 'restructuredtext en'
 
 import sys
@@ -38,7 +36,6 @@ import pkg_resources
 from minitage.paste import common
 from minitage.core.common import which, search_latest
 
-
 class Template(common.Template):
     """Common template"""
 
@@ -46,7 +43,7 @@ class Template(common.Template):
         self.lastlogs.append(
             '* A project has been created in %s.\n' % vars['path']
         )
-        minilay = os.path.join(vars['mt_fp'], 'minilays', vars['project'])
+        minilay = os.path.join(self.output_dir, 'minilays', vars['project'])
         if vars['inside_minitage']:
             self.lastlogs.append(
                 '* A minilay has been installed in %s.\n'
@@ -105,15 +102,23 @@ class Template(common.Template):
         if not 'opt_deps' in vars:
             vars['opt_deps'] = ''
         if vars['inside_minitage']:
-            vars['path'] = os.path.join(
-                self.output_dir,
-                vars['category'],
-                vars['project'],
-            )
+            if not self.special_output_dir:
+                vars['path'] = os.path.join(
+                    self.output_dir,
+                    vars['category'],
+                    vars['project'],
+                )
+            else:
+                vars['path'] = self.output_dir
         else:
             vars['category'] = ''
             vars['path'] = self.output_dir
-
+        if not self.special_output_dir:
+            vars['project_dir'] = vars['project']
+            vars['categoy_dir'] = vars['category']
+        else:
+             vars['project_dir'] = ''
+             vars['category_dir'] = ''
         xml2, xslt ='py-libxml2-2.6', 'py-libxslt-1.1'
         interpreter, pyver = None, None
         pythons = {

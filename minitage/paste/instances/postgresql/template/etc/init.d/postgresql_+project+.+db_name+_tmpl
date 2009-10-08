@@ -32,9 +32,9 @@ checkconfig() {
 
 wrap_pg_ctl() {
     if [[ `whoami` == root ]];then
-        su \$effectiveuser -c "\$pg_ctl -s \$1"
+        su \$effectiveuser -c "\$pg_ctl -s \$@"
     else
-        \$pg_ctl -s \$1
+        \$pg_ctl -s \$@
     fi
 }
 

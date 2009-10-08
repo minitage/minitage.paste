@@ -44,7 +44,7 @@ from paste.script import templates
 
 re_flags = re.M|re.U|re.I|re.S
 running_user = getpass.getuser()
-special_chars_re = re.compile('[-_@|{(\[|)\]}]', re_flags)
+special_chars_re = re.compile('[-._@|{(\[|)\]}]', re_flags)
 
 class Template(common.Template):
 
@@ -56,7 +56,7 @@ class Template(common.Template):
     def pre(self, command, output_dir, vars):
         common.Template.pre(self, command, output_dir, vars)
         vars['running_user'] = running_user
-        db_path = os.path.join(
+        self.db_path = db_path = os.path.join(
             vars['sys'], 'var', 'data', 'postgresql', vars['db_name']
         )
         conf = os.path.join(vars['sys'],
@@ -64,21 +64,31 @@ class Template(common.Template):
                             'postgresql',
                             vars['db_name'],
                             'postgresql.conf')
+        # registering where we initdb
+        # which database do we createdb
+        os.environ['PGDATA'] = db_path
+        os.environ['PGUSER'] = running_user
+        os.environ['PGDATABASE'] = vars['db_name']
+        os.environ['PGHOST'] = vars['db_host']
+        os.environ['PGPORT'] = vars['db_port']
+        # default charsets C avoiding regional problems :)
+        os.environ['LANG'] = os.environ['LC_ALL'] = 'C'
+        env_file = os.path.join(vars['sys'], 'share', 'minitage', 'minitage.env')
+        bash_init = '. %s' % (env_file,)
+        fic = open(env_file).read()
+        version = os.popen(
+            'bash -c "'
+            '%s;'
+            'initdb --version'
+            '"' % bash_init
+        ).read()
+        if '8.2' in version:
+            vars['lc'] = 'redirect_stderr'
+        else:
+            vars['lc'] = 'logging_collector'
         if not os.path.exists(conf):
             if not os.path.exists(db_path):
                 os.makedirs(db_path)
-
-            # registering where we initdb
-            # which database do we createdb
-            os.environ['PGDATA'] = db_path
-            os.environ['PGUSER'] = running_user
-            os.environ['PGDATABASE'] = vars['db_name']
-            os.environ['PGHOST'] = vars['db_host']
-            os.environ['PGPORT'] = vars['db_port']
-            # default charsets C avoiding regional problems :)
-            os.environ['LANG'] = os.environ['LC_ALL'] = 'C'
-            env_file = os.path.join(vars['sys'], 'share', 'minitage', 'minitage.env')
-            fic = open(env_file).read()
             pgre = re.compile('.*postgresql-([^\s]*)\s.*', re_flags)
             m = pgre.match(fic)
             # We are searching in the destination if we
@@ -88,11 +98,10 @@ class Template(common.Template):
             # If no pgsql is installed, do initdb/createdb but
             # remove files coming out by templates
             # to be out of overwrite errors.
-            bash_init = '. %s' % (env_file,)
             init_db = ';'.join(
                 [bash_init,
                 'initdb  -E \'UTF-8\';'
-                'pg_ctl -w start ;']
+                'pg_ctl -w start  -o "-k%s"' % self.db_path]
             )
             create_user = ';'.join(
                 [bash_init,
@@ -139,16 +148,6 @@ class Template(common.Template):
                         ' after adding postgresql-x.x to your project minibuild?.'
                     )
                     sys.exit(1)
-            version = os.popen(
-                'bash -c "'
-                '%s;'
-                'initdb --version'
-                '"' % bash_init
-            ).read()
-            if '8.2' in version:
-                vars['lc'] = 'redirect_stderr'
-            else:
-                vars['lc'] = 'logging_collector'
             for f in ('pg_hba.conf',
                       'pg_ident.conf' ):
                 fp = os.path.join(db_path, f)
@@ -163,7 +162,6 @@ class Template(common.Template):
             for filep in os.listdir(directory):
                 p = os.path.join(directory, filep)
                 os.chmod(p, stat.S_IRGRP|stat.S_IXGRP|stat.S_IRWXU)
-
         # be nice, link some files
         conf = os.path.join(vars['sys'],
                             'var', 'data',
@@ -201,14 +199,16 @@ class Template(common.Template):
                 """
 # MINITAGE LOGGING
 log_directory = '%(sys)s/var/log/postgresql/%(project)s'
+unix_socket_directory = '%(sys)s/var/run/postgresql/%(project)s'
 # directory where log files are written,
 # can be absolute or relative to PGDATA
 log_filename='postgresql-%(p)sY-%(p)sm-%(p)sd.log'
 %(lc)s=true
+
                                  """ % {
                                      'sys':vars['sys'], 'p':'%',
                                      'lc': vars['lc'],
-                                     'project': vars['project']
+                                     'project': vars['db_name']
                                  })
         infos = "%s" % (
             "    * You can look for wrappers to various postgresql scripts located in %s. You must use them as they are configured to use some useful defaults to connect to your database.\n"

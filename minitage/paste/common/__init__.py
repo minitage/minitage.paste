@@ -79,6 +79,7 @@ class Template(templates.Template):
     _template_dir = 'template'
     use_cheetah = True
     read_vars_from_templates = True
+    special_output_dir = False
 
     vars = [
         templates.var('project_dependencies',
@@ -151,15 +152,15 @@ class Template(templates.Template):
     def pre(self, command, output_dir, vars):
         self.boolify(vars)
         vars['booleans'] = []
-        special_output_dir = not(command.options.output_dir.strip() in ['', '.'])
+        self.special_output_dir = not(command.options.output_dir.strip() in ['', '.'])
         # either / or virtualenv prefix is the root
         # of minitage in any cases.
         # This is pointed out by sys.exec_prefix, hopefullly.
         vars['booleans'].append('inside_minitage')
         prefix = os.path.join(command.options.output_dir)
-        if vars['inside_minitage'] and not special_output_dir:
+        if vars['inside_minitage'] and not self.special_output_dir:
             prefix = sys.exec_prefix
-        if not vars['inside_minitage'] and not special_output_dir:
+        if not vars['inside_minitage'] and not self.special_output_dir:
             prefix = os.path.join(command.options.output_dir, vars['project'])
         self.old_output_dir = getattr(self, 'output_dir', None)
         self.output_dir = prefix
@@ -175,8 +176,8 @@ class Template(templates.Template):
         vars['minilay'] = vars['project']
         if vars['inside_minitage']:
             not_minitage = False
-            if not special_output_dir:
-                vars['project_dir'] = vars['project']
+            if self.special_output_dir:
+                vars['path'] = self.output_dir
             vars['mt'] = self.output_dir
         else:
             not_minitage = True
@@ -184,9 +185,9 @@ class Template(templates.Template):
         if not_minitage or not (os.path.exists(
             os.path.join(vars['mt'], 'etc', 'minimerge.cfg')
         )):
-            vars['inside_minitage'] = False
-            vars['project_dir'] = ''
-            vars['mt'] = '/'
+            if not self.special_output_dir:
+                vars['inside_minitage'] = False
+            vars['mt'] = sys.prefix
         vars['mt_fp'] = vars['mt']
 
     def post(self, command, output_dir, vars):
@@ -196,10 +197,10 @@ class Template(templates.Template):
             if os.path.isdir(minilays):
                 if 2 > len(os.listdir(minilays)):
                     paths.append(minilays)
-        for p in paths:
-            fp = os.path.join(self.output_dir, p)
-            if os.path.exists(fp):
-                shutil.rmtree(fp)
+            for p in paths:
+                fp = os.path.join(self.output_dir, p)
+                if os.path.exists(fp):
+                    shutil.rmtree(fp)
 
         if self.lastlogs and not command.options.quiet:
             print

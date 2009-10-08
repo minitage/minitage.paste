@@ -5,5 +5,5 @@ src_uri=$uri
 src_type=$scm_type
 category=$category
 homepage=$homepage
-description= a plone 3.1 buildout for $project
+description= a plone $plone_version buildout for $project
 buildout_config=buildout-dev.cfg
