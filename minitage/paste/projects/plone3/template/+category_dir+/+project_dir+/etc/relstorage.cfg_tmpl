@@ -1,5 +1,5 @@
 [buildout]
-storage-mode=$mode
+storage-mode=relstorage
 
 [instance]
 rel-storage =

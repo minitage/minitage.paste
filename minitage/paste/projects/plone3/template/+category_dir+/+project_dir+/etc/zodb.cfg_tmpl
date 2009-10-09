@@ -1,6 +1,6 @@
 
 
 [buildout]
-storage-mode=$mode
+storage-mode=zodb
 
 

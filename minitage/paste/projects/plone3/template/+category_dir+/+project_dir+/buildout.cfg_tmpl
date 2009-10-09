@@ -90,6 +90,4 @@
 [buildout]
 extends= etc/${project}.cfg etc/${mode}.cfg etc/minitage.cfg
 
-
-
 # vim:set ft=cfg:

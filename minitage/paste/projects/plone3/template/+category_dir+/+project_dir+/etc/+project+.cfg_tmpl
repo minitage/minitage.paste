@@ -1,4 +1,5 @@
 # PROJECT SPECIFIC SETTINGS
+#set $zeocomment=('zeo' in $mode) and '' or '#'
 
 # add hand pinned version there
 [versions]
@@ -42,15 +43,13 @@ parts += #slurp
 #if $with_ploneproduct_vaporisation:
     vaporisation
 #end if
-#if $mode == 'zeo':
-    zeoserver
-#end if
     backup
 #if $with_ploneproduct_fss:
 # disabled as the iw.recipe.fss do that for us :  create-fss-dirs
     fss
     testsfss-command
 #end if
+${zeocomment}    zeoserver
     plonesite
 # on Upgrades
 # Think to change the plone release URL !!!
@@ -195,6 +194,17 @@ products+=
     \${plomino:location}
 #end if
 
+# may be not used but it is good to have it in case.
+[zeoserver]
+recipe = plone.recipe.zope2zeoserver
+zope2-location = \${zope2:location}
+zeo-address = $zeo_address
+zeo-conf-additional =
+    %import tempstorage
+    <temporarystorage temp>
+        name temporary storage for sessioning
+    </temporarystorage>
+
 [vaporisation]
 recipe=minitage.recipe.fetch
 urls=http://svn.plone.org/svn/collective/Vaporisation/trunk|svn||\${zope2:location}/lib/python/vaporisation
@@ -246,7 +256,7 @@ storages =
 
 # Command below is important
 # if not, fss tests fail
-[testsfss-command] 
+[testsfss-command]
 recipe = plone.recipe.command
 update-command = \${testsfss-command:command}
 command =
@@ -295,5 +305,9 @@ zeoserver = zeoserver
 #else
 #zeoserver = zeoserver
 #end if
+
+
+
+
 
 # vim:set ft=cfg:

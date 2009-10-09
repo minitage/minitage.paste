@@ -16,6 +16,7 @@ CHANGES
     * add facultystaff to plone3
     * make plone3 paster customizable via configuration files (xml)
     * maintenance on the postgresql instance (8.4.1)
+    * let zeo part be there, everytime.
 
 1.3.51
 -------

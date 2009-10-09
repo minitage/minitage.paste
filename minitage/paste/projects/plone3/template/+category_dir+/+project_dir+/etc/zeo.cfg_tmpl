@@ -1,15 +1,5 @@
 [buildout]
-storage-mode=$mode
-
-[zeoserver]
-recipe = plone.recipe.zope2zeoserver
-zope2-location = \${zope2:location}
-zeo-address = $zeo_address
-zeo-conf-additional =
-    %import tempstorage
-    <temporarystorage temp>
-        name temporary storage for sessioning
-    </temporarystorage>
+storage-mode=zeo
 
 [instance]
 zeo-client-cache-size = 80MB
