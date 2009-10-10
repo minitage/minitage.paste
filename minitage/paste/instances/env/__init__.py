@@ -29,7 +29,11 @@
 
 __docformat__ = 'restructuredtext en'
 
+import os
+import re
 from minitage.paste.instances import common
+
+reflags = re.M|re.S|re.U
 
 class Template(common.Template):
 
@@ -39,5 +43,24 @@ class Template(common.Template):
             'playing in the shell or for other templates'
     _template_dir = 'template'
     use_cheetah = True
+
+    def pre(self, command, output_dir, vars):
+        common.Template.pre(self, command, output_dir, vars)
+        vars['ENVVAR'] = 'MINITAGE%s' % (
+            re.sub(
+                '[.-_*,@#]', '',
+                vars['project'], reflags
+            )
+        )
+
+    def post(self, command, output_dir, vars):
+        common.Template.post(self, command, output_dir, vars)
+        p = os.path.join(
+            vars['sys'], 'share','minitage'
+        )
+        for l in os.listdir(p):
+            fp = os.path.join(p, l)
+            os.chmod(fp, 0755)
+
 
 # vim:set et sts=4 ts=4 tw=80:

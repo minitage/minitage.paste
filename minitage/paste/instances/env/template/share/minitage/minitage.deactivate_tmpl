@@ -1,0 +1,26 @@
+$header
+# # gentoo stolen stuff
+. $sys/share/gentoo/functions.sh
+if test -n \$MINITAGE_ENV;then
+    LD_LIBRARY_PATH=\$OLD_MINITAGE_LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH
+    unset OLD_MINITAGE_LD_LIBRARY_PATH
+
+    PATH=\$OLD_MINITAGE_PATH
+    export PATH
+    unset OLD_MINITAGE_PATH
+
+    PS1=\$OLD_MINITAGE_PS1
+    export PS1
+    unset OLD_MINITAGE_PS1
+
+    unset MINITAGE_ENV
+fi
+unset INS
+unset MT
+unset PROJECT
+#if $category == 'zope'
+unset MINITAGE_DATAFS
+unset MINITAGE_ZCONF
+#end if
+# vim: set ft=sh:
