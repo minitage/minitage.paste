@@ -220,6 +220,7 @@
     -->
   <versions>
     <version p="ZODB3" v="3.7.2" name="RelStorage"/>
+    <version p="ipython" v="0.9.1" name="IPython py2.4 compatible version"/>
   </versions>
   <!--
     Enter here know good set versions stuff
