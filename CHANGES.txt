@@ -22,6 +22,7 @@ CHANGES
     * add five.grok support to minitage.plone3
     * add MYSQL50 support to mysql instance
     * add env file generation to minitage.plone3 project
+    * add ipython patch to go out the pdb hack
 
 1.3.51
 -------
