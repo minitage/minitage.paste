@@ -3,26 +3,31 @@ CHANGES
 ==============
 
 -> UP
+-----------
+
+    - bump ipython to 0.10
+
+0.91
 -------
 
-    * add support for installing Quills, the plone Blog suite.
-    * fix plone3 default buildout code
-    * switch recipe names to new minitage.recipe recipes
-    * plone3 template refactoring
-    * atreal.patchfss fix
-    * paster quiet option handled correctly
-    * distribute instead of setuptools
-    * cheetah requirement fix because of ugly zopeskel version pinning
-    * add facultystaff to plone3
-    * make plone3 paster customizable via configuration files (xml)
-    * maintenance on the postgresql instance (8.4.1)
-    * let zeo part be there, everytime.
-    * fix "instance.env" deactivate function
-    * minitage.plone3 autoselect scripts as well
-    * add five.grok support to minitage.plone3
-    * add MYSQL50 support to mysql instance
-    * add env file generation to minitage.plone3 project
-    * add ipython patch to go out the pdb hack
+    - add support for installing Quills, the plone Blog suite.
+    - fix plone3 default buildout code
+    - switch recipe names to new minitage.recipe recipes
+    - plone3 template refactoring
+    - atreal.patchfss fix
+    - paster quiet option handled correctly
+    - distribute instead of setuptools
+    - cheetah requirement fix because of ugly zopeskel version pinning
+    - add facultystaff to plone3
+    - make plone3 paster customizable via configuration files (xml)
+    - maintenance on the postgresql instance (8.4.1)
+    - let zeo part be there, everytime.
+    - fix "instance.env" deactivate function
+    - minitage.plone3 autoselect scripts as well
+    - add five.grok support to minitage.plone3
+    - add MYSQL50 support to mysql instance
+    - add env file generation to minitage.plone3 project
+    - add ipython patch to go out the pdb hack
 
 1.3.51
 -------

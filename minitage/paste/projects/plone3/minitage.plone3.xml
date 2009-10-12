@@ -224,7 +224,7 @@
     -->
   <versions>
     <version p="ZODB3" v="3.7.2" name="RelStorage"/>
-    <version p="ipython" v="0.9.1" name="IPython py2.4 compatible version"/>
+    <version p="ipython" v="0.10" name="IPython py2.4 compatible version"/>
     <version p="Cheetah" v="2.2.1"  name="Markdown crazy stuff"/>
   </versions>
   <!--
