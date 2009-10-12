@@ -112,6 +112,7 @@ Markdown-2.0.1-patches=\${buildout:directory}/patches/mardown-elementtree.patch
 Markdown-patch-options=-Np1
 atreal.patchfss-patches=\${buildout:directory}/patches/atreal.patchfss-setuppy.patch
 atreal.patchfss-patch-options=-Np1
+env-file=\${buildout:directory}/etc/$project.env
 # Scripts generated filtering
 scripts+=
 #zope2

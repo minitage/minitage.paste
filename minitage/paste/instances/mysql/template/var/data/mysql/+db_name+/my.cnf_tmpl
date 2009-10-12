@@ -35,7 +35,11 @@ log-error=  $sys/var/log/mysql/$db_name/mysqld.log
 skip-locking
 key_buffer_size = 256M
 max_allowed_packet = 1M
+#if $mysql_ver == '50':
+table_cache = 256
+#else:
 table_open_cache = 256
+#end if
 sort_buffer_size = 1M
 read_buffer_size = 1M
 read_rnd_buffer_size = 4M
@@ -58,7 +62,9 @@ thread_concurrency = 8
 log-bin=mysql-bin
 
 # binary logging format - mixed recommended
+#if $mysql_ver != '50':
 binlog_format=mixed
+#end if
 
 # required unique id between 1 and 2^32 - 1
 # defaults to 1 if master-host is not set

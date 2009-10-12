@@ -185,6 +185,7 @@ gid = pwd.getpwnam(running_user)[3]
 #group = grp.getgrgid(gid)[0]
 Template.vars = common.Template.vars + \
                 [
+                templates.var('mysql_ver', 'Mysql major version (50|51)', default = '51'),
                 templates.var('db_name', 'Database name', default = 'minitagedb'),
                 templates.var('db_user', 'Default user', default = running_user),
                 templates.var('db_host', 'Host to listen on', default = 'localhost'),
