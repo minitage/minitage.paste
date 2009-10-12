@@ -20,7 +20,8 @@
   <option order="250"  name="with_database_postgresql"       description="Postgresql python bindings support y/n"/>
   <option order="300"  name="with_binding_pil"               description="Python imaging support (dangerous to disable) y/n" default="y"/>
   <option order="350"  name="with_tool_ipython"              description="ipython support http://ipython.scipy.org/ y/n" default="y"/>
-  <option order="400"  name="with_tool_zopeskel"             description="ZopeSkel http://pypi.python.org/pypi/ZopeSkel" default="y"/>
+  <option order="400"  name="with_tool_zopeskel"             description="ZopeSkel http://pypi.python.org/pypi/ZopeSkel y/n" default="y"/>
+  <option order="400"  name="with_tool_colgenskelcommon"     description="Common GenericSkel,see http://pypi.python.org/pypi/collective.generic.skel.common y/n" default="y"/>
   <option order="450"  name="with_wsgi_support"              description="WSGI capabilities y/n"/>
   <option order="500"  name="with_ploneproduct_atbackref"    description="ATBAckRef, see http://pypi.python.org/pypi/Products.ATBackRef y/n"/>
   <option order="550"  name="with_ploneproduct_fss"          description="File System Storage support, see http://plone.org/products/filesystemstorage y/n" default="y"/>
@@ -46,6 +47,7 @@
   <option order="1450" name="with_ploneproduct_plonesurvey"   description="PloneSurvey, see http://plone.org/products/plone-survey/releases/1.3.0 y/n"/>
   <option order="1550" name="with_ploneproduct_quills"        description="Quills, see http://pypi.python.org/pypi/Products.Quills/ y/n"/>
   <option order="1500" name="with_ploneproduct_schematuning"  description="Schematuning patch, see http://pypi.python.org/pypi/archetypes.schematuning/ y/n"/>
+  <option order="1500" name="with_ploneproduct_fivegrok"      description="five.grok integration, see http://pypi.python.org/pypi/five.grok y/n" default="y"/>
   <option order="1600" name="with_ploneproduct_sgdcg"         description="Singing / Dancing NewsLetter, see http://plone.org/products/dancing S/D is known to lead to multiple buildout installation errors.Be sure to activate it and debug the errors. y/n"/>
   <option order="1650" name="with_ploneproduct_tal_portlet"   description="Tal Portlet, see http://pypi.python.org/pypi/collective.portlet.tal y/n"/>
   <option order="1750" name="with_ploneproduct_truegallery"   description="PloneTrueGallery, see http://plone.org/products/plone-true-gallery/ y/n"/>
@@ -81,21 +83,22 @@
   -->
   <eggs>
     <egg name="PILwoTK"                        options="with_binding_pil"                  />
+    <egg name="collective.generic.skel.common" options="with_tool_colgenskelcommon"        />
     <egg name="cx_Oracle"                      options="with_database_oracle"              />
     <egg name="egenix-mx-base"                 options="with_database_postgresql"          />
     <egg name="psycopg2"                       options="with_database_postgresql"          />
     <egg name="flickrapi"                      options="with_ploneproduct_truegallery"     />
     <egg name="gdata"                          options="with_ploneproduct_truegallery"     />
-    <egg name="ipython"                        options="with_tool_ipython"                 />
+    <egg name="ipython"                        options="with_tool_ipython"          scripts="ipython" />
     <egg name="MySQL_python"                   options="with_database_mysql"               />
     <egg name="PasteDeploy"                    options="with_wsgi_support"                 />
     <egg name="Paste"                          options="with_wsgi_support"                 />
-    <egg name="PasteScript"                    options="with_wsgi_support"                 />
+    <egg name="PasteScript"                    options="with_tool_zopeskel,with_wsgi_support,with_tool_colgenskelcommon" scripts="paster"/>
     <egg name="python-ldap"                    options="with_binding_ldap,with_ploneproduct_ldap"/>
     <egg name="repoze.zope2"                   options="with_wsgi_support"                 />
     <egg name="Spawning"                       options="with_wsgi_support"                 />
     <egg name="ZODB3"                          options="with_wsgi_support"                 />
-    <egg name="Deliverance"                    options="with_wsgi_support"                 />
+    <egg name="Deliverance"                    options="with_wsgi_support"           scripts="deliverance-handtransform,deliverance-proxy,deliverance-speed,deliverance-static,deliverance-tests"  />
     <egg name="ZopeSkel"                       options="with_tool_zopeskel"                />
 
     <!-- pure zope/plone eggs -->
@@ -107,6 +110,7 @@
     <egg name="collective.flowplayer"          options="with_ploneproduct_flowplayer"   zcml="configure"/>
     <egg name="quills.remoteblogging"          options="with_ploneproduct_quillsenabled,with_ploneproduct_quills"/>
     <egg name="plone.z3cform"                  options="with_ploneproduct_pz3cform"                      zcml="configure"/>
+    <egg name="five.grok"                      options="with_ploneproduct_fivegrok"                      zcml="configure"/>
 
     <!-- zope products -->
     <egg name="p4a.plonecalendar"              options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
@@ -183,15 +187,15 @@
     <product name="Maps"                           options="with_ploneproduct_maps"             />
     <product name="PloneArticle"                   options="with_ploneproduct_plonearticle"     />
     <product name="PloneFormGen"                   options="with_ploneproduct_ploneformgen"     />
-    <product name="PloneSurvey"                    options="with_ploneproduct_plonesurvey "     /> 
+    <product name="PloneSurvey"                    options="with_ploneproduct_plonesurvey "     />
     <product name="Quills"                         options="with_ploneproduct_quills"           />
     <product name="fatsyndication"                 options="with_ploneproduct_quills"           />
-    <product name="QuillsEnabled"                  options="with_ploneproduct_quillsenabled"    /> 
-    <product name="Relations"                      options="with_ploneproduct_facultystaff"     /> 
+    <product name="QuillsEnabled"                  options="with_ploneproduct_quillsenabled"    />
+    <product name="Relations"                      options="with_ploneproduct_facultystaff"     />
     <product name="collective.dancing"             options="with_ploneproduct_sgdcg"            />
     <product name="collective.flowplayer"          options="with_ploneproduct_flowplayer"       />
     <product name="collective.plonetruegallery"    options="with_ploneproduct_truegallery"      />
-    <product name="collective.portlet.tal"         options="with_ploneproduct_tal_portlet"      /> 
+    <product name="collective.portlet.tal"         options="with_ploneproduct_tal_portlet"      />
     <product name="csvreplicata"                   options="with_ploneproduct_csvreplica"       />
     <product name="easyshop.core"                  options="with_ploneproduct_easyshop"         />
     <product name="iw.fss"                         options="with_ploneproduct_fss"              />
@@ -203,7 +207,7 @@
     <product name="vaporisation"                   options="with_ploneproduct_vaporisation"     />
     <product name="webcouturier.dropdownmenu"      options="with_ploneproduct_wc_dd_menu"       />
     <product name="Ploneboard"                     options="with_ploneproduct_ploneboard"       />
-    <product name="SimpleAttachment"               options="with_ploneproduct_ploneboard"       /> 
+    <product name="SimpleAttachment"               options="with_ploneproduct_ploneboard"       />
     <product name="plone.app.z3cform"              options="with_ploneproduct_pz3cform"         />
     <product name="plone.app.iterate"              options="with_ploneproduct_iterate"          />
     <product name="collective.contentlicensing"    options="with_ploneproduct_contentlicensing" />
@@ -221,6 +225,7 @@
   <versions>
     <version p="ZODB3" v="3.7.2" name="RelStorage"/>
     <version p="ipython" v="0.9.1" name="IPython py2.4 compatible version"/>
+    <version p="Cheetah" v="2.2.1"  name="Markdown crazy stuff"/>
   </versions>
   <!--
     Enter here know good set versions stuff
@@ -249,7 +254,7 @@
     <version p='dateable.kalends'               v='0.4'     options="with_ploneproduct_p4a_cal"/>
     <version p='Products.LinguaPlone'           v='3.0a3'   options="with_ploneproduct_lingua"/>
     <version p='Products.PloneLanguageTool'     v='3.0.2'   options="with_ploneproduct_lingua"/>
-    <version p='Products.FacultyStaffDirectory' v='2.1.1.2' options="with_ploneproduct_facultystaff"/>
+    <version p='Products.FacultyStaffDirectory' v='2.1.3'   options="with_ploneproduct_facultystaff"/>
     <version p='Products.LDAPUserFolder'        v='2.12'    options="with_ploneproduct_ldap"/>
     <version p='Products.LDAPMultiPlugins'      v='1.7'     options="with_ploneproduct_ldap"/>
     <version p='Products.PloneLDAP'             v='1.1'     options="with_ploneproduct_ldap"/>
@@ -260,6 +265,25 @@
     <version p='p4a.subtyper'                   v='1.1.0'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/>
     <version p='p4a.z2utils'                    v='1.0.2'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/>
     <version p='p4a.common'                     v='1.0.3'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/>
+
+    <!-- FIVE.GROK -->
+    <version p='grokcore.annotation'            v='1.0.1'   options='with_ploneproduct_fivegrok' />
+    <version p='grokcore.component'             v='1.7'     options='with_ploneproduct_fivegrok' />
+    <version p='grokcore.formlib'               v='1.4'     options='with_ploneproduct_fivegrok' />
+    <version p='grokcore.security'              v='1.2'     options='with_ploneproduct_fivegrok' />
+    <version p='grokcore.site'                  v='1.0.1'   options='with_ploneproduct_fivegrok' />
+    <version p='grokcore.view'                  v='1.12.1'  options='with_ploneproduct_fivegrok' />
+    <version p='grokcore.viewlet'               v='1.3'     options='with_ploneproduct_fivegrok' />
+    <version p='five.localsitemanager'          v='1.1'     options='with_ploneproduct_fivegrok' />
+    <version p='martian'                        v='0.11'    options='with_ploneproduct_fivegrok' />
+    <version p='zope.app.publisher'             v='3.5.1'   options='with_ploneproduct_fivegrok' />
+    <version p='zope.app.zcmlfiles'             v='3.4.3'   options='with_ploneproduct_fivegrok' />
+    <version p='zope.component'                 v='3.4.0'   options='with_ploneproduct_fivegrok' />
+    <version p='zope.i18n'                      v='3.4.0'   options='with_ploneproduct_fivegrok' />
+    <version p='zope.interface'                 v='3.4.1'   options='with_ploneproduct_fivegrok' />
+    <version p='zope.schema'                    v='3.4.0'   options='with_ploneproduct_fivegrok' />
+    <version p='zope.securitypolicy'            v='3.4.1'   options='with_ploneproduct_fivegrok' />
+    <version p='zope.testing'                   v='3.7.6'   options='with_ploneproduct_fivegrok' />
   </checkedversions>
   <!--
     Old style plone products to checkout using the [productsdistros] part
@@ -277,7 +301,7 @@
   <miscproducts>
     <product name="vaporisation" zpackage="vaporisation" zcml="configure" options="with_ploneproduct_vaporisation"/>
     <product name="Products.Maps" zproduct="Maps" zcml="configure" options="with_ploneproduct_maps"/>
-    <product name="Products.CMFPlomino" zproduct="Plomino" zcml="configure" options="with_ploneproduct_plomino"/>
+    <product name="archetypes.schemaextender" zcml="configure" options="with_ploneproduct_facultystaff"/>
   </miscproducts>
 </root>
 

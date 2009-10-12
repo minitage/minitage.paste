@@ -46,6 +46,7 @@ from minitage.core.common  import which, search_latest
 
 reflags = re.M|re.U|re.S
 UNSPACER = re.compile('\s+|\n', reflags)
+SPECIALCHARS = re.compile('[.-@_]', reflags)
 running_user = getpass.getuser()
 
 default_config = pkg_resources.resource_filename(
@@ -64,6 +65,8 @@ z2packages, z2products = {}, {}
 addons_vars = []
 # mappings option/eggs to install
 eggs_mappings = {}
+# scripts to generate
+scripts_mappings = {}
 # mappings option/zcml to install
 zcml_loading_order = {}
 zcml_mappings = {}
@@ -154,6 +157,11 @@ def parse_xmlconfig(xml):
                         eggs_mappings[option] = []
                     if not oattrs['name'] in eggs_mappings[option]:
                         eggs_mappings[option].append(oattrs['name'])
+                    if 'scripts' in oattrs:
+                        if not option in scripts_mappings:
+                            scripts_mappings[option] = []
+                        for item in oattrs['scripts'].split(','):
+                            scripts_mappings[option].append(item)
                     if 'zcml' in oattrs:
                         if not option in zcml_mappings:
                             zcml_mappings[option] = []
@@ -228,6 +236,7 @@ sections_mappings = {
     'plone_products': urls_mappings,
     'plone_np': plone_np_mappings,
     'plone_vsp': plone_vsp_mappings,
+    'plone_scripts': scripts_mappings,
 }
 
 packaged_version = '3.3.1'
@@ -257,6 +266,7 @@ class Template(common.Template):
 
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
+        vars['plonesite'] = SPECIALCHARS.sub('', vars['project'])
         vars['category'] = 'zope'
         vars['includesdirs'] = ''
         common.Template.pre(self, command, output_dir, vars)
@@ -264,7 +274,8 @@ class Template(common.Template):
 
         # transforming eggs requirements as lists
         for var in sections_mappings:
-            vars[var] = [a.strip() for a in vars[var].split(',')]
+            if var in vars:
+                vars[var] = [a.strip() for a in vars[var].split(',')]
 
         # ZODB3 from egg
         vars['additional_eggs'].append('#ZODB3 is installed as an EGG!')
@@ -338,6 +349,7 @@ class Template(common.Template):
                     if not '%s\n' % item in vars[section]:
                         if not item in vars[section]:
                             vars[section].append(item)
+
         package_slug_re = re.compile('(.*)-(meta|configure|overrides)', reflags)
         def zcmlsort(obja, objb):
             obja = re.sub('^#', '', obja).strip()
@@ -483,6 +495,7 @@ Template.vars = common.Template.vars \
            var('plone_zcml', 'comma separeted list of eggs to include for searching ZCML slugs', default = '',),
            var('plone_np', 'comma separeted list of nested packages for products distro part', default = '',),
            var('plone_vsp', 'comma separeted list of versionned suffix packages for product distro part', default = '',),
+           var('plone_scripts', 'comma separeted list of scripts to generate from installed eggs', default = '',),
            var('with_checked_versions', 'Use product versions that interact well together (can be outdated, check [versions] in buildout.', default = 'n',),
            ] + addons_vars
 

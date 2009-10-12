@@ -112,34 +112,21 @@ Markdown-2.0.1-patches=\${buildout:directory}/patches/mardown-elementtree.patch
 Markdown-patch-options=-Np1
 atreal.patchfss-patches=\${buildout:directory}/patches/atreal.patchfss-setuppy.patch
 atreal.patchfss-patch-options=-Np1
-
-
 # Scripts generated filtering
 scripts+=
 #zope2
+    zconfig
+    zconfig_schema2html
     addzope2user
     debugzope2
     repozo
     runzeo
-    zconfig
-    zconfig_schema2html
     zeoctl
     zeopack
     zeopasswd
     zodbconvert
     zope2testrunner
     zopeedit
-    zopepy
-#deliverance
-    deliverance-handtransform
-    deliverance-proxy
-    deliverance-speed
-    deliverance-static
-    deliverance-tests
-#ipython
-    ipython
-#PasteScript
-    paster
 #collective.releaser
     project_deploy
     project_diff
@@ -147,7 +134,14 @@ scripts+=
     project_md5
     project_release
     package_svn_prepare
-    release_eggs
+    release_eggs #slurp
+#for $product in $plone_scripts:
+#if product.startswith('#'):
+${product}
+#else:
+    ${product}
+#end if
+#end for
 
 # here is defined the Zope instance running your plone site
 # beware that zopepy part must run before isntance in order to have the right version
@@ -298,16 +292,10 @@ ${product}
 
 [plonesite]
 recipe = collective.recipe.plonesite
-site-id = $project
+site-id = $plonesite
+site-replace=false
+enabled=true
 instance = instance
-#if 'zeoserver' in $mode:
-zeoserver = zeoserver
-#else
-#zeoserver = zeoserver
-#end if
-
-
-
-
+${zeocomment}zeoserver = zeoserver
 
 # vim:set ft=cfg:

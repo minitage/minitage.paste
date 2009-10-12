@@ -18,6 +18,8 @@ CHANGES
     * maintenance on the postgresql instance (8.4.1)
     * let zeo part be there, everytime.
     * fix "instance.env" deactivate function
+    * minitage.plone3 autoselect scripts as well
+    * add five.grok support to minitage.plone3
 
 1.3.51
 -------
