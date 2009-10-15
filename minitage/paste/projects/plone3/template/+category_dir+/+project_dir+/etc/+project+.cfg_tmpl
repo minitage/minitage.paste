@@ -1,8 +1,12 @@
 # PROJECT SPECIFIC SETTINGS
-#set $zeocomment=('zeo' in $mode) and '' or '#'
+#if 'zeo' in $mode:
+#set $zeocomment=''
+#else
+#set $zeocomment='#'
+#end if
 
-# add hand pinned version there
 [versions]
+# add hand pinned version there
 # plone32 hack to remove the bugged fixed version of buildout.
 zc.buildout -= 1.1.1
 zc.recipe.egg -= 1.1.0
@@ -299,5 +303,6 @@ site-replace=false
 enabled=true
 instance = instance
 ${zeocomment}zeoserver = zeoserver
+# $mode
 
 # vim:set ft=cfg:

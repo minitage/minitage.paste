@@ -15,7 +15,8 @@
   -->
   <options>
   <option order="100"  name="with_binding_ldap"              description="LDAP bindings support y/n"/>
-  <option order="150"  name="with_database_mysql"            description="Mysql python bindings support y/nx"/>
+  <option order="150"  name="with_database_sa"               description="SQLAlchemy support, see http://www.sqlalchemy.org y/n"/>
+  <option order="150"  name="with_database_mysql"            description="Mysql python bindings support y/n"/>
   <option order="200"  name="with_database_oracle"           description="Oracle python bindings support y/n"/>
   <option order="250"  name="with_database_postgresql"       description="Postgresql python bindings support y/n"/>
   <option order="300"  name="with_binding_pil"               description="Python imaging support (dangerous to disable) y/n" default="y"/>
@@ -56,6 +57,7 @@
   <option order="1950" name="with_ploneproduct_wc_dd_menu"    description="WebCouturier Dropdown Menu, see http://plone.org/products/webcouturier-dropdownmenu y/n"/>
   <option order="1951" name="with_ploneproduct_pz3cform"      description="Plone z3c.form support, see http://pypi.python.org/pypi/plone.z3cform y/n" default="y"/>
   <option order="1951" name="with_ploneproduct_iterate"       description="Plone Iterate support, see http://pypi.python.org/pypi/plone.app.iterate y/n" default="n"/>
+  <option order="1951" name="with_ploneproduct_schemaextender" description="Plone Archetypes schema extender support, see http://pypi.python.org/pypi/archetypes.schemaextender y/n" default="n"/>
   </options>
   <!--
     LINK THERE YOUR EGGS TO BE Installed on option triggering.
@@ -89,8 +91,9 @@
     <egg name="psycopg2"                       options="with_database_postgresql"          />
     <egg name="flickrapi"                      options="with_ploneproduct_truegallery"     />
     <egg name="gdata"                          options="with_ploneproduct_truegallery"     />
-    <egg name="ipython"                        options="with_tool_ipython"          scripts="ipython" />
+    <egg name="ipython"                        options="with_tool_ipython"                 scripts="ipython" />
     <egg name="MySQL_python"                   options="with_database_mysql"               />
+    <egg name="sqlalchemy"                     options="with_database_sa"                  />
     <egg name="PasteDeploy"                    options="with_wsgi_support"                 />
     <egg name="Paste"                          options="with_wsgi_support"                 />
     <egg name="PasteScript"                    options="with_tool_zopeskel,with_wsgi_support,with_tool_colgenskelcommon" scripts="paster"/>
@@ -155,6 +158,7 @@
     <egg name="Products.PloneArticle"          options="with_ploneproduct_plonearticle"     zproduct="y" zcml="configure"/>
     <egg name="Products.Ploneboard"            options="with_ploneproduct_ploneboard"       zproduct="y" zcml="configure"/>
     <egg name="Products.SimpleAttachment"      options="with_ploneproduct_ploneboard"       zproduct="y" zcml="configure"/>
+    <egg name="archetypes.schemaextender"      options="with_ploneproduct_facultystaff,with_ploneproduct_schemaextender" zcml="configure" />
     <egg name="Products.PloneFormGen"          options="with_ploneproduct_ploneformgen"     zproduct="y" zcml="configure"/>
     <egg name="Products.PloneLDAP"             options="with_ploneproduct_ldap"             zproduct="y" zcml="configure"/>
     <egg name="Products.PloneSurvey"           options="with_ploneproduct_plonesurvey"      zproduct="y" zcml="configure"/>
@@ -266,6 +270,9 @@
     <version p='p4a.z2utils'                    v='1.0.2'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/>
     <version p='p4a.common'                     v='1.0.3'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/>
 
+    <!-- z3c.form -->
+    <version p='z3c.form'                       v='1.9.0'   options='with_ploneproduct_pz3cform' />
+
     <!-- FIVE.GROK -->
     <version p='grokcore.annotation'            v='1.0.1'   options='with_ploneproduct_fivegrok' />
     <version p='grokcore.component'             v='1.7'     options='with_ploneproduct_fivegrok' />
@@ -301,7 +308,6 @@
   <miscproducts>
     <product name="vaporisation" zpackage="vaporisation" zcml="configure" options="with_ploneproduct_vaporisation"/>
     <product name="Products.Maps" zproduct="Maps" zcml="configure" options="with_ploneproduct_maps"/>
-    <product name="archetypes.schemaextender" zcml="configure" options="with_ploneproduct_facultystaff"/>
   </miscproducts>
 </root>
 

@@ -535,7 +535,7 @@ if [[ -z ${EBUILD} ]] ; then
 	# Setup a basic $PATH.  Just add system default to existing.
 	# This should solve both /sbin and /usr/sbin not present when
 	# doing 'su -c foo', or for something like:  PATH= rcscript start
-	PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/sbin:${PATH}"
+	PATH="${PATH}:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/sbin"
 
 	# Cache the CONSOLETYPE - this is important as backgrounded shells don't
 	# have a TTY. rc unsets it at the end of running so it shouldn't hang

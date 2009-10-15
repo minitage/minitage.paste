@@ -6,6 +6,9 @@ CHANGES
 -----------
 
     - bump ipython to 0.10
+    - pin z3c.form
+    - fix PATH bug in gentoo function helpers
+    - fix zeo integration
 
 0.91
 -------
