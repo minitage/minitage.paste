@@ -183,7 +183,6 @@
     <product name="ATBackRef"                      options="with_ploneproduct_atbackref"        />
     <product name="CMFPlacefulWorkflow"            options="with_ploneproduct_cpwkf"            />
     <product name="CMFSquidTool"                   options="with_ploneproduct_cachesetup"       />
-    <product name="Products.CMFSquidTool"          options="with_ploneproduct_cachesetup"       />
     <product name="CacheSetup"                     options="with_ploneproduct_cachesetup"       />
     <product name="Collage"                        options="with_ploneproduct_collage"          />
     <product name="FacultyStaffDirectory"          options="with_ploneproduct_facultystaff"     />
