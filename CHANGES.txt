@@ -10,6 +10,7 @@ CHANGES
     - fix PATH bug in gentoo function helpers
     - fix zeo integration
     - update distribute buildout
+    - add pilwotk for non minitage users helper
 
 0.91
 -------

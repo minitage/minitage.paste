@@ -60,8 +60,11 @@ ${zeocomment}    zeoserver
 #if $with_wsgi_support:
 find-links += http://pypi.python.org/simple/ZODB3
             http://dist.repoze.org/zope2/latest/
+# FOR PILWTOK
+            http://download.zope.org/distribution/
 #else
-#find-links += http://dist.repoze.org/zope2/latest/
+# FOR PILWTOK
+find-links += http://download.zope.org/distribution/
 #end if
 eggs += zopelib
 develop += \${buildout:directory}/src.mrdeveloper/zopelib
@@ -97,6 +100,9 @@ skip-fake-eggs +=
 recipe = minitage.recipe.scripts
 # Important for you to note the installation of the ZODB as an egg . We will not
 # use the zodb code from the zope source distribution !!!!!!!
+#if not $inside_minitage:
+urls=http://download.zope.org/distribution/PILwoTk-1.1.6.4.tar.gz
+#end if
 eggs = \${instance:eggs}
 interpreter = zopepy
 # make the completyion work
