@@ -112,8 +112,9 @@
     <egg name="zc.authorizedotnet"             options="with_ploneproduct_easyshop"     />
     <egg name="collective.flowplayer"          options="with_ploneproduct_flowplayer"   zcml="configure"/>
     <egg name="quills.remoteblogging"          options="with_ploneproduct_quillsenabled,with_ploneproduct_quills"/>
-    <egg name="plone.z3cform"                  options="with_ploneproduct_pz3cform"                      zcml="configure"/>
-    <egg name="five.grok"                      options="with_ploneproduct_fivegrok"                      zcml="configure"/>
+    <egg name="plone.z3cform"                  options="with_ploneproduct_pz3cform"                                 zcml="configure"/>
+    <egg name="plone.directives.form"          options="with_ploneproduct_pz3cform"                                 zcml="configure,meta"/>
+    <egg name="five.grok"                      options="with_ploneproduct_fivegrok,with_ploneproduct_pz3cform"      zcml="configure"/>
 
     <!-- zope products -->
     <egg name="p4a.plonecalendar"              options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
