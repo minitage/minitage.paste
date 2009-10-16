@@ -9,6 +9,7 @@ CHANGES
     - pin z3c.form
     - fix PATH bug in gentoo function helpers
     - fix zeo integration
+    - update distribute buildout
 
 0.91
 -------
