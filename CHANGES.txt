@@ -11,6 +11,8 @@ CHANGES
     - fix zeo integration
     - update distribute buildout
     - add pilwotk for non minitage users helper
+    - add five.grok zcml order
+    - add collective.z3cform.grok
 
 0.91
 -------
