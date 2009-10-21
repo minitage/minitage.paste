@@ -64,7 +64,7 @@ eggs =
 develop =
     src/${project}
 #if $inside_minitage:
-eggs-directory = \${buildout:directory}/../../eggs/caches
+eggs-directory = \${buildout:directory}/../../eggs/cache
 #end if
 # see http://pypi.python.org/pypi/mr.developer for documentation
 sources = sources
