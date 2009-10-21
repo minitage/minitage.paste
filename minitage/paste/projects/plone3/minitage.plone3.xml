@@ -117,7 +117,7 @@
     <egg name="quills.remoteblogging"          options="with_ploneproduct_quillsenabled,with_ploneproduct_quills"/>
     <egg name="plone.directives.form"          options="with_ploneproduct_pz3cform"                                 zcml="configure,meta"/>
     <egg name="five.grok"                      options="with_ploneproduct_fivegrok,with_ploneproduct_pz3cform"      zcml="configure" order="100"/>
-    <egg name="plone.app.z3cform"              options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"         zpackage="y" zcml="configure" order="110"/>
+    <egg name="plone.app.z3cform"              options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"  zcml="configure" order="110"/>
     <egg name="plone.z3cform"                  options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"        zcml="configure"/>
     <egg name="collective.z3cform.grok"        options="with_ploneproduct_cz3cformgrok"      zcml="configure"/>
 
