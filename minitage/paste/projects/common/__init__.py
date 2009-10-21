@@ -115,7 +115,7 @@ class Template(common.Template):
             vars['path'] = self.output_dir
         if not self.special_output_dir:
             vars['project_dir'] = vars['project']
-            vars['categoy_dir'] = vars['category']
+            vars['category_dir'] = vars['category']
         else:
              vars['project_dir'] = ''
              vars['category_dir'] = ''
