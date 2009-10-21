@@ -21,6 +21,7 @@
   <option order="250"  name="with_database_postgresql"       description="Postgresql python bindings support y/n"/>
   <option order="300"  name="with_binding_pil"               description="Python imaging support (dangerous to disable) y/n" default="y"/>
   <option order="350"  name="with_tool_ipython"              description="ipython support http://ipython.scipy.org/ y/n" default="y"/>
+  <option order="350"  name="with_tool_i18ndude"             description="i18n support http://pypi.python.org/pypi/i18ndude y/n" default="n"/>
   <option order="400"  name="with_tool_zopeskel"             description="ZopeSkel http://pypi.python.org/pypi/ZopeSkel y/n" default="y"/>
   <option order="400"  name="with_tool_colgenskelcommon"     description="Common GenericSkel,see http://pypi.python.org/pypi/collective.generic.skel.common y/n" default="y"/>
   <option order="450"  name="with_wsgi_support"              description="WSGI capabilities y/n"/>
@@ -93,6 +94,7 @@
     <egg name="flickrapi"                      options="with_ploneproduct_truegallery"     />
     <egg name="gdata"                          options="with_ploneproduct_truegallery"     />
     <egg name="ipython"                        options="with_tool_ipython"                 scripts="ipython" />
+    <egg name="i18ndude"                       options="with_tool_i18ndude"                scripts="i18ndude" />
     <egg name="MySQL_python"                   options="with_database_mysql"               />
     <egg name="sqlalchemy"                     options="with_database_sa"                  />
     <egg name="PasteDeploy"                    options="with_wsgi_support"                 />
@@ -113,9 +115,10 @@
     <egg name="zc.authorizedotnet"             options="with_ploneproduct_easyshop"     />
     <egg name="collective.flowplayer"          options="with_ploneproduct_flowplayer"   zcml="configure"/>
     <egg name="quills.remoteblogging"          options="with_ploneproduct_quillsenabled,with_ploneproduct_quills"/>
-    <egg name="plone.z3cform"                  options="with_ploneproduct_pz3cform"                                 zcml="configure"/>
     <egg name="plone.directives.form"          options="with_ploneproduct_pz3cform"                                 zcml="configure,meta"/>
     <egg name="five.grok"                      options="with_ploneproduct_fivegrok,with_ploneproduct_pz3cform"      zcml="configure" order="100"/>
+    <egg name="plone.app.z3cform"              options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"         zpackage="y" zcml="configure" order="110"/>
+    <egg name="plone.z3cform"                  options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"        zcml="configure"/>
     <egg name="collective.z3cform.grok"        options="with_ploneproduct_cz3cformgrok"      zcml="configure"/>
 
     <!-- zope products -->
@@ -214,7 +217,6 @@
     <product name="webcouturier.dropdownmenu"      options="with_ploneproduct_wc_dd_menu"       />
     <product name="Ploneboard"                     options="with_ploneproduct_ploneboard"       />
     <product name="SimpleAttachment"               options="with_ploneproduct_ploneboard"       />
-    <product name="plone.app.z3cform"              options="with_ploneproduct_pz3cform"         />
     <product name="plone.app.iterate"              options="with_ploneproduct_iterate"          />
     <product name="collective.contentlicensing"    options="with_ploneproduct_contentlicensing" />
   </qi>

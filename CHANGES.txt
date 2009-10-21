@@ -2,7 +2,13 @@
 CHANGES
 ==============
 
--> UP
+1.3.100
+-------------
+
+    - better integration of z3cform
+    - let us have i18ndude
+
+1.3.99
 -----------
 
     - bump ipython to 0.10
