@@ -82,146 +82,150 @@ plone_vsp_mappings = {}
 
 def parse_xmlconfig(xml):
     # discover  additionnal configuration options
-    discovered_options = []
-    optsnodes = xml.getElementsByTagName('options')
-    if optsnodes:
-        for elem in optsnodes:
-            opts = elem.getElementsByTagName('option')
-            for o in opts:
-                oattrs = dict(o.attributes.items())
-                order = int(oattrs.get('order', 99999))
-                # be sure not to have unicode params there because paster will swallow them up
-                discovered_options.append(
-                    (order,
-                    var(oattrs.get('name'),
-                        UNSPACER.sub(' ', oattrs.get('description', '').strip()),
-                        default=oattrs.get('default')
-                       )
+    try:
+        discovered_options = []
+        optsnodes = xml.getElementsByTagName('options')
+        if optsnodes:
+            for elem in optsnodes:
+                opts = elem.getElementsByTagName('option')
+                for o in opts:
+                    oattrs = dict(o.attributes.items())
+                    order = int(oattrs.get('order', 99999))
+                    # be sure not to have unicode params there because paster will swallow them up
+                    discovered_options.append(
+                        (order,
+                        var(oattrs.get('name'),
+                            UNSPACER.sub(' ', oattrs.get('description', '').strip()),
+                            default=oattrs.get('default')
+                           )
+                        )
                     )
-                )
-    discovered_options.sort(lambda x, y: x[0] - y[0])
-    noecho = [addons_vars.append(o[1]) for o in discovered_options]
+        discovered_options.sort(lambda x, y: x[0] - y[0])
+        noecho = [addons_vars.append(o[1]) for o in discovered_options]
 
-    # discover KGS version
-    cvs = xml.getElementsByTagName('checkedversions')
-    #'with_ploneproduct_plonearticle': [('Products.PloneArticle', '4.1.4',)],
-    if cvs:
-        for elem in cvs:
-            for e in elem.getElementsByTagName('version'):
-                oattrs = dict(e.attributes.items())
-                for option in oattrs['options'].split(','):
-                    option = option.strip()
-                    if not option in checked_versions_mappings:
-                        checked_versions_mappings[option] = []
-                    item = (oattrs['p'], oattrs['v'])
-                    if not item in checked_versions_mappings[option]:
-                        checked_versions_mappings[option].append(item)
+        # discover KGS version
+        cvs = xml.getElementsByTagName('checkedversions')
+        #'with_ploneproduct_plonearticle': [('Products.PloneArticle', '4.1.4',)],
+        if cvs:
+            for elem in cvs:
+                for e in elem.getElementsByTagName('version'):
+                    oattrs = dict(e.attributes.items())
+                    for option in oattrs['options'].split(','):
+                        option = option.strip()
+                        if not option in checked_versions_mappings:
+                            checked_versions_mappings[option] = []
+                        item = (oattrs['p'], oattrs['v'])
+                        if not item in checked_versions_mappings[option]:
+                            checked_versions_mappings[option].append(item)
 
-    # discover andatory versions pinning
-    vs = xml.getElementsByTagName('versions')
-    # versions_mappings = {RelStorage': [('ZODB3', '3.7.2')],}
-    if vs:
-        for elem in vs:
-            for e in elem.getElementsByTagName('version'):
-                oattrs = dict(e.attributes.items())
-                for option in oattrs['name'].split(','):
-                    option = option.strip()
-                    if not option in checked_versions_mappings:
-                        versions_mappings[option] = []
-                    item = (oattrs['p'], oattrs['v'])
-                    if not item in versions_mappings[option]:
-                        versions_mappings[option].append(item)
+        # discover andatory versions pinning
+        vs = xml.getElementsByTagName('versions')
+        # versions_mappings = {RelStorage': [('ZODB3', '3.7.2')],}
+        if vs:
+            for elem in vs:
+                for e in elem.getElementsByTagName('version'):
+                    oattrs = dict(e.attributes.items())
+                    for option in oattrs['name'].split(','):
+                        option = option.strip()
+                        if not option in checked_versions_mappings:
+                            versions_mappings[option] = []
+                        item = (oattrs['p'], oattrs['v'])
+                        if not item in versions_mappings[option]:
+                            versions_mappings[option].append(item)
 
-    # quickinstaller mappings discovery
-    qi = xml.getElementsByTagName('qi')
-    if qi:
-        for elem in qi:
-            for e in elem.getElementsByTagName('product'):
-                oattrs = dict(e.attributes.items())
-                for option in oattrs['options'].split(','):
-                    option = option.strip()
-                    if not option in qi_mappings:
-                        qi_mappings[option] = []
-                    if not oattrs['name'] in qi_mappings:
-                        qi_mappings[option].append(oattrs['name'])
+        # quickinstaller mappings discovery
+        qi = xml.getElementsByTagName('qi')
+        if qi:
+            for elem in qi:
+                for e in elem.getElementsByTagName('product'):
+                    oattrs = dict(e.attributes.items())
+                    for option in oattrs['options'].split(','):
+                        option = option.strip()
+                        if not option in qi_mappings:
+                            qi_mappings[option] = []
+                        if not oattrs['name'] in qi_mappings:
+                            qi_mappings[option].append(oattrs['name'])
 
-    # eggs/zcml discovery
-    eggs = xml.getElementsByTagName('eggs')
-    if eggs:
-        for elem in eggs:
-            for e in elem.getElementsByTagName('egg'):
-                oattrs = dict(e.attributes.items())
-                for option in oattrs['options'].split(','):
-                    option = option.strip()
-                    if not option in eggs_mappings:
-                        eggs_mappings[option] = []
-                    if not oattrs['name'] in eggs_mappings[option]:
-                        eggs_mappings[option].append(oattrs['name'])
-                    if 'scripts' in oattrs:
-                        if not option in scripts_mappings:
-                            scripts_mappings[option] = []
-                        for item in oattrs['scripts'].split(','):
-                            scripts_mappings[option].append(item)
-                    if 'zcml' in oattrs:
-                        if not option in zcml_mappings:
-                            zcml_mappings[option] = []
-                        for slug in oattrs['zcml'].split(','):
-                            item = (oattrs['name'], slug.strip())
-                            if not item in zcml_mappings[option]:
-                                zcml_mappings[option].append(item)
-                                zcml_loading_order[item] = int(oattrs.get('zcmlorder', '50000'))
-                    for d, package in [(z2packages, 'zpackage'), (z2products, 'zproduct')]:
-                        if package in oattrs:
-                            v = oattrs[package]
-                            if not option in d:
-                                d[option] = []
-                            if v == 'y':
-                                if not oattrs['name'] in d[option]:
-                                    d[option].append(oattrs['name'])
-                            else:
-                                #d[option].append('#%s' % oattrs['name'])
-                                zp = [z.strip() for z in oattrs[package].split(',')]
-                                noecho = [d[option].append(z) for z in zp if not z in d[option]]
-    # misc product discovery
-    miscproducts = xml.getElementsByTagName('miscproducts')
-    if miscproducts:
-        for elem in miscproducts:
-            for e in elem.getElementsByTagName('product'):
-                oattrs = dict(e.attributes.items())
-                for option in oattrs['options'].split(','):
-                    option = option.strip()
-                    if 'zcml' in oattrs:
-                        if not option in zcml_mappings:
-                            zcml_mappings[option] = []
-                        for slug in oattrs['zcml'].split(','):
-                            item = (oattrs['name'], slug.strip())
-                            if not item in zcml_mappings[option]:
-                                zcml_mappings[option].append(item)
-                                zcml_loading_order[item] = int(oattrs.get('zcmlorder', '50000'))
-                    for d, package in [(z2packages, 'zpackage'), (z2products, 'zproduct')]:
-                        if package in oattrs:
-                            v = oattrs[package]
-                            if not option in d:
-                                d[option] = []
-                            if v == 'y':
-                                if not oattrs[package] in d[option]:
-                                    d[option].append(oattrs[package])
-                            else:
-                                #d[option].append('#%s' % oattrs['name'])
-                                zp = [z.strip() for z in oattrs[package].split(',')]
-                                noecho = [d[option].append(z) for z in zp if not z in d[option]]
+        # eggs/zcml discovery
+        eggs = xml.getElementsByTagName('eggs')
+        if eggs:
+            for elem in eggs:
+                for e in elem.getElementsByTagName('egg'):
+                    oattrs = dict(e.attributes.items())
+                    for option in oattrs['options'].split(','):
+                        option = option.strip()
+                        if not option in eggs_mappings:
+                            eggs_mappings[option] = []
+                        if not oattrs['name'] in eggs_mappings[option]:
+                            eggs_mappings[option].append(oattrs['name'])
+                        if 'scripts' in oattrs:
+                            if not option in scripts_mappings:
+                                scripts_mappings[option] = []
+                            for item in oattrs['scripts'].split(','):
+                                scripts_mappings[option].append(item)
+                        if 'zcml' in oattrs:
+                            if not option in zcml_mappings:
+                                zcml_mappings[option] = []
+                            for slug in oattrs['zcml'].split(','):
+                                item = (oattrs['name'], slug.strip())
+                                if not item in zcml_mappings[option]:
+                                    zcml_mappings[option].append(item)
+                                    zcml_loading_order[item] = int(oattrs.get('zcmlorder', '50000'))
+                        for d, package in [(z2packages, 'zpackage'), (z2products, 'zproduct')]:
+                            if package in oattrs:
+                                v = oattrs[package]
+                                if not option in d:
+                                    d[option] = []
+                                if v == 'y':
+                                    if not oattrs['name'] in d[option]:
+                                        d[option].append(oattrs['name'])
+                                else:
+                                    #d[option].append('#%s' % oattrs['name'])
+                                    zp = [z.strip() for z in oattrs[package].split(',')]
+                                    noecho = [d[option].append(z) for z in zp if not z in d[option]]
+        # misc product discovery
+        miscproducts = xml.getElementsByTagName('miscproducts')
+        if miscproducts:
+            for elem in miscproducts:
+                for e in elem.getElementsByTagName('product'):
+                    oattrs = dict(e.attributes.items())
+                    for option in oattrs['options'].split(','):
+                        option = option.strip()
+                        if 'zcml' in oattrs:
+                            if not option in zcml_mappings:
+                                zcml_mappings[option] = []
+                            for slug in oattrs['zcml'].split(','):
+                                item = (oattrs['name'], slug.strip())
+                                if not item in zcml_mappings[option]:
+                                    zcml_mappings[option].append(item)
+                                    zcml_loading_order[item] = int(oattrs.get('zcmlorder', '50000'))
+                        for d, package in [(z2packages, 'zpackage'), (z2products, 'zproduct')]:
+                            if package in oattrs:
+                                v = oattrs[package]
+                                if not option in d:
+                                    d[option] = []
+                                if v == 'y':
+                                    if not oattrs[package] in d[option]:
+                                        d[option].append(oattrs[package])
+                                else:
+                                    #d[option].append('#%s' % oattrs['name'])
+                                    zp = [z.strip() for z in oattrs[package].split(',')]
+                                    noecho = [d[option].append(z) for z in zp if not z in d[option]]
 
-    # productdistros handling
-    productsdistros = xml.getElementsByTagName('productdistros')
-    if productsdistros:
-        for elem in productsdistros:
-            for e in elem.getElementsByTagName('productdistro'):
-                oattrs = dict(e.attributes.items())
-                for option in oattrs['options'].split(','):
-                    option = option.strip()
-                    if not option in urls_mappings:
-                        urls_mappings[option] = []
-                    urls_mappings[option].append(oattrs['url'])
+        # productdistros handling
+        productsdistros = xml.getElementsByTagName('productdistros')
+        if productsdistros:
+            for elem in productsdistros:
+                for e in elem.getElementsByTagName('productdistro'):
+                    oattrs = dict(e.attributes.items())
+                    for option in oattrs['options'].split(','):
+                        option = option.strip()
+                        if not option in urls_mappings:
+                            urls_mappings[option] = []
+                        urls_mappings[option].append(oattrs['url'])
+    except Exception, e:
+        raise
+
 
 def init_vars():
     for config in user_config, default_config:
@@ -344,11 +348,13 @@ class Template(common.Template):
                 if not section == 'plone_zcml':
                     vars[section].append('#%s'%var)
                 for item in sections_mappings[section][var]:
-                    if section == 'plone_zcml':
-                        item = '-'.join(item)
-                    if not '%s\n' % item in vars[section]:
-                        if not item in vars[section]:
-                            vars[section].append(item)
+                   if section == 'plone_zcml':
+                       item = '-'.join(item)
+                   if not '%s\n' % item in vars[section]:
+                       if not item in vars[section]:
+                           vars[section].append(item)
+        
+
 
         package_slug_re = re.compile('(.*)-(meta|configure|overrides)', reflags)
         def zcmlsort(obja, objb):
