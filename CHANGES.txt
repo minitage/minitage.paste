@@ -2,6 +2,13 @@
 CHANGES
 ==============
 
+
+up
+----
+
+    - distribute fix
+    - add tinymce
+
 1.3.103
 ---------
 

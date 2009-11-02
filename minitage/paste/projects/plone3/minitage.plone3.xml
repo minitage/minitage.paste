@@ -49,6 +49,7 @@
   <option order="1450" name="with_ploneproduct_plonesurvey"   description="PloneSurvey, see http://plone.org/products/plone-survey/releases/1.3.0 y/n"/>
   <option order="1550" name="with_ploneproduct_quills"        description="Quills, see http://pypi.python.org/pypi/Products.Quills/ y/n"/>
   <option order="1500" name="with_ploneproduct_schematuning"  description="Schematuning patch, see http://pypi.python.org/pypi/archetypes.schematuning/ y/n"/>
+  <option order="1500" name="with_ploneproduct_tinymce"       description="Tinymce, see http://plone.org/products/tinymce y/n"/>
   <option order="1500" name="with_ploneproduct_fivegrok"      description="five.grok integration, see http://pypi.python.org/pypi/five.grok y/n" default="y"/>
   <option order="1600" name="with_ploneproduct_sgdcg"         description="Singing / Dancing NewsLetter, see http://plone.org/products/dancing S/D is known to lead to multiple buildout installation errors.Be sure to activate it and debug the errors. y/n"/>
   <option order="1650" name="with_ploneproduct_tal_portlet"   description="Tal Portlet, see http://pypi.python.org/pypi/collective.portlet.tal y/n"/>
@@ -160,6 +161,7 @@
     <egg name="Products.FacultyStaffDirectory" options="with_ploneproduct_facultystaff"     zproduct="FacultyStaffDirectory,ATReferenceBrowserWidget,Relations,Archetypes,MimetypesRegistry,PortalTransforms,membrane" zcml="configure"/>
     <egg name="Products.LDAPMultiPlugins"      options="with_ploneproduct_ldap"             zproduct="y"/>
     <egg name="Products.LDAPUserFolder"        options="with_ploneproduct_ldap"             zproduct="y"/>
+    <egg name="Products.TinyMCE"               options="with_ploneproduct_tinymce"          zproduct="y" zcml="configure"/>
     <egg name="Products.LinguaPlone"           options="with_ploneproduct_lingua"           zproduct="y" zcml="configure"/>
     <egg name="Products.PloneArticle"          options="with_ploneproduct_plonearticle"     zproduct="y" zcml="configure"/>
     <egg name="Products.Ploneboard"            options="with_ploneproduct_ploneboard"       zproduct="y" zcml="configure"/>
