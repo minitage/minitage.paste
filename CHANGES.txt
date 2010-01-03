@@ -8,6 +8,7 @@ up
 
     - distribute fix
     - add tinymce
+    - plone3 template maintenance
 
 1.3.103
 ---------

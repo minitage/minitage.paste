@@ -127,7 +127,7 @@ def parse_xmlconfig(xml):
                     oattrs = dict(e.attributes.items())
                     for option in oattrs['name'].split(','):
                         option = option.strip()
-                        if not option in checked_versions_mappings:
+                        if not option in versions_mappings:
                             versions_mappings[option] = []
                         item = (oattrs['p'], oattrs['v'])
                         if not item in versions_mappings[option]:
@@ -243,7 +243,7 @@ sections_mappings = {
     'plone_scripts': scripts_mappings,
 }
 
-packaged_version = '3.3.1'
+packaged_version = '3.3.3'
 class Template(common.Template):
 
     summary = 'Template for creating a plone3 project'
@@ -353,7 +353,7 @@ class Template(common.Template):
                    if not '%s\n' % item in vars[section]:
                        if not item in vars[section]:
                            vars[section].append(item)
-        
+
 
 
         package_slug_re = re.compile('(.*)-(meta|configure|overrides)', reflags)
@@ -483,7 +483,7 @@ sd_str = '%s' % (
     ' Be sure to activate it and debug the errors. y/n'
 )
 Template.vars = common.Template.vars \
-        + [var('plone_version', 'Plone version, default is the one supported and packaged', default = '3.3.1',),
+        + [var('plone_version', 'Plone version, default is the one supported and packaged', default = packaged_version,),
            var('address', 'Address to listen on', default = 'localhost',),
            var('http_port', 'Port to listen to', default = '8081',),
            var('mode', 'Mode to use : zodb|relstorage|zeo', default = 'zodb'),

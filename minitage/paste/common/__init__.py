@@ -176,12 +176,18 @@ class Template(templates.Template):
         vars['minilay'] = vars['project']
         if vars['inside_minitage']:
             not_minitage = False
+            vars['mt'] = self.output_dir
             if self.special_output_dir:
                 vars['path'] = self.output_dir
-            vars['mt'] = self.output_dir
         else:
             not_minitage = True
-
+        if not (os.path.exists(
+            os.path.join(vars['mt'], 'etc', 'minimerge.cfg')
+        )) and 'MT' in os.environ: 
+            if os.path.exists(
+                os.path.join(os.environ['MT'], 'etc', 'minimerge.cfg')
+            ):
+                vars['mt'] = os.environ['MT'] 
         if not_minitage or not (os.path.exists(
             os.path.join(vars['mt'], 'etc', 'minimerge.cfg')
         )):

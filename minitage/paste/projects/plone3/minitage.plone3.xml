@@ -14,53 +14,53 @@
     <option name="foo" description="SOMETEXT>
   -->
   <options>
-  <option order="100"  name="with_binding_ldap"              description="LDAP bindings support y/n"/>
-  <option order="150"  name="with_database_sa"               description="SQLAlchemy support, see http://www.sqlalchemy.org y/n"/>
-  <option order="150"  name="with_database_mysql"            description="Mysql python bindings support y/n"/>
-  <option order="200"  name="with_database_oracle"           description="Oracle python bindings support y/n"/>
-  <option order="250"  name="with_database_postgresql"       description="Postgresql python bindings support y/n"/>
-  <option order="300"  name="with_binding_pil"               description="Python imaging support (dangerous to disable) y/n" default="y"/>
-  <option order="350"  name="with_tool_ipython"              description="ipython support http://ipython.scipy.org/ y/n" default="y"/>
-  <option order="350"  name="with_tool_i18ndude"             description="i18n support http://pypi.python.org/pypi/i18ndude y/n" default="n"/>
-  <option order="400"  name="with_tool_zopeskel"             description="ZopeSkel http://pypi.python.org/pypi/ZopeSkel y/n" default="y"/>
-  <option order="400"  name="with_tool_colgenskelcommon"     description="Common GenericSkel,see http://pypi.python.org/pypi/collective.generic.skel.common y/n" default="y"/>
-  <option order="450"  name="with_wsgi_support"              description="WSGI capabilities y/n"/>
-  <option order="500"  name="with_ploneproduct_atbackref"    description="ATBAckRef, see http://pypi.python.org/pypi/Products.ATBackRef y/n"/>
-  <option order="550"  name="with_ploneproduct_fss"          description="File System Storage support, see http://plone.org/products/filesystemstorage y/n" default="y"/>
-  <option order="600"  name="with_ploneproduct_cachesetup"   description="Cachefu caching Support, see http://plone.org/products/cachefu/ y/n" default="y"/>
-  <option order="650"  name="with_ploneproduct_collage"      description="Collage, see http://pypi.python.org/pypi/Products.Collage/ y/n"/>
-  <option order="700"  name="with_ploneproduct_facultystaff" description="FalcultyStaff, see http://plone.org/products/faculty-staff-directory y/n"/>
+  <option order="100"  name="with_binding_ldap"                  description="LDAP bindings support y/n"/>
+  <option order="150"  name="with_database_sa"                   description="SQLAlchemy support, see http://www.sqlalchemy.org y/n"/>
+  <option order="150"  name="with_database_mysql"                description="Mysql python bindings support y/n"/>
+  <option order="200"  name="with_database_oracle"               description="Oracle python bindings support y/n"/>
+  <option order="250"  name="with_database_postgresql"           description="Postgresql python bindings support y/n"/>
+  <option order="300"  name="with_binding_pil"                   description="Python imaging support (dangerous to disable) y/n" default="y"/>
+  <option order="350"  name="with_tool_ipython"                  description="ipython support http://ipython.scipy.org/ y/n" default="y"/>
+  <option order="350"  name="with_tool_i18ndude"                 description="i18n support http://pypi.python.org/pypi/i18ndude y/n" default="n"/>
+  <option order="400"  name="with_tool_zopeskel"                 description="ZopeSkel http://pypi.python.org/pypi/ZopeSkel y/n" default="y"/>
+  <option order="400"  name="with_tool_colgenskelcommon"         description="Common GenericSkel,see http://pypi.python.org/pypi/collective.generic.skel.common y/n" default="y"/>
+  <option order="450"  name="with_wsgi_support"                  description="WSGI capabilities y/n"/>
+  <option order="500"  name="with_ploneproduct_atbackref"        description="ATBAckRef, see http://pypi.python.org/pypi/Products.ATBackRef y/n"/>
+  <option order="550"  name="with_ploneproduct_fss"              description="File System Storage support, see http://plone.org/products/filesystemstorage y/n" default="y"/>
+  <option order="600"  name="with_ploneproduct_cachesetup"       description="Cachefu caching Support, see http://plone.org/products/cachefu/ y/n" default="y"/>
+  <option order="650"  name="with_ploneproduct_collage"          description="Collage, see http://pypi.python.org/pypi/Products.Collage/ y/n"/>
+  <option order="700"  name="with_ploneproduct_facultystaff"     description="FalcultyStaff, see http://plone.org/products/faculty-staff-directory y/n"/>
   <option order="750"  name="with_ploneproduct_contentlicensing" description="Content Licensing, see http://pypi.python.org/pypi/collective.contentlicensing y/n"/>
-  <option order="800"  name="with_ploneproduct_cpwkf"         description="CMFPlacefulWorkflow, see http://plone.org/products/cmfplacefulworkflow/ y/n"/>
-  <option order="850"  name="with_ploneproduct_csvreplica"    description="CSV Replicata, see http://pypi.python.org/pypi/Products.csvreplicata (makina users, do not untick) y/n" default="y" />
-  <option order="900"  name="with_ploneproduct_easyshop"      description="Easy Shop, see http://www.geteasyshop.com y/n"/>
-  <option order="950"  name="with_ploneproduct_flowplayer"    description="FlowPlayer, see http://plone.org/products/collective-flowplayer/ y/n"/>
-  <option order="1000" name="with_ploneproduct_ldap"          description="Plone LDAP support, see http://plone.org/products/ploneldap/ y/n"/>
-  <option order="1050" name="with_ploneproduct_lingua"        description="LinguaPlone support, see http://plone.org/products/linguaplone y/n"/>
-  <option order="1100" name="with_ploneproduct_maps"          description="Maps, see http://plone.org/products/maps/ y/n"/>
-  <option order="1150" name="with_ploneproduct_p4a_cal"       description="p4a Calendar, see http://pypi.python.org/pypi/p4a.calendar y/n"/>
-  <option order="1200" name="with_ploneproduct_p4a_vid"       description="p4a Video, see http://www.plone4artists.org/products/plone4artistsvideo y/n"/>
-  <option order="1250" name="with_ploneproduct_plomino"       description="Plomino, see http://plone.org/products/plomino y/n"/>
-  <option order="1300" name="fss_strategy"                    description='File System Storage strategy, see http://pypi.python.org/pypi/iw.fss/#storage-strategies (directory, flat, site1, site2)'  default='directory'/>
-  <option order="1350" name="plomino_revision"                description='Plomino Revision to checkout, see http://plone.org/products/plomino/ y/n'  default='HEAD'/>
-  <option order="1400" name="with_ploneproduct_plonearticle"  description="Plone Article, see http://plone.org/products/plonearticle/ y/n"/>
-  <option order="1450" name="with_ploneproduct_ploneboard"    description="Plone Board, see http://plone.org/products/ploneboard/ y/n"/>
-  <option order="1400" name="with_ploneproduct_quillsenabled" description="Quills Enabled, see http://pypi.python.org/pypi/Products.QuillsEnabled/ y/n"/>
-  <option order="1450" name="with_ploneproduct_plonesurvey"   description="PloneSurvey, see http://plone.org/products/plone-survey/releases/1.3.0 y/n"/>
-  <option order="1550" name="with_ploneproduct_quills"        description="Quills, see http://pypi.python.org/pypi/Products.Quills/ y/n"/>
-  <option order="1500" name="with_ploneproduct_schematuning"  description="Schematuning patch, see http://pypi.python.org/pypi/archetypes.schematuning/ y/n"/>
-  <option order="1500" name="with_ploneproduct_tinymce"       description="Tinymce, see http://plone.org/products/tinymce y/n"/>
-  <option order="1500" name="with_ploneproduct_fivegrok"      description="five.grok integration, see http://pypi.python.org/pypi/five.grok y/n" default="y"/>
-  <option order="1600" name="with_ploneproduct_sgdcg"         description="Singing / Dancing NewsLetter, see http://plone.org/products/dancing S/D is known to lead to multiple buildout installation errors.Be sure to activate it and debug the errors. y/n"/>
-  <option order="1650" name="with_ploneproduct_tal_portlet"   description="Tal Portlet, see http://pypi.python.org/pypi/collective.portlet.tal y/n"/>
-  <option order="1750" name="with_ploneproduct_truegallery"   description="PloneTrueGallery, see http://plone.org/products/plone-true-gallery/ y/n"/>
-  <option order="1800" name="with_ploneproduct_vaporisation"  description="Vaporisation, see http://plone.org/products/vaporisation/ y/n"/>
-  <option order="1850" name="with_ploneproduct_ploneformgen"  description="PloneFormGen, see http://plone.org/products/ploneformgen y/n"/>
-  <option order="1950" name="with_ploneproduct_wc_dd_menu"    description="WebCouturier Dropdown Menu, see http://plone.org/products/webcouturier-dropdownmenu y/n"/>
-  <option order="1951" name="with_ploneproduct_pz3cform"      description="Plone z3c.form support, see http://pypi.python.org/pypi/plone.z3cform y/n" default="y"/>
-  <option order="1951" name="with_ploneproduct_iterate"       description="Plone Iterate support, see http://pypi.python.org/pypi/plone.app.iterate y/n" default="n"/>
-  <option order="1951" name="with_ploneproduct_schemaextender" description="Plone Archetypes schema extender support, see http://pypi.python.org/pypi/archetypes.schemaextender y/n" default="n"/>
-  <option order="1951" name="with_ploneproduct_cz3cformgrok"   description="Plone + z3cform light grok integration support, see http://pypi.python.org/pypi/collective.z3cform.grok y/n" default="n"/>
+  <option order="800"  name="with_ploneproduct_cpwkf"            description="CMFPlacefulWorkflow, see http://plone.org/products/cmfplacefulworkflow/ y/n"/>
+  <option order="850"  name="with_ploneproduct_csvreplica"       description="CSV Replicata, see http://pypi.python.org/pypi/Products.csvreplicata (makina users, do not untick) y/n" default="y" />
+  <option order="900"  name="with_ploneproduct_easyshop"         description="Easy Shop, see http://www.geteasyshop.com y/n"/>
+  <option order="950"  name="with_ploneproduct_flowplayer"       description="FlowPlayer, see http://plone.org/products/collective-flowplayer/ y/n"/>
+  <option order="1000" name="with_ploneproduct_ldap"             description="Plone LDAP support, see http://plone.org/products/ploneldap/ y/n"/>
+  <option order="1050" name="with_ploneproduct_lingua"           description="LinguaPlone support, see http://plone.org/products/linguaplone y/n"/>
+  <option order="1100" name="with_ploneproduct_maps"             description="Maps, see http://plone.org/products/maps/ y/n"/>
+  <option order="1150" name="with_ploneproduct_p4a_cal"          description="p4a Calendar, see http://pypi.python.org/pypi/p4a.calendar y/n"/>
+  <option order="1200" name="with_ploneproduct_p4a_vid"          description="p4a Video, see http://www.plone4artists.org/products/plone4artistsvideo y/n"/>
+  <option order="1250" name="with_ploneproduct_plomino"          description="Plomino, see http://plone.org/products/plomino y/n"/>
+  <option order="1300" name="fss_strategy"                       description='File System Storage strategy, see http://pypi.python.org/pypi/iw.fss/#storage-strategies (directory, flat, site1, site2)'  default='directory'/>
+  <option order="1350" name="plomino_revision"                   description='Plomino Revision to checkout, see http://plone.org/products/plomino/ y/n'  default='HEAD'/>
+  <option order="1400" name="with_ploneproduct_plonearticle"     description="Plone Article, see http://plone.org/products/plonearticle/ y/n"/>
+  <option order="1450" name="with_ploneproduct_ploneboard"       description="Plone Board, see http://plone.org/products/ploneboard/ y/n"/>
+  <option order="1400" name="with_ploneproduct_quillsenabled"    description="Quills Enabled, see http://pypi.python.org/pypi/Products.QuillsEnabled/ y/n"/>
+  <option order="1450" name="with_ploneproduct_plonesurvey"      description="PloneSurvey, see http://plone.org/products/plone-survey/releases/1.3.0 y/n"/>
+  <option order="1550" name="with_ploneproduct_quills"           description="Quills, see http://pypi.python.org/pypi/Products.Quills/ y/n"/>
+  <option order="1500" name="with_ploneproduct_schematuning"     description="Schematuning patch, see http://pypi.python.org/pypi/archetypes.schematuning/ y/n"/>
+  <option order="1500" name="with_ploneproduct_tinymce"          description="Tinymce, see http://plone.org/products/tinymce y/n"/>
+  <option order="1500" name="with_ploneproduct_fivegrok"         description="five.grok integration, see http://pypi.python.org/pypi/five.grok y/n" default="y"/>
+  <option order="1600" name="with_ploneproduct_sgdcg"            description="Singing / Dancing NewsLetter, see http://plone.org/products/dancing S/D is known to lead to multiple buildout installation errors.Be sure to activate it and debug the errors. y/n"/>
+  <option order="1650" name="with_ploneproduct_tal_portlet"      description="Tal Portlet, see http://pypi.python.org/pypi/collective.portlet.tal y/n"/>
+  <option order="1750" name="with_ploneproduct_truegallery"      description="PloneTrueGallery, see http://plone.org/products/plone-true-gallery/ y/n"/>
+  <option order="1800" name="with_ploneproduct_vaporisation"     description="Vaporisation, see http://plone.org/products/vaporisation/ y/n"/>
+  <option order="1850" name="with_ploneproduct_ploneformgen"     description="PloneFormGen, see http://plone.org/products/ploneformgen y/n"/>
+  <option order="1950" name="with_ploneproduct_wc_dd_menu"       description="WebCouturier Dropdown Menu, see http://plone.org/products/webcouturier-dropdownmenu y/n"/>
+  <option order="1951" name="with_ploneproduct_pz3cform"         description="Plone z3c.form support, see http://pypi.python.org/pypi/plone.z3cform y/n" default="y"/>
+  <option order="1962" name="with_ploneproduct_iterate"          description="Plone Iterate support, see http://pypi.python.org/pypi/plone.app.iterate y/n" default="n"/>
+  <option order="1973" name="with_ploneproduct_schemaextender"   description="Plone Archetypes schema extender support, see http://pypi.python.org/pypi/archetypes.schemaextender y/n" default="n"/>
+  <option order="1984" name="with_ploneproduct_cz3cformgrok"     description="Plone + z3cform light grok integration support, see http://pypi.python.org/pypi/collective.z3cform.grok y/n" default="n"/>
   </options>
   <!--
     LINK THERE YOUR EGGS TO BE Installed on option triggering.
@@ -233,9 +233,13 @@
       name: description to add as comment into the resulting buildout
     -->
   <versions>
-    <version p="ZODB3" v="3.7.2" name="RelStorage"/>
-    <version p="ipython" v="0.10" name="IPython py2.4 compatible version"/>
-    <version p="Cheetah" v="2.2.1"  name="Markdown crazy stuff"/>
+    <version p="ZODB3"          v="3.7.2"   name="RelStorage"/>
+    <version p="ipython"        v="0.10"    name="IPython py2.4 compatible version"/>
+    <version p="Cheetah"        v="2.2.1"   name="Markdown crazy stuff"/>
+    <version p="zope.site"      v="3.5.1"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
+    <version p="zope.schema"    v="3.5.1"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
+    <version p="zope.component" v="3.5.1"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
+    <version p="zope.proxy"     v="3.5.0"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
   </versions>
   <!--
     Enter here know good set versions stuff
@@ -249,37 +253,48 @@
     -->
   <checkedversions>
     <version p='Products.PloneArticle'          v='4.1.4'   options="with_ploneproduct_plonearticle"/>
+
     <version p='hachoir-parser'                 v='1.2.1'   options="with_ploneproduct_p4a_vid"/>
     <version p='hachoir-metadata'               v='1.2.1'   options="with_ploneproduct_p4a_vid"/>
     <version p='hachoir-core'                   v='1.2.1'   options="with_ploneproduct_p4a_vid"/>
+
     <version p='p4a.fileimage'                  v='1.0.2'   options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.video'                      v='1.1.1'   options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.plonevideo'                 v='1.1.1'   options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.plonevideoembed'            v='1.1'     options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.plonecalendar'              v='2.0a2'   options="with_ploneproduct_p4a_cal"/>
     <version p='p4a.calendar'                   v='2.0a1'   options="with_ploneproduct_p4a_cal"/>
-    <version p='python_dateutil'                v='1.4.1'   options="with_ploneproduct_p4a_cal"/>
     <version p='p4a.ploneevent'                 v='0.5'     options="with_ploneproduct_p4a_cal"/>
+    <version p='p4a.subtyper'                   v='1.1.0'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/>
+    <version p='p4a.z2utils'                    v='1.0.2'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/>
+    <version p='p4a.common'                     v='1.0.3'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/> 
+    
+    <version p='python_dateutil'                v='1.4.1'   options="with_ploneproduct_p4a_cal"/>
     <version p='dateable.chronos'               v='0.4'     options="with_ploneproduct_p4a_cal"/>
+
     <version p='dateable.kalends'               v='0.4'     options="with_ploneproduct_p4a_cal"/>
+
     <version p='Products.LinguaPlone'           v='3.0a3'   options="with_ploneproduct_lingua"/>
     <version p='Products.PloneLanguageTool'     v='3.0.2'   options="with_ploneproduct_lingua"/>
+
     <version p='Products.FacultyStaffDirectory' v='2.1.3'   options="with_ploneproduct_facultystaff"/>
+
     <version p='Products.LDAPUserFolder'        v='2.12'    options="with_ploneproduct_ldap"/>
     <version p='Products.LDAPMultiPlugins'      v='1.7'     options="with_ploneproduct_ldap"/>
     <version p='Products.PloneLDAP'             v='1.1'     options="with_ploneproduct_ldap"/>
+
     <version p='iw.fss'                         v='2.7.6'   options="with_ploneproduct_fss"/>
     <version p='iw.recipe.fss'                  v='0.2.1'   options="with_ploneproduct_fss"/>
+
     <version p='Products.SimpleAttachment'      v='3.0.2'   options="with_ploneproduct_ploneboard"/>
+
     <version p='collective.plonetruegallery'    v='0.7rc1'  options="with_ploneproduct_truegallery"/>
-    <version p='p4a.subtyper'                   v='1.1.0'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/>
-    <version p='p4a.z2utils'                    v='1.0.2'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/>
-    <version p='p4a.common'                     v='1.0.3'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/>
 
     <!-- z3c.form -->
     <version p='z3c.form'                       v='1.9.0'   options='with_ploneproduct_pz3cform' />
 
     <!-- FIVE.GROK -->
+    <version p='five.grok'                      v='1.0'     options='with_ploneproduct_fivegrok' />
     <version p='grokcore.annotation'            v='1.0.1'   options='with_ploneproduct_fivegrok' />
     <version p='grokcore.component'             v='1.7'     options='with_ploneproduct_fivegrok' />
     <version p='grokcore.formlib'               v='1.4'     options='with_ploneproduct_fivegrok' />
@@ -291,10 +306,10 @@
     <version p='martian'                        v='0.11'    options='with_ploneproduct_fivegrok' />
     <version p='zope.app.publisher'             v='3.5.1'   options='with_ploneproduct_fivegrok' />
     <version p='zope.app.zcmlfiles'             v='3.4.3'   options='with_ploneproduct_fivegrok' />
-    <version p='zope.component'                 v='3.4.0'   options='with_ploneproduct_fivegrok' />
+    <version p='zope.component'                 v='3.5.1'   options='with_ploneproduct_fivegrok' />
     <version p='zope.i18n'                      v='3.4.0'   options='with_ploneproduct_fivegrok' />
     <version p='zope.interface'                 v='3.4.1'   options='with_ploneproduct_fivegrok' />
-    <version p='zope.schema'                    v='3.4.0'   options='with_ploneproduct_fivegrok' />
+    <version p='zope.schema'                    v='3.5.4'   options='with_ploneproduct_fivegrok' />
     <version p='zope.securitypolicy'            v='3.4.1'   options='with_ploneproduct_fivegrok' />
     <version p='zope.testing'                   v='3.7.6'   options='with_ploneproduct_fivegrok' />
   </checkedversions>
