@@ -36,6 +36,7 @@ import pwd
 import grp
 import re
 import subprocess
+import tempfile
 import time
 
 from minitage.paste.instances import common
@@ -75,33 +76,62 @@ class Template(common.Template):
             os.environ['MYSQL_HOME'] = os.path.join(vars['sys'], 'var', 'data',
                                                      'mysql', vars['db_name'])
             os.system("""
-                      bash -c ". %s/share/minitage/minitage.env";\
+                      bash -c \". %s/share/minitage/minitage.env;\
                       cd %s;\
                       mysql_install_db --defaults-file=my.cnf --verbose --datadir=%s\
-                      """ % (vars['sys'], db_path, db_path))
+                      \"""" % (vars['sys'], db_path, db_path))
             os.system("""
-                      bash -c ". %s/share/minitage/minitage.env";\
+                      bash -c ". %s/share/minitage/minitage.env;\
                       cd %s;\
-                      mysqld_safe --defaults-file=my.cnf&
-                       """ % (vars['sys'], db_path))
+                      mysqld_safe --defaults-file=my.cnf&\
+                      \"""" % (vars['sys'], db_path))
             time.sleep(2)
+            db_infos = {'sys':vars['sys'],
+                        'db': db_path,
+                        'db_name': vars['db_name'],
+                        'db_user': vars['db_user'],
+                        'pourcent': '%',
+                        'root_password': vars['root_password'],
+                        'db_password': vars['password'],
+                       }
             os.system("""
-                      bash -c ". %(sys)s/share/minitage/minitage.env";\
+                      bash -c ". %(sys)s/share/minitage/minitage.env;\
                       cd %(db)s;\
-                      mysqladmin --defaults-file=my.cnf -w30 -u root create %(db_name)s;\
-                      echo "use %(db_name)s;GRANT ALL PRIVILEGES ON %(db_name)s to '%(db_user)s'@\'%(pourcent)s\' IDENTIFIED BY '%(db_password)s' WITH GRANT OPTION;"| mysql --defaults-file=my.cnf -u root;\
-                      echo "use %(db_name)s;GRANT ALL PRIVILEGES ON %(db_name)s to '%(db_user)s'@\'localhost\' IDENTIFIED BY '%(db_password)s' WITH GRANT OPTION;"| mysql --defaults-file=my.cnf -u root;\
-                      mysqladmin --defaults-file=my.cnf -w30 -u root password '%(root_password)s';\
-                      mysqladmin --defaults-file=my.cnf -w30 -u root -p%(db_password)s shutdown
-                      """ % {'sys':vars['sys'],
-                             'db': db_path,
-                             'db_name': vars['db_name'],
-                             'db_user': vars['db_user'],
-                             'pourcent': '%',
-                             'root_password': vars['root_password'],
-                             'db_password': vars['password'],
-                            }
-                     )
+                      mysqladmin --defaults-file=my.cnf -w30 -u root create %(db_name)s;"\
+                      """ % db_infos)
+            fp = tempfile.mkstemp()[1]
+            open(fp, 'w').write(
+"""
+use %(db_name)s;
+
+GRANT ALL PRIVILEGES 
+ON %(db_name)s 
+to '%(db_user)s'@'%(pourcent)s' 
+IDENTIFIED BY '%(db_password)s' 
+WITH GRANT OPTION;
+
+GRANT ALL PRIVILEGES 
+ON %(db_name)s 
+to '%(db_user)s'@'localhost' 
+IDENTIFIED BY '%(db_password)s' 
+WITH GRANT OPTION;
+""" % db_infos)
+            db_infos['fp'] = fp
+            print fp
+            os.system("""bash -c ". %(sys)s/share/minitage/minitage.env;\
+                      cd %(db)s;\
+                      mysql --defaults-file=my.cnf -u root < '%(fp)s'"\
+                      """ % db_infos)
+            os.remove(fp)
+            os.system("""bash -c ". %(sys)s/share/minitage/minitage.env;\
+                      cd %(db)s;\
+                      mysqladmin --defaults-file=my.cnf -w30 -u root password '%(root_password)s';"\
+                      """ % db_infos)
+            os.system("""
+                      bash -c ". %(sys)s/share/minitage/minitage.env;\
+                      cd %(db)s;\
+                      mysqladmin --defaults-file=my.cnf -w30 -u root -p%(db_password)s shutdown"\
+                      """ % db_infos)
         sys = vars['sys']
         dirs = [os.path.join(sys, 'bin'),
                 os.path.join(sys, 'etc', 'init.d')]
