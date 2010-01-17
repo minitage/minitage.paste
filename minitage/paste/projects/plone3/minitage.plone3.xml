@@ -262,17 +262,17 @@
     <version p='p4a.video'                      v='1.1.1'   options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.plonevideo'                 v='1.1.1'   options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.plonevideoembed'            v='1.1'     options="with_ploneproduct_p4a_vid"/>
-    <version p='p4a.plonecalendar'              v='2.0a2'   options="with_ploneproduct_p4a_cal"/>
-    <version p='p4a.calendar'                   v='2.0a1'   options="with_ploneproduct_p4a_cal"/>
-    <version p='p4a.ploneevent'                 v='0.5'     options="with_ploneproduct_p4a_cal"/>
-    <version p='p4a.subtyper'                   v='1.1.0'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/>
+    <version p='p4a.plonecalendar'              v='2.0a5'   options="with_ploneproduct_p4a_cal"/>
+    <version p='p4a.calendar'                   v='2.0a3'   options="with_ploneproduct_p4a_cal"/>
+    <version p='p4a.ploneevent'                 v='0.7.3'     options="with_ploneproduct_p4a_cal"/>
+    <version p='p4a.subtyper'                   v='1.1.1'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/>
     <version p='p4a.z2utils'                    v='1.0.2'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/>
-    <version p='p4a.common'                     v='1.0.3'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/> 
+    <version p='p4a.common'                     v='1.0.5'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/> 
     
     <version p='python_dateutil'                v='1.4.1'   options="with_ploneproduct_p4a_cal"/>
-    <version p='dateable.chronos'               v='0.4'     options="with_ploneproduct_p4a_cal"/>
+    <version p='dateable.chronos'               v='0.7'     options="with_ploneproduct_p4a_cal"/>
 
-    <version p='dateable.kalends'               v='0.4'     options="with_ploneproduct_p4a_cal"/>
+    <version p='dateable.kalends'               v='0.5'     options="with_ploneproduct_p4a_cal"/>
 
     <version p='Products.LinguaPlone'           v='3.0a3'   options="with_ploneproduct_lingua"/>
     <version p='Products.PloneLanguageTool'     v='3.0.2'   options="with_ploneproduct_lingua"/>
