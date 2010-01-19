@@ -48,7 +48,8 @@ command = \${buildout:directory}/bin/snapshotbackup
 [zopepackdaily]
 recipe = z3c.recipe.usercrontab
 times = 15 1 * * *
-command = wget "http://$zope_user:$zope_password@$address:$http_port/Control_Panel/Database/main/manage_main/manage_pack?days%3Afloat=0&submit=Pack"
+command = wget "http://$address:$http_port/Control_Panel/Database/main/manage_main/manage_pack?days%3Afloat=0&submit=Pack"  --http-user '$zope_user'  --http-passwd '$zope_password' --post-data 'days%3Afloat=0&submit=Pack' -O /dev/null
+
 
 # restart zope instance every night
 [zoperestartdaily]

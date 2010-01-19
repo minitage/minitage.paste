@@ -9,6 +9,7 @@ up
     - distribute fix
     - add tinymce
     - plone3 template maintenance
+    - fix pack [thx to jpc]
 
 1.3.103
 ---------
