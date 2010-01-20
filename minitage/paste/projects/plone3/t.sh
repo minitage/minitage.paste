@@ -56,6 +56,7 @@ with_ploneproduct_ploneformgen=y            \
 with_ploneproduct_quillsenabled=y           \
 with_ploneproduct_quills=y                  \
 with_ploneproduct_schematuning=y            \
+with_indexing_solr=y            \
 with_ploneproduct_sgdcg=y                   \
 with_ploneproduct_tal_portlet=y             \
 with_ploneproduct_truegallery=y             \

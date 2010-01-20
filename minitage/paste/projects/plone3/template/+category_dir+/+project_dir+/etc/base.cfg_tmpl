@@ -5,11 +5,16 @@
 # WARNING ABOUT BUILOOUT BOOTSTRAP WARNING
 # ---------------------------------------
 # If you are using the standalone (choose to answer inside_minitage=no), you must ensure to do the
-# \$python bootstrap.py dance with a python compatible with the targeted zope installation (python 2.4 AFAIK)
+# \$python bootstrap.py dance with a python compatible with the targeted zope installation (python 2.4/plone3 python 2.6/plone4)
 # eg: cd $project && python2.4 bootstrap.py && bin/buildout -vvvvvvc <CONFIG_FILE>
 #echo '#\n'
 #echo '#\n'
 # Minitage users, don't worry about that, all is setted for you.
+#echo '#\n'
+# Create a first plonesite object
+# ---------------------------------
+# run buildout -c <CONFIG_FILE> install plonesite
+#echo '#\n'
 #echo '#\n'
 # DEVELOP MODE
 # ---------------
@@ -20,13 +25,13 @@
 #echo '#\n'
 # PRODUCTION MODE
 # ---------------
-# To make your application safe for production, run the buildout-prod.cfg buildout, it extends this one with additionnal crontabs and backup scripts.
+# To make your application safe for production, run the buildout-prod.cfg buildout, it extends this one with additionnal crontabs and backup scripts and some additionnal instances creation.
 #echo '#\n'
 #echo '#\n'
 # PLONE Official buildouts Integration
 # --------------------------------------------
-# The original etc/plone3.version.cfg is the original pinned version file for your plone3 release maintened in the official package.
-# The original etc/plone3.buildout.cfg is the one maintened by the plone.org's guys through the package ZopeSkel (plone3_buildout).
+# The original etc/plone/plone3.version.cfg is the original pinned version file for your plone3 release maintened in the official package.
+# The original etc/plone/plone3.buildout.cfg is the one maintened by the plone.org's guys through the package ZopeSkel (plone3_buildout).
 # The parts in this buildout extends/overwrite this file, you can read it to get additionnal documentation.
 # You must enter speicfic project settings in the etc/${project}.cfg file.
 #echo '#\n'
@@ -37,31 +42,59 @@
 #
 #
 # Base buildouts:
-# |-- buildout-dev.cfg -> buildout for development
-# |-- buildout-prod.cfg -> buildout for production
-# |-- minitage.buildout-dev.cfg -> buildout for development with minitage support (python, dependencies & common eggs cache)
-# |-- minitage.buildout-prod.cfg -> buildout for production with minitage support (python, dependencies & common eggs cache)
-#
-# Remaning layout:
+# |-- buildout-dev.cfg   -> buildout for development
+# |-- buildout-prod.cfg  -> buildout for production
+#echo '#\n'
+# Remaining layout:
 # |-- cron_scripts=
 # |   |-- fss_daily.sh -> backup script for fss
-# |   `-- fss_daily.sh.in
+#echo '#\n'
 # |-- etc
-# |-- |-- base.cfg -> this base buildout
-# |   |-- dancing.cfg -> singing & dancing  particular buildout
-# |   |-- dev.ini -> paster development configuration for running in wsgi mode
-# |   |-- minitage.cfg -> some buildout tweaks to run in the best of the world
-# |   |-- ${project}-kgs.cfg -> KGS for your project
-# |   |-- sources.cfg -> externals sources of your project
-# |   |-- versions.cfg -> minimal version pinning for installing your project
-# |   |-- ${project}.cfg -> your project needs (packages, sources, products
-# |   |-- plone3.buildout.cfg -> official plone3 buildout
-# |   |-- plone3.versions.cfg-> official plone3 buildout kgs
-# |   |-- prod.ini -> paster production configuration for running in wsgi mode
-# |   |-- sys.cfg -> Sysadmin relative informations like ports, users and log levels
-# |   |-- relstorage.cfg -> relstorage configuration if any
-# |   |-- zeo.cfg -> zeoserver configuration if any
-# |   `-- zodb.cfg -> Filestorage configuration if any
+# |-- |-- base.cfg   -> this base buildout
+# |   |-- sys.cfg    -> Sysadmin relative informations like ports, users and log levels
+#echo '#\n'
+# Per os install helpers to install popular tools around zope/plone dev (not supported, just here for your conveniance, READ BEFORE USING THEM)
+# And you'd  better have to learn how to bootstrap some minitage environement out there, funny and secure!
+# |   |-- os/debian.sh
+# |   |-- os/opensuse-dev.sh
+# |   |-- os/opensuse.sh
+# |   |-- os/osx.sh
+# |   `-- os/ubuntu.sh
+#echo '#\n'
+# Minitage support
+# |   |-- minitage/minitage.cfg               -> some buildout tweaks to run in the best of the world with minitage
+# |   |-- minitage/minitage.buildout-dev.cfg  -> buildout for development with minitage support (including xml libs, ldap, dbs; python, dependencies & common eggs cache for things like lxml or PIL)
+# |   |-- minitage/minitage.buildout-prod.cfg -> buildout for production  with minitage support (including xml libs, ldap, dbs; python, dependencies & common eggs cache for things like lxml or PIL)
+#echo '#\n'
+# Project specific
+# |   |-- project/cluster.cfg        -> define new zope instances here
+# |   |-- project/sources.cfg        -> externals sources of your project
+# |   |-- project/patches.cfg        -> patches used on the project
+# |   |-- project/versions.cfg       -> minimal version pinning for installing your project
+# |   |-- project/${project}.cfg     -> your project needs (packages, sources, products
+# |   |-- project/${project}-kgs.cfg -> Generated KGS for your project (minitage's printer or buildout.dumppickledversion)
+#echo '#\n'
+# Configuration templates
+# |   |-- templates/balancer.conf.template_tmpl  -> haproxy template
+# |   |-- templates/fss_daily.sh.in_tmpl         -> FSS daily backup script template
+# |   |-- templates/logrotate.conf.template_tmpl -> logrotate configuration file template
+#echo '#\n'
+# Plone specific
+# |   |-- plone/plone3.buildout.cfg -> official plone3 buildout
+# |   |-- plone/plone3.versions.cfg -> official plone3 buildout kgs
+# |   |-- plone/experimental.cfg    -> experimental plone code
+# |   |-- plone/dancing.cfg         -> singing & dancing  particular buildout
+#echo '#\n'
+# Paster (WSGI)
+# |   |-- wsgi/prod.ini -> paster production configuration for running in wsgi mode
+# |   |-- wsgi/dev.ini  -> paster development configuration for running in wsgi mode
+#echo '#\n'
+# Backends
+# |   |-- backends/relstorage.cfg -> relstorage configuration if any
+# |   |-- backends/zeo.cfg        -> zeoserver configuration if any
+# |   |-- backends/zodb.cfg       -> Filestorage configuration if any
+# |   |-- backends/solr.cfg       -> Solr configuration if any
+# |   `-- backends/fss.cfg        -> FSS configuration if any
 #echo '#\n'
 #echo '#\n'
 # KGS FILE
@@ -89,8 +122,8 @@
 #   PYTHONPATH.
 #   If you raelly want zopelib as an egg, (un)comment things in the buildout(develop, patch). But i am use, you dont have to !
 #   TO run in WSGI with repoze.zope2:
-#   bin/paster serve etc/dev.ini
-#   bin/paster serve etc/prod.ini
+#   bin/paster serve etc/wsgi/dev.ini
+#   bin/paster serve etc/wsgi/prod.ini
 #echo '#\n'
 #echo '#\n'
 #   You can use the minitage.instances.paste-initd paster template to generate init scripts
@@ -103,33 +136,45 @@
 #else
 #set $zeocomment='#'
 #end if
+#if $with_ploneproduct_fss
+#set $fsscomment=''
+#else
+#set $fsscomment='#'
+#end if
+#if $with_indexing_solr
+#set $solrcomment=''
+#else
+#set $solrcomment='#'
+#end if
 
 
 [buildout]
+timeout=3
 extensions = buildout.minitagificator mr.developer
 extends-cache = \${buildout:directory}/etc/cache
 # this allow you to run buildout on offline mode and to use only the downloaded plonev3.versions.cfg
 extends -= http://dist.plone.org/1elease/${plone_version}/versions.cfg
-extends = plone3.versions.cfg plone3.buildout.cfg patches.cfg sys.cfg sources.cfg versions.cfg $project-kgs.cfg ${project}.cfg #slurp
+extends = plone/plone3.versions.cfg plone/plone3.buildout.cfg project/patches.cfg project/sources.cfg sys.cfg project/versions.cfg project/cluster.cfg project/${project}-kgs.cfg project/${project}.cfg #slurp
+#if $with_indexing_solr:
+    backends/solr.cfg#slurp
+#end if
+#if $with_ploneproduct_fss:
+    backends/fss.cfg#slurp
+#end if
 #if $with_ploneproduct_sgdcg:
-    dancing.cfg
+    plone/dancing.cfg#slurp
+#end if
+#if $with_experimental:
+    plone/experimental.cfg#slurp
 #end if
 
-parts += #slurp
-#if $with_ploneproduct_plomino:
-    plomino
-#end if
-#if $with_ploneproduct_vaporisation:
-    vaporisation
-#end if
-    backup
-#if $with_ploneproduct_fss:
-# disabled as the iw.recipe.fss do that for us :  create-fss-dirs
-    fss
-    testsfss-command
-#end if
-${zeocomment}    zeoserver
-    plonesite
+parts += backup
+    omelette
+    mkdirs
+    instance-newsletter
+${fsscomment}    fss
+${solrcomment}    solr
+${solrcomment}    solrinstance
 
 find-links = \${groups:find-links}
 eggs += zopelib
@@ -151,7 +196,7 @@ additional-fake-eggs +=
     ZConfig
     pytz
 skip-fake-eggs +=
-    ZODB3                           
+    ZODB3
 
 # eggs & scripts installation
 [zopepy]
@@ -170,7 +215,7 @@ env-file=\${buildout:directory}/etc/${project}.env
 # pinned for relstorage
 [instance]
 order=\${zopepy:recipe}
-http-address=\${hosts:zope-address}
+http-address=\${hosts:instance}:\${ports:instance}
 user = \${zope:user}:\${zope:password}
 session-timeout-minutes = \${cache:session-timeout-minutes}
 verbose-security=\${zope:verbose-security}
@@ -180,25 +225,6 @@ z2-log-level=\${zope:z2-log-level}
 extra-paths+=
     \${zope2:location}/lib/python
     \${buildout:extra-paths}
-
-# may be not used but it is good to have it in case.
-[zeoserver]
-recipe = plone.recipe.zope2zeoserver
-zope2-location = \${zope2:location}
-zeo-address = \${hosts:zeo-address}
-zeo-conf-additional =
-    %import tempstorage
-    <temporarystorage temp>
-        name temporary storage for sessioning
-    </temporarystorage>
-
-[vaporisation]
-recipe=minitage.recipe.fetch
-urls=\${groups:vaporization}|svn||\${zope2:location}/lib/python/vaporisation
-
-[plomino]
-recipe=minitage.recipe.fetch
-urls=\${groups:plomino}|svn||\${buildout:directory}/parts/plomino/CMFPlomino
 
 # KGS generation
 [kgs]
@@ -218,33 +244,6 @@ eggs=\${instance:eggs}
 #library-dirs  = \${openldap:location}/lib
 #end if
 
-# FSS Support
-# See: http://plone.org/products/filesystemstorage
-# and http://pypi.python.org/pypi/atreal.patchfss/1.0.0
-# http://pypi.python.org/pypi/iw.recipe.fss
-# the new iw.recipe.fss do this for us, disabling
-#[create-fss-dirs]
-#recipe = plone.recipe.command
-#update-command = \${create-fss-dirs:command}
-#command =
-#    mkdir -p \${buildout:directory}/var/fss_storage_global ;
-#    mkdir -p \${buildout:directory}/var/fss_backup_global ;
-#    mkdir -p \${buildout:directory}/var/fss_storage_${project} ;
-#    mkdir -p \${buildout:directory}/var/fss_backup_${project} ;
-
-[fss]
-recipe = iw.recipe.fss
-zope-instances=\${instance:location}
-
-# Command below is important
-# if not, fss tests fail
-[testsfss-command]
-recipe = plone.recipe.command
-update-command = \${testsfss-command:command}
-command =
-    mkdir -pv \${plone:testfss-backup}
-    mkdir -pv \${plone:testfss-storage}
-
 [backup]
 recipe = collective.recipe.backup
 
@@ -255,13 +254,28 @@ urls=\${groups:products-urls}
 version-suffix-packages = \${groups:version-suffix-packages}
 nested-packages = \${groups:nested-packages}
 
-[plonesite]
-recipe = collective.recipe.plonesite
-site-id = \${plone:site}
-site-replace=false
-enabled=true
-instance = instance
-${zeocomment}zeoserver = zeoserver
- 
+[omelette]
+recipe = collective.recipe.omelette
+eggs = \${instance:eggs}
+products = \${instance:products}
+packages = \${zope2:location}/lib/python ./
 
-# vim:set ft=cfg:
+# Command below is important
+# if not, fss tests or tests using fss in their configuration will fail
+[mkdirs]
+recipe = plone.recipe.command
+update-command = \${mkdirs:command}
+command =
+    mkdir -pv \${plone:testfss-backup};
+    mkdir -pv \${plone:testfss-storage};
+    mkdir -pv \${plone:fss-storage};
+    mkdir -pv \${plone:fss-backup};
+#    mkdir -pv \${plone:testfss-backup-newsletter}
+#    mkdir -pv \${plone:testfss-storage-newsletter}
+#    mkdir -pv \${plone:testfss-backup-newsletter}
+#    mkdir -pv \${plone:testfss-storage-newsletter}
+#    mkdir -pv \${buildout:directory}/src/nmd/newsletter/nmd/newsletter/mailqueue/cur;
+#    mkdir -pv \${buildout:directory}/src/nmd/newsletter/nmd/newsletter/mailqueue/tmp;
+#    mkdir -pv \${buildout:directory}/src/nmd/newsletter/nmd/newsletter/mailqueue/new;
+
+\# vim: set ft=cfg:

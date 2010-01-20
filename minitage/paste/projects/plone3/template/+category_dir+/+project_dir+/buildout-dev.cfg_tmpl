@@ -7,7 +7,7 @@
 
 # We want the production buildout + the debug bits.
 [buildout]
-extends=etc/base.cfg etc/${mode}.cfg
+extends=etc/base.cfg etc/backends/${mode}.cfg
 parts+= omelette
         ipzope
 
@@ -22,12 +22,18 @@ debug-mode=ON
 #end if
 #
 eggs+= plone.reload
+    collective.dist
     collective.releaser
-    Products.PDBDebugMode
+    docutils
+    gprof2dot
     Products.Clouseau
     Products.DocFinderTab
     Products.Gloworm
+    Products.PDBDebugMode
     Products.ZopeProfiler
+    Sphinx
+    zest.releaser
+    ZopeSkel
 #if $linux:
 # plone auto reloading facility relying on inotify.
 # Desactivated by default because it can lead to bugs when you
@@ -81,3 +87,5 @@ scripts = ipython=ipzope
 #author = You
 #dot = _
 
+
+# vim:set ft=cfg:

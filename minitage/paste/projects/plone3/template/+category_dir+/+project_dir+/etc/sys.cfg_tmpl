@@ -3,7 +3,31 @@
 [hosts]
 # setted here but just as information, it may not be used.
 zeo-address = $zeo_address
-zope-address=$address:$http_port
+instance= $address
+instance1=$address
+instance2=$address
+instance3=$address
+instance4=$address
+instance-newsletter=$address
+#may not be used
+supervisor=$supervisor_host
+balancer=$haproxy_host
+syslog = 127.0.0.1
+solr = $solr_host
+
+
+[ports]
+# other instances, in case.
+instance=$http_port
+instance1=$http_port1
+instance2=$http_port2
+instance3=$http_port3
+instance4=$http_port4
+instance-newsletter=$http_port5
+#may not be used
+supervisor=$supervisor_port
+balancer=$haproxy_port
+solr = $solr_port
 
 #if 'relstorage' in $mode:
 [database]
@@ -17,12 +41,12 @@ password=$relstorage_password
 #host=$relstorage_host
 #dbname=$relstorage_dbname
 #user=$relstorage_dbuser
-#password=$relstorage_password 
+#password=$relstorage_password
 #end if
 
 [zope]
 user=$zope_user
-password=$zope_password 
+password=$zope_password
 debug-mode=OFF
 verbose-security=off
 z2-log-level=INFO
@@ -31,14 +55,41 @@ event-log-level=INFO
 [plone]
 # Site ID
 site = $plonesite
-testfss-backup=\${buildout:directory}/parts/instance/var/fss_backup
-testfss-storage=\${buildout:directory}/parts/instance/var/fss_storage
-fss-backup=\${buildout:directory}/var/fss_backup_${project}  
-fss-storage=\${buildout:directory}/var/fss_storage_${project}
- 
+testfss-backup1= \${instance1:location}/var/fss_backup
+testfss-storage1=\${instance1:location}/var/fss_storage
+testfss-backup2= \${instance2:location}/var/fss_backup
+testfss-storage2=\${instance2:location}/var/fss_storage
+testfss-backup3= \${instance3:location}/var/fss_backup
+testfss-storage3=\${instance3:location}/var/fss_storage
+testfss-backup4= \${instance4:location}/var/fss_backup
+testfss-storage4=\${instance4:location}/var/fss_storage
+testfss-backup=  \${instance:location}/var/fss_backup
+testfss-storage= \${instance:location}/var/fss_storage
+testfss-backup-newsletter= \${instance-newsletter:location}/var/fss_backup
+testfss-storage-newsletter=\${instance-newsletter:location}/var/fss_storage
+fss-backup=  \${buildout:directory}/var/fss_backup_${project}
+fss-storage= \${buildout:directory}/var/fss_storage_${project}
+fss-backup1= \${buildout:directory}/var/fss_backup1_${project}
+fss-storage1=\${buildout:directory}/var/fss_storage1_${project}
+fss-backup2= \${buildout:directory}/var/fss_backup2_${project}
+fss-storage2=\${buildout:directory}/var/fss_storage2_${project}
+fss-backup3= \${buildout:directory}/var/fss_backup3_${project}
+fss-storage3=\${buildout:directory}/var/fss_storage3_${project}
+fss-backup4= \${buildout:directory}/var/fss_backup4_${project}
+fss-storage4=\${buildout:directory}/var/fss_storage4_${project}
+fss-backup-newsletter= \${buildout:directory}/var/fss_backupnewsletter_${project}
+fss-storage-newsletter=\${buildout:directory}/var/fss_storagenewsletter_${project}
+#system user
+[users]
+zope=$running_user
+balancer=$running_user
 
 [cache]
 zeo-client-cache-size = 80MB
 session-timeout-minutes=90
+
+#may not be used
+[solr]
+path = \$solr_path
 
 # vim:set ft=cfg:

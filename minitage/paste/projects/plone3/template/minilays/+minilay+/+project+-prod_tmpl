@@ -6,4 +6,4 @@ src_type=$scm_type
 category=$category
 homepage=$homepage
 description= a plone $plone_version buildout for $project (PRODUCTION MODE)
-buildout_config=minitage.buildout-prod.cfg
+buildout_config=etc/minitage/minitage.buildout-prod.cfg

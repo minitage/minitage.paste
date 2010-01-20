@@ -1,5 +1,5 @@
 # Plone production buildout
-# It will install your plone and additional crontabs and backup scripts
+# It will install your plone and additional crontabs, monitoring, loadbalancing, logrotating,  and backup scripts
 # Launch it:
 # bin/buildout -c buildout-prod.cfg
 # minimerge -NuUvR ${project}-prod
@@ -14,9 +14,19 @@
 # backup FSS every day
 #end if
 
+# for haproxy, look at the template in etc/templates/balancer.conf.template
+# regenerate with: buildout -c <CONFIG_FILE> install balancer.config
+# Think for enabling the log statement!
+
+# Think to include the logrotate configuration file inside your logrotate configuration (ln ?)
+
 [buildout]
-extends=etc/base.cfg etc/${mode}.cfg 
-parts+=zopepackdaily
+extends=etc/base.cfg etc/backends/${mode}.cfg
+parts+= instance1
+    instance2
+    instance3
+    instance4
+    zopepackdaily
     zoperestartdaily
 #if not 'relstorage' in $mode:
     repozodaily
@@ -30,6 +40,20 @@ parts+=zopepackdaily
 #end if
     chmodcron
     backupdirs
+    logrotate.conf
+#if $with_haproxy
+    haproxy-build
+    balancer.config
+#else
+#    haproxy-build
+#    balancer.config
+#end if
+#if $with_supervisor
+    supervisor
+#else
+#    supervisor
+#end if
+
 
 # make an incremental backup per day
 [repozodaily]
@@ -48,7 +72,7 @@ command = \${buildout:directory}/bin/snapshotbackup
 [zopepackdaily]
 recipe = z3c.recipe.usercrontab
 times = 15 1 * * *
-command = wget "http://$address:$http_port/Control_Panel/Database/main/manage_main/manage_pack"  --http-user '$zope_user'  --http-passwd '$zope_password' --post-data '?days:float=0' -O /dev/null
+command = wget "http://$address:$http_port/Control_Panel/Database/manage_pack"  --http-user '$zope_user'  --http-passwd '$zope_password' --post-data '?days:float=0' -O /dev/null
 
 
 # restart zope instance every night
@@ -62,7 +86,7 @@ order=\${fssdaily:recipe}
 recipe = plone.recipe.command
 update-command = \${chmodcron:command}
 command =
-    chmod -v 750 \${buildout:directory}/cron_scripts//*.sh
+    chmod -v 750 \${buildout:directory}/cron_scripts/*.sh
 
 [backupdirs]
 order=\${fssdaily:recipe}
@@ -76,8 +100,8 @@ command =
 # please edit the .in file to fit your needs if you change the fss storage layout.
 [fssdaily]
 recipe = collective.recipe.template
-input =\${buildout:directory}/cron_scripts/fss_daily.sh.in
-output =\${buildout:directory}/cron_scripts//fss_daily.sh
+input =\${buildout:directory}/etc/templates/fss_daily.sh.in
+output =\${buildout:directory}/cron_scripts/fss_daily.sh
 backuppath=\${buildout:directory}/var/fssbackups
 
 # backup FSS every day
@@ -87,3 +111,54 @@ times = 15 1 * * *
 command =  \${buildout:directory}/cron_scripts/fss_daily.sh
 # end if
 
+[haproxy-build]
+recipe = plone.recipe.haproxy
+url = http://dist.jarn.com/public/haproxy-1.3.15.7.zip
+#cpu = x86-64
+#cpu = i686
+#target = linux26
+
+[supervisor]
+recipe = collective.recipe.supervisor
+port = \${ports:supervisor}
+user = admin
+password = admin
+serverurl = http://\${hosts:supervisor}:\${ports:supervisor}
+programs =
+    20 solr (startsecs=10) java [-Djava.security.egd=file:/dev/urandom -jar start.jar] \${buildout:parts-directory}/solrinstance true \${users:zope}
+    20 instance1 \${buildout:directory}/parts/instance1/bin/runzope                                          true \${users:zope}
+    20 instance2 \${buildout:directory}/parts/instance2/bin/runzope                                          true \${users:zope}
+    20 instance3 \${buildout:directory}/parts/instance3/bin/runzope                                          true \${users:zope}
+    20 instance4 \${buildout:directory}/parts/instance4/bin/runzope                                          true \${users:zope}
+    30 balancer  \${buildout:directory}/bin/haproxy  [-f \${buildout:directory}/etc/loadbalancing/balancer.conf -db]       true \${users:balancer}
+
+[logrotate.conf]
+recipe = collective.recipe.template
+input =  \${buildout:directory}/etc/templates/logrotate.conf.template
+output = \${buildout:directory}/etc/logrotate.conf
+
+[balancer.config]
+recipe = collective.recipe.template
+input =  \${buildout:directory}/etc/templates/balancer.conf.template
+output = \${buildout:directory}/etc/loadbalancing/balancer.conf
+
+[mkdirs]
+command +=
+    mkdir -pv \${plone:testfss-backup1};
+    mkdir -pv \${plone:testfss-backup4};
+    mkdir -pv \${plone:testfss-backup2};
+    mkdir -pv \${plone:testfss-backup3};
+    mkdir -pv \${plone:testfss-storage1};
+    mkdir -pv \${plone:testfss-storage2};
+    mkdir -pv \${plone:testfss-storage3};
+    mkdir -pv \${plone:testfss-storage4};
+    mkdir -pv \${plone:fss-backup1}/var/fss_backup;
+    mkdir -pv \${plone:fss-backup2}/var/fss_backup;
+    mkdir -pv \${plone:fss-backup3}/var/fss_backup;
+    mkdir -pv \${plone:fss-backup4}/var/fss_backup;
+    mkdir -pv \${plone:fss-storage1}/var/fss_storage;
+    mkdir -pv \${plone:fss-storage2}/var/fss_storage;
+    mkdir -pv \${plone:fss-storage3}/var/fss_storage;
+    mkdir -pv \${plone:fss-storage4}/var/fss_storage;
+
+# vim:set ft=cfg:

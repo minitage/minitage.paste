@@ -412,14 +412,14 @@ class Template(common.Template):
             p3.run(command, vars['path'], vars)
             command.options.overwrite = coo
             try:
-                etc = os.path.join(vars['path'], 'etc')
+                etc = os.path.join(vars['path'], 'etc', 'plone')
                 if not os.path.isdir(etc):
                     os.makedirs(etc)
                 cfg = os.path.join(vars['path'], 'buildout.cfg')
                 dst = os.path.join(vars['path'],
-                                   'etc', 'plone3.buildout.cfg')
+                                   'etc', 'plone', 'plone3.buildout.cfg')
                 vdst = os.path.join(vars['path'],
-                                   'etc', 'plone3.versions.cfg')
+                                   'etc', 'plone', 'plone3.versions.cfg')
                 bc = ConfigParser()
                 bc.read(cfg)
                 ext = ''
@@ -476,6 +476,12 @@ class Template(common.Template):
         # be sure our special python is in priority
         vars['opt_deps'] = re.sub('\s*%s\s*' % self.python, ' ', vars['opt_deps'])
         vars['opt_deps'] += " %s" % self.python
+        vars['http_port1'] = int(vars['http_port']) + 1
+        vars['http_port2'] = int(vars['http_port']) + 2
+        vars['http_port3'] = int(vars['http_port']) + 3
+        vars['http_port4'] = int(vars['http_port']) + 4
+        vars['http_port5'] = int(vars['http_port']) + 5
+        vars['running_user'] = running_user
 
 sd_str = '%s' % (
     'Singing & Dancing NewsLetter, see http://plone.org/products/dancing'
@@ -496,6 +502,15 @@ Template.vars = common.Template.vars \
            var('relstorage_dbname', 'Relstorage databse name (only useful for relstorage mode)', default = 'minitagedb',),
            var('relstorage_dbuser', 'Relstorage user (only useful for relstorage mode)', default = running_user),
            var('relstorage_password', 'Relstorage password (only useful for relstorage mode)', default = 'secret',),
+           var('solr_host', 'Solr host (only useful if you want solr)', default = '127.0.0.1',),
+           var('solr_port', 'Solr port (only useful if you want solr)', default = '8983',),
+           var('solr_path', 'Solr path (only useful if you want solr)', default = '/solr',),
+           var('with_supervisor', 'Supervisor support (monitoring), http://supervisord.org/ y/n', default = 'y',),
+           var('supervisor_host', 'Supervisor host', default = '127.0.0.1',),
+           var('supervisor_port', 'Supervisor port', default = '9001',),
+           var('with_haproxy', 'haproxy support (loadbalancing), http://haproxy.1wt.eu/ y/n', default = 'y',),
+           var('haproxy_host', 'Haproxy host', default = '127.0.0.1',),
+           var('haproxy_port', 'Haproxy port', default = '8201',),
            var('plone_products', 'comma separeted list of adtionnal products to install: eg: file://a.tz file://b.tgz', default = '',),
            var('additional_eggs', 'comma separeted list of additionnal eggs to install', default = '',),
            var('plone_zcml', 'comma separeted list of eggs to include for searching ZCML slugs', default = '',),

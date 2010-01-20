@@ -19,6 +19,7 @@
   <option order="150"  name="with_database_mysql"                description="Mysql python bindings support y/n"/>
   <option order="200"  name="with_database_oracle"               description="Oracle python bindings support y/n"/>
   <option order="250"  name="with_database_postgresql"           description="Postgresql python bindings support y/n"/>
+  <option order="253"  name="with_indexing_solr"                 description="Solr support y/n"/>
   <option order="300"  name="with_binding_pil"                   description="Python imaging support (dangerous to disable) y/n" default="y"/>
   <option order="350"  name="with_tool_ipython"                  description="ipython support http://ipython.scipy.org/ y/n" default="y"/>
   <option order="350"  name="with_tool_i18ndude"                 description="i18n support http://pypi.python.org/pypi/i18ndude y/n" default="n"/>
@@ -61,6 +62,7 @@
   <option order="1962" name="with_ploneproduct_iterate"          description="Plone Iterate support, see http://pypi.python.org/pypi/plone.app.iterate y/n" default="n"/>
   <option order="1973" name="with_ploneproduct_schemaextender"   description="Plone Archetypes schema extender support, see http://pypi.python.org/pypi/archetypes.schemaextender y/n" default="n"/>
   <option order="1984" name="with_ploneproduct_cz3cformgrok"     description="Plone + z3cform light grok integration support, see http://pypi.python.org/pypi/collective.z3cform.grok y/n" default="n"/>
+  <option order="1984" name="with_experimental"                  description="Plone experimental improvments y/n" default="n"/>
   </options>
   <!--
     LINK THERE YOUR EGGS TO BE Installed on option triggering.

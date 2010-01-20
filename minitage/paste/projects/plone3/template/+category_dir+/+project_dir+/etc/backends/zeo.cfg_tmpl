@@ -1,0 +1,32 @@
+# ZEO backend support and configuration
+#
+[buildout]
+storage-mode=zeo
+parts+=zeoserver
+
+[instance]
+zeo-client-cache-size = \${cache:zeo-client-cache-size}
+zeo-client = on
+zeo-address = \${hosts:zeo-address}
+temporary-storage =
+    <zeoclient>
+        server \${hosts:zeo-address}
+        storage temp
+        name zeostorage
+        var \${buildout:directory}/var
+    </zeoclient>
+    mount-point /temp_folder
+    container-class Products.TemporaryFolder.TemporaryContainer
+
+# may be not used but it is good to have it in case.
+[zeoserver]
+recipe = plone.recipe.zope2zeoserver
+zope2-location = \${zope2:location}
+zeo-address = \${hosts:zeo-address}
+zeo-conf-additional =
+    %import tempstorage
+    <temporarystorage temp>
+        name temporary storage for sessioning
+    </temporarystorage>
+
+# vim:set ft=cfg:
