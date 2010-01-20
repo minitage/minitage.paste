@@ -1,0 +1,27 @@
+[buildout]
+storage-mode=relstorage
+
+[instance]
+rel-storage =
+#if $relstorage_type == 'oracle':
+    type $relstorage_type
+    dsn (DESCRIPTION=(ADDRESS=(HOST=$relstorage_host))(CONNECT_DATA=(SERVICE_NAME=$relstorage_dbname)))
+    user $relstorage_dbuser
+    password $relstorage_password
+#elif $relstorage_type == 'mysql':
+    type $relstorage_type
+    dbname $relstorage_dbname
+    user $relstorage_dbuser
+    host $relstorage_host
+    passwd $dbpassword
+#elif $relstorage_type == 'postgresql':
+    type $relstorage_type
+    dsn  dbname='$relstorage_dbname' user='$relstorage_dbuser' host='$relstorage_host' password='$relstorage_password'
+#else
+    type $relstorage_type
+    dbname $relstorage_dbname
+    user $relstorage_dbuser
+    host $relstorage_host
+    password $relstorage_password
+#end if
+

@@ -1,0 +1,6 @@
+
+
+[buildout]
+storage-mode=zodb
+
+

@@ -1,0 +1,9 @@
+[minibuild]
+dependencies=$opt_deps
+install_method=$install_method
+src_uri=$uri
+src_type=$scm_type
+category=$category
+homepage=$homepage
+description= a plone $plone_version buildout for $project
+buildout_config=buildout-dev.cfg

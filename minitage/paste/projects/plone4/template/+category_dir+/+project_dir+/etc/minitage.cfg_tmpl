@@ -1,0 +1,59 @@
+#if $inside_minitage:
+[minitage]
+location=\${buildout:directory}/../..
+#end if
+
+# site-packages
+[libxml2]
+# the path to find the libxml2 python bindings, maybe your global site-packages?
+site-packages=$xml2
+[libxslt]
+# the path to find the libxslt python bindings, maybe your global site-packages?
+site-packages=$xslt
+
+[python2.4]
+#if $inside_minitage:
+executable=$python
+#else
+#executable=$python
+#end if
+python=python2.4
+name=python2.4
+
+[buildout]
+#if $inside_minitage:
+python=python2.4
+#else
+#python=python2.4
+#end if
+find-links +=
+    http://distfiles.minitage.org/public/externals/minitage/
+extra-paths+=
+    \${libxml2:site-packages}
+    \${libxslt:site-packages}
+#if $inside_minitage:
+eggs-directory=\${minitage:location}/eggs/cache
+#end if
+
+[versions]
+# bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
+# the one packaged in minitage !
+PILwoTK  = 1.1.6.4
+Spawning=0.8.11-minitage
+
+[zopepy]
+#if $inside_minitage:
+executable=\${python2.4:executable}
+#else
+#executable=\${python2.4:executable}
+#end if
+#if $with_binding_ldap:
+includes-dirs = $includesdirs
+#end if
+
+[mirrors]
+sourceforge = ovh.dl.sourceforge.net
+minitage = distfiles.minitage.org/public/externals/minitage
+plone = plone.org
+zope = download.zope.org
+

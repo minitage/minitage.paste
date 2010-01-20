@@ -1,0 +1,17 @@
+[buildout]
+storage-mode=zeo
+
+[instance]
+zeo-client-cache-size = 80MB
+zeo-client = on
+zeo-address = $zeo_address
+temporary-storage =
+    <zeoclient>
+        server $zeo_address
+        storage temp
+        name zeostorage
+        var \${buildout:directory}/var
+    </zeoclient>
+    mount-point /temp_folder
+    container-class Products.TemporaryFolder.TemporaryContainer
+

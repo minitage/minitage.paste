@@ -1,0 +1,22 @@
+diff -ubBr Markdown-2.0.1/setup.py Markdown-2.0.1.new/setup.py
+--- Markdown-2.0.1/setup.py	2009-03-31 14:31:33.000000000 +0200
++++ Markdown-2.0.1.new/setup.py	2009-09-25 15:38:45.000000000 +0200
+@@ -5,6 +5,10 @@
+ from distutils.command.install_scripts import install_scripts
+ from markdown import version
+ 
++ir = []
++if sys.version[:3] < '2.5':
++    ir.append('elementtree')
++
+ class md_install_scripts(install_scripts):
+     """ Customized install_scripts. Create markdown.bat for win32. """
+     def run(self):
+@@ -37,6 +41,7 @@
+     packages = ['markdown', 'markdown.extensions'],
+     scripts = ['bin/markdown'],
+     cmdclass = {'install_scripts': md_install_scripts},
++    install_requires = ir,
+     classifiers = ['Development Status :: 5 - Production/Stable',
+                    'License :: OSI Approved :: BSD License',
+                    'Operating System :: OS Independent',

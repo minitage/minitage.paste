@@ -1,0 +1,25 @@
+=== modified file 'IPython/deathrow/ipy_profile_zope.py'
+--- IPython/Extensions/ipy_profile_zope.py	2009-09-18 02:40:20 +0000
++++ IPython/Extensions/ipy_profile_zope.py	2009-10-05 20:36:02 +0000
+@@ -24,6 +24,10 @@
+ import os
+ import textwrap
+ 
++sys.oldstdin   = sys.stdin
++sys.oldstdout  = sys.stdout
++#sys.oldstderr  = sys.stderr
++
+ # The import below effectively obsoletes your old-style ipythonrc[.ini],
+ # so consider yourself warned!
+ # import ipy_defaults
+@@ -314,6 +318,9 @@
+         """ % ( ",".join([ x for x in dir(zope_debug.utils) if not x.startswith("_") ] ) ) )
+ 
+ 
++    sys.stdin  = sys.oldstdin
++    #sys.stderr  = sys.oldstderr
++    sys.stdout  = sys.oldstdout
+     ip.user_ns.update( zope_debug.namespace )
+ 
+ 
+

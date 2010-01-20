@@ -1,0 +1,93 @@
+#echo '##############################################################################\n'
+# PLONE 3 BUILDOUT
+#echo '#\n'
+#echo '#\n'
+# WARNING ABOUT BUILOOUT BOOTSTRAP WARNING
+# ---------------------------------------
+# If you are using the standalone (choose to answer inside_minitage=no), you must ensure to do the
+# \$python bootstrap.py dance with a python compatible with the targeted zope installation (python 2.4 AFAIK)
+# eg: cd $project && python2.4 bootstrap.py && bin/buildout -vvvvvv
+#echo '#\n'
+#echo '#\n'
+# Minitage users, don't worry about that, all is setted for you.
+#echo '#\n'
+# DEVELOP MODE
+# ---------------
+# To develop your application, run the buildout-dev.cfg buildout, it extends this one but:
+#   * has development tools.
+#   * configure the instance to be more verbose (debug mode)
+#echo '#\n'
+#echo '#\n'
+# PRODUCTION MODE
+# ---------------
+# To make your application safe for production, run the buildout-prod.cfg buildout, it extends this one with additionnal crontabs and backup scripts.
+#echo '#\n'
+#echo '#\n'
+# PLONE3 Official buildouts Integration
+# --------------------------------------------
+# The original etc/plone3.version.cfg is the original pinned version file for your plone3 release maintened in the official package.
+# The original etc/plone3.buildout.cfg is the one maintened by the plone.org's guys through the package ZopeSkel (plone3_buildout).
+# The parts in this buildout extends/overwrite this file, you can read it to get additionnal documentation.
+# You must enter speicfic project settings in the etc/${project}.cfg file.
+#echo '#\n'
+#echo '#\n'
+# LAYOUT
+# ---------
+# Think you have the most important sections of this buildout configuration in etc/${project}.cfg
+# |-- buildout-dev.cfg -> buildout for development
+# |-- buildout-prod.cfg -> buildout for production
+# |-- buildout.cfg -> this/base buildout
+# |-- cron_scripts
+# |   |-- fss_daily.sh -> backup script for fss
+# |   `-- fss_daily.sh.in
+# |-- etc
+# |   |-- dancing.cfg -> singing & dancing  particular buildout
+# |   |-- dev.ini -> paster development configuration for running in wsgi mode
+# |   |-- minitage.cfg -> some buildout tweaks to run in the best of the world
+# |   |-- ${project}-kgs.cfg -> KGS for your project
+# |   |-- ${project}.cfg -> your project main buildout
+# |   |-- plone3.buildout.cfg -> official plone3 buildout
+# |   |-- plone3.versions.cfg-> official plone3 buildout kgs
+# |   |-- prod.ini -> paster production configuration for running in wsgi mode
+# |   |-- relstorage.cfg -> relstorage configuration if any
+# |   |-- zeo.cfg -> zeoserver configuration if any
+# |   `-- zodb.cfg -> Filestorage configuration if any
+#echo '#\n'
+#echo '#\n'
+# KGS FILE
+# ----------
+# We provide a part to generate the etc/${project}-kgs.cfg file.
+# This will allow you to freeze software versions known to work with your project and make reproducible environment.
+# This file will be generated the first time that you run buildout.
+# To un it, just runbin/buildout -vvvvvvv install kgs
+# To unlock the versions, cmment out the according statement "etc/${project}-kgs}.cfg in the extends option of the ${project}.cfg gile.
+#echo '#\n'
+#echo '#\n'
+# FOR RELSTORAGE SUPPORT
+# -------------------------
+# * We use the ZODB as an egg which is patched during installation, please see
+# the zoopy section and also the minitage.recipe documentation on patching an
+# egg.
+# The egg is on your cache with a particular version, the classical ZODB3 egg wont be touched if you have one.
+# WHAT IS VERY IMPORTANT is that [zopepy] part must run BEFORE [instance] to get the version with appropriate patches pinned.
+#echo '#\n'
+#echo '#\n'
+#  As we support WSGI, there is an important thing to know:
+#   'zopelib' is an egg from repoze where live the zope code, we
+#   totally do not NEED it, it's useless and make things buggy.
+#   We build zopelib as a fake egg, as we have already zope in our
+#   PYTHONPATH.
+#   If you raelly want zopelib as an egg, (un)comment things in the buildout(develop, patch). But i am use, you dont have to !
+#   TO run in WSGI with repoze.zope2:
+#   bin/paster serve etc/dev.ini
+#   bin/paster serve etc/prod.ini
+#echo '#\n'
+#echo '#\n'
+#   You can use the minitage.instances.paste-initd paster template to generate init scripts
+
+#echo '##############################################################################\n'
+
+[buildout]
+extends= etc/${project}.cfg etc/${mode}.cfg etc/minitage.cfg
+
+# vim:set ft=cfg:
