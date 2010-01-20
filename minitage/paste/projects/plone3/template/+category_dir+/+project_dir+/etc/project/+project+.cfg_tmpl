@@ -50,6 +50,8 @@ $product
 #end if
 #end for
 
+develop+=
+
 zcml +=#slurp
 #for $product in $plone_zcml:
 #if product.startswith('#'):
