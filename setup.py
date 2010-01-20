@@ -9,7 +9,7 @@ name='minitage.paste'
 version = '1.3.114'
 
 
-deef read(rnames):
+def read(rnames):
     return open(
         os.path.join(setupdir, rnames)
     ).read()
