@@ -1,0 +1,267 @@
+#echo '##############################################################################\n'
+# PLONE  BUILDOUT
+#echo '#\n'
+#echo '#\n'
+# WARNING ABOUT BUILOOUT BOOTSTRAP WARNING
+# ---------------------------------------
+# If you are using the standalone (choose to answer inside_minitage=no), you must ensure to do the
+# \$python bootstrap.py dance with a python compatible with the targeted zope installation (python 2.4 AFAIK)
+# eg: cd $project && python2.4 bootstrap.py && bin/buildout -vvvvvvc <CONFIG_FILE>
+#echo '#\n'
+#echo '#\n'
+# Minitage users, don't worry about that, all is setted for you.
+#echo '#\n'
+# DEVELOP MODE
+# ---------------
+# To develop your application, run the buildout-dev.cfg buildout, it extends this one but:
+#   * has development tools.
+#   * configure the instance to be more verbose (debug mode)
+#echo '#\n'
+#echo '#\n'
+# PRODUCTION MODE
+# ---------------
+# To make your application safe for production, run the buildout-prod.cfg buildout, it extends this one with additionnal crontabs and backup scripts.
+#echo '#\n'
+#echo '#\n'
+# PLONE Official buildouts Integration
+# --------------------------------------------
+# The original etc/plone3.version.cfg is the original pinned version file for your plone3 release maintened in the official package.
+# The original etc/plone3.buildout.cfg is the one maintened by the plone.org's guys through the package ZopeSkel (plone3_buildout).
+# The parts in this buildout extends/overwrite this file, you can read it to get additionnal documentation.
+# You must enter speicfic project settings in the etc/${project}.cfg file.
+#echo '#\n'
+#echo '#\n'
+# LAYOUT
+# ---------
+# Think you have the most important sections of this buildout configuration in etc/${project}.cfg
+#
+#
+# Base buildouts:
+# |-- buildout-dev.cfg -> buildout for development
+# |-- buildout-prod.cfg -> buildout for production
+# |-- minitage.buildout-dev.cfg -> buildout for development with minitage support (python, dependencies & common eggs cache)
+# |-- minitage.buildout-prod.cfg -> buildout for production with minitage support (python, dependencies & common eggs cache)
+#
+# Remaning layout:
+# |-- cron_scripts=
+# |   |-- fss_daily.sh -> backup script for fss
+# |   `-- fss_daily.sh.in
+# |-- etc
+# |-- |-- base.cfg -> this base buildout
+# |   |-- dancing.cfg -> singing & dancing  particular buildout
+# |   |-- dev.ini -> paster development configuration for running in wsgi mode
+# |   |-- minitage.cfg -> some buildout tweaks to run in the best of the world
+# |   |-- ${project}-kgs.cfg -> KGS for your project
+# |   |-- sources.cfg -> externals sources of your project
+# |   |-- versions.cfg -> minimal version pinning for installing your project
+# |   |-- ${project}.cfg -> your project needs (packages, sources, products
+# |   |-- plone3.buildout.cfg -> official plone3 buildout
+# |   |-- plone3.versions.cfg-> official plone3 buildout kgs
+# |   |-- prod.ini -> paster production configuration for running in wsgi mode
+# |   |-- sys.cfg -> Sysadmin relative informations like ports, users and log levels
+# |   |-- relstorage.cfg -> relstorage configuration if any
+# |   |-- zeo.cfg -> zeoserver configuration if any
+# |   `-- zodb.cfg -> Filestorage configuration if any
+#echo '#\n'
+#echo '#\n'
+# KGS FILE
+# ----------
+# We provide a part to generate the etc/${project}-kgs.cfg file.
+# This will allow you to freeze software versions known to work with your project and make reproducible environment.
+# This file will be generated the first time that you run buildout.
+# To un it, just run bin/buildout -vvvvvvv  -c <CONFIG_FILE> install kgs
+# To unlock the versions, cmment out the according statement "etc/${project}-kgs}.cfg in the extends option of the ${project}.cfg gile.
+#echo '#\n'
+#echo '#\n'
+# FOR RELSTORAGE SUPPORT
+# -------------------------
+# * We use the ZODB as an egg which is patched during installation, please see
+# the zoopy section and also the minitage.recipe documentation on patching an
+# egg.
+# The egg is on your cache with a particular version, the classical ZODB3 egg wont be touched if you have one.
+# WHAT IS VERY IMPORTANT is that [zopepy] part must run BEFORE [instance] to get the version with appropriate patches pinned.
+#echo '#\n'
+#echo '#\n'
+#  As we support WSGI, there is an important thing to know:
+#   'zopelib' is an egg from repoze where live the zope code, we
+#   totally do not NEED it, it's useless and make things buggy.
+#   We build zopelib as a fake egg, as we have already zope in our
+#   PYTHONPATH.
+#   If you raelly want zopelib as an egg, (un)comment things in the buildout(develop, patch). But i am use, you dont have to !
+#   TO run in WSGI with repoze.zope2:
+#   bin/paster serve etc/dev.ini
+#   bin/paster serve etc/prod.ini
+#echo '#\n'
+#echo '#\n'
+#   You can use the minitage.instances.paste-initd paster template to generate init scripts
+
+#echo '##############################################################################\n'
+
+# PROJECT SPECIFIC SETTINGS
+#if 'zeo' in $mode:
+#set $zeocomment=''
+#else
+#set $zeocomment='#'
+#end if
+
+
+[buildout]
+extensions = buildout.minitagificator mr.developer
+extends-cache = \${buildout:directory}/etc/cache
+# this allow you to run buildout on offline mode and to use only the downloaded plonev3.versions.cfg
+extends -= http://dist.plone.org/1elease/${plone_version}/versions.cfg
+extends = plone3.versions.cfg plone3.buildout.cfg patches.cfg sys.cfg sources.cfg versions.cfg $project-kgs.cfg ${project}.cfg #slurp
+#if $with_ploneproduct_sgdcg:
+    dancing.cfg
+#end if
+
+parts += #slurp
+#if $with_ploneproduct_plomino:
+    plomino
+#end if
+#if $with_ploneproduct_vaporisation:
+    vaporisation
+#end if
+    backup
+#if $with_ploneproduct_fss:
+# disabled as the iw.recipe.fss do that for us :  create-fss-dirs
+    fss
+    testsfss-command
+#end if
+${zeocomment}    zeoserver
+    plonesite
+
+find-links = \${groups:find-links}
+eggs += zopelib
+develop += \${buildout:directory}/src.mrdeveloper/zopelib
+# see http://pypi.python.org/pypi/mr.developer for documentation
+versions = versions
+sources = sources
+
+# auto tracked developement products, see ${project}.cfg
+[sources]
+
+# Zope operating instances are created elsewhere.
+# For options see http://pypi.python.org/pypi/plone.recipe.zope2install
+[zope2]
+# fake eggs are required to satisfy Zope dependencies while
+# zope is not yet eggified.
+fake-zope-eggs = true
+additional-fake-eggs +=
+    ZConfig
+    pytz
+skip-fake-eggs +=
+    ZODB3                           
+
+# eggs & scripts installation
+[zopepy]
+recipe = minitage.recipe.scripts
+# Important for you to note the installation of the ZODB as an egg . We will not
+# use the zodb code from the zope source distribution !!!!!!!
+#if not $inside_minitage:
+urls=http://download.zope.org/distribution/PILwoTk-1.1.6.4.tar.gz
+#end if
+eggs = \${instance:eggs}
+interpreter = zopepy
+env-file=\${buildout:directory}/etc/${project}.env
+
+# here is defined the Zope instance running your plone site
+# beware that zopepy part must run before isntance in order to have the right version
+# pinned for relstorage
+[instance]
+order=\${zopepy:recipe}
+http-address=\${hosts:zope-address}
+user = \${zope:user}:\${zope:password}
+session-timeout-minutes = \${cache:session-timeout-minutes}
+verbose-security=\${zope:verbose-security}
+debug-mode=\${zope:debug-mode}
+event-log-level=\${zope:event-log-level}
+z2-log-level=\${zope:z2-log-level}
+extra-paths+=
+    \${zope2:location}/lib/python
+    \${buildout:extra-paths}
+
+# may be not used but it is good to have it in case.
+[zeoserver]
+recipe = plone.recipe.zope2zeoserver
+zope2-location = \${zope2:location}
+zeo-address = \${hosts:zeo-address}
+zeo-conf-additional =
+    %import tempstorage
+    <temporarystorage temp>
+        name temporary storage for sessioning
+    </temporarystorage>
+
+[vaporisation]
+recipe=minitage.recipe.fetch
+urls=\${groups:vaporization}|svn||\${zope2:location}/lib/python/vaporisation
+
+[plomino]
+recipe=minitage.recipe.fetch
+urls=\${groups:plomino}|svn||\${buildout:directory}/parts/plomino/CMFPlomino
+
+# KGS generation
+[kgs]
+recipe=minitage.recipe.printer
+quiet=
+eggs=\${instance:eggs}
+
+#if not $inside_minitage:
+#[openldap]
+#recipe = minitage.recipe.cmmi
+#url = ftp://gd.tuwien.ac.at/infosys/network/OpenLDAP/openldap-stable/openldap-stable-20090411.tgz
+#
+#[python-ldap]
+#recipe = minitage.recipe.egg
+#egg = python-ldap
+#include-dirs  = \${openldap:location}/include
+#library-dirs  = \${openldap:location}/lib
+#end if
+
+# FSS Support
+# See: http://plone.org/products/filesystemstorage
+# and http://pypi.python.org/pypi/atreal.patchfss/1.0.0
+# http://pypi.python.org/pypi/iw.recipe.fss
+# the new iw.recipe.fss do this for us, disabling
+#[create-fss-dirs]
+#recipe = plone.recipe.command
+#update-command = \${create-fss-dirs:command}
+#command =
+#    mkdir -p \${buildout:directory}/var/fss_storage_global ;
+#    mkdir -p \${buildout:directory}/var/fss_backup_global ;
+#    mkdir -p \${buildout:directory}/var/fss_storage_${project} ;
+#    mkdir -p \${buildout:directory}/var/fss_backup_${project} ;
+
+[fss]
+recipe = iw.recipe.fss
+zope-instances=\${instance:location}
+
+# Command below is important
+# if not, fss tests fail
+[testsfss-command]
+recipe = plone.recipe.command
+update-command = \${testsfss-command:command}
+command =
+    mkdir -pv \${plone:testfss-backup}
+    mkdir -pv \${plone:testfss-storage}
+
+[backup]
+recipe = collective.recipe.backup
+
+# Traditionnal Plone products to install
+[productdistros]
+recipe = plone.recipe.distros
+urls=\${groups:products-urls}
+version-suffix-packages = \${groups:version-suffix-packages}
+nested-packages = \${groups:nested-packages}
+
+[plonesite]
+recipe = collective.recipe.plonesite
+site-id = \${plone:site}
+site-replace=false
+enabled=true
+instance = instance
+${zeocomment}zeoserver = zeoserver
+ 
+
+# vim:set ft=cfg:

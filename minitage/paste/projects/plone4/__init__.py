@@ -52,7 +52,7 @@ running_user = getpass.getuser()
 CONFIG_FILENAME = 'minitage.plone4.xml'
 default_config = pkg_resources.resource_filename(
     'minitage.paste',
-    'projects/plone3/%s' % CONFIG_FILENAME)
+    'projects/plone4/%s' % CONFIG_FILENAME)
 user_config = os.path.join(
     os.path.expanduser('~'),
     '.%s' % CONFIG_FILENAME
@@ -244,18 +244,18 @@ sections_mappings = {
     'plone_scripts': scripts_mappings,
 }
 
-packaged_version = '3.3.3'
+packaged_version = '4.0a3'
 class Template(common.Template):
 
     summary = 'Template for creating a plone3 project'
-    python = 'python-2.4'
+    python = 'python-2.6'
 
     def read_vars(self, command=None):
         if command:
             if not command.options.quiet:
                 print '%s' % (
                     '---------------------------------------------------------\n'
-                    '\tPlone 3 needs a python 2.4 to run:\n'
+                    '\tPlone 3 needs a python 2.6 to run:\n'
                     '\t * if you do not fill anything, it will use minitage or system\'s one\n'
                     '\t * if you do not provide one explicitly, it will use minitage or system\'s one\n'
                     '\t * Bindings will be automaticly included when you choose for example relstorage/mysql or plone ldap support.\n'

@@ -243,7 +243,7 @@ sections_mappings = {
     'plone_scripts': scripts_mappings,
 }
 
-packaged_version = '3.3.3'
+packaged_version = '3.3.4'
 class Template(common.Template):
 
     summary = 'Template for creating a plone3 project'

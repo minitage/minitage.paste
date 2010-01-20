@@ -1,0 +1,44 @@
+# Sysadmin settings like hosts, credentials, paths, cache settings, and loglevels
+
+[hosts]
+# setted here but just as information, it may not be used.
+zeo-address = $zeo_address
+zope-address=$address:$http_port
+
+#if 'relstorage' in $mode:
+[database]
+\#for non standart port use host:port
+host=$relstorage_host
+dbname=$relstorage_dbname
+user=$relstorage_dbuser
+password=$relstorage_password
+#else
+\#for non standart port use host:port
+#host=$relstorage_host
+#dbname=$relstorage_dbname
+#user=$relstorage_dbuser
+#password=$relstorage_password 
+#end if
+
+[zope]
+user=$zope_user
+password=$zope_password 
+debug-mode=OFF
+verbose-security=off
+z2-log-level=INFO
+event-log-level=INFO
+
+[plone]
+# Site ID
+site = $plonesite
+testfss-backup=\${buildout:directory}/parts/instance/var/fss_backup
+testfss-storage=\${buildout:directory}/parts/instance/var/fss_storage
+fss-backup=\${buildout:directory}/var/fss_backup_${project}  
+fss-storage=\${buildout:directory}/var/fss_storage_${project}
+ 
+
+[cache]
+zeo-client-cache-size = 80MB
+session-timeout-minutes=90
+
+# vim:set ft=cfg:

@@ -1,0 +1,39 @@
+# BASE VERSIONS PINNING
+
+[versions]
+# add hand pinned version there
+# plone32 hack to remove the bugged fixed version of buildout.
+zc.buildout -= 1.1.1
+zc.recipe.egg -= 1.1.0
+distribute -= 0.6.8
+# do not fix latest templates
+ZopeSkel=
+# do not fix for latest Cheetah sake
+Markdown=
+# $project=1.0
+# plone.reload > 1 is not compatible with plone3 (depends on Zope2, eggigied)
+#plone.reload=0.11
+#if $plone_version < '3.3':
+\#http://plone.org/products/plone/security/advisories/cve-2009-0662
+Products.PlonePAS = 3.9
+#end if
+#for version in $plone_versions:
+#if $version[0].startswith('#'):
+$version[0]
+#else
+$version[0] = $version[1]
+#end if
+#end for
+ 
+# on Upgrades
+# Think to change the plone release URL !!!
+#if $with_wsgi_support:
+find-links += http://pypi.python.org/simple/ZODB3
+            http://dist.repoze.org/zope2/latest/
+# FOR PILWTOK
+            http://download.zope.org/distribution/
+#else
+# FOR PILWTOK
+find-links += http://download.zope.org/distribution/
+#end if
+# vim:set ft=cfg:

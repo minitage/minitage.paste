@@ -10,6 +10,7 @@ up
     - add tinymce
     - plone3 template maintenance
     - fix pack [thx to jpc]
+    - relayout the plone templates
 
 1.3.103
 ---------

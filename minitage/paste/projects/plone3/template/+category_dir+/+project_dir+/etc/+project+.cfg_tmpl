@@ -1,131 +1,49 @@
-# PROJECT SPECIFIC SETTINGS
-#if 'zeo' in $mode:
-#set $zeocomment=''
-#else
-#set $zeocomment='#'
-#end if
 
-[versions]
-# add hand pinned version there
-# plone32 hack to remove the bugged fixed version of buildout.
-zc.buildout -= 1.1.1
-zc.recipe.egg -= 1.1.0
-# do not fix latest templates
-ZopeSkel=
-# do not fix for latest Cheetah sake
-Markdown=
-# $project=1.0
-# plone.reload > 1 is not compatible with plone3 (depends on Zope2, eggigied)
-#plone.reload=0.11
-#if $plone_version < '3.3':
-\#http://plone.org/products/plone/security/advisories/cve-2009-0662
-Products.PlonePAS = 3.9
-#end if
-#for version in $plone_versions:
-#if $version[0].startswith('#'):
-$version[0]
-#else
-$version[0] = $version[1]
-#end if
-#end for
-
+# Project specific settings
 
 [buildout]
-extensions = buildout.minitagificator mr.developer
-extends-cache = \${buildout:directory}/etc/cache
-# this allow you to run buildout on offline mode and to use only the downloaded plonev3.versions.cfg
-extends -= http://dist.plone.org/1elease/${plone_version}/versions.cfg
-extends = plone3.versions.cfg $project-kgs.cfg plone3.buildout.cfg #slurp
-#if $with_ploneproduct_sgdcg:
-    dancing.cfg
-#end if
-
-parts += #slurp
-#if $with_ploneproduct_plomino:
-    plomino
-#end if
-#if $with_ploneproduct_vaporisation:
-    vaporisation
-#end if
-    backup
-#if $with_ploneproduct_fss:
-# disabled as the iw.recipe.fss do that for us :  create-fss-dirs
-    fss
-    testsfss-command
-#end if
-${zeocomment}    zeoserver
-    plonesite
-# on Upgrades
-# Think to change the plone release URL !!!
-#if $with_wsgi_support:
-find-links += http://pypi.python.org/simple/ZODB3
-            http://dist.repoze.org/zope2/latest/
-# FOR PILWTOK
-            http://download.zope.org/distribution/
-#else
-# FOR PILWTOK
-find-links += http://download.zope.org/distribution/
-#end if
-eggs += zopelib
-develop += \${buildout:directory}/src.mrdeveloper/zopelib
-# see http://pypi.python.org/pypi/mr.developer for documentation
-versions = versions
-sources = sources
-auto-checkout =
 sources-dir=\${buildout:directory}/src.mrdeveloper
-#my.package
-
+# extra directories oto add to the python path
+extra-paths=
+auto-checkout =
+#     my.package
 
 # auto tracked developement products
 [sources]
 # see http://pypi.python.org/pypi/mr.developer for documentation
 #my.package = svn http://example.com/svn/my.package/trunk
 #some.other.package = git git://example.com/git/some.other.package.git
+ 
+[instance]
+# attacking zopepy:eggs make instance be built after zopepy
+# in any case thx to the buildout automatic parts sort. 
+eggs += \${buildout:eggs} #slurp
+#for $product in $additional_eggs:
+#if product.startswith('#'):
+$product
+#else:
+    ${product}
+#end if
+#end for
 
+zcml +=#slurp
+#for $product in $plone_zcml:
+#if product.startswith('#'):
+${product}
+#else:
+    ${product}
+#end if
+#end for 
 
-# Zope operating instances are created elsewhere.
-# For options see http://pypi.python.org/pypi/plone.recipe.zope2install
-[zope2]
-# fake eggs are required to satisfy Zope dependencies while
-# zope is not yet eggified.
-fake-zope-eggs = true
-additional-fake-eggs +=
-    ZConfig
-    pytz
-skip-fake-eggs +=
-    ZODB3
+#if $with_ploneproduct_plomino:
+products+=
+    \${plomino:location}
+#end if 
 
-# eggs & scripts installation
+[kgs]
+file=\${buildout:directory}/etc/${project}-kgs.cfg
+
 [zopepy]
-recipe = minitage.recipe.scripts
-# Important for you to note the installation of the ZODB as an egg . We will not
-# use the zodb code from the zope source distribution !!!!!!!
-#if not $inside_minitage:
-urls=http://download.zope.org/distribution/PILwoTk-1.1.6.4.tar.gz
-#end if
-eggs = \${instance:eggs}
-interpreter = zopepy
-# make the completyion work
-ipython-patches=\${buildout:directory}/patches/ipython.readline.patch
-                \${buildout:directory}/patches/ipython.withoutpdb.patch
-ipython-patch-options= -Np0
-extra-paths = \${instance:extra-paths}
-# first patch is for maintenance scripts inclusion bug
-# second is for relstorage
-ZODB3-patches=
-    \${buildout:directory}/patches/zodb3-3.7-scripts.patch
-#if 'relstorage' in $mode:
-    \${buildout:directory}/patches/minitage.poll-invalidation-1-zodb-3-7-1.patch
-#else
-#   \${buildout:directory}/patches/minitage.poll-invalidation-1-zodb-3-7-1.patch
-#end if
-Markdown-2.0.1-patches=\${buildout:directory}/patches/mardown-elementtree.patch
-Markdown-patch-options=-Np1
-atreal.patchfss-patches=\${buildout:directory}/patches/atreal.patchfss-setuppy.patch
-atreal.patchfss-patch-options=-Np1
-Products.Archetypes-patches=\${buildout:directory}/patches/archetypes_implby.patch
-
-env-file=\${buildout:directory}/etc/${project}.env
 # Scripts generated filtering
 scripts+=
 #zope2
@@ -155,162 +73,12 @@ ${product}
 #else:
     ${product}
 #end if
-#end for
+#end for 
 
-# here is defined the Zope instance running your plone site
-# beware that zopepy part must run before isntance in order to have the right version
-# pinned for relstorage
-[instance]
-order=\${zopepy:recipe}
-http-address=$address:$http_port
-zope2-location = \${zope2:location}
-user = $zope_user:$zope_password
-session-timeout-minutes = 90
-verbose-security = off
-debug-mode=OFF
-event-log-level=INFO
-# make the ZODB correctly build
-ZODB3-patches=\${zopepy:ZODB3-patches}
-
-z2-log-level=INFO
-# attacking zopepy:eggs make instance be built after zopepy
-# in any case thx to the buildout automatic parts sort.
-eggs += \${buildout:eggs} #slurp
-#for $product in $additional_eggs:
-#if product.startswith('#'):
-$product
-#else:
-    ${product}
-#end if
-#end for
-
-zcml +=#slurp
-#for $product in $plone_zcml:
-#if product.startswith('#'):
-${product}
-#else:
-    ${product}
-#end if
-#end for
-
-extra-paths+=
-    \${zope2:location}/lib/python
-    \${buildout:extra-paths}
-
-#if $with_ploneproduct_plomino:
-products+=
-    \${plomino:location}
-#end if
-
-# may be not used but it is good to have it in case.
-[zeoserver]
-recipe = plone.recipe.zope2zeoserver
-zope2-location = \${zope2:location}
-zeo-address = $zeo_address
-zeo-conf-additional =
-    %import tempstorage
-    <temporarystorage temp>
-        name temporary storage for sessioning
-    </temporarystorage>
-
-[vaporisation]
-recipe=minitage.recipe.fetch
-urls=http://svn.plone.org/svn/collective/Vaporisation/trunk|svn||\${zope2:location}/lib/python/vaporisation
-
-[plomino]
-recipe=minitage.recipe.fetch
-urls=http://plomino.svn.sourceforge.net/svnroot/plomino/branches/plone3/CMFPlomino|svn||\${buildout:directory}/parts/plomino/CMFPlomino
-
-# KGS generation
-[kgs]
-recipe=minitage.recipe.printer
-quiet=
-eggs=\${instance:eggs}
-file=\${buildout:directory}/etc/${project}-kgs.cfg
-
-#if not $inside_minitage:
-#[openldap]
-#recipe = minitage.recipe.cmmi
-#url = ftp://gd.tuwien.ac.at/infosys/network/OpenLDAP/openldap-stable/openldap-stable-20090411.tgz
-#
-#[python-ldap]
-#recipe = minitage.recipe.egg
-#egg = python-ldap
-#include-dirs  = \${openldap:location}/include
-#library-dirs  = \${openldap:location}/lib
-#end if
-
-# FSS Support
-# See: http://plone.org/products/filesystemstorage
-# and http://pypi.python.org/pypi/atreal.patchfss/1.0.0
-# http://pypi.python.org/pypi/iw.recipe.fss
-# the new iw.recipe.fss do this for us, disabling
-#[create-fss-dirs]
-#recipe = plone.recipe.command
-#update-command = \${create-fss-dirs:command}
-#command =
-#    mkdir -p \${buildout:directory}/var/fss_storage_global ;
-#    mkdir -p \${buildout:directory}/var/fss_backup_global ;
-#    mkdir -p \${buildout:directory}/var/fss_storage_${project} ;
-#    mkdir -p \${buildout:directory}/var/fss_backup_${project} ;
-
+# make attention only if you use fss
 [fss]
-recipe = iw.recipe.fss
-zope-instances=\${instance:location}
 storages =
     global /
-    ${project} /${project} $fss_strategy \${buildout:directory}/var/fss_storage_${project} \${buildout:directory}/var/fss_backup_${project}
-
-
-# Command below is important
-# if not, fss tests fail
-[testsfss-command]
-recipe = plone.recipe.command
-update-command = \${testsfss-command:command}
-command =
-    mkdir -pv \${buildout:directory}/parts/instance/var/fss_storage;
-    mkdir -pv \${buildout:directory}/parts/instance/var/fss_backup;
-
-[backup]
-recipe = collective.recipe.backup
-
-# Traditionnal Plone products to install
-[productdistros]
-recipe = plone.recipe.distros
-urls = #slurp
-#for $product in $plone_products:
-#if product.startswith('#'):
-${product}
-#else:
-    ${product}
-#end if
-#end for
-
-nested-packages = #slurp
-#for $product in $plone_np:
-#if product.startswith('#'):
-${product}
-#else:
-    ${product}
-#end if
-#end for
-
-version-suffix-packages = #slurp
-#for $product in $plone_vsp:
-#if product.startswith('#'):
-${product}
-#else:
-    ${product}
-#end if
-#end for
-
-[plonesite]
-recipe = collective.recipe.plonesite
-site-id = $plonesite
-site-replace=false
-enabled=true
-instance = instance
-${zeocomment}zeoserver = zeoserver
-# $mode
-
+    ${project} /${project} $fss_strategy \${plone:fss-storage} \${plone:fss-backup}
+ 
 # vim:set ft=cfg:

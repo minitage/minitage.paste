@@ -1,9 +1,9 @@
-# Plone 3  production buildout
+# Plone production buildout
 # It will install your plone and additional crontabs and backup scripts
 # Launch it:
 # bin/buildout -c buildout-prod.cfg
 # minimerge -NuUvR ${project}-prod
-# look at the extenended buildout: ./buildout.cfg for other details of your plone3 installation
+# look at the extenended buildout: ./buildout.cfg for other details of your plone installation
 
 # crontabs are:
 # make an incremental backup per day
@@ -15,7 +15,7 @@
 #end if
 
 [buildout]
-extends=buildout.cfg
+extends=etc/base.cfg etc/${mode}.cfg 
 parts+=zopepackdaily
     zoperestartdaily
 #if not 'relstorage' in $mode:

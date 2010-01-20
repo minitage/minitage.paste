@@ -1,0 +1,26 @@
+[zopepy]
+# make the completyion work
+ipython-patches=\${buildout:directory}/patches/ipython.readline.patch
+                \${buildout:directory}/patches/ipython.withoutpdb.patch
+ipython-patch-options= -Np0
+extra-paths = \${instance:extra-paths}
+# first patch is for maintenance scripts inclusion bug
+# second is for relstorage
+ZODB3-patches=
+    \${buildout:directory}/patches/zodb3-3.7-scripts.patch
+#if 'relstorage' in $mode:
+    \${buildout:directory}/patches/minitage.poll-invalidation-1-zodb-3-7-1.patch
+#else
+#   \${buildout:directory}/patches/minitage.poll-invalidation-1-zodb-3-7-1.patch
+#end if
+Markdown-2.0.1-patches=\${buildout:directory}/patches/mardown-elementtree.patch
+Markdown-patch-options=-Np1
+atreal.patchfss-patches=\${buildout:directory}/patches/atreal.patchfss-setuppy.patch
+atreal.patchfss-patch-options=-Np1
+Products.Archetypes-patches=\${buildout:directory}/patches/archetypes_implby.patch
+
+[instance]
+# make the ZODB correctly build
+ZODB3-patches=\${zopepy:ZODB3-patches}  
+
+# vim:set ft=cfg:

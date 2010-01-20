@@ -4,24 +4,24 @@ storage-mode=relstorage
 [instance]
 rel-storage =
 #if $relstorage_type == 'oracle':
-    type $relstorage_type
-    dsn (DESCRIPTION=(ADDRESS=(HOST=$relstorage_host))(CONNECT_DATA=(SERVICE_NAME=$relstorage_dbname)))
-    user $relstorage_dbuser
-    password $relstorage_password
+    type oracle
+    dsn (DESCRIPTION=(ADDRESS=(HOST=\${database:host}))(CONNECT_DATA=(SERVICE_NAME=\${database:dbname})))
+    user \${database:user}
+    password \${database:password}
 #elif $relstorage_type == 'mysql':
-    type $relstorage_type
+    type mysql
     dbname $relstorage_dbname
-    user $relstorage_dbuser
-    host $relstorage_host
-    passwd $dbpassword
+    user \${database:user}
+    host \${database:host}
+    passwd \${database:password}
 #elif $relstorage_type == 'postgresql':
-    type $relstorage_type
-    dsn  dbname='$relstorage_dbname' user='$relstorage_dbuser' host='$relstorage_host' password='$relstorage_password'
+    type postgresql
+    dsn  dbname='\${database:dbname}' user='\${database:user}' host='\${database:host}' password='\${database:password}'
 #else
     type $relstorage_type
-    dbname $relstorage_dbname
-    user $relstorage_dbuser
-    host $relstorage_host
-    password $relstorage_password
+    dbname \${database:dbname}
+    user \${database:user}
+    host \${database:host}
+    password \${database:password}
 #end if
 
