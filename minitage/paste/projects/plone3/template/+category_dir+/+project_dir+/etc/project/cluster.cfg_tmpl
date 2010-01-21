@@ -18,20 +18,4 @@ http-address = \$host:instance3}:\${ports:instance3}
 http-address = \$host:instance4}:\${ports:instance4}
 
 
-# example for a s&d configuration
-[instance-newsletter]
-<= instance
-http-address = \${hosts:instance-newsletter}:\${ports:instance-newsletter}
-zope-conf-additional +=
-    <clock-server>
-    # the traversal path (from the Zope root) to an executable Zope method (Python Script, external method, product method, etc). The method must take no arguments.
-    method /\${plone:site}/@@dancing.utils/tick_and_dispatch
-    #the number of seconds between each clock "tick" (and thus each call to the above "method"). The lowest number providable here is typically 30 (this is the asyncore mainloop "timeout" value).
-    period 300
-    user \${zope:user}
-    password \${zope:password}
-    #the hostname passed in via the "Host:" header in the faux request. Could be useful if you have virtual host rules set up inside Zope itself.
-    host localhost
-    </clock-server>
-
 # vim:set ft=cfg:

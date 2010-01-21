@@ -1,4 +1,9 @@
 # Sysadmin settings like hosts, credentials, paths, cache settings, and loglevels
+#if $with_ploneproduct_sgdcg
+#set $sgdgcomment=''
+#else
+#set $sgdgcomment='#'
+#end if 
 
 [hosts]
 # setted here but just as information, it may not be used.
@@ -55,18 +60,17 @@ event-log-level=INFO
 [plone]
 # Site ID
 site = $plonesite
-testfss-backup1= \${instance1:location}/var/fss_backup
-testfss-storage1=\${instance1:location}/var/fss_storage
-testfss-backup2= \${instance2:location}/var/fss_backup
-testfss-storage2=\${instance2:location}/var/fss_storage
-testfss-backup3= \${instance3:location}/var/fss_backup
-testfss-storage3=\${instance3:location}/var/fss_storage
-testfss-backup4= \${instance4:location}/var/fss_backup
-testfss-storage4=\${instance4:location}/var/fss_storage
-testfss-backup=  \${instance:location}/var/fss_backup
-testfss-storage= \${instance:location}/var/fss_storage
-testfss-backup-newsletter= \${instance-newsletter:location}/var/fss_backup
-testfss-storage-newsletter=\${instance-newsletter:location}/var/fss_storage
+# aboslute paths to avoid buildout auto build of reffered part
+testfss-backup1= \${buildout:directory}/instance1/var/fss_backup
+testfss-storage1=\${buildout:directory}/instance1/var/fss_storage
+testfss-backup2= \${buildout:directory}/instance2/var/fss_backup
+testfss-storage2=\${buildout:directory}/instance2/var/fss_storage
+testfss-backup3= \${buildout:directory}/instance3/var/fss_backup
+testfss-storage3=\${buildout:directory}/instance3/var/fss_storage
+testfss-backup4= \${buildout:directory}/instance4/var/fss_backup
+testfss-storage4=\${buildout:directory}/instance4/var/fss_storage
+testfss-backup=  \${buildout:directory}/instance:location}/var/fss_backup
+testfss-storage= \${buildout:directory}/instance:location}/var/fss_storage
 fss-backup=  \${buildout:directory}/var/fss_backup_${project}
 fss-storage= \${buildout:directory}/var/fss_storage_${project}
 fss-backup1= \${buildout:directory}/var/fss_backup1_${project}
@@ -77,9 +81,13 @@ fss-backup3= \${buildout:directory}/var/fss_backup3_${project}
 fss-storage3=\${buildout:directory}/var/fss_storage3_${project}
 fss-backup4= \${buildout:directory}/var/fss_backup4_${project}
 fss-storage4=\${buildout:directory}/var/fss_storage4_${project}
-fss-backup-newsletter= \${buildout:directory}/var/fss_backupnewsletter_${project}
-fss-storage-newsletter=\${buildout:directory}/var/fss_storagenewsletter_${project}
+${sgdgcomment}testfss-backup-newsletter= \${instance-newsletter:location}/var/fss_backup
+${sgdgcomment}testfss-storage-newsletter=\${instance-newsletter:location}/var/fss_storage 
+${sgdgcomment}fss-backup-newsletter= \${buildout:directory}/var/fss_backupnewsletter_${project}
+${sgdgcomment}fss-storage-newsletter=\${buildout:directory}/var/fss_storagenewsletter_${project}
 #system user
+
+
 [users]
 zope=$running_user
 balancer=$running_user

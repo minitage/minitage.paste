@@ -97,7 +97,6 @@
     <egg name="flickrapi"                      options="with_ploneproduct_truegallery"     />
     <egg name="gdata"                          options="with_ploneproduct_truegallery"     />
     <egg name="ipython"                        options="with_tool_ipython"                 scripts="ipython" />
-    <egg name="i18ndude"                       options="with_tool_i18ndude"                scripts="i18ndude" />
     <egg name="MySQL_python"                   options="with_database_mysql"               />
     <egg name="sqlalchemy"                     options="with_database_sa"                  />
     <egg name="PasteDeploy"                    options="with_wsgi_support"                 />

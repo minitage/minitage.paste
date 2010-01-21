@@ -3,6 +3,11 @@ CHANGES
 ==============
 
 
+UP
+------
+
+    - plone3 template maintenance
+
 1.3.114
 ----------------
 

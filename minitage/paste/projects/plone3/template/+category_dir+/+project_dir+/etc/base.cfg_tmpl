@@ -146,7 +146,12 @@
 #else
 #set $solrcomment='#'
 #end if
-
+#if $with_ploneproduct_sgdcg
+#set $sgdgcomment=''
+#else
+#set $sgdgcomment='#'
+#end if
+ 
 
 [buildout]
 timeout=3
@@ -154,7 +159,7 @@ extensions = buildout.minitagificator mr.developer
 extends-cache = \${buildout:directory}/etc/cache
 # this allow you to run buildout on offline mode and to use only the downloaded plonev3.versions.cfg
 extends -= http://dist.plone.org/1elease/${plone_version}/versions.cfg
-extends = plone/plone3.versions.cfg plone/plone3.buildout.cfg project/patches.cfg project/sources.cfg sys.cfg project/versions.cfg project/cluster.cfg project/${project}-kgs.cfg project/${project}.cfg #slurp
+extends = plone/plone3.versions.cfg plone/plone3.buildout.cfg project/patches.cfg project/sources.cfg sys.cfg project/versions.cfg project/${project}-kgs.cfg project/${project}.cfg #slurp
 #if $with_indexing_solr:
     backends/solr.cfg#slurp
 #end if
@@ -162,7 +167,7 @@ extends = plone/plone3.versions.cfg plone/plone3.buildout.cfg project/patches.cf
     backends/fss.cfg#slurp
 #end if
 #if $with_ploneproduct_sgdcg:
-    plone/dancing.cfg#slurp
+    project/newsletter.cfg#slurp
 #end if
 #if $with_experimental:
     plone/experimental.cfg#slurp
@@ -171,7 +176,7 @@ extends = plone/plone3.versions.cfg plone/plone3.buildout.cfg project/patches.cf
 parts += backup
     omelette
     mkdirs
-    instance-newsletter
+${sgdgcomment}    instance-newsletter
 ${fsscomment}    fss
 ${solrcomment}    solr
 ${solrcomment}    solrinstance
@@ -270,12 +275,12 @@ command =
     mkdir -pv \${plone:testfss-storage};
     mkdir -pv \${plone:fss-storage};
     mkdir -pv \${plone:fss-backup};
-#    mkdir -pv \${plone:testfss-backup-newsletter}
-#    mkdir -pv \${plone:testfss-storage-newsletter}
-#    mkdir -pv \${plone:testfss-backup-newsletter}
-#    mkdir -pv \${plone:testfss-storage-newsletter}
-#    mkdir -pv \${buildout:directory}/src/nmd/newsletter/nmd/newsletter/mailqueue/cur;
-#    mkdir -pv \${buildout:directory}/src/nmd/newsletter/nmd/newsletter/mailqueue/tmp;
-#    mkdir -pv \${buildout:directory}/src/nmd/newsletter/nmd/newsletter/mailqueue/new;
+${sgdgcomment}    mkdir -pv \${plone:testfss-backup-newsletter}
+${sgdgcomment}    mkdir -pv \${plone:testfss-storage-newsletter}
+${sgdgcomment}    mkdir -pv \${plone:testfss-backup-newsletter}
+${sgdgcomment}    mkdir -pv \${plone:testfss-storage-newsletter}
+${sgdgcomment}    mkdir -pv \${buildout:directory}/src/nmd/newsletter/nmd/newsletter/mailqueue/cur;
+${sgdgcomment}    mkdir -pv \${buildout:directory}/src/nmd/newsletter/nmd/newsletter/mailqueue/tmp;
+${sgdgcomment}    mkdir -pv \${buildout:directory}/src/nmd/newsletter/nmd/newsletter/mailqueue/new;
 
 \# vim: set ft=cfg:

@@ -10,6 +10,7 @@
 extends=etc/base.cfg etc/backends/${mode}.cfg
 parts+= omelette
         ipzope
+        i18ndude
 
 [versions]
 ctypes=1.0.2
@@ -87,5 +88,9 @@ scripts = ipython=ipzope
 #author = You
 #dot = _
 
+[i18ndude]
+recipe=minitage.recipe.scripts
+eggs=i18ndude
+scripts=i18ndude
 
 # vim:set ft=cfg:

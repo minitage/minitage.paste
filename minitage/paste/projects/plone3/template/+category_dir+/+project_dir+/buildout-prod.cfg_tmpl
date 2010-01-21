@@ -19,9 +19,14 @@
 # Think for enabling the log statement!
 
 # Think to include the logrotate configuration file inside your logrotate configuration (ln ?)
+#if $with_ploneproduct_sgdcg
+#set $sgdgcomment=''
+#else
+#set $sgdgcomment='#'
+#end if 
 
 [buildout]
-extends=etc/base.cfg etc/backends/${mode}.cfg
+extends=etc/base.cfg etc/project/cluster.cfg etc/backends/${mode}.cfg
 parts+= instance1
     instance2
     instance3
@@ -130,6 +135,7 @@ programs =
     20 instance2 \${buildout:directory}/parts/instance2/bin/runzope                                          true \${users:zope}
     20 instance3 \${buildout:directory}/parts/instance3/bin/runzope                                          true \${users:zope}
     20 instance4 \${buildout:directory}/parts/instance4/bin/runzope                                          true \${users:zope}
+${sgdgcomment}    20 instance4 \${buildout:directory}/parts/instance-newsletter/bin/runzope                                          true \${users:zope}
     30 balancer  \${buildout:directory}/bin/haproxy  [-f \${buildout:directory}/etc/loadbalancing/balancer.conf -db]       true \${users:balancer}
 
 [logrotate.conf]
