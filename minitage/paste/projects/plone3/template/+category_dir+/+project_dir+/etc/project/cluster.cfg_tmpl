@@ -3,19 +3,19 @@
 
 [instance1]
 <= instance
-http-address = \$host:instance1}:\${ports:instance1}
+http-address = \${hosts:instance1}:\${ports:instance1}
 
 [instance2]
 <= instance
-http-address = \$host:instance2}:\${ports:instance2}
+http-address = \${hosts:instance2}:\${ports:instance2}
 
 [instance3]
 <= instance
-http-address = \$host:instance3}:\${ports:instance3}
+http-address = \${hosts:instance3}:\${ports:instance3}
 
 [instance4]
 <= instance
-http-address = \$host:instance4}:\${ports:instance4}
+http-address = \${hosts:instance4}:\${ports:instance4}
 
 
 # vim:set ft=cfg:
