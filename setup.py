@@ -70,6 +70,7 @@ setup(
             'minitage.instances.env = minitage.paste.instances.env:Template',
             'minitage.instances.postgresql = minitage.paste.instances.postgresql:Template',
             'minitage.instances.mysql = minitage.paste.instances.mysql:Template',
+            'minitage.instances.nginx = minitage.paste.instances.nginx:Template',
             'minitage.instances.varnish = minitage.paste.instances.varnish:Template',
             'minitage.instances.varnish2 = minitage.paste.instances.varnish2:Template',
             'minitage.instances.paste-initd = minitage.paste.instances.pasteinitd:Template',
