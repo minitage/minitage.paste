@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+. $sys/share/minitage/minitage.env
+configfile=${sys}/etc/nginx/${project}/nginx.conf
+nginx -c  \$configfile  "$@"

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+. $sys/share/minitage/minitage.env
+
+nginx $@
+
+

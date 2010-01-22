@@ -1,0 +1,27 @@
+server {
+        listen	        ${http_address}:${http_port};
+        server_name	localhost;
+
+        access_log	${sys}/var/log/nginx/${project}.localhost.access_log main;
+        error_log	${sys}/var/log/nginx/${project}.localhost.error_log info;
+	include		${sys}/etc/nginx/${project}/fastcgi.conf;
+
+        root ${sys}/var/www/${project}/htdocs;
+} 
+
+#ssl portion
+# server {
+        #listen	       ${https_address}:${https_port};
+        # 	listen		127.0.0.1:443;
+        # 	server_name	localhost;
+	#       include		${sys}/etc/nginx/${project}/fastcgi.conf;
+        # 	
+        # 	ssl on;
+        # 	ssl_certificate		${sys}/etc/ssl/nginx/${project}.nginx.pem;
+        # 	ssl_certificate_key	${sys}/etc/ssl/nginx/${project}.nginx.key;
+        # 	
+        # 	access_log	/var/log/nginx/${project}.localhost.ssl_access_log main;
+        # 	error_log	/var/log/nginx/${project}.localhost.ssl_error_log info;
+        # 
+        # 	root /var/www/localhost/htdocs;
+        # } 

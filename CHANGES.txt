@@ -7,6 +7,8 @@ UP
 ------
 
     - plone3 template maintenance
+    - nginx instance
+    - init.d files coherence
 
 1.3.114
 ----------------

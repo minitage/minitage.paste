@@ -185,7 +185,7 @@ WITH GRANT OPTION;
                     )
                 ),
                 os.path.join(
-                    vars['sys'], 'etc', 'init.d', 'mysql_%s.%s' %(
+                    vars['sys'], 'etc', 'init.d', '%s_mysql.%s' %(
                         vars['project'], vars['db_name']
 
                     )

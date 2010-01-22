@@ -1,0 +1,9 @@
+
+${sys}/var/log/nginx/${project}*_log {
+	missingok
+	sharedscripts
+	postrotate
+		kill -USR1 `cat ${sys}/var/run/nginx/${project}.pid`
+	endscript
+}
+

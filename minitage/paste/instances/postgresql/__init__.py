@@ -250,7 +250,7 @@ log_filename='postgresql-%(p)sY-%(p)sm-%(p)sd.log'
                     )
                 ),
                 os.path.join(
-                    vars['sys'], 'etc', 'init.d', 'postgresql_%s.%s' %(
+                    vars['sys'], 'etc', 'init.d', '%s_postgresql.%s' %(
                         vars['project'], vars['db_name']
 
                     )
