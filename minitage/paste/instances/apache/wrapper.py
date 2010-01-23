@@ -1,0 +1,71 @@
+# Copyright (C) 2009, Mathieu PASQUET <kiorky@cryptelium.net>
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# 1. Redistributions of source code must retain the above copyright notice,
+#    this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. Neither the name of the <ORGANIZATION> nor the names of its
+#    contributors may be used to endorse or promote products derived from
+#    this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+
+
+
+__docformat__ = 'restructuredtext en'
+
+import sys
+import os
+
+
+PATH = os.path.join(os.path.dirname(__file__), 'template', 'bin')
+PG_PATH = os.environ.get('MPG_PATH',
+                         os.path.expanduser('~/minitage/dependencies/apache-2.2/parts/part/bin/')
+                        )
+WRAPPE_TEMPLATE ="""\
+#!/usr/bin/env bash
+. ${sys}/share/minitage/minitage.env
+%s $@
+"""
+
+CWRAPPE_TEMPLATE =r"""\
+#!/usr/bin/env bash
+. ${sys}/share/minitage/minitage.env
+args="-f ${sys}/etc/apache/${project}/httpd.conf \$@"
+if [[ -z "\$@" ]];then args="";fi
+%s \$args
+
+""" 
+
+configt = ['apachectl']
+
+def main():
+    for f in os.listdir(PG_PATH):
+        d = open(os.path.join(PATH, '+project+.%s_tmpl' % f), 'w')
+        t=WRAPPE_TEMPLATE
+        if f in configt:
+            t=CWRAPPE_TEMPLATE
+        d.write(t % f)
+        d.close()
+
+
+if __name__ == '__main__':
+    main()
+
+
+# vim:set et sts=4 ts=4 tw=80:

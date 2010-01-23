@@ -1,0 +1,7 @@
+\
+#!/usr/bin/env bash
+. ${sys}/share/minitage/minitage.env
+args="-f ${sys}/etc/apache/${project}/httpd.conf \$@"
+if [[ -z "\$@" ]];then args="";fi
+apachectl \$args
+

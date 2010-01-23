@@ -26,6 +26,7 @@ Projects templates
 Projects  instances
 =======================
 
+    - minitage.instances.apache: create an apache instance.
     - minitage.instances.nginx: create a nginx instance.
     - minitage.instances.varnish: create a varnish instance with or without a sample
       configuration file toward zope/plone.

@@ -6,7 +6,7 @@ setupdir = os.path.abspath(
 os.chdir(setupdir)
 
 name='minitage.paste'
-version = '1.3.117'
+version = '1.3.118'
 
 
 def read(rnames):
@@ -67,6 +67,7 @@ setup(
             'minitage.plone25 = minitage.paste.projects.plone25:Template',
             'minitage.plone3 = minitage.paste.projects.plone3:Template',
             'minitage.plone4 = minitage.paste.projects.plone4:Template',
+            'minitage.instances.apache = minitage.paste.instances.apache:Template',
             'minitage.instances.env = minitage.paste.instances.env:Template',
             'minitage.instances.postgresql = minitage.paste.instances.postgresql:Template',
             'minitage.instances.mysql = minitage.paste.instances.mysql:Template',
