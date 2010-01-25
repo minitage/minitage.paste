@@ -315,7 +315,7 @@ def parse_xmlconfig(xml):
         'eggs_mappings' :                eggs_mappings,
         'scripts_mappings' :             scripts_mappings,
         'zcml_loading_order' :           zcml_loading_order,
-        'izcml_mappings' :               zcml_mappings,
+        'zcml_mappings' :               zcml_mappings,
         'versions_mappings' :            versions_mappings,
         'checked_versions_mappings' :    checked_versions_mappings,
         'urls_mappings' :                urls_mappings,
