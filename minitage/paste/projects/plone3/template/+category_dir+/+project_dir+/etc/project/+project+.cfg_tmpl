@@ -16,7 +16,7 @@
 #else
 #set $solrcomment='#'
 #end if
- 
+
 [buildout]
 sources-dir=\${buildout:directory}/src.mrdeveloper
 parts += #slurp
@@ -93,6 +93,6 @@ site-id = \${plone:site}
 site-replace=false
 enabled=true
 instance = instance
-${zeocomment}zeoserver = zeoserver 
+${zeocomment}zeoserver = zeoserver
 
 # vim:set ft=cfg:

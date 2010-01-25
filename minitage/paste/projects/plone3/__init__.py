@@ -296,7 +296,7 @@ class Template(common.Template):
         vars['running_user'] = common.running_user
         vars['instances_description'] = common.INSTANCES_DESCRIPTION % vars
 
-    def post_default_template_hook(command, output_dir, vars, ep):
+    def post_default_template_hook(self, command, output_dir, vars, ep):
         try:
             etc = os.path.join(vars['path'], 'etc', 'plone')
             if not os.path.isdir(etc):
