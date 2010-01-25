@@ -1,15 +1,20 @@
-#echo '##############################################################################\n'
+$hr
 # PLONE  BUILDOUT
 #echo '#\n'
 #echo '#\n'
 # WARNING ABOUT BUILOOUT BOOTSTRAP WARNING
-# ---------------------------------------
+# --------------------------------------------
+#echo '#\n'
+#         !!!    Be sure to use zc.buildout >= 1.4.3, or you ll have errors or bugs.    !!!
+#echo '#\n'
 # If you are using the standalone (choose to answer inside_minitage=no), you must ensure to do the
 # \$python bootstrap.py dance with a python compatible with the targeted zope installation (python 2.4/plone3 python 2.6/plone4)
 # eg: cd $project && python2.4 bootstrap.py && bin/buildout -vvvvvvc <CONFIG_FILE>
 #echo '#\n'
 #echo '#\n'
-# Minitage users, don't worry about that, all is setted for you.
+# Minitage users, don't worry about that, all is setted for you in the two minibuilds created for you,
+# just issue minimerge -v <MINIBUILD_NAME> after installing the minilay in your MINITAGE/minilays directory.
+#echo '#\n'
 #echo '#\n'
 # Create a first plonesite object
 # ---------------------------------
@@ -19,18 +24,19 @@
 # DEVELOP MODE
 # ---------------
 # To develop your application, run the buildout-dev.cfg buildout, it extends this one but:
-#   * has development tools.
-#   * configure the instance to be more verbose (debug mode)
+#   * it comes with development tools.
+#   * it configures the instance to be more verbose (debug mode & verbose security)
 #echo '#\n'
 #echo '#\n'
 # PRODUCTION MODE
 # ---------------
-# To make your application safe for production, run the buildout-prod.cfg buildout, it extends this one with additionnal crontabs and backup scripts and some additionnal instances creation.
+# To make your application safe for production, run the 'buildout-prod.cfg buildout'.
+# It extends this one with additionnal crontabs and backup scripts and some additionnal instances creation.
 #echo '#\n'
 #echo '#\n'
 # PLONE Official buildouts Integration
 # --------------------------------------------
-# The original etc/plone/plone3.version.cfg is the original pinned version file for your plone3 release maintened in the official package.
+# The original etc/plone/plone3.version.cfg is the original pinned version file for your plone3 release maintened by the official plone folks.
 # The original etc/plone/plone3.buildout.cfg is the one maintened by the plone.org's guys through the package ZopeSkel (plone3_buildout).
 # The parts in this buildout extends/overwrite this file, you can read it to get additionnal documentation.
 # You must enter speicfic project settings in the etc/${project}.cfg file.
@@ -42,59 +48,63 @@
 #
 #
 # Base buildouts:
-# |-- buildout-dev.cfg   -> buildout for development
-# |-- buildout-prod.cfg  -> buildout for production
+# |-- buildout-dev.cfg                           -> buildout for development
+# |-- buildout-prod.cfg                          -> buildout for production
+# |-- minitage/minitage.buildout-dev.cfg         -> buildout for development with minitage support (including xml libs, ldap, dbs; python, dependencies & common eggs cache for things like lxml or PIL)
+# `-- minitage/minitage.buildout-prod.cfg        -> buildout for production  with minitage support (including xml libs, ldap, dbs; python, dependencies & common eggs cache for things like lxml or PIL)
 #echo '#\n'
-# Remaining layout:
+#echo '#\n'
+# Crons
 # |-- cron_scripts=
-# |   |-- fss_daily.sh -> backup script for fss
+# |   |-- fss_daily.sh                           -> backup script for fss
 #echo '#\n'
+#echo '#\n'
+# Configuration files
 # |-- etc
-# |-- |-- base.cfg   -> this base buildout
-# |   |-- sys.cfg    -> Sysadmin relative informations like ports, users and log levels
+# |-- |-- base.cfg                               -> this base buildout
+# |   |-- sys.cfg                                -> Sysadmin related informations like paths, ports, users and log levels
 #echo '#\n'
 # Per os install helpers to install popular tools around zope/plone dev (not supported, just here for your conveniance, READ BEFORE USING THEM)
 # And you'd  better have to learn how to bootstrap some minitage environement out there, funny and secure!
-# |   |-- os/debian.sh
-# |   |-- os/opensuse-dev.sh
-# |   |-- os/opensuse.sh
-# |   |-- os/osx.sh
-# |   `-- os/ubuntu.sh
+# |   |-- os/debian.sh                           -> debian specific
+# |   |-- os/opensuse-dev.sh                     -> opensuse/dev specific
+# |   |-- os/opensuse.sh                         -> suse specific
+# |   |-- os/osx.sh                              -> osx specific
+# |   `-- os/ubuntu.sh                           -> ubuntu specific
 #echo '#\n'
 # Minitage support
-# |   |-- minitage/minitage.cfg               -> some buildout tweaks to run in the best of the world with minitage
-# |   |-- minitage/minitage.buildout-dev.cfg  -> buildout for development with minitage support (including xml libs, ldap, dbs; python, dependencies & common eggs cache for things like lxml or PIL)
-# |   |-- minitage/minitage.buildout-prod.cfg -> buildout for production  with minitage support (including xml libs, ldap, dbs; python, dependencies & common eggs cache for things like lxml or PIL)
+# |   |-- minitage/minitage.cfg                  -> some buildout tweaks to run in the best of the world with minitage
 #echo '#\n'
 # Project specific
-# |   |-- project/cluster.cfg        -> define new zope instances here
-# |   |-- project/sources.cfg        -> externals sources of your project
-# |   |-- project/patches.cfg        -> patches used on the project
-# |   |-- project/versions.cfg       -> minimal version pinning for installing your project
-# |   |-- project/${project}.cfg     -> your project needs (packages, sources, products
-# |   |-- project/${project}-kgs.cfg -> Generated KGS for your project (minitage's printer or buildout.dumppickledversion)
+# |   |-- project/cluster.cfg                    -> define new zope instances here & also their FileSystemStorage if any.
+# |   |-- project/sources.cfg                    -> externals sources of your project
+# |   |-- project/newsletter.cfg                 -> singing & dancing integration (new instance with clockserver, version pinning, fss if any)
+# |   |-- project/patches.cfg                    -> patches used on the project
+# |   |-- project/versions.cfg                   -> minimal version pinning for installing your project
+# |   |-- project/${project}.cfg                 -> your project needs (packages, sources, products
+# |   |-- project/${project}-kgs.cfg             -> Generated KGS for your project (minitage's printer or buildout.dumppickledversion)
 #echo '#\n'
 # Configuration templates
-# |   |-- templates/balancer.conf.template_tmpl  -> haproxy template
+# |   |-- templates/balancer.conf.template_tmpl  -> haproxy template.
+# |   |                                             Copy or ln the generated file 'etc/loadbalncing/balancer.conf' to your haproxy installation if any.
 # |   |-- templates/fss_daily.sh.in_tmpl         -> FSS daily backup script template
-# |   |-- templates/logrotate.conf.template_tmpl -> logrotate configuration file template
+# |   |-- templates/logrotate.conf.template_tmpl -> logrotate configuration file template for your Zope logs
 #echo '#\n'
 # Plone specific
-# |   |-- plone/plone3.buildout.cfg -> official plone3 buildout
-# |   |-- plone/plone3.versions.cfg -> official plone3 buildout kgs
-# |   |-- plone/experimental.cfg    -> experimental plone code
-# |   |-- plone/dancing.cfg         -> singing & dancing  particular buildout
+# |   |-- plone/plone3.buildout.cfg              -> official plone3 buildout
+# |   |-- plone/plone3.versions.cfg              -> official plone3 buildout kgs
+# |   |-- plone/experimental.cfg                 -> experimental plone code
 #echo '#\n'
 # Paster (WSGI)
-# |   |-- wsgi/prod.ini -> paster production configuration for running in wsgi mode
-# |   |-- wsgi/dev.ini  -> paster development configuration for running in wsgi mode
+# |   |-- wsgi/prod.ini                          -> paster production configuration for running in wsgi mode
+# |   |-- wsgi/dev.ini                           -> paster development configuration for running in wsgi mode
 #echo '#\n'
 # Backends
-# |   |-- backends/relstorage.cfg -> relstorage configuration if any
-# |   |-- backends/zeo.cfg        -> zeoserver configuration if any
-# |   |-- backends/zodb.cfg       -> Filestorage configuration if any
-# |   |-- backends/solr.cfg       -> Solr configuration if any
-# |   `-- backends/fss.cfg        -> FSS configuration if any
+# |   |-- backends/relstorage.cfg                -> relstorage configuration if any
+# |   |-- backends/zeo.cfg                       -> zeoserver configuration if any
+# |   |-- backends/zodb.cfg                      -> Filestorage configuration if any
+# |   |-- backends/solr.cfg                      -> Solr configuration if any
+# |   `-- backends/fss.cfg                       -> FSS configuration if any
 #echo '#\n'
 #echo '#\n'
 # KGS FILE
@@ -126,11 +136,9 @@
 #   bin/paster serve etc/wsgi/prod.ini
 #echo '#\n'
 #echo '#\n'
-#   You can use the minitage.instances.paste-initd paster template to generate init scripts
+$instances_description#slurp
+$hr
 
-#echo '##############################################################################\n'
-
-# PROJECT SPECIFIC SETTINGS
 #if 'zeo' in $mode:
 #set $zeocomment=''
 #else
@@ -151,7 +159,7 @@
 #else
 #set $sgdgcomment='#'
 #end if
- 
+
 
 [buildout]
 timeout=3
@@ -159,27 +167,30 @@ extensions = buildout.minitagificator mr.developer
 extends-cache = \${buildout:directory}/etc/cache
 # this allow you to run buildout on offline mode and to use only the downloaded plonev3.versions.cfg
 extends -= http://dist.plone.org/1elease/${plone_version}/versions.cfg
-extends = plone/plone3.versions.cfg plone/plone3.buildout.cfg project/patches.cfg project/sources.cfg sys.cfg project/versions.cfg project/${project}-kgs.cfg project/${project}.cfg #slurp
+extends = plone/plone3.versions.cfg plone/plone3.buildout.cfg project/patches.cfg project/sources.cfg sys.cfg #slurp
 #if $with_indexing_solr:
     backends/solr.cfg#slurp
 #end if
 #if $with_ploneproduct_fss:
     backends/fss.cfg#slurp
 #end if
-#if $with_ploneproduct_sgdcg:
-    project/newsletter.cfg#slurp
-#end if
 #if $with_experimental:
     plone/experimental.cfg#slurp
 #end if
+#if $with_ploneproduct_sgdcg:
+    project/newsletter.cfg#slurp
+#end if
+    project/versions.cfg project/${project}-kgs.cfg project/${project}.cfg
 
 parts += backup
-    omelette
-    mkdirs
 ${sgdgcomment}    instance-newsletter
+${fsscomment}${sgdgcomment}    fss-newsletter
 ${fsscomment}    fss
 ${solrcomment}    solr
 ${solrcomment}    solrinstance
+    backup
+    mkdirs
+    omelette
 
 find-links = \${groups:find-links}
 eggs += zopelib
@@ -270,17 +281,7 @@ packages = \${zope2:location}/lib/python ./
 [mkdirs]
 recipe = plone.recipe.command
 update-command = \${mkdirs:command}
-command =
-    mkdir -pv \${plone:testfss-backup};
-    mkdir -pv \${plone:testfss-storage};
-    mkdir -pv \${plone:fss-storage};
-    mkdir -pv \${plone:fss-backup};
-${sgdgcomment}    mkdir -pv \${plone:testfss-backup-newsletter}
-${sgdgcomment}    mkdir -pv \${plone:testfss-storage-newsletter}
-${sgdgcomment}    mkdir -pv \${plone:testfss-backup-newsletter}
-${sgdgcomment}    mkdir -pv \${plone:testfss-storage-newsletter}
-${sgdgcomment}    mkdir -pv \${buildout:directory}/src/nmd/newsletter/nmd/newsletter/mailqueue/cur;
-${sgdgcomment}    mkdir -pv \${buildout:directory}/src/nmd/newsletter/nmd/newsletter/mailqueue/tmp;
-${sgdgcomment}    mkdir -pv \${buildout:directory}/src/nmd/newsletter/nmd/newsletter/mailqueue/new;
+command +=
+
 
 \# vim: set ft=cfg:

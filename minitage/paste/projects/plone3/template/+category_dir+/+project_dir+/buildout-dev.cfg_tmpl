@@ -47,6 +47,36 @@ eggs+= plone.reload
 #    collective.autorestart
 #end if
 
+
+[zopepy]
+scripts += project_deploy
+    project_diff
+    project_eggs
+    project_md5
+    project_release
+    package_svn_prepare
+    release_eggs
+#Sphinx
+    sphinx-build
+    sphinx-quickstart
+    sphinx-autogen
+#zest.releaser
+    fullrelease
+    postrelease
+    lasttagdiff
+    prerelease
+    release
+    longtest
+#docutils
+    st2html.py
+    rst2latex.py
+    rst2newlatex.py
+    rst2pseudoxml.py
+    rst2s5.py
+    rst2xml.py
+    rstpep2html.p
+
+
 # Aggregate all python packages on one directory to have all in one directory
 # its really great after to have it for  your tags generator or your IDE
 # see parts/omelette after running this part to understand :)
@@ -91,6 +121,5 @@ scripts = ipython=ipzope
 [i18ndude]
 recipe=minitage.recipe.scripts
 eggs=i18ndude
-scripts=i18ndude
 
 # vim:set ft=cfg:

@@ -71,28 +71,12 @@ file=\${buildout:directory}/etc/${project}-kgs.cfg
 
 [zopepy]
 # Scripts generated filtering
-scripts+=
+scripts +=
 #zope2
-    zconfig
-    zconfig_schema2html
-    addzope2user
-    debugzope2
     repozo
-    runzeo
     zeoctl
     zeopack
-    zeopasswd
-    zodbconvert
-    zope2testrunner
-    zopeedit
-#collective.releaser
-    project_deploy
-    project_diff
-    project_eggs
-    project_md5
-    project_release
-    package_svn_prepare
-    release_eggs #slurp
+    zeopasswd #slurp
 #for $product in $plone_scripts:
 #if product.startswith('#'):
 ${product}
@@ -101,11 +85,7 @@ ${product}
 #end if
 #end for
 
-# make attention only if you use fss
-[fss]
-storages =
-    global /
-    ${project} /${project} $fss_strategy \${plone:fss-storage} \${plone:fss-backup}
+
 
 [plonesite]
 recipe = collective.recipe.plonesite

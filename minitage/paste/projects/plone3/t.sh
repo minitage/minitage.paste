@@ -34,7 +34,7 @@
 
 $MT/bfg/cgwb-dev/bin/paster create -t minitage.plone3 test inside_minitage=${1:-yes} --no-interactive -o $MT/zope/test \
 mode=relstorage                             \
-with_ploneproduct_fss=y                     \
+with_ploneproduct_fss=n                     \
 with_ploneproduct_atbackref=y               \
 with_ploneproduct_cachesetup=y              \
 with_ploneproduct_collage=y                 \
@@ -51,13 +51,15 @@ with_ploneproduct_plomino=y                 \
 with_ploneproduct_plonearticle=y            \
 with_ploneproduct_ploneboard=y              \
 with_ploneproduct_p4a_cal=y                 \
-with_ploneproduct_p4a_vid=y                 \
+with_ploneproduct_p4a_cal=y                 \
+with_haproxy=y                 \
+with_supervisor=y                 \
 with_ploneproduct_ploneformgen=y            \
 with_ploneproduct_quillsenabled=y           \
 with_ploneproduct_quills=y                  \
 with_ploneproduct_schematuning=y            \
 with_indexing_solr=y            \
-with_ploneproduct_sgdcg=n                   \
+with_ploneproduct_sgdcg=y                   \
 with_ploneproduct_tal_portlet=y             \
 with_ploneproduct_truegallery=y             \
 with_ploneproduct_vaporisation=y            \

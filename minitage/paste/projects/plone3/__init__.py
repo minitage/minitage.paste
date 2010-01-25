@@ -29,239 +29,98 @@ __docformat__ = 'restructuredtext en'
 
 import os
 import shutil
-import getpass
 import re
-import subprocess
 import urllib2
-from xml.dom.minidom import parse, parseString
 
 import pkg_resources
 
-from paste.script.command import run
 from iniparse import ConfigParser
 
 from minitage.paste.projects import common
 from minitage.paste.common import var
-from minitage.core.common  import which, search_latest
+from minitage.core.common  import search_latest
 
-reflags = re.M|re.U|re.S
-UNSPACER = re.compile('\s+|\n', reflags)
-SPECIALCHARS = re.compile('[.-@_]', reflags)
-running_user = getpass.getuser()
+class NoDefaultTemplateError(Exception): pass
 
-default_config = pkg_resources.resource_filename(
-    'minitage.paste',
-    'projects/plone3/minitage.plone3.xml')
-user_config = os.path.join(
-    os.path.expanduser('~'),
-    '.minitage.plone3.xml'
-)
-
+default_config = pkg_resources.resource_filename('minitage.paste', 'projects/plone3/minitage.plone3.xml')
+user_config = os.path.join( os.path.expanduser('~'), '.minitage.plone3.xml')
+vars = common.read_vars(default_config, user_config)
 # plone quickinstaller option/names mappings
-qi_mappings = {}
+qi_mappings = vars.get('qi_mappings', {})
 # eggs registered as Zope2 packages
-z2packages, z2products = {}, {}
+z2packages = vars.get('z2packages', {})
+z2products = vars.get('z2products', {})
 # variables discovered via configuration
-addons_vars = []
+addons_vars = vars.get('addons_vars', [])
 # mappings option/eggs to install
-eggs_mappings = {}
+eggs_mappings = vars.get('eggs_mappings', {})
 # scripts to generate
-scripts_mappings = {}
+scripts_mappings = vars.get('scripts_mappings', {})
 # mappings option/zcml to install
-zcml_loading_order = {}
-zcml_mappings = {}
+zcml_loading_order = vars.get('zcml_loading_order', {})
+zcml_mappings = vars.get('zcml_mappings', {})
 # mappings option/versions to pin
-versions_mappings = {}
+versions_mappings = vars.get('versions_mappings', {})
 # mappings option/versions to pin if the user wants really stable sets
-checked_versions_mappings = {}
+checked_versions_mappings = vars.get('checked_versions_mappings',{})
 # mappings option/productdistros to install
-urls_mappings = {}
+urls_mappings = vars.get('urls_mappings', {})
 # mappings option/nested packages/version suffix packages  to install
-plone_np_mappings = {}
-plone_vsp_mappings = {}
+plone_np_mappings = vars.get('plone_np_mappings', {})
+plone_vsp_mappings = vars.get('plone_vsp_mappings', {})
 
-def parse_xmlconfig(xml):
-    # discover  additionnal configuration options
-    try:
-        discovered_options = []
-        optsnodes = xml.getElementsByTagName('options')
-        if optsnodes:
-            for elem in optsnodes:
-                opts = elem.getElementsByTagName('option')
-                for o in opts:
-                    oattrs = dict(o.attributes.items())
-                    order = int(oattrs.get('order', 99999))
-                    # be sure not to have unicode params there because paster will swallow them up
-                    discovered_options.append(
-                        (order,
-                        var(oattrs.get('name'),
-                            UNSPACER.sub(' ', oattrs.get('description', '').strip()),
-                            default=oattrs.get('default')
-                           )
-                        )
-                    )
-        discovered_options.sort(lambda x, y: x[0] - y[0])
-        noecho = [addons_vars.append(o[1]) for o in discovered_options]
-
-        # discover KGS version
-        cvs = xml.getElementsByTagName('checkedversions')
-        #'with_ploneproduct_plonearticle': [('Products.PloneArticle', '4.1.4',)],
-        if cvs:
-            for elem in cvs:
-                for e in elem.getElementsByTagName('version'):
-                    oattrs = dict(e.attributes.items())
-                    for option in oattrs['options'].split(','):
-                        option = option.strip()
-                        if not option in checked_versions_mappings:
-                            checked_versions_mappings[option] = []
-                        item = (oattrs['p'], oattrs['v'])
-                        if not item in checked_versions_mappings[option]:
-                            checked_versions_mappings[option].append(item)
-
-        # discover andatory versions pinning
-        vs = xml.getElementsByTagName('versions')
-        # versions_mappings = {RelStorage': [('ZODB3', '3.7.2')],}
-        if vs:
-            for elem in vs:
-                for e in elem.getElementsByTagName('version'):
-                    oattrs = dict(e.attributes.items())
-                    for option in oattrs['name'].split(','):
-                        option = option.strip()
-                        if not option in versions_mappings:
-                            versions_mappings[option] = []
-                        item = (oattrs['p'], oattrs['v'])
-                        if not item in versions_mappings[option]:
-                            versions_mappings[option].append(item)
-
-        # quickinstaller mappings discovery
-        qi = xml.getElementsByTagName('qi')
-        if qi:
-            for elem in qi:
-                for e in elem.getElementsByTagName('product'):
-                    oattrs = dict(e.attributes.items())
-                    for option in oattrs['options'].split(','):
-                        option = option.strip()
-                        if not option in qi_mappings:
-                            qi_mappings[option] = []
-                        if not oattrs['name'] in qi_mappings:
-                            qi_mappings[option].append(oattrs['name'])
-
-        # eggs/zcml discovery
-        eggs = xml.getElementsByTagName('eggs')
-        if eggs:
-            for elem in eggs:
-                for e in elem.getElementsByTagName('egg'):
-                    oattrs = dict(e.attributes.items())
-                    for option in oattrs['options'].split(','):
-                        option = option.strip()
-                        if not option in eggs_mappings:
-                            eggs_mappings[option] = []
-                        if not oattrs['name'] in eggs_mappings[option]:
-                            eggs_mappings[option].append(oattrs['name'])
-                        if 'scripts' in oattrs:
-                            if not option in scripts_mappings:
-                                scripts_mappings[option] = []
-                            for item in oattrs['scripts'].split(','):
-                                scripts_mappings[option].append(item)
-                        if 'zcml' in oattrs:
-                            if not option in zcml_mappings:
-                                zcml_mappings[option] = []
-                            for slug in oattrs['zcml'].split(','):
-                                item = (oattrs['name'], slug.strip())
-                                if not item in zcml_mappings[option]:
-                                    zcml_mappings[option].append(item)
-                                    zcml_loading_order[item] = int(oattrs.get('zcmlorder', '50000'))
-                        for d, package in [(z2packages, 'zpackage'), (z2products, 'zproduct')]:
-                            if package in oattrs:
-                                v = oattrs[package]
-                                if not option in d:
-                                    d[option] = []
-                                if v == 'y':
-                                    if not oattrs['name'] in d[option]:
-                                        d[option].append(oattrs['name'])
-                                else:
-                                    #d[option].append('#%s' % oattrs['name'])
-                                    zp = [z.strip() for z in oattrs[package].split(',')]
-                                    noecho = [d[option].append(z) for z in zp if not z in d[option]]
-        # misc product discovery
-        miscproducts = xml.getElementsByTagName('miscproducts')
-        if miscproducts:
-            for elem in miscproducts:
-                for e in elem.getElementsByTagName('product'):
-                    oattrs = dict(e.attributes.items())
-                    for option in oattrs['options'].split(','):
-                        option = option.strip()
-                        if 'zcml' in oattrs:
-                            if not option in zcml_mappings:
-                                zcml_mappings[option] = []
-                            for slug in oattrs['zcml'].split(','):
-                                item = (oattrs['name'], slug.strip())
-                                if not item in zcml_mappings[option]:
-                                    zcml_mappings[option].append(item)
-                                    zcml_loading_order[item] = int(oattrs.get('zcmlorder', '50000'))
-                        for d, package in [(z2packages, 'zpackage'), (z2products, 'zproduct')]:
-                            if package in oattrs:
-                                v = oattrs[package]
-                                if not option in d:
-                                    d[option] = []
-                                if v == 'y':
-                                    if not oattrs[package] in d[option]:
-                                        d[option].append(oattrs[package])
-                                else:
-                                    #d[option].append('#%s' % oattrs['name'])
-                                    zp = [z.strip() for z in oattrs[package].split(',')]
-                                    noecho = [d[option].append(z) for z in zp if not z in d[option]]
-
-        # productdistros handling
-        productsdistros = xml.getElementsByTagName('productdistros')
-        if productsdistros:
-            for elem in productsdistros:
-                for e in elem.getElementsByTagName('productdistro'):
-                    oattrs = dict(e.attributes.items())
-                    for option in oattrs['options'].split(','):
-                        option = option.strip()
-                        if not option in urls_mappings:
-                            urls_mappings[option] = []
-                        urls_mappings[option].append(oattrs['url'])
-    except Exception, e:
-        raise
-
-
-def init_vars():
-    for config in user_config, default_config:
-        if os.path.exists(config):
-            xml = parseString(open(config).read())
-            parse_xmlconfig(xml)
-            break
-init_vars()
-sections_mappings = {
-    'additional_eggs': eggs_mappings,
-    'plone_zcml': zcml_mappings,
-    'plone_products': urls_mappings,
-    'plone_np': plone_np_mappings,
-    'plone_vsp': plone_vsp_mappings,
-    'plone_scripts': scripts_mappings,
-}
-
-packaged_version = '3.3.4'
 class Template(common.Template):
+    packaged_version = '3.3.4'
+    summary                    = 'Template for creating a plone3 project'
+    python                     = 'python-2.4'
+    default_template_package   = 'ZopeSkel'
+    default_template_epn       = 'paste.paster_create_template'
+    default_template_templaten = 'plone3_buildout'
+    init_messages = (
+        '%s' % (
+            '---------------------------------------------------------\n'
+            '\tPlone 3 needs a python 2.4 to run:\n'
+            '\t * if you do not fill anything, it will use minitage or system\'s one\n'
+            '\t * if you do not provide one explicitly, it will use minitage or system\'s one\n'
+            '\t * Bindings will be automaticly included when you choose for example relstorage/mysql or plone ldap support.\n'
+            '\tAditionnaly you ll got two buildouts for production (buildout.cfg) and develoment mode (dev.cfg).\n'
+            '\tYou can also activate or safely ignore questions about zeoserver and relstorage if you do not use them.\n'
+            '---------------------------------------------------------\n'
+        ),
+    )
+    # not nice, but allow us to import variables from another place like
+    # from plone3 import qi_mappings and also avoid template copy/paste,
+    # just inherit and redefine those variables in the child class.
+    # plone quickinstaller option/names mappings
 
-    summary = 'Template for creating a plone3 project'
-    python = 'python-2.4'
+    # buildout <-> minitage config vars mapping
+    sections_mappings = {
+        'additional_eggs': eggs_mappings,
+        'plone_zcml': zcml_mappings,
+        'plone_products': urls_mappings,
+        'plone_np': plone_np_mappings,
+        'plone_vsp': plone_vsp_mappings,
+        'plone_scripts': scripts_mappings,
+    }
+    qi_mappings               = qi_mappings
+    z2packages                = z2packages
+    z2products                = z2products
+    addons_vars               = addons_vars
+    eggs_mappings             = eggs_mappings
+    scripts_mappings          = scripts_mappings
+    zcml_loading_order        = zcml_loading_order
+    zcml_mappings             = zcml_mappings
+    versions_mappings         = versions_mappings
+    checked_versions_mappings = checked_versions_mappings
+    urls_mappings             = urls_mappings
+    plone_np_mappings         = plone_np_mappings
+    plone_vsp_mappings        = plone_vsp_mappings
 
     def read_vars(self, command=None):
         if command:
             if not command.options.quiet:
-                print '%s' % (
-                    '---------------------------------------------------------\n'
-                    '\tPlone 3 needs a python 2.4 to run:\n'
-                    '\t * if you do not fill anything, it will use minitage or system\'s one\n'
-                    '\t * if you do not provide one explicitly, it will use minitage or system\'s one\n'
-                    '\t * Bindings will be automaticly included when you choose for example relstorage/mysql or plone ldap support.\n'
-                    '\tAditionnaly you ll got two buildouts for production (buildout.cfg) and develoment mode (dev.cfg).\n'
-                    '\tYou can also activate or safely ignore questions about zeoserver and relstorage if you do not use them.\n'
-                    '---------------------------------------------------------\n'
-                )
+                for msg in getattr(self, 'init_messages', []):
+                    print msg
         vars = common.Template.read_vars(self, command)
         for i, var in enumerate(vars[:]):
             if var.name in ['relstorage_dbname', 'relstorage_dbuser'] and command:
@@ -270,14 +129,15 @@ class Template(common.Template):
 
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
-        vars['plonesite'] = SPECIALCHARS.sub('', vars['project'])
+        vars['plonesite'] = common.SPECIALCHARS.sub('', vars['project'])
         vars['category'] = 'zope'
         vars['includesdirs'] = ''
+        vars['hr'] = '#' * 120
         common.Template.pre(self, command, output_dir, vars)
         vars['mode'] = vars['mode'].lower().strip()
 
         # transforming eggs requirements as lists
-        for var in sections_mappings:
+        for var in self.sections_mappings:
             if var in vars:
                 vars[var] = [a.strip() for a in vars[var].split(',')]
 
@@ -307,6 +167,10 @@ class Template(common.Template):
                 vars['mt'], cs, 'parts', 'part', 'include', 'sasl'
             )
 
+        # haproxy
+        if vars['with_haproxy'] and vars['inside_minitage']:
+            vars['opt_deps'] += ' %s' % search_latest('haproxy-\d\.\d*', vars['minilays'])
+
         # relstorage
         if 'relstorage' in vars['mode']:
             vars['additional_eggs'].append('#Relstorage')
@@ -326,16 +190,16 @@ class Template(common.Template):
 
         # do we need some pinned version
         vars['plone_versions'] = []
-        for var in versions_mappings:
+        for var in self.versions_mappings:
             vars['plone_versions'].append(('# %s' % var, '',))
-            for pin in versions_mappings[var]:
+            for pin in self.versions_mappings[var]:
                 vars['plone_versions'].append(pin)
 
         if vars["with_checked_versions"]:
-            for var in checked_versions_mappings:
+            for var in self.checked_versions_mappings:
                 if vars[var]:
                     vars['plone_versions'].append(('# %s' % var, '',))
-                    for pin in checked_versions_mappings[var]:
+                    for pin in self.checked_versions_mappings[var]:
                         vars['plone_versions'].append(pin)
 
         if not vars['mode'] in ['zodb', 'relstorage', 'zeo']:
@@ -343,11 +207,11 @@ class Template(common.Template):
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir)
 
-        for section in sections_mappings:
-            for var in [k for k in sections_mappings[section] if vars[k]]:
+        for section in self.sections_mappings:
+            for var in [k for k in self.sections_mappings[section] if vars[k]]:
                 if not section == 'plone_zcml':
                     vars[section].append('#%s'%var)
-                for item in sections_mappings[section][var]:
+                for item in self.sections_mappings[section][var]:
                    if section == 'plone_zcml':
                        item = '-'.join(item)
                    if not '%s\n' % item in vars[section]:
@@ -355,8 +219,7 @@ class Template(common.Template):
                            vars[section].append(item)
 
 
-
-        package_slug_re = re.compile('(.*)-(meta|configure|overrides)', reflags)
+        package_slug_re = re.compile('(.*)-(meta|configure|overrides)', common.reflags)
         def zcmlsort(obja, objb):
             obja = re.sub('^#', '', obja).strip()
             objb = re.sub('^#', '', objb).strip()
@@ -371,8 +234,8 @@ class Template(common.Template):
             bpackage, bslug = (objb, 'configure')
             if mb:
                 bpackage, bslug = mb.groups()
-            aorder = zcml_loading_order.get((apackage, aslug), 50000)
-            border = zcml_loading_order.get((bpackage, bslug), 50000)
+            aorder = self.zcml_loading_order.get((apackage, aslug), 50000)
+            border = self.zcml_loading_order.get((bpackage, bslug), 50000)
             return aorder - border
 
         # order zcml
@@ -380,8 +243,8 @@ class Template(common.Template):
         vars["plone_zcml"] = [a for a in  vars["plone_zcml"] if a.strip()]
 
         # add option marker
-        for option in zcml_mappings:
-            for p in zcml_mappings[option]:
+        for option in self.zcml_mappings:
+            for p in self.zcml_mappings[option]:
                 id = '-'.join(p)
                 if id in vars['plone_zcml']:
                     i = vars['plone_zcml'].index(id)
@@ -397,10 +260,15 @@ class Template(common.Template):
         vars['debug_mode'] = 'off'
         vars['verbose_security'] = 'off'
 
-        # running plone 3 buildout and getting stuff from it.
+        # running default template (like plone3_buildout) and getting stuff from it.
         try:
+            if not getattr(self, 'default_template_package', None):
+                raise NoDefaultTemplateError('')
+
             ep = pkg_resources.load_entry_point(
-                'ZopeSkel', 'paste.paster_create_template', 'plone3_buildout'
+                self.default_template_package,
+                self.default_template_epn,
+                self.default_template_templaten
             )
             p3 = ep(self)
             coo = command.options.overwrite
@@ -411,65 +279,9 @@ class Template(common.Template):
             p3.check_vars(vars, command)
             p3.run(command, vars['path'], vars)
             command.options.overwrite = coo
-            try:
-                etc = os.path.join(vars['path'], 'etc', 'plone')
-                if not os.path.isdir(etc):
-                    os.makedirs(etc)
-                cfg = os.path.join(vars['path'], 'buildout.cfg')
-                dst = os.path.join(vars['path'],
-                                   'etc', 'plone', 'plone3.buildout.cfg')
-                vdst = os.path.join(vars['path'],
-                                   'etc', 'plone', 'plone3.versions.cfg')
-                bc = ConfigParser()
-                bc.read(cfg)
-                ext = ''
-                try:
-                    ext = bc.get('buildout', 'extends')
-                except:
-                    pass
-                if ext:
-                    try:
-                        open(vdst, 'w').write(
-                            urllib2.urlopen(ext).read()
-                        )
-                    except Exception, e:
-                        shutil.copy2(
-                            pkg_resources.resource_filename(
-                                'minitage.paste',
-                                'projects/plone3/versions.cfg'
-                            ),
-                            vdst
-                        )
-                        self.lastlogs.append(
-                            "Versions have not been fixed, be ware. Are"
-                            " you connected to the internet (%s).\n" % e
-                        )
-                        self.lastlogs.append(
-                            "%s" % (
-                                'As a default, we will take an already'
-                                ' downloaded versions.cfg matching plone'
-                                ' %s.\n' %
-                                packaged_version
-                            )
-                        )
-                os.rename(cfg, dst)
-                # remove the extends bits in the plone3 buildout
-                if not bc.has_section('buildout'):
-                    bc.add_section('buildout')
-
-                bc.set(
-                    'buildout',
-                    'extends',
-                    'plone3.versions.cfg'
-                )
-                bc.write(open(dst, 'w'))
-            except Exception, e:
-                print
-                print
-                print "%s" % ("Plone folks have changed their paster, we didnt get any"
-                               " buildout, %s" %e)
-                print
-                print
+            self.post_default_template_hook(command, output_dir, vars, p3)
+        except NoDefaultTemplateError, e:
+            pass
         except Exception, e:
             print 'Error executing plone3 buildout, %s'%e
 
@@ -481,15 +293,78 @@ class Template(common.Template):
         vars['http_port3'] = int(vars['http_port']) + 3
         vars['http_port4'] = int(vars['http_port']) + 4
         vars['http_port5'] = int(vars['http_port']) + 5
-        vars['running_user'] = running_user
+        vars['running_user'] = common.running_user
+        vars['instances_description'] = common.INSTANCES_DESCRIPTION % vars
+
+    def post_default_template_hook(command, output_dir, vars, ep):
+        try:
+            etc = os.path.join(vars['path'], 'etc', 'plone')
+            if not os.path.isdir(etc):
+                os.makedirs(etc)
+            cfg = os.path.join(vars['path'], 'buildout.cfg')
+            dst = os.path.join(vars['path'],
+                               'etc', 'plone', 'plone3.buildout.cfg')
+            vdst = os.path.join(vars['path'],
+                               'etc', 'plone', 'plone3.versions.cfg')
+            bc = ConfigParser()
+            bc.read(cfg)
+            ext = ''
+            try:
+                ext = bc.get('buildout', 'extends')
+            except:
+                pass
+            if ext:
+                try:
+                    open(vdst, 'w').write(
+                        urllib2.urlopen(ext).read()
+                    )
+                except Exception, e:
+                    shutil.copy2(
+                        pkg_resources.resource_filename(
+                            'minitage.paste',
+                            'projects/plone3/versions.cfg'
+                        ),
+                        vdst
+                    )
+                    self.lastlogs.append(
+                        "Versions have not been fixed, be ware. Are"
+                        " you connected to the internet (%s).\n" % e
+                    )
+                    self.lastlogs.append(
+                        "%s" % (
+                            'As a default, we will take an already'
+                            ' downloaded versions.cfg matching plone'
+                            ' %s.\n' %
+                            self.packaged_version
+                        )
+                    )
+            os.rename(cfg, dst)
+            # remove the extends bits in the plone3 buildout
+            if not bc.has_section('buildout'):
+                bc.add_section('buildout')
+            bc.set(
+                'buildout',
+                'extends',
+                'plone3.versions.cfg'
+            )
+            bc.write(open(dst, 'w'))
+        except Exception, e:
+            print
+            print
+            print "%s" % ("Plone folks have changed their paster, we didnt get any"
+                           " buildout, %s" %e)
+            print
+            print
+
 
 sd_str = '%s' % (
     'Singing & Dancing NewsLetter, see http://plone.org/products/dancing'
     ' S&D is known to lead to multiple buildout installation errors.'
     ' Be sure to activate it and debug the errors. y/n'
 )
+
 Template.vars = common.Template.vars \
-        + [var('plone_version', 'Plone version, default is the one supported and packaged', default = packaged_version,),
+        + [var('plone_version', 'Plone version, default is the one supported and packaged', default = Template.packaged_version,),
            var('address', 'Address to listen on', default = 'localhost',),
            var('http_port', 'Port to listen to', default = '8081',),
            var('mode', 'Mode to use : zodb|relstorage|zeo', default = 'zodb'),
@@ -500,7 +375,7 @@ Template.vars = common.Template.vars \
            var('relstorage_host', 'Relstorage database host (only useful for relstorage mode)', default = 'localhost',),
            var('relstorage_port', 'Relstorage databse port (only useful for relstorage mode). (postgresql : 5432, mysql : 3306)', default = '5432',),
            var('relstorage_dbname', 'Relstorage databse name (only useful for relstorage mode)', default = 'minitagedb',),
-           var('relstorage_dbuser', 'Relstorage user (only useful for relstorage mode)', default = running_user),
+           var('relstorage_dbuser', 'Relstorage user (only useful for relstorage mode)', default = common.running_user),
            var('relstorage_password', 'Relstorage password (only useful for relstorage mode)', default = 'secret',),
            var('solr_host', 'Solr host (only useful if you want solr)', default = '127.0.0.1',),
            var('solr_port', 'Solr port (only useful if you want solr)', default = '8983',),
@@ -508,7 +383,7 @@ Template.vars = common.Template.vars \
            var('with_supervisor', 'Supervisor support (monitoring), http://supervisord.org/ y/n', default = 'y',),
            var('supervisor_host', 'Supervisor host', default = '127.0.0.1',),
            var('supervisor_port', 'Supervisor port', default = '9001',),
-           var('with_haproxy', 'haproxy support (loadbalancing), http://haproxy.1wt.eu/ y/n', default = 'y',),
+           var('with_haproxy', 'haproxy configuration file generation support (loadbalancing), http://haproxy.1wt.eu/ y/n', default = 'y',),
            var('haproxy_host', 'Haproxy host', default = '127.0.0.1',),
            var('haproxy_port', 'Haproxy port', default = '8201',),
            var('plone_products', 'comma separeted list of adtionnal products to install: eg: file://a.tz file://b.tgz', default = '',),
@@ -518,6 +393,6 @@ Template.vars = common.Template.vars \
            var('plone_vsp', 'comma separeted list of versionned suffix packages for product distro part', default = '',),
            var('plone_scripts', 'comma separeted list of scripts to generate from installed eggs', default = '',),
            var('with_checked_versions', 'Use product versions that interact well together (can be outdated, check [versions] in buildout.', default = 'n',),
-           ] + addons_vars
+           ] + Template.addons_vars
 
 # vim:set et sts=4 ts=4 tw=0:

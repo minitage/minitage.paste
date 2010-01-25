@@ -3,7 +3,7 @@
 [versions]
 # add hand pinned version there
 # plone32 hack to remove the bugged fixed version of buildout.
-zc.buildout -= 1.1.1
+zc.buildout = 
 zc.recipe.egg -= 1.1.0
 distribute -= 0.6.8
 # do not fix latest templates

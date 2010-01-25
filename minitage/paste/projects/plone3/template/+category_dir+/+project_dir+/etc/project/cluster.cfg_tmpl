@@ -17,5 +17,32 @@ http-address = \${hosts:instance3}:\${ports:instance3}
 <= instance
 http-address = \${hosts:instance4}:\${ports:instance4}
 
+[fss1]
+zope-instances=\${instance1:location} 
+[fss2]
+zope-instances=\${instance2:location}  
+[fss3]
+zope-instances=\${instance3:location}  
+[fss4]
+zope-instances=\${instance4:location}  
+
+[mkdirs]
+command +=
+#    mkdir -pv \${locations:testfss-backup1};
+#    mkdir -pv \${locations:testfss-backup2};
+#    mkdir -pv \${locations:testfss-backup3};
+#    mkdir -pv \${locations:testfss-backup4};
+#    mkdir -pv \${locations:testfss-storage1};
+#    mkdir -pv \${locations:testfss-storage2};
+#    mkdir -pv \${locations:testfss-storage3};
+#    mkdir -pv \${locations:testfss-storage4};
+#    mkdir -pv \${locations:fss-backup1}/var/fss_backup;
+#    mkdir -pv \${locations:fss-backup2}/var/fss_backup;
+#    mkdir -pv \${locations:fss-backup3}/var/fss_backup;
+#    mkdir -pv \${locations:fss-backup4}/var/fss_backup;
+#    mkdir -pv \${locations:fss-storage1}/var/fss_storage;
+#    mkdir -pv \${locations:fss-storage2}/var/fss_storage;
+#    mkdir -pv \${locations:fss-storage3}/var/fss_storage;
+#    mkdir -pv \${locations:fss-storage4}/var/fss_storage; 
 
 # vim:set ft=cfg:

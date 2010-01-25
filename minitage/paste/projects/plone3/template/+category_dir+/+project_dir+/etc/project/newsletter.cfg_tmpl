@@ -1,3 +1,8 @@
+#if $with_ploneproduct_fss
+#set $fsscomment=''
+#else
+#set $fsscomment='#'
+#end if 
 [buildout]
 #prefer-final = true
 versions = versions
@@ -26,6 +31,11 @@ skip-fake-eggs =
     zope.container
     zope.intid
 
+${fsscomment}[fss-newsletter]
+${fsscomment}<= fss
+${fsscomment}recipe = iw.recipe.fss
+${fsscomment}zope-instances=\${instance-newsletter:location}  
+
 # Singing & dancing clock server enabled instance
 [instance-newsletter]
 <= instance
@@ -42,4 +52,14 @@ zope-conf-additional +=
     host localhost
     </clock-server>
  
+[mkdirs]
+command +=
+    mkdir -pv \${locations:testfss-backup-newsletter};
+    mkdir -pv \${locations:testfss-storage-newsletter};
+    mkdir -pv \${locations:fss-backup-newsletter};
+    mkdir -pv \${locations:fss-storage-newsletter};
+    mkdir -pv \${buildout:directory}/var/newsletter/mailqueue/cur;
+    mkdir -pv \${buildout:directory}/var/newsletter/mailqueue/tmp;
+    mkdir -pv \${buildout:directory}/var/newsletter/mailqueue/new; 
+
 # vim:set ft=cfg:

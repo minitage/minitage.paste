@@ -57,47 +57,57 @@ verbose-security=off
 z2-log-level=INFO
 event-log-level=INFO
 
+[cache]
+zeo-client-cache-size = 80MB
+session-timeout-minutes=90 
+
 [plone]
 # Site ID
-site = $plonesite
+site = $plonesite 
+
+[users]
+#system user
+zope=$running_user
+#haproxy user
+balancer=$running_user
+
+[locations]
 # aboslute paths to avoid buildout auto build of reffered part
-testfss-backup1= \${buildout:directory}/parts/instance1/var/fss_backup
-testfss-storage1=\${buildout:directory}/parts/instance1/var/fss_storage
-testfss-backup2= \${buildout:directory}/parts/instance2/var/fss_backup
-testfss-storage2=\${buildout:directory}/parts/instance2/var/fss_storage
-testfss-backup3= \${buildout:directory}/parts/instance3/var/fss_backup
-testfss-storage3=\${buildout:directory}/parts/instance3/var/fss_storage
-testfss-backup4= \${buildout:directory}/parts/instance4/var/fss_backup
-testfss-storage4=\${buildout:directory}/parts/instance4/var/fss_storage
-testfss-backup=  \${buildout:directory}/parts/instance:location}/var/fss_backup
-testfss-storage= \${buildout:directory}/parts/instance:location}/var/fss_storage
+solr = \$solr_path
+testfss-backup=  \${buildout:directory}/parts/instance/var/fss_backup
+testfss-storage= \${buildout:directory}/parts/instance/var/fss_storage 
 fss-backup=  \${buildout:directory}/var/fss_backup_${project}
-fss-storage= \${buildout:directory}/var/fss_storage_${project}
-fss-backup1= \${buildout:directory}/var/fss_backup1_${project}
-fss-storage1=\${buildout:directory}/var/fss_storage1_${project}
-fss-backup2= \${buildout:directory}/var/fss_backup2_${project}
-fss-storage2=\${buildout:directory}/var/fss_storage2_${project}
-fss-backup3= \${buildout:directory}/var/fss_backup3_${project}
-fss-storage3=\${buildout:directory}/var/fss_storage3_${project}
-fss-backup4= \${buildout:directory}/var/fss_backup4_${project}
-fss-storage4=\${buildout:directory}/var/fss_storage4_${project}
+fss-storage= \${buildout:directory}/var/fss_storage_${project} 
 ${sgdgcomment}testfss-backup-newsletter= \${buildout:directory}/parts/instance-newsletter/var/fss_backup
 ${sgdgcomment}testfss-storage-newsletter=\${buildout:directory}/parts/instance-newsletter/var/fss_storage 
 ${sgdgcomment}fss-backup-newsletter= \${buildout:directory}/var/fss_backupnewsletter_${project}
-${sgdgcomment}fss-storage-newsletter=\${buildout:directory}/var/fss_storagenewsletter_${project}
-#system user
+${sgdgcomment}fss-storage-newsletter=\${buildout:directory}/var/fss_storagenewsletter_${project} 
 
+# if you want separated FSS directories, you can use that 
+#testfss-backup1= \${buildout:directory}/parts/instance1/var/fss_backup
+#testfss-storage1=\${buildout:directory}/parts/instance1/var/fss_storage 
+#testfss-backup2= \${buildout:directory}/parts/instance2/var/fss_backup
+#testfss-storage2=\${buildout:directory}/parts/instance2/var/fss_storage
+#testfss-backup3= \${buildout:directory}/parts/instance3/var/fss_backup
+#testfss-storage3=\${buildout:directory}/parts/instance3/var/fss_storage
+#testfss-backup4= \${buildout:directory}/parts/instance4/var/fss_backup
+#testfss-storage4=\${buildout:directory}/parts/instance4/var/fss_storage
 
-[users]
-zope=$running_user
-balancer=$running_user
+#fss-backup1= \${buildout:directory}/var/fss_backup1_${project}
+#fss-storage1=\${buildout:directory}/var/fss_storage1_${project}
+#fss-backup2= \${buildout:directory}/var/fss_backup2_${project}
+#fss-storage2=\${buildout:directory}/var/fss_storage2_${project}
+#fss-backup3= \${buildout:directory}/var/fss_backup3_${project}
+#fss-storage3=\${buildout:directory}/var/fss_storage3_${project}
+#fss-backup4= \${buildout:directory}/var/fss_backup4_${project}
+#fss-storage4=\${buildout:directory}/var/fss_storage4_${project}
 
-[cache]
-zeo-client-cache-size = 80MB
-session-timeout-minutes=90
-
-#may not be used
-[solr]
-path = \$solr_path
-
+ 
+# Command below is important
+# if not, fss tests or tests using fss in their configuration will fail
+# You can add here directories to create
+[mkdirs]
+command =
+#    mkdir -pv \${buildout:directory}/foo
+ 
 # vim:set ft=cfg:

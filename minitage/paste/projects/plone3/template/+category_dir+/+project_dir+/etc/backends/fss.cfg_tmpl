@@ -3,7 +3,27 @@
 [fss]
 recipe = iw.recipe.fss
 zope-instances=\${instance:location}
+storages =
+    global /
+    ${project} /${project} $fss_strategy \${locations:fss-storage} \${locations:fss-backup} 
 
+
+# see also etc/project/cluster.cfg
+[fss1]
+<= fss
+[fss2]
+<= fss
+[fss3]
+<= fss
+[fss4]
+<= fss
+
+[mkdirs]
+command +=
+    mkdir -pv \${locations:testfss-backup};
+    mkdir -pv \${locations:testfss-storage};
+    mkdir -pv \${locations:fss-storage};
+    mkdir -pv \${locations:fss-backup}; 
 
 
 # FSS Support
