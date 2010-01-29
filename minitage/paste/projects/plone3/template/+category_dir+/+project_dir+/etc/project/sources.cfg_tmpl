@@ -1,5 +1,15 @@
+ 
 # Externals mr.developer products
+[buildout]
+sources=sources
+
 [sources]
+#set $psources_keys = $plone_sources.keys()
+# $psources_keys.sort()
+#for $item in $psources_keys:
+#set source=$plone_sources[item]
+$source['name'] = $source['type'] $source['url']
+#end for
 
 [groups]
 # OLD ZOPE2 PRODUCTS SUPPORT

@@ -29,7 +29,7 @@ parts += #slurp
 
 # extra directories oto add to the python path
 extra-paths=
-auto-checkout =
+auto-checkout +=
 #     my.package
 
 # auto tracked developement products

@@ -3,7 +3,7 @@
 [versions]
 # add hand pinned version there
 # plone32 hack to remove the bugged fixed version of buildout.
-zc.buildout = 
+zc.buildout =
 zc.recipe.egg -= 1.1.0
 distribute -= 0.6.8
 # do not fix latest templates
@@ -24,7 +24,7 @@ $version[0]
 $version[0] = $version[1]
 #end if
 #end for
- 
+
 # on Upgrades
 # Think to change the plone release URL !!!
 #if $with_wsgi_support:

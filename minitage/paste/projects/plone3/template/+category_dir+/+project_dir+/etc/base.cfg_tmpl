@@ -78,6 +78,7 @@ $hr
 # Project specific
 # |   |-- project/cluster.cfg                    -> define new zope instances here & also their FileSystemStorage if any.
 # |   |-- project/sources.cfg                    -> externals sources of your project
+# |   |-- project/sources-dev.cfg                -> externals sources of your project only used in development mode, like products installed from the SCM with mr.developer instead of a release
 # |   |-- project/newsletter.cfg                 -> singing & dancing integration (new instance with clockserver, version pinning, fss if any)
 # |   |-- project/patches.cfg                    -> patches used on the project
 # |   |-- project/versions.cfg                   -> minimal version pinning for installing your project
@@ -195,9 +196,10 @@ ${solrcomment}    solrinstance
 find-links = \${groups:find-links}
 eggs += zopelib
 develop += \${buildout:directory}/src.mrdeveloper/zopelib
-# see http://pypi.python.org/pypi/mr.developer for documentation
 versions = versions
+# see http://pypi.python.org/pypi/mr.developer for documentation
 sources = sources
+auto-checkout +=
 
 # auto tracked developement products, see ${project}.cfg
 [sources]

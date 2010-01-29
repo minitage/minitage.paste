@@ -62,7 +62,9 @@
   <option order="1962" name="with_ploneproduct_iterate"          description="Plone Iterate support, see http://pypi.python.org/pypi/plone.app.iterate y/n" default="n"/>
   <option order="1973" name="with_ploneproduct_schemaextender"   description="Plone Archetypes schema extender support, see http://pypi.python.org/pypi/archetypes.schemaextender y/n" default="n"/>
   <option order="1984" name="with_ploneproduct_cz3cformgrok"     description="Plone + z3cform light grok integration support, see http://pypi.python.org/pypi/collective.z3cform.grok y/n" default="n"/>
-  <option order="1984" name="with_experimental"                  description="Plone experimental improvments y/n" default="n"/>
+  <option order="1994" name="with_ploneproduct_contentwellportlet"     description="Content well porlets, see http://pypi.python.org/pypi/Products.ContentWellPortlets y/n" default="n"/>
+  <option order="2000" name="with_experimental"                  description="Plone experimental improvments y/n" default="n"/>
+  <option order="2194" name="with_ploneproduct_ci"               description="collective.indexing Support, see http://pypi.python.org/pypi/collective.indexing y/n" default="n"/>
   </options>
   <!--
     LINK THERE YOUR EGGS TO BE Installed on option triggering.
@@ -110,33 +112,16 @@
     <egg name="ZopeSkel"                       options="with_tool_zopeskel"                />
 
     <!-- pure zope/plone eggs -->
-    <!-- load atreal patch vefore fss-->
-    <egg name="iw.fss"                         options="with_ploneproduct_fss"          zcml="meta"      zcmlorder="150"/>
-    <egg name="atreal.patchfss"                options="with_ploneproduct_fss"          zcml="configure" zcmlorder="100"/>
+    <egg name="archetypes.schemaextender"      options="with_ploneproduct_schemaextender,with_ploneproduct_facultystaff" zcml="configure" />
     <egg name="archetypes.schematuning"        options="with_ploneproduct_schematuning" />
-    <egg name="zc.authorizedotnet"             options="with_ploneproduct_easyshop"     />
-    <egg name="collective.flowplayer"          options="with_ploneproduct_flowplayer"   zcml="configure"/>
-    <egg name="quills.remoteblogging"          options="with_ploneproduct_quillsenabled,with_ploneproduct_quills"/>
-    <egg name="plone.directives.form"          options="with_ploneproduct_pz3cform"                                 zcml="configure,meta"/>
-    <egg name="five.grok"                      options="with_ploneproduct_fivegrok,with_ploneproduct_pz3cform"      zcml="configure" order="100"/>
-    <egg name="plone.app.z3cform"              options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"  zcml="configure" order="110"/>
-    <egg name="plone.z3cform"                  options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"        zcml="configure"/>
-    <egg name="collective.z3cform.grok"        options="with_ploneproduct_cz3cformgrok"      zcml="configure"/>
-
-    <!-- zope products -->
-    <egg name="p4a.plonecalendar"              options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
-    <egg name="plone.app.iterate"              options="with_ploneproduct_iterate"          zpackage="y" zcml="configure"/>
-    <egg name="p4a.ploneevent"                 options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
-    <egg name="p4a.plonevideoembed"            options="with_ploneproduct_p4a_vid"          zpackage="y" zcml="configure"/>
-    <egg name="p4a.plonevideo"                 options="with_ploneproduct_p4a_vid"          zpackage="y" zcml="configure"/>
-    <egg name="p4a.video"                      options="with_ploneproduct_p4a_vid"                       zcml="configure"/>
-    <egg name="p4a.z2utils"                    options="with_ploneproduct_p4a_vid"          />
-    <egg name="p4a.common"                     options="with_ploneproduct_p4a_vid"          />
-    <egg name="p4a.fileimage"                  options="with_ploneproduct_p4a_vid"                       zcml="configure"/>
     <egg name="collective.contentlicensing"    options="with_ploneproduct_contentlicensing" zpackage="y" zcml="configure"/>
     <egg name="collective.dancing"             options="with_ploneproduct_sgdcg"            zpackage="y" zcml="configure"/>
+    <egg name="collective.flowplayer"          options="with_ploneproduct_flowplayer"   zcml="configure"/>
+    <egg name="collective.indexing"            options="with_ploneproduct_ci"               zpackage="y" zcml="configure"/>
     <egg name="collective.plonetruegallery"    options="with_ploneproduct_truegallery"      zpackage="y" zcml="configure"/>
     <egg name="collective.portlet.tal"         options="with_ploneproduct_tal_portlet"      zpackage="y" zcml="configure"/>
+    <egg name="collective.singing"             options="with_ploneproduct_sgdcg"            zpackage="y" zcml="configure"/>
+    <egg name="collective.z3cform.grok"        options="with_ploneproduct_cz3cformgrok"      zcml="configure"/>
     <egg name="easyshop.carts"                 options="with_ploneproduct_easyshop"                      zcml="configure"/>
     <egg name="easyshop.catalog"               options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
     <egg name="easyshop.checkout"              options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
@@ -153,28 +138,45 @@
     <egg name="easyshop.payment"               options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
     <egg name="easyshop.shipping"              options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
     <egg name="easyshop.shop"                  options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
-    <egg name="easyshop.stocks"                options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
+    <egg name="easyshop.stocks"                options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/> 
     <egg name="easyshop.taxes"                 options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
-    <egg name="Products.CacheSetup"            options="with_ploneproduct_cachesetup"       zproduct="y" zcml="configure"/>
+    <egg name="five.grok"                      options="with_ploneproduct_fivegrok,with_ploneproduct_pz3cform"      zcml="configure" order="100"/>
+    <egg name="iw.fss"                         options="with_ploneproduct_fss"          zcml="configure,meta"      zcmlorder="150"/>
+    <egg name="p4a.common"                     options="with_ploneproduct_p4a_vid"          />
+    <egg name="p4a.fileimage"                  options="with_ploneproduct_p4a_vid"                       zcml="configure"/>
+    <egg name="p4a.plonecalendar"              options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
+    <egg name="p4a.ploneevent"                 options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
+    <egg name="p4a.plonevideoembed"            options="with_ploneproduct_p4a_vid"          zpackage="y" zcml="configure"/>
+    <egg name="p4a.plonevideo"                 options="with_ploneproduct_p4a_vid"          zpackage="y" zcml="configure"/>
+    <egg name="p4a.video"                      options="with_ploneproduct_p4a_vid"                       zcml="configure"/>
+    <egg name="p4a.z2utils"                    options="with_ploneproduct_p4a_vid"          />
+    <egg name="plone.app.iterate"              options="with_ploneproduct_iterate"          zpackage="y" zcml="configure"/>
+    <egg name="plone.app.z3cform"              options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"  zcml="configure" order="110"/>
+    <egg name="plone.directives.form"          options="with_ploneproduct_pz3cform"                                 zcml="configure,meta"/>
+    <egg name="plone.z3cform"                  options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"        zcml="configure"/>
     <egg name="Products.ATBackRef"             options="with_ploneproduct_atbackref"        zproduct="y" zcml="configure"/>
+    <egg name="Products.CacheSetup"            options="with_ploneproduct_cachesetup"       zproduct="y" zcml="configure"/>
+    <egg name="Products.CMFPlacefulWorkflow"   options="with_ploneproduct_cpwkf"            zproduct="y" zcml="configure"/>
     <egg name="Products.Collage"               options="with_ploneproduct_collage"          zproduct="y" zcml="configure"/>
     <egg name="Products.csvreplicata"          options="with_ploneproduct_csvreplica"       zproduct="y"/>
     <egg name="Products.FacultyStaffDirectory" options="with_ploneproduct_facultystaff"     zproduct="FacultyStaffDirectory,ATReferenceBrowserWidget,Relations,Archetypes,MimetypesRegistry,PortalTransforms,membrane" zcml="configure"/>
     <egg name="Products.LDAPMultiPlugins"      options="with_ploneproduct_ldap"             zproduct="y"/>
     <egg name="Products.LDAPUserFolder"        options="with_ploneproduct_ldap"             zproduct="y"/>
-    <egg name="Products.TinyMCE"               options="with_ploneproduct_tinymce"          zproduct="y" zcml="configure"/>
     <egg name="Products.LinguaPlone"           options="with_ploneproduct_lingua"           zproduct="y" zcml="configure"/>
+    <egg name="Products.ContentWellPortlets"   options="with_ploneproduct_contentwellportlet" zproduct="y" zcml="configure"/>
     <egg name="Products.PloneArticle"          options="with_ploneproduct_plonearticle"     zproduct="y" zcml="configure"/>
     <egg name="Products.Ploneboard"            options="with_ploneproduct_ploneboard"       zproduct="y" zcml="configure"/>
-    <egg name="Products.SimpleAttachment"      options="with_ploneproduct_ploneboard"       zproduct="y" zcml="configure"/>
-    <egg name="archetypes.schemaextender"      options="with_ploneproduct_schemaextender,with_ploneproduct_facultystaff" zcml="configure" />
     <egg name="Products.PloneFormGen"          options="with_ploneproduct_ploneformgen"     zproduct="y" zcml="configure"/>
     <egg name="Products.PloneLDAP"             options="with_ploneproduct_ldap"             zproduct="y" zcml="configure"/>
     <egg name="Products.PloneSurvey"           options="with_ploneproduct_plonesurvey"      zproduct="y" zcml="configure"/>
     <egg name="Products.QuillsEnabled"         options="with_ploneproduct_quillsenabled"    zproduct="y" zcml="configure"/>
     <egg name="Products.Quills"                options="with_ploneproduct_quills"           zproduct="y" zcml="configure"/>
-    <egg name="Products.CMFPlacefulWorkflow"   options="with_ploneproduct_cpwkf"            zproduct="y" zcml="configure"/>
+    <egg name="Products.SimpleAttachment"      options="with_ploneproduct_ploneboard"       zproduct="y" zcml="configure"/>
+    <egg name="Products.TinyMCE"               options="with_ploneproduct_tinymce"          zproduct="y" zcml="configure"/>
+    <egg name="quills.remoteblogging"          options="with_ploneproduct_quillsenabled,with_ploneproduct_quills"/>
     <egg name="webcouturier.dropdownmenu"      options="with_ploneproduct_wc_dd_menu"       zpackage="y" zcml="configure"/>
+    <egg name="zc.authorizedotnet"             options="with_ploneproduct_easyshop"     />
+    <!-- zope products -->
   </eggs>
   <!--
     As you know you are configurating a plone3 environment, and hell, you will have to register your products throught the quickinstaller at a time.
@@ -222,6 +224,7 @@
     <product name="SimpleAttachment"               options="with_ploneproduct_ploneboard"       />
     <product name="plone.app.iterate"              options="with_ploneproduct_iterate"          />
     <product name="collective.contentlicensing"    options="with_ploneproduct_contentlicensing" />
+    <product name="ContentWellPortlets"            options="with_ploneproduct_contentwellportlet"/>
   </qi>
   <!--
     Enter here mandatory version pinnings
@@ -234,13 +237,14 @@
       name: description to add as comment into the resulting buildout
     -->
   <versions>
-    <version p="ZODB3"          v="3.7.2"   name="RelStorage"/>
-    <version p="ipython"        v="0.10"    name="IPython py2.4 compatible version"/>
-    <version p="Cheetah"        v="2.2.1"   name="Markdown crazy stuff"/>
-    <version p="zope.site"      v="3.5.1"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
-    <version p="zope.schema"    v="3.5.1"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
-    <version p="zope.component" v="3.5.1"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
-    <version p="zope.proxy"     v="3.5.0"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
+    <version p="ZODB3"                 v="3.7.2"   name="RelStorage"/>
+    <version p="ipython"               v="0.10"    name="IPython py2.4 compatible version"/>
+    <version p="Cheetah"               v="2.2.1"   name="Markdown crazy stuff"/>
+    <version p="zope.site"             v="3.5.1"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
+    <version p="zope.schema"           v="3.5.4"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
+    <version p="zope.component"        v="3.5.1"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
+    <version p="zope.proxy"            v="3.5.0"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
+    <version p="Products.Archetypes"   v="1.5.15"  name="Needed for fixing https://dev.plone.org/plone/ticket/10088"/>
   </versions>
   <!--
     Enter here know good set versions stuff
@@ -268,8 +272,8 @@
     <version p='p4a.ploneevent'                 v='0.7.3'     options="with_ploneproduct_p4a_cal"/>
     <version p='p4a.subtyper'                   v='1.1.1'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/>
     <version p='p4a.z2utils'                    v='1.0.2'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/>
-    <version p='p4a.common'                     v='1.0.5'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/> 
-    
+    <version p='p4a.common'                     v='1.0.5'   options="with_ploneproduct_p4a_vid,with_ploneproduct_p4a_vid"/>
+
     <version p='python_dateutil'                v='1.4.1'   options="with_ploneproduct_p4a_cal"/>
     <version p='dateable.chronos'               v='0.7'     options="with_ploneproduct_p4a_cal"/>
 
@@ -284,12 +288,13 @@
     <version p='Products.LDAPMultiPlugins'      v='1.7'     options="with_ploneproduct_ldap"/>
     <version p='Products.PloneLDAP'             v='1.1'     options="with_ploneproduct_ldap"/>
 
-    <version p='iw.fss'                         v='2.7.6'   options="with_ploneproduct_fss"/>
-    <version p='iw.recipe.fss'                  v='0.2.1'   options="with_ploneproduct_fss"/>
+    <version p='iw.fss'                         v='2.8.0rc1'   options="with_ploneproduct_fss"/>
+    <version p='iw.recipe.fss'                  v='0.2.1'      options="with_ploneproduct_fss"/>
 
     <version p='Products.SimpleAttachment'      v='3.0.2'   options="with_ploneproduct_ploneboard"/>
 
     <version p='collective.plonetruegallery'    v='0.7rc1'  options="with_ploneproduct_truegallery"/>
+    <version p='Products.ContentWellPortlets'   v='2.0.1'   options="with_ploneproduct_contentwellportlet"/>
 
     <!-- z3c.form -->
     <version p='z3c.form'                       v='1.9.0'   options='with_ploneproduct_pz3cform' />
@@ -307,10 +312,8 @@
     <version p='martian'                        v='0.11'    options='with_ploneproduct_fivegrok' />
     <version p='zope.app.publisher'             v='3.5.1'   options='with_ploneproduct_fivegrok' />
     <version p='zope.app.zcmlfiles'             v='3.4.3'   options='with_ploneproduct_fivegrok' />
-    <version p='zope.component'                 v='3.5.1'   options='with_ploneproduct_fivegrok' />
     <version p='zope.i18n'                      v='3.4.0'   options='with_ploneproduct_fivegrok' />
     <version p='zope.interface'                 v='3.4.1'   options='with_ploneproduct_fivegrok' />
-    <version p='zope.schema'                    v='3.5.4'   options='with_ploneproduct_fivegrok' />
     <version p='zope.securitypolicy'            v='3.4.1'   options='with_ploneproduct_fivegrok' />
     <version p='zope.testing'                   v='3.7.6'   options='with_ploneproduct_fivegrok' />
   </checkedversions>
@@ -322,14 +325,65 @@
     <productdistro url="http://plone.org/products/maps/releases/1.1/maps-1-1.tgz" options="with_ploneproduct_maps"/>
   </productdistros>
   <!--
+    Sources for mr.developer
+    links to the SCM of a product, autocheckout will be enabled when option in in options.
+
+  --> 
+  <sources>
+    <source name="archetypes.schemaextender" type="svn" url="http://svn.plone.org/svn/archetypes/archetypes.schemaextender/trunk" options="with_ploneproduct_schemaextender,with_ploneproduct_facultystaff"/>
+    <source name="archetypes.tuning"     type="svn" url="http://svn.plone.org/svn/archetypes/archetypes.schematuning/trunk" options="with_ploneproduct_schematuning"/>
+    <source name="collective.contentlicensing"    type="svn" url="https://svn.plone.org/svn/collective/collective.contentlicensing/trunk" options="with_ploneproduct_contentlicensing" />
+    <source name="collective.dancing"    type="svn" url="https://svn.plone.org/svn/collective/collective.dancing/trunk" options="with_ploneproduct_sgdcg"/>
+    <source name="collective.flowplayer" type="svn" url="http://svn.plone.org/svn/collective/collective.flowplayer/trunk" options="with_ploneproduct_flowplayer"/>
+    <source name="collective.indexing"   type="svn" url="https://svn.plone.org/svn/collective/collective.indexing/trunk" options="with_ploneproduct_ci"/>
+    <source name="collective.plonetruegallery"    type="svn" url="https://svn.plone.org/svn/collective/collective.plonetruegallery/trunk" options="with_ploneproduct_truegallery"/>
+    <source name="collective.portlet.tal"  type="svn" url="https://svn.plone.org/svn/collective/collective.portlet.tal/trunk" options="with_ploneproduct_tal_portlet"/>
+    <source name="collective.singing"      type="svn" url="https://svn.plone.org/svn/collective/collective.singing/trunk" options="with_ploneproduct_sgdcg"/>
+    <source name="collective.z3cform.grok" type="svn" url="http://svn.plone.org/svn/collective/collective.z3cform.grok/trunk" options="with_ploneproduct_cz3cformgrok" /> 
+    <source name="p4a.common"              type="svn" url="https://svn.plone.org/svn/collective/p4a/p4a.common/trunk" options="with_ploneproduct_p4a_vid"/>
+    <source name="p4a.fileimage"           type="svn" url="https://svn.plone.org/svn/collective/p4a/p4a.fileimage/trunk" options="with_ploneproduct_p4a_vid"/>
+    <source name="p4a.plonecalendar"       type="svn" url="https://svn.plone.org/svn/collective/p4a/p4a.plonecalendar/trunk" options="with_ploneproduct_p4a_cal"/>
+    <source name="p4a.ploneevent"          type="svn" url="https://svn.plone.org/svn/collective/p4a/p4a.ploneevent/trunk" options="with_ploneproduct_p4a_cal"/>
+    <source name="p4a.plonevideoembed"     type="svn" url="https://svn.plone.org/svn/collective/p4a/p4a.plonevideoembed/trunk" options="with_ploneproduct_p4a_vid"/>
+    <source name="p4a.plonevideo"          type="svn" url="https://svn.plone.org/svn/collective/p4a/p4a.plonevideo/trunk" options="with_ploneproduct_p4a_vid"/>
+    <source name="p4a.video"               type="svn" url="https://svn.plone.org/svn/collective/p4a/p4a.video/trunk" options="with_ploneproduct_p4a_vid"/>
+    <source name="p4a.z2utils"             type="svn" url="https://svn.plone.org/svn/collective/p4a/p4a.z2utils/trunk" options="with_ploneproduct_p4a_vid"/>
+    <source name="plone.app.iterate"       type="svn" url="https://svn.plone.org/svn/plone/plone.app.iterate/trunk" options="with_ploneproduct_iterate"/>
+    <source name="plone.app.z3cform"       type="svn" url="https://svn.plone.org/svn/plone/plone.app.z3cform/trunk/" options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"/>
+    <source name="plone.directives.form"   type="svn" url="https://svn.plone.org/svn/plone/plone.directives.form/trunk" options="with_ploneproduct_pz3cform"/>
+    <source name="plone.z3cform"           type="svn" url="svn://svn.zope.org/repos/main/plone.z3cform/trunk" options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"/> 
+    <source name="Products.ATBackRef"      type="svn" url="https://svn.plone.org/svn/archetypes/MoreFieldsAndWidgets/ATBackRef/trunk" options="with_ploneproduct_atbackref"/>
+    <source name="Products.CacheSetup"     type="svn" url="https://svn.plone.org/svn/collective/Products.CacheSetup/trunk" options="with_ploneproduct_cachesetup"       />
+    <source name="Products.CMFPlacefulWorkflow"   type="svn" url="https://svn.plone.org/svn/collective/Products.CMFPlacefulWorkflow/trunk" options="with_ploneproduct_cpwkf"/>
+    <source name="Products.ContentWellPortlets"   type="svn" url="https://weblion.psu.edu/svn/weblion/weblion/Products.ContentWellPortlets/trunk" options="with_ploneproduct_contentwellportlet"/>
+    <source name="Products.Collage"               type="svn" url="https://svn.plone.org/svn/collective/Products.Collage/trunk" options="with_ploneproduct_collage"/>
+    <source name="Products.csvreplicata"          type="svn" url="https://svn.plone.org/svn/collective/Products.csvreplicata/trunk/Products.csvreplicata" options="with_ploneproduct_csvreplica"/>
+    <source name="Products.FacultyStaffDirectory" type="svn" url="https://weblion.psu.edu/svn/weblion/weblion/Products.FacultyStaffDirectory/trunk" options="with_ploneproduct_facultystaff"/>
+    <source name="Products.LDAPMultiPlugins" type="svn" url="http://svn.dataflake.org/svn/Products.LDAPMultiPlugins/trunk" options="with_ploneproduct_ldap"/>
+    <source name="Products.LDAPUserFolder"   type="svn" url="http://svn.dataflake.org/svn/Products.LDAPUserFolder/trunk" options="with_ploneproduct_ldap"/>
+    <source name="Products.LinguaPlone"      type="svn" url="http://svn.plone.org/svn/plone/Products.LinguaPlone/trunk" options="with_ploneproduct_lingua"/>
+    <source name="Products.PloneArticle"     type="svn" url="https://svn.plone.org/svn/collective/Products.PloneArticle/trunk" options="with_ploneproduct_plonearticle"/>
+    <source name="Products.Ploneboard"       type="svn" url="https://svn.plone.org/svn/collective/Products.Ploneboard/trunk" options="with_ploneproduct_ploneboard"/>
+    <source name="Products.PloneFormGen"     type="svn" url="https://svn.plone.org/svn/collective/Products.PloneFormGen/trunk" options="with_ploneproduct_ploneformgen"/>
+    <source name="Products.PloneLDAP"        type="svn" url="https://svn.plone.org/svn/collective/Products.PloneLDAP/trunk" options="with_ploneproduct_ldap"/>
+    <source name="Products.PloneSurvey"      type="svn" url="https://svn.plone.org/svn/collective/Products.PloneSurvey/trunk" options="with_ploneproduct_plonesurvey"/>
+    <source name="Products.QuillsEnabled"    type="svn" url="https://svn.plone.org/svn/collective/Products.QuillsEnabled/trunk" options="with_ploneproduct_quillsenabled"/>
+    <source name="Products.Quills"           type="svn" url="https://svn.plone.org/svn/collective/Products.Quills/trunk" options="with_ploneproduct_quills"/>
+    <source name="Products.SimpleAttachment" type="svn" url="https://svn.plone.org/svn/collective/Products.SimpleAttachment/trunk" options="with_ploneproduct_ploneboard"/>
+    <source name="Products.TinyMCE"          type="svn" url="http://svn.plone.org/svn/collective/Products.TinyMCE/trunk" options="with_ploneproduct_tinymce"/>
+    <source name="quills.remoteblogging"     type="svn" url="http://svn.plone.org/svn/collective/quills.remoteblogging/trunk" options="with_ploneproduct_quillsenabled,with_ploneproduct_quills"/>
+    <source name="webcouturier.dropdownmenu" type="svn" url="https://svn.plone.org/svn/collective/webcouturier.dropdownmenu/trunk" options="with_ploneproduct_wc_dd_menu"/>
+  </sources>
+  <!--
     Some very ecliptic products doesnt fit with previous declaration, we will describe how to add the options to the underlying policy there.
     (the packages/products that we want into the tests to be added.
     <product name="" zpackage="" zcml="" zcmlorder="" zcml=""/>
       name is mandatory only for zcml slugs.
-  -->
+  --> 
   <miscproducts>
     <product name="vaporisation" zpackage="vaporisation" zcml="configure" options="with_ploneproduct_vaporisation"/>
     <product name="Products.Maps" zproduct="Maps" zcml="configure" options="with_ploneproduct_maps"/>
+    <product name="Products.CMFPlomino"           zcml="configure" options="with_ploneproduct_plomino"/>
   </miscproducts>
 </root>
 

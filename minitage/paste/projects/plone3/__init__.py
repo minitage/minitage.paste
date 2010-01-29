@@ -27,6 +27,7 @@
 
 __docformat__ = 'restructuredtext en'
 
+import copy
 import os
 import shutil
 import re
@@ -37,37 +38,50 @@ import pkg_resources
 from iniparse import ConfigParser
 
 from minitage.paste.projects import common
-from minitage.paste.common import var
+from minitage.paste.common import var as pvar
 from minitage.core.common  import search_latest
 
 class NoDefaultTemplateError(Exception): pass
 
 default_config = pkg_resources.resource_filename('minitage.paste', 'projects/plone3/minitage.plone3.xml')
 user_config = os.path.join( os.path.expanduser('~'), '.minitage.plone3.xml')
-vars = common.read_vars(default_config, user_config)
+xmlvars = common.read_vars(default_config, user_config)
 # plone quickinstaller option/names mappings
-qi_mappings = vars.get('qi_mappings', {})
+qi_mappings = xmlvars.get('qi_mappings', {})
 # eggs registered as Zope2 packages
-z2packages = vars.get('z2packages', {})
-z2products = vars.get('z2products', {})
+z2packages = xmlvars.get('z2packages', {})
+z2products = xmlvars.get('z2products', {})
 # variables discovered via configuration
-addons_vars = vars.get('addons_vars', [])
+addons_vars = xmlvars.get('addons_vars', [])
 # mappings option/eggs to install
-eggs_mappings = vars.get('eggs_mappings', {})
+eggs_mappings = xmlvars.get('eggs_mappings', {})
 # scripts to generate
-scripts_mappings = vars.get('scripts_mappings', {})
+scripts_mappings = xmlvars.get('scripts_mappings', {})
 # mappings option/zcml to install
-zcml_loading_order = vars.get('zcml_loading_order', {})
-zcml_mappings = vars.get('zcml_mappings', {})
+zcml_loading_order = xmlvars.get('zcml_loading_order', {})
+zcml_mappings = xmlvars.get('zcml_mappings', {})
 # mappings option/versions to pin
-versions_mappings = vars.get('versions_mappings', {})
+versions_mappings = xmlvars.get('versions_mappings', {})
 # mappings option/versions to pin if the user wants really stable sets
-checked_versions_mappings = vars.get('checked_versions_mappings',{})
+checked_versions_mappings = xmlvars.get('checked_versions_mappings',{})
 # mappings option/productdistros to install
-urls_mappings = vars.get('urls_mappings', {})
+urls_mappings = xmlvars.get('urls_mappings', {})
 # mappings option/nested packages/version suffix packages  to install
-plone_np_mappings = vars.get('plone_np_mappings', {})
-plone_vsp_mappings = vars.get('plone_vsp_mappings', {})
+plone_np_mappings = xmlvars.get('plone_np_mappings', {})
+plone_vsp_mappings = xmlvars.get('plone_vsp_mappings', {})
+plone_sources = xmlvars.get('plone_sources', {})
+dev_desc = 'Install %s in development mode.'
+dev_vars = []
+sources_k = plone_sources.keys()
+sources_k.sort()
+for name in sources_k:
+    dev_vars.append(
+        pvar(
+            'with_autocheckout_%s' % name,
+            description = name,
+            default = "n",
+        )
+    ) 
 
 class Template(common.Template):
     packaged_version = '3.3.4'
@@ -115,6 +129,7 @@ class Template(common.Template):
     urls_mappings             = urls_mappings
     plone_np_mappings         = plone_np_mappings
     plone_vsp_mappings        = plone_vsp_mappings
+    plone_sources             = plone_sources
 
     def read_vars(self, command=None):
         if command:
@@ -140,6 +155,27 @@ class Template(common.Template):
         for var in self.sections_mappings:
             if var in vars:
                 vars[var] = [a.strip() for a in vars[var].split(',')]
+
+        vars['autocheckout'] = []
+        for var in vars:
+            if var.startswith('with_autocheckout') and vars[var]:
+                vn = var.replace('with_autocheckout_', '')
+                vars['autocheckout'].append(
+                    self.plone_sources[vn]['name']
+                )
+
+        lps = copy.deepcopy(self.plone_sources)
+        for item in self.plone_sources:
+            col = self.plone_sources[item]
+            found = False
+            for option in col['options']:
+                if vars.get(option, False):
+                    found = True
+                    break
+            if not found:
+                del lps[item]
+        vars['plone_sources'] = lps
+
 
         # ZODB3 from egg
         vars['additional_eggs'].append('#ZODB3 is installed as an EGG!')
@@ -364,35 +400,37 @@ sd_str = '%s' % (
 )
 
 Template.vars = common.Template.vars \
-        + [var('plone_version', 'Plone version, default is the one supported and packaged', default = Template.packaged_version,),
-           var('address', 'Address to listen on', default = 'localhost',),
-           var('http_port', 'Port to listen to', default = '8081',),
-           var('mode', 'Mode to use : zodb|relstorage|zeo', default = 'zodb'),
-           var('zeo_address', 'Address for the zeoserver (zeo mode only)', default = 'localhost:8100',),
-           var('zope_user', 'Administrator login', default = 'admin',),
-           var('zope_password', 'Admin Password in the ZMI', default = 'secret',),
-           var('relstorage_type', 'Relstorage database type (only useful for relstorage mode)', default = 'postgresql',),
-           var('relstorage_host', 'Relstorage database host (only useful for relstorage mode)', default = 'localhost',),
-           var('relstorage_port', 'Relstorage databse port (only useful for relstorage mode). (postgresql : 5432, mysql : 3306)', default = '5432',),
-           var('relstorage_dbname', 'Relstorage databse name (only useful for relstorage mode)', default = 'minitagedb',),
-           var('relstorage_dbuser', 'Relstorage user (only useful for relstorage mode)', default = common.running_user),
-           var('relstorage_password', 'Relstorage password (only useful for relstorage mode)', default = 'secret',),
-           var('solr_host', 'Solr host (only useful if you want solr)', default = '127.0.0.1',),
-           var('solr_port', 'Solr port (only useful if you want solr)', default = '8983',),
-           var('solr_path', 'Solr path (only useful if you want solr)', default = '/solr',),
-           var('with_supervisor', 'Supervisor support (monitoring), http://supervisord.org/ y/n', default = 'y',),
-           var('supervisor_host', 'Supervisor host', default = '127.0.0.1',),
-           var('supervisor_port', 'Supervisor port', default = '9001',),
-           var('with_haproxy', 'haproxy configuration file generation support (loadbalancing), http://haproxy.1wt.eu/ y/n', default = 'y',),
-           var('haproxy_host', 'Haproxy host', default = '127.0.0.1',),
-           var('haproxy_port', 'Haproxy port', default = '8201',),
-           var('plone_products', 'comma separeted list of adtionnal products to install: eg: file://a.tz file://b.tgz', default = '',),
-           var('additional_eggs', 'comma separeted list of additionnal eggs to install', default = '',),
-           var('plone_zcml', 'comma separeted list of eggs to include for searching ZCML slugs', default = '',),
-           var('plone_np', 'comma separeted list of nested packages for products distro part', default = '',),
-           var('plone_vsp', 'comma separeted list of versionned suffix packages for product distro part', default = '',),
-           var('plone_scripts', 'comma separeted list of scripts to generate from installed eggs', default = '',),
-           var('with_checked_versions', 'Use product versions that interact well together (can be outdated, check [versions] in buildout.', default = 'n',),
-           ] + Template.addons_vars
+        + [pvar('plone_version', 'Plone version, default is the one supported and packaged', default = Template.packaged_version,),
+           pvar('address', 'Address to listen on', default = 'localhost',),
+           pvar('http_port', 'Port to listen to', default = '8081',),
+           pvar('mode', 'Mode to use : zodb|relstorage|zeo', default = 'zodb'),
+           pvar('devmode', 'Mode to use in development mode: zodb|relstorage|zeo', default = 'zeo'),
+           pvar('zeo_host', 'Address for the zeoserver (zeo mode only)', default = 'localhost',),
+           pvar('zeo_port', 'Port for the zeoserver (zeo mode only)', default = '8100',),
+           pvar('zope_user', 'Administrator login', default = 'admin',),
+           pvar('zope_password', 'Admin Password in the ZMI', default = 'secret',),
+           pvar('relstorage_type', 'Relstorage database type (only useful for relstorage mode)', default = 'postgresql',),
+           pvar('relstorage_host', 'Relstorage database host (only useful for relstorage mode)', default = 'localhost',),
+           pvar('relstorage_port', 'Relstorage databse port (only useful for relstorage mode). (postgresql : 5432, mysql : 3306)', default = '5432',),
+           pvar('relstorage_dbname', 'Relstorage databse name (only useful for relstorage mode)', default = 'minitagedb',),
+           pvar('relstorage_dbuser', 'Relstorage user (only useful for relstorage mode)', default = common.running_user),
+           pvar('relstorage_password', 'Relstorage password (only useful for relstorage mode)', default = 'secret',),
+           pvar('solr_host', 'Solr host (only useful if you want solr)', default = '127.0.0.1',),
+           pvar('solr_port', 'Solr port (only useful if you want solr)', default = '8983',),
+           pvar('solr_path', 'Solr path (only useful if you want solr)', default = '/solr',),
+           pvar('with_supervisor', 'Supervisor support (monitoring), http://supervisord.org/ y/n', default = 'y',),
+           pvar('supervisor_host', 'Supervisor host', default = '127.0.0.1',),
+           pvar('supervisor_port', 'Supervisor port', default = '9001',),
+           pvar('with_haproxy', 'haproxy configuration file generation support (loadbalancing), http://haproxy.1wt.eu/ y/n', default = 'y',),
+           pvar('haproxy_host', 'Haproxy host', default = '127.0.0.1',),
+           pvar('haproxy_port', 'Haproxy port', default = '8201',),
+           pvar('plone_products', 'comma separeted list of adtionnal products to install: eg: file://a.tz file://b.tgz', default = '',),
+           pvar('additional_eggs', 'comma separeted list of additionnal eggs to install', default = '',),
+           pvar('plone_zcml', 'comma separeted list of eggs to include for searching ZCML slugs', default = '',),
+           pvar('plone_np', 'comma separeted list of nested packages for products distro part', default = '',),
+           pvar('plone_vsp', 'comma separeted list of versionned suffix packages for product distro part', default = '',),
+           pvar('plone_scripts', 'comma separeted list of scripts to generate from installed eggs', default = '',),
+           pvar('with_checked_versions', 'Use product versions that interact well together (can be outdated, check [versions] in buildout.', default = 'n',),
+           ] + Template.addons_vars + dev_vars
 
 # vim:set et sts=4 ts=4 tw=0:

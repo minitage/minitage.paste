@@ -42,7 +42,7 @@ from minitage.core.common import which, search_latest
 reflags = re.M|re.U|re.S
 running_user = getpass.getuser()
 UNSPACER = re.compile('\s+|\n', reflags)
-SPECIALCHARS = re.compile('[.-@_]', reflags) 
+SPECIALCHARS = re.compile('[.-@_]', reflags)
 INSTANCES_DESCRIPTION = """\
 # A word about minitage.paste instances
 # --------------------------------------
@@ -81,7 +81,7 @@ INSTANCES_DESCRIPTION = """\
 #     * minimerge -v  %(project)s # install what was not, and surely at least postgresql-8.4
 #     * minitage/bin/paster create -t minitage.instance.postgresql %(project)s
 #     * Then to start the postgres : zope/%(project)s/sys/etc/init.d/%(project)s_postgresql restart
-""" 
+"""
 
 class Template(common.Template):
     """Common template"""
@@ -307,6 +307,7 @@ def parse_xmlconfig(xml):
     urls_mappings             = {}
     plone_np_mappings         = {}
     plone_vsp_mappings        = {}
+    plone_sources             = {}
     result = {
         'qi_mappings' :                  qi_mappings,
         'z2packages' :                   z2packages,
@@ -315,12 +316,13 @@ def parse_xmlconfig(xml):
         'eggs_mappings' :                eggs_mappings,
         'scripts_mappings' :             scripts_mappings,
         'zcml_loading_order' :           zcml_loading_order,
-        'zcml_mappings' :               zcml_mappings,
+        'zcml_mappings' :                zcml_mappings,
         'versions_mappings' :            versions_mappings,
         'checked_versions_mappings' :    checked_versions_mappings,
         'urls_mappings' :                urls_mappings,
         'plone_np_mappings' :            plone_np_mappings,
         'plone_vsp_mappings' :           plone_vsp_mappings,
+        'plone_sources' :                plone_sources,
     }
     # discover  additionnal configuration options
     try:
@@ -343,6 +345,24 @@ def parse_xmlconfig(xml):
                     )
         discovered_options.sort(lambda x, y: x[0] - y[0])
         noecho = [addons_vars.append(o[1]) for o in discovered_options]
+
+        # discover development sources information
+        sources_node = xml.getElementsByTagName('sources')
+        if sources_node:
+            for elem in sources_node:
+                for e in elem.getElementsByTagName('source'):
+                    oattrs = dict(e.attributes.items())
+                    options = [option.strip() for option in oattrs['options'].split(',')]
+                    name = oattrs.get('name').strip()
+                    if not name in plone_sources:
+                        item = {
+                            'name':     name,
+                            'type':     oattrs.get('type').strip(),
+                            'url':      oattrs.get('url'),
+                            'options': options,
+                            'default': oattrs.get('default', '').strip(),
+                        }
+                        plone_sources[name] = item
 
         # discover KGS version
         cvs = xml.getElementsByTagName('checkedversions')

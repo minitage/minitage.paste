@@ -7,7 +7,7 @@
 
 [hosts]
 # setted here but just as information, it may not be used.
-zeo-address = $zeo_address
+zeo = $zeo_host
 instance= $address
 instance1=$address
 instance2=$address
@@ -23,6 +23,7 @@ solr = $solr_host
 
 [ports]
 # other instances, in case.
+zeo = $zeo_port
 instance=$http_port
 instance1=$http_port1
 instance2=$http_port2

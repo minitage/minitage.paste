@@ -13,14 +13,28 @@ ZODB3-patches=
 #else
 #   \${buildout:directory}/patches/minitage.poll-invalidation-1-zodb-3-7-1.patch
 #end if
+
+# fix 'elementree' dependency
 Markdown-2.0.1-patches=\${buildout:directory}/patches/mardown-elementtree.patch
 Markdown-patch-options=-Np1
-atreal.patchfss-patches=\${buildout:directory}/patches/atreal.patchfss-setuppy.patch
-atreal.patchfss-patch-options=-Np1
-Products.Archetypes-patches=\${buildout:directory}/patches/archetypes_implby.patch
 
+Products.Archetypes-patches=
+# Fix https://dev.plone.org/plone/ticket/10088:
+#     If you add new archetypes content then you got following exception after calling save:
+#     Exception Type AttributeError Exception Value 'NoneType' object has no attribute 'meta_type'
+                            \${buildout:directory}/patches/archetypes_isFactoryContained.patch
+# Fix part of http://dev.plone.org/plone/ticket/8794
+# fix old 'isImplementedByInstancesOf' calls
+                            \${buildout:directory}/patches/archetypes_implby.patch
+
+
+# make sur the patchs are applied
 [instance]
-# make the ZODB correctly build
-ZODB3-patches=\${zopepy:ZODB3-patches}  
+ZODB3-patches=\${zopepy:ZODB3-patches}
+Markdown-2.0.1-patches=\${zopepy:Markdown-2.0.1-patches}
+Markdown-patch-options=\${zopepy:Markdown-patch-options}
+Products.Archetypes-patches=\${zopepy:Products.Archetypes-patches}
+ipython-patches=      \${zopepy:ipython-patches}
+ipython-patch-options=\${zopepy:ipython-patch-options}
 
 # vim:set ft=cfg:
