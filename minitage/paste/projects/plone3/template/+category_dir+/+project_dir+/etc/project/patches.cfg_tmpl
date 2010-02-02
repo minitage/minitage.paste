@@ -19,10 +19,6 @@ Markdown-2.0.1-patches=\${buildout:directory}/patches/mardown-elementtree.patch
 Markdown-patch-options=-Np1
 
 Products.Archetypes-patches=
-# Fix https://dev.plone.org/plone/ticket/10088:
-#     If you add new archetypes content then you got following exception after calling save:
-#     Exception Type AttributeError Exception Value 'NoneType' object has no attribute 'meta_type'
-                            \${buildout:directory}/patches/archetypes_isFactoryContained.patch
 # Fix part of http://dev.plone.org/plone/ticket/8794
 # fix old 'isImplementedByInstancesOf' calls
                             \${buildout:directory}/patches/archetypes_implby.patch
