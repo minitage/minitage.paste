@@ -98,6 +98,7 @@ class Template(common.Template):
             # If no pgsql is installed, do initdb/createdb but
             # remove files coming out by templates
             # to be out of overwrite errors.
+            SANITIZER = re.compile('([;])', re_flags).sub
             init_db = ';'.join(
                 [bash_init,
                 'initdb  -E \'UTF-8\';'
@@ -108,7 +109,7 @@ class Template(common.Template):
                 "echo CREATE USER %s"
                 "      WITH ENCRYPTED PASSWORD \\'%s\\'|psql template1" % (
                     vars['db_user'],
-                    vars['db_password'],
+                    SANITIZER(r'\\\1' ,vars['db_password']),
                 )]
             )
             create_db = ';'.join(
