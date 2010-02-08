@@ -1,0 +1,10 @@
+ 
+# Externals mr.developer products
+[buildout]
+auto-checkout +=
+# $autocheckout.sort()
+#for $item in $autocheckout:
+    $item
+#end for
+
+# vim:set ft=cfg:
