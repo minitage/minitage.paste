@@ -168,7 +168,7 @@ extensions = buildout.minitagificator mr.developer
 extends-cache = \${buildout:directory}/etc/cache
 # this allow you to run buildout on offline mode and to use only the downloaded plonev3.versions.cfg
 extends -= http://dist.plone.org/1elease/${plone_version}/versions.cfg
-extends = plone/plone3.versions.cfg plone/plone3.buildout.cfg project/patches.cfg project/sources.cfg sys.cfg #slurp
+extends = plone/plone3.versions.cfg plone/plone3.buildout.cfg project/patches.cfg project/sources-dev.cfg  project/sources.cfg sys.cfg #slurp
 #if $with_indexing_solr:
     backends/solr.cfg#slurp
 #end if

@@ -7,7 +7,7 @@
 
 # We want the production buildout + the debug bits.
 [buildout]
-extends=etc/base.cfg etc/backends/${devmode}.cfg etc/project/sources-dev.cfg 
+extends=etc/base.cfg etc/backends/${devmode}.cfg
 parts+= omelette
         ipzope
         i18ndude
