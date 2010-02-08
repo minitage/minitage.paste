@@ -21,6 +21,9 @@ if test -n \$MINITAGE_ENV;then
     unset PROJECT
 
 #if $category == 'zope'
+    PYTHONPATH="\$OLD_MINITAGE_PYTHONPATH"
+    export PYTHONPATH
+    unset OLD_MINITAGE_PYTHONPATH
     unset MINITAGE_DATAFS
     unset MINITAGE_ZCONF
 #end if
