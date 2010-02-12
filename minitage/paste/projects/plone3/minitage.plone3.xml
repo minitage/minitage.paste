@@ -147,6 +147,7 @@
     <egg name="p4a.plonecalendar"              options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
     <egg name="p4a.ploneevent"                 options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
     <egg name="p4a.plonevideoembed"            options="with_ploneproduct_p4a_vid"          zpackage="y" zcml="configure"/>
+    <egg name="p4a.videoembed"                 options="with_ploneproduct_p4a_vid"          zpackage="y" zcml="configure"/>
     <egg name="p4a.plonevideo"                 options="with_ploneproduct_p4a_vid"          zpackage="y" zcml="configure"/>
     <egg name="p4a.video"                      options="with_ploneproduct_p4a_vid"                       zcml="configure"/>
     <egg name="p4a.z2utils"                    options="with_ploneproduct_p4a_vid"          />
@@ -245,6 +246,7 @@
     <version p="zope.component"        v="3.5.1"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
     <version p="zope.proxy"            v="3.5.0"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
     <version p="Products.Archetypes"   v="1.5.15"  name="Needed for fixing https://dev.plone.org/plone/ticket/10088"/>
+    <version p="plone.app.portlets"    v="1.2.1"   name="Fix http://dev.plone.org/plone/ticket/9437"/>
   </versions>
   <!--
     Enter here know good set versions stuff
@@ -267,6 +269,7 @@
     <version p='p4a.video'                      v='1.1.1'   options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.plonevideo'                 v='1.1.1'   options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.plonevideoembed'            v='1.1'     options="with_ploneproduct_p4a_vid"/>
+    <version p='p4a.videoembed'                 v='1.1'     options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.plonecalendar'              v='2.0a5'   options="with_ploneproduct_p4a_cal"/>
     <version p='p4a.calendar'                   v='2.0a3'   options="with_ploneproduct_p4a_cal"/>
     <version p='p4a.ploneevent'                 v='0.7.3'     options="with_ploneproduct_p4a_cal"/>

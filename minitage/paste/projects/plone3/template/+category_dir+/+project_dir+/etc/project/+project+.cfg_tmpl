@@ -88,11 +88,20 @@ ${product}
 
 
 [plonesite]
+# http://pypi.python.org/pypi/collective.recipe.plonesite/
 recipe = collective.recipe.plonesite
 site-id = \${plone:site}
 site-replace=false
 enabled=true
 instance = instance
+# products to autoinstall
+products-initial=
+# profils to autorun
+profils-initial=
 ${zeocomment}zeoserver = zeoserver
+
+[newplonesite]
+<= plonesite
+site-replace=true
 
 # vim:set ft=cfg:

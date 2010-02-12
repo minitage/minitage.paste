@@ -37,7 +37,7 @@ http {
         ## General Options
         ignore_invalid_headers   on;
         keepalive_requests      100;
-        #limit_zone gulag $binary_remote_addr 5m;
+        #limit_zone gulag \$binary_remote_addr 5m;
         recursive_error_pages    on;
         server_name_in_redirect  off;
         server_tokens            off;
