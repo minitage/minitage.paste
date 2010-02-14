@@ -27,7 +27,7 @@ actl="${sys}/bin/${project}.apachectl -k"
 start() {
     ebegin  "Starting apache"
     if [[ `whoami` == root ]];then
-        su \$effectiveuser -c "\$actl start"
+        su \$effectiveuser -m -c "\$actl start"
     else
         \$actl start
     fi

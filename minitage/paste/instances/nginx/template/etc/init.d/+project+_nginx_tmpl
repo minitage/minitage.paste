@@ -28,11 +28,7 @@ start() {
         ewarn "Deleting old pid file"
         rm -f "\$PID_FILE"
     fi
-    if [[ `whoami` == root ]];then
-        su \$effectiveuser -c "${sys}/bin/${project}.nginxd"
-    else
-        ${sys}/bin/${project}.nginxd
-    fi
+    ${sys}/bin/${project}.nginxd
     eend \$?
 }
 

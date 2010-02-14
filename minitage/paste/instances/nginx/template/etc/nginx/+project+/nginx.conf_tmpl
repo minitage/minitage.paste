@@ -1,4 +1,4 @@
-user nginx nginx;
+user $user $user;
 worker_processes 1;
 
 error_log ${sys}/var/log/nginx/error_log info;
@@ -31,7 +31,7 @@ http {
         ## Timeouts
         client_body_timeout   60;
         client_header_timeout 60;
-        eepalive_timeout       750 20;
+        keepalive_timeout       750 20;
         send_timeout          300;
 
         ## General Options
