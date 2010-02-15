@@ -1,9 +1,10 @@
 
-${sys}/var/log/apache/${project}*_log {
+${sys}/var/log/apache/${project}/*log {
 	missingok
 	sharedscripts
+        compress
 	postrotate
-		kill -USR1 `cat ${sys}/var/run/nginx/${project}.pid`
+		${sys}/etc/init.d/${project}_apache reload
 	endscript
 }
 

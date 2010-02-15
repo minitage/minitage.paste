@@ -1,7 +1,8 @@
 
-${sys}/var/log/nginx/${project}*_log {
+${sys}/var/log/nginx/*log {
 	missingok
 	sharedscripts
+        compress
 	postrotate
 		kill -USR1 `cat ${sys}/var/run/nginx/${project}.pid`
 	endscript
