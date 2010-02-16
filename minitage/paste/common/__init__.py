@@ -179,15 +179,19 @@ class Template(templates.Template):
             vars['mt'] = self.output_dir
             if self.special_output_dir:
                 vars['path'] = self.output_dir
+            # call to be in minitage but deport
+            # the minitage ROOT to the 'MT' environment variable
+            # this variable is set automaticly by the minitage.instances.env
+            # template which must has been used to set the current environment
+            if not (os.path.exists(
+                os.path.join(vars['mt'], 'etc', 'minimerge.cfg')
+            )) and 'MT' in os.environ: 
+                if os.path.exists(
+                    os.path.join(os.environ['MT'], 'etc', 'minimerge.cfg')
+                ):
+                    vars['mt'] = os.environ['MT']  
         else:
             not_minitage = True
-        if not (os.path.exists(
-            os.path.join(vars['mt'], 'etc', 'minimerge.cfg')
-        )) and 'MT' in os.environ: 
-            if os.path.exists(
-                os.path.join(os.environ['MT'], 'etc', 'minimerge.cfg')
-            ):
-                vars['mt'] = os.environ['MT'] 
         if not_minitage or not (os.path.exists(
             os.path.join(vars['mt'], 'etc', 'minimerge.cfg')
         )):
