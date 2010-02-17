@@ -81,7 +81,7 @@ for name in sources_k:
             description = name,
             default = "n",
         )
-    ) 
+    )
 
 class Template(common.Template):
     packaged_version = '3.3.4'
@@ -329,6 +329,9 @@ class Template(common.Template):
         vars['http_port3'] = int(vars['http_port']) + 3
         vars['http_port4'] = int(vars['http_port']) + 4
         vars['http_port5'] = int(vars['http_port']) + 5
+        vars['http_port_buildbot'] = int(vars['http_port']) + 6
+
+        vars['zeo_port_buildbot'] = int(vars['zeo_port']) + 1
         vars['running_user'] = common.running_user
         vars['instances_description'] = common.INSTANCES_DESCRIPTION % vars
 
@@ -421,6 +424,10 @@ Template.vars = common.Template.vars \
            pvar('with_supervisor', 'Supervisor support (monitoring), http://supervisord.org/ y/n', default = 'y',),
            pvar('supervisor_host', 'Supervisor host', default = '127.0.0.1',),
            pvar('supervisor_port', 'Supervisor port', default = '9001',),
+           pvar('buildbot_master_web_port', 'Buildbot master web port', default = '9080',),
+           pvar('buildbot_master_control_port', 'Buildbot master control port', default = '9081',),
+           pvar('buildbot_master_host', 'Buildbot master host', default = '127.0.0.1',),
+           pvar('buildbot_slave_password',  'Buildbot password', default = 'i_am_a_buildbot_slave_password',),
            pvar('with_haproxy', 'haproxy configuration file generation support (loadbalancing), http://haproxy.1wt.eu/ y/n', default = 'y',),
            pvar('haproxy_host', 'Haproxy host', default = '127.0.0.1',),
            pvar('haproxy_port', 'Haproxy port', default = '8201',),

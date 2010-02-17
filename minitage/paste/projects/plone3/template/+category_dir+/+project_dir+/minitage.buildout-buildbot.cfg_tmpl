@@ -1,0 +1,128 @@
+#echo '#\n'
+#echo '#\n'
+# Note that this buildbot configuration relies on a minitage based project
+#echo '#\n'
+# with the .env instance installed inside (minitage/paster create -t minitage.instances.env ${project}-buildbot)
+#echo '#\n'
+# Concept :
+# - install the buildbot minibuild which has the same dependencies as the project
+# - When buildbot is finally installed:
+#echo '#\n'
+#       - Launch the master & the slave::
+#            ./bin/buildbot-master start
+#            ./bin/buildbot-slave start
+#echo '#\n'
+# - Then the basic build sequence is:
+#   1. builds the buildbot in update mode but ingoring all dependencies (at minitage level!)
+#      This will rerun the base buildbout (and all its parts) ensuring that most of the buildout is sane
+#   2. Run the ${project}.policy & ${project}.skin tests ensuring base code is sane
+#   3. Add your tests to the build sequence ;)
+#echo '#\n'
+# Think to eithersetup the project for mr.developer not to find dirty packages either by:
+# See http://pypi.python.org/pypi/mr.developer/1.10#troubleshooting
+#   - the user subversion or other tools configuration no
+#   - the checkouted-via-mr.developer repositories ignore systems
+# This will prevent buildout from being interactive
+#echo '#\n'
+#echo '#\n'
+
+[buildout]
+parts += buildbot-master
+         buildbot-slave
+         b-${project}
+         zeoserver-buildbot
+         instance-buildbot
+         bmkdirs
+extends=etc/minitage/minitage.cfg etc/base.cfg
+
+[buildbot-master]
+recipe = collective.buildbot:master
+project-name = ${project} Buildbot
+project-url = ${homepage}
+# allow to force build with the web interface
+allow-force = true
+port = \${ports:buildbot-master-control}
+wport = \${ports:buildbot-master-web}
+url = http://\${hosts:buildbot-master}:\${ports:buildbot-master-web}
+public-html = \${buildout:directory}/var/buildbot
+slaves =
+    buildbot-slave \${buildbot:slave-password}
+
+# uncomment/edit to receive email alerts from builds
+#mail-host = smtp.foo.com
+#email-notification-sender =     foo@foo.com
+#email-notification-recipients = foo@foo.com
+# The mode to use for sending mails. Available options are:
+# * all Send mail about all builds, both passing and failing
+# * failing Only send mail about builds which fail
+# * problem  Only send mail about a build which failed when the previous build has passed.
+#   If your builds usually pass, then this will only send mail when a problem occurs.
+mail-mode = all
+
+# uncomment/edit to receive email alerts from builds on irc
+# but also control the bot via irc
+#irc-host=irc.freenode.net
+#irc-channels=#${project}
+#irc-nickname=${project}-bbot
+#irc-password=${project}-bbot-p4sswd
+
+[buildbot-slave]
+recipe = collective.buildbot:slave
+host = \${hosts:buildbot-master}
+port = \${ports:buildbot-master-control}
+password = \${buildbot:slave-password}
+
+[b-${project}]
+recipe = collective.buildbot:project
+slave-names = buildbot-slave
+vcs = $scm_type
+repositories = $uri
+build-sequence =
+    \${buildout:directory}/../../bin/minimerge  -s
+    \${buildout:directory}/../../bin/minimerge  -NRuUv ${project}-buildbot
+    \${buildout:directory}/bin/zeoserver-buildbot restart
+# if you want to update minitage also you can:
+#    - comment the previous minimerge call
+#    - uncomment the following lines
+#    \${buildout:directory}/../../bin/minimerge  -s
+#    \${buildout:directory}/../../bin/minimerge  -uUv ${project}-buildbot
+test-sequence=\${buildout:directory}/bin/instance-buildbot test -m ${project}.policy
+              \${buildout:directory}/bin/instance-buildbot test -m ${project}.skin
+# build every 3 hours
+cron-scheduler=\${crons:buildbot-${project}}
+
+[zeoserver-buildbot]
+recipe = plone.recipe.zope2zeoserver
+zope2-location = \${zope2:location}
+zeo-address = \${hosts:zeo-buildbot}:\${ports:zeo-buildbot}
+zeo-conf-additional =
+    %import tempstorage
+    <temporarystorage temp>
+        name temporary storage for sessioning
+    </temporarystorage>
+
+
+[instance-buildbot]
+<= instance
+http-address = \${hosts:instance-buildbot}:\${ports:instance-buildbot}
+zeo-client-cache-size = \${cache:zeo-client-cache-size}
+zeo-client = on
+zeo-address = \${zeoserver-buildbot:zeo-address}
+temporary-storage =
+    <zeoclient>
+    server  \${zeoserver-buildbot:zeo-address}
+        storage temp
+        name zeostorage
+        var \${buildout:directory}/var
+    </zeoclient>
+    mount-point /temp_folder
+    container-class Products.TemporaryFolder.TemporaryContainer
+
+[bmkdirs]
+recipe = plone.recipe.command
+update-command = \${bmkdirs:command}
+command=
+    mkdir -pv \${locations:buildbot-testfss-backup};
+    mkdir -pv \${locations:buildbot-testfss-storage};
+
+# vim: set ft=cfg:

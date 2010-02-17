@@ -3,37 +3,51 @@
 #set $sgdgcomment=''
 #else
 #set $sgdgcomment='#'
-#end if 
+#end if
 
 [hosts]
 # setted here but just as information, it may not be used.
 zeo = $zeo_host
+zeo-buildbot = $zeo_host
 instance= $address
 instance1=$address
 instance2=$address
 instance3=$address
 instance4=$address
 instance-newsletter=$address
+instance-buildbot=$address
 #may not be used
 supervisor=$supervisor_host
 balancer=$haproxy_host
 syslog = 127.0.0.1
 solr = $solr_host
+buildbot-master=${buildbot_master_host}
 
 
 [ports]
 # other instances, in case.
 zeo = $zeo_port
+zeo-buildbot =${zeo_port_buildbot}
 instance=$http_port
 instance1=$http_port1
 instance2=$http_port2
 instance3=$http_port3
 instance4=$http_port4
 instance-newsletter=$http_port5
+instance-buildbot=$http_port_buildbot
 #may not be used
 supervisor=$supervisor_port
 balancer=$haproxy_port
 solr = $solr_port
+buildbot-master-control=${buildbot_master_control_port}
+buildbot-master-web=${buildbot_master_web_port}
+
+[buildbot]
+slave-password=${buildbot_slave_password}
+
+[crons]
+# at 3:00am
+buildbot-${project} = 0 3 * * *
 
 #if 'relstorage' in $mode:
 [database]
@@ -60,11 +74,11 @@ event-log-level=INFO
 
 [cache]
 zeo-client-cache-size = 80MB
-session-timeout-minutes=90 
+session-timeout-minutes=90
 
 [plone]
 # Site ID
-site = $plonesite 
+site = $plonesite
 
 [users]
 #system user
@@ -76,17 +90,19 @@ balancer=$running_user
 # aboslute paths to avoid buildout auto build of reffered part
 solr = \$solr_path
 testfss-backup=  \${buildout:directory}/parts/instance/var/fss_backup
-testfss-storage= \${buildout:directory}/parts/instance/var/fss_storage 
+testfss-storage= \${buildout:directory}/parts/instance/var/fss_storage
 fss-backup=  \${buildout:directory}/var/fss_backup_${project}
-fss-storage= \${buildout:directory}/var/fss_storage_${project} 
+fss-storage= \${buildout:directory}/var/fss_storage_${project}
+buildbot-testfss-backup=  \${buildout:directory}/parts/instance-buildbot/var/fss_backup
+buildbot-testfss-storage= \${buildout:directory}/parts/instance-buildbot/var/fss_storage
 ${sgdgcomment}testfss-backup-newsletter= \${buildout:directory}/parts/instance-newsletter/var/fss_backup
-${sgdgcomment}testfss-storage-newsletter=\${buildout:directory}/parts/instance-newsletter/var/fss_storage 
+${sgdgcomment}testfss-storage-newsletter=\${buildout:directory}/parts/instance-newsletter/var/fss_storage
 ${sgdgcomment}fss-backup-newsletter= \${buildout:directory}/var/fss_backupnewsletter_${project}
-${sgdgcomment}fss-storage-newsletter=\${buildout:directory}/var/fss_storagenewsletter_${project} 
+${sgdgcomment}fss-storage-newsletter=\${buildout:directory}/var/fss_storagenewsletter_${project}
 
-# if you want separated FSS directories, you can use that 
+# if you want separated FSS directories, you can use that
 #testfss-backup1= \${buildout:directory}/parts/instance1/var/fss_backup
-#testfss-storage1=\${buildout:directory}/parts/instance1/var/fss_storage 
+#testfss-storage1=\${buildout:directory}/parts/instance1/var/fss_storage
 #testfss-backup2= \${buildout:directory}/parts/instance2/var/fss_backup
 #testfss-storage2=\${buildout:directory}/parts/instance2/var/fss_storage
 #testfss-backup3= \${buildout:directory}/parts/instance3/var/fss_backup
@@ -103,12 +119,12 @@ ${sgdgcomment}fss-storage-newsletter=\${buildout:directory}/var/fss_storagenewsl
 #fss-backup4= \${buildout:directory}/var/fss_backup4_${project}
 #fss-storage4=\${buildout:directory}/var/fss_storage4_${project}
 
- 
+
 # Command below is important
 # if not, fss tests or tests using fss in their configuration will fail
 # You can add here directories to create
 [mkdirs]
 command =
 #    mkdir -pv \${buildout:directory}/foo
- 
+
 # vim:set ft=cfg:

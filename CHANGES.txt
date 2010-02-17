@@ -7,6 +7,7 @@ UP
 ------
 
     - plone3 template maintenance
+    - plone3 auto project buildbot support
     - nginx instance
     - init.d files coherence
 

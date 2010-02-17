@@ -1,0 +1,9 @@
+[minibuild]
+dependencies=$opt_deps
+install_method=$install_method
+src_uri=$uri
+src_type=$scm_type
+category=buildbot
+homepage=$homepage
+description= a buildout for $project buildbot
+buildout_config=minitage.buildout-buildbot.cfg

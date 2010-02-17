@@ -2,7 +2,7 @@
 #set $fsscomment=''
 #else
 #set $fsscomment='#'
-#end if 
+#end if
 [buildout]
 #prefer-final = true
 versions = versions
@@ -34,7 +34,7 @@ skip-fake-eggs =
 ${fsscomment}[fss-newsletter]
 ${fsscomment}<= fss
 ${fsscomment}recipe = iw.recipe.fss
-${fsscomment}zope-instances=\${instance-newsletter:location}  
+${fsscomment}zope-instances=\${instance-newsletter:location}
 
 # Singing & dancing clock server enabled instance
 [instance-newsletter]
@@ -51,7 +51,7 @@ zope-conf-additional +=
     #the hostname passed in via the "Host:" header in the faux request. Could be useful if you have virtual host rules set up inside Zope itself.
     host localhost
     </clock-server>
- 
+
 [mkdirs]
 command +=
     mkdir -pv \${locations:testfss-backup-newsletter};
@@ -60,6 +60,6 @@ command +=
     mkdir -pv \${locations:fss-storage-newsletter};
     mkdir -pv \${buildout:directory}/var/newsletter/mailqueue/cur;
     mkdir -pv \${buildout:directory}/var/newsletter/mailqueue/tmp;
-    mkdir -pv \${buildout:directory}/var/newsletter/mailqueue/new; 
+    mkdir -pv \${buildout:directory}/var/newsletter/mailqueue/new;
 
 # vim:set ft=cfg:

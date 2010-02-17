@@ -246,6 +246,7 @@
     <version p="zope.component"        v="3.5.1"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
     <version p="zope.proxy"            v="3.5.0"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
     <version p="Products.Archetypes"   v="1.5.15"  name="Needed for fixing https://dev.plone.org/plone/ticket/10088"/>
+    <version p="Products.validation"   v="1.6.4"  name="Needed for fixing https://dev.plone.org/plone/ticket/10088"/>
     <version p="plone.app.portlets"    v="1.2.1"   name="Fix http://dev.plone.org/plone/ticket/9437"/>
   </versions>
   <!--
