@@ -6,23 +6,24 @@
 #echo '#\n'
 # Concept :
 # - install the buildbot minibuild which has the same dependencies as the project
+# - this to make your coe archived in the targeted SCM prior to a buildbot build
 # - When buildbot is finally installed:
 #echo '#\n'
 #       - Launch the master & the slave::
 #            ./bin/buildbot-master start
 #            ./bin/buildbot-slave start
 #echo '#\n'
-# - Then the basic build sequence is:
+# - Then the basic build sequence configured here is:
 #   1. builds the buildbot in update mode but ingoring all dependencies (at minitage level!)
 #      This will rerun the base buildbout (and all its parts) ensuring that most of the buildout is sane
 #   2. Run the ${project}.policy & ${project}.skin tests ensuring base code is sane
 #   3. Add your tests to the build sequence ;)
 #echo '#\n'
-# Think to eithersetup the project for mr.developer not to find dirty packages either by:
 # See http://pypi.python.org/pypi/mr.developer/1.10#troubleshooting
-#   - the user subversion or other tools configuration no
-#   - the checkouted-via-mr.developer repositories ignore systems
-# This will prevent buildout from being interactive
+# Think to either setup the project for mr.developer not to find dirty packages either by:
+#   - Giving a password somehow to the subversion user or other SCM
+#   - the checkouted-via-mr.developer repositories ignore inputs, so buildout can't be interactive
+#     and you ll have problems if mr.developer ask you for a password or for dirty packages
 #echo '#\n'
 #echo '#\n'
 
@@ -80,6 +81,7 @@ repositories = $uri
 build-sequence =
     \${buildout:directory}/../../bin/minimerge  -s
     \${buildout:directory}/../../bin/minimerge  -NRuUv ${project}-buildbot
+    \${buildout:directory}/bin/develop up
     \${buildout:directory}/bin/zeoserver-buildbot restart
 # if you want to update minitage also you can:
 #    - comment the previous minimerge call

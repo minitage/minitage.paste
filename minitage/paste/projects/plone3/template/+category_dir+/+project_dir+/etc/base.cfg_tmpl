@@ -52,6 +52,7 @@ $hr
 # |-- buildout-prod.cfg                          -> buildout for production
 # |-- minitage/minitage.buildout-dev.cfg         -> buildout for development with minitage support (including xml libs, ldap, dbs; python, dependencies & common eggs cache for things like lxml or PIL)
 # `-- minitage/minitage.buildout-prod.cfg        -> buildout for production  with minitage support (including xml libs, ldap, dbs; python, dependencies & common eggs cache for things like lxml or PIL)
+# `-- minitage/minitage.buildout-buildbot.cfg    -> buildout for deploying a buildbot related to your project (requires to be inside a minitage)
 #echo '#\n'
 #echo '#\n'
 # Crons

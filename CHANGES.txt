@@ -10,6 +10,7 @@ UP
     - plone3 auto project buildbot support
     - nginx instance
     - init.d files coherence
+    - flickr api patch on plone3
 
 1.3.114
 ----------------
