@@ -193,6 +193,9 @@ ${solrcomment}    solrinstance
     backup
     mkdirs
     omelette
+    fakeproducts
+    test
+    xmltest
 
 find-links = \${groups:find-links}
 eggs += zopelib
@@ -285,6 +288,39 @@ packages = \${zope2:location}/lib/python ./
 recipe = plone.recipe.command
 update-command = \${mkdirs:command}
 command +=
+
+# External testrunner
+[testenv]
+INSTANCE_HOME=\${instance:location}
+CONFIG_FILE=\${instance:location}/etc/zope.conf
+
+[test]
+recipe = zc.recipe.testrunner
+eggs = \${instance:eggs}
+extra-paths = \${instance:extra-paths}
+             \${buildout:directory}/parts/fakeproducts
+defaults = ['--exit-with-status', '--auto-color', '--auto-progress']
+environment = testenv
+
+
+# External testrunner with xml reports
+# It is useful for generating reports fr yhudson
+[xmltest]
+recipe = collective.xmltestreport
+eggs = \${test:eggs}
+extra-paths = \${test:extra-paths}
+defaults = ['-x', '--exit-with-status', '--auto-color', '--auto-progress']
+environment = \${test:environment}
+
+[fakeproducts]
+recipe=plone.recipe.command
+update-command = \${fakeproducts:command}
+command =
+    mkdir -pv \${buildout:directory}/parts/fakeproducts/Products/;
+    touch  \${buildout:directory}/parts/fakeproducts/Products/__init__.py;
+# fix multiline products ;)
+    for i in \$(echo "\${instance:products}");do for j in \$i/*;do if [[ "\$j" != "\$i/" ]] && [[ -d \$j ]];then ln -sfv \$j \${buildout:directory}/parts/fakeproducts/Products/\$(basename \$j);fi;done;done;
+
 
 
 \# vim: set ft=cfg:

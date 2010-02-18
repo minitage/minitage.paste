@@ -10,6 +10,7 @@ sources=sources
 #set source=$plone_sources[item]
 $source['name'] = $source['type'] $source['url']
 #end for
+plomino=svn http://plomino.svn.sourceforge.net/svnroot/plomino/trunk/Plomino/
 
 [groups]
 # OLD ZOPE2 PRODUCTS SUPPORT
@@ -42,7 +43,6 @@ ${product}
 #end if
 #end for
 
-plomino=http://plomino.svn.sourceforge.net/svnroot/plomino/branches/plone3/CMFPlomino
 vaporization=http://svn.plone.org/svn/collective/Vaporisation/trunk
 
 # on Upgrades
@@ -62,7 +62,5 @@ find-links = http://download.zope.org/distribution/
 recipe=minitage.recipe.fetch
 urls=\${groups:vaporization}|svn||\${zope2:location}/lib/python/vaporisation
 
-[plomino]
-recipe=minitage.recipe.fetch
-urls=\${groups:plomino}|svn||\${buildout:directory}/parts/plomino/CMFPlomino
+
 # vim:set ft=cfg:

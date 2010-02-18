@@ -6,5 +6,8 @@ auto-checkout +=
 #for $item in $autocheckout:
     $item
 #end for
+#if $with_ploneproduct_plomino:
+    plomino
+#end if 
 
 # vim:set ft=cfg:

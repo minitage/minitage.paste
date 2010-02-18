@@ -39,7 +39,7 @@ class Template(common.Template):
 
     summary = 'Template for creating a file '\
             'to source to get the needed '\
-            'environnment variables for '\
+            'environment variables for '\
             'playing in the shell or for other templates'
     _template_dir = 'template'
     use_cheetah = True

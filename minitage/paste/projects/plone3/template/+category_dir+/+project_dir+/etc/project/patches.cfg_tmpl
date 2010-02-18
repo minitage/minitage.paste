@@ -24,7 +24,7 @@ Products.Archetypes-patches=
                             \${buildout:directory}/patches/archetypes_implby.patch
 # packaging problem in and only flickrapi==1.4
 flickrapi-1.4-patches=\${buildout:directory}/patches/flickrapi.patch
-flickrapi-1.4.1-patches=\${buildout:directory}/patches/flickrapi.patch
+flickrapi-1.4.1-patches=\${buildout:directory}/patches/flickrapi141.patch
 flickrapi-patch-options=-Np1
 
 
@@ -36,10 +36,21 @@ Markdown-patch-options=\${zopepy:Markdown-patch-options}
 Products.Archetypes-patches=\${zopepy:Products.Archetypes-patches}
 ipython-patches=      \${zopepy:ipython-patches}
 ipython-patch-options=\${zopepy:ipython-patch-options}
-flickrapi-1.4.1-patches=\${zopepy:flickrapi-1.4-patches}
+flickrapi-1.4.1-patches=\${zopepy:flickrapi-1.4.1-patches}
 flickrapi-1.4-patches=\${zopepy:flickrapi-1.4-patches}
 flickrapi-patch-options=\${zopepy:flickrapi-patch-options}
 
+# make sur the patchs are applied
+[test]
+ZODB3-patches=\${zopepy:ZODB3-patches}
+Markdown-2.0.1-patches=\${zopepy:Markdown-2.0.1-patches}
+Markdown-patch-options=\${zopepy:Markdown-patch-options}
+Products.Archetypes-patches=\${zopepy:Products.Archetypes-patches}
+ipython-patches=      \${zopepy:ipython-patches}
+ipython-patch-options=\${zopepy:ipython-patch-options}
+flickrapi-1.4.1-patches=\${zopepy:flickrapi-1.4.1-patches}
+flickrapi-1.4-patches=\${zopepy:flickrapi-1.4-patches}
+flickrapi-patch-options=\${zopepy:flickrapi-patch-options} 
 
 
 # vim:set ft=cfg:

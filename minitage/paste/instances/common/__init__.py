@@ -38,7 +38,7 @@ from paste.script import templates
 running_user = getpass.getuser()
 
 class Template(common.Template):
-    '''A template for minitage.instances/'''
+    """A template for minitage.instances"""
 
     def pre(self, command, output_dir, vars):
         common.Template.pre(self, command, output_dir, vars)
