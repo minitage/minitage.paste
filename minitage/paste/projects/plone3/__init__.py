@@ -145,6 +145,7 @@ class Template(common.Template):
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
         vars['plonesite'] = common.SPECIALCHARS.sub('', vars['project'])
+        vars['sane_name'] = common.SPECIALCHARS.sub('', vars['project'])
         vars['category'] = 'zope'
         vars['includesdirs'] = ''
         vars['hr'] = '#' * 120

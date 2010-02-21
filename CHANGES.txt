@@ -13,6 +13,7 @@ UP
     - flickr api patch on plone3
     - testrunner parts
     - plomino moved to be used with mr.developer
+    - add hudson support to minitage.plone3
 
 1.3.114
 ----------------

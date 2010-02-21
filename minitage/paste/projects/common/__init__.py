@@ -42,7 +42,7 @@ from minitage.core.common import which, search_latest
 reflags = re.M|re.U|re.S
 running_user = getpass.getuser()
 UNSPACER = re.compile('\s+|\n', reflags)
-SPECIALCHARS = re.compile('[.-@_]', reflags)
+SPECIALCHARS = common.SPECIALCHARS
 INSTANCES_DESCRIPTION = """\
 # A word about minitage.paste instances
 # --------------------------------------
@@ -287,7 +287,10 @@ Template.vars = common.Template.vars + \
          common.var('python',
                     'the Python interpreter to use. (Only useful if you are not'
                     'inside a minitage.',
-                    default = sys.executable,)
+                    default = sys.executable,),
+         common.var('author',
+                    'Author signature',
+                    default = '%s <%s@localhost>' % (running_user, running_user),) 
         ]
 
 

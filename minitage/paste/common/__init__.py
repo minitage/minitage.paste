@@ -32,12 +32,16 @@ __docformat__ = 'restructuredtext en'
 import os
 import sys
 import shutil
+import re
 import logging
 
 from paste.script import templates
 
 from minitage.core import common
 from minitage.core import core
+
+re_flags = re.M|re.U|re.I|re.S
+SPECIALCHARS = re.compile('[-._@|{(\[|)\]}]', re_flags)
 
 __HEADER__ = """\
 %(comment)s!/usr/bin/env bash

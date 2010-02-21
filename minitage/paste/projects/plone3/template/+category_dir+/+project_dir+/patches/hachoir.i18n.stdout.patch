@@ -1,0 +1,25 @@
+diff -ur a/hachoir_core/i18n.py b/hachoir_core/i18n.py
+--- a/hachoir_core/i18n.py	2008-10-16 22:12:30.000000000 +0200
++++ b/hachoir_core/i18n.py	2010-02-19 09:36:30.000000000 +0100
+@@ -65,7 +65,7 @@
+         getTerminalCharset.value = _getTerminalCharset()
+         return getTerminalCharset.value
+ 
+-class UnicodeStdout:
++class UnicodeStdout(object):
+     def __init__(self, old_device, charset):
+         self.device = old_device
+         self.charset = charset
+@@ -73,6 +73,12 @@
+     def flush(self):
+         self.device.flush()
+ 
++    def writelines(self, lines):
++        for text in lines:
++            if isinstance(text, unicode):
++                text = text.encode(self.charset, 'replace')
++            self.device.write(text)
++
+     def write(self, text):
+         if isinstance(text, unicode):
+             text = text.encode(self.charset, 'replace')
