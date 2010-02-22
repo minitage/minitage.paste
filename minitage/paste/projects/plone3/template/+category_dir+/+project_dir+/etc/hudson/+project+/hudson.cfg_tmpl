@@ -1,4 +1,4 @@
-# hudson contineous integratop,integration with buildout
+# hudson contineous integration with buildout
 # This is not integrated by default in others templates
 # To add this support, just add the three parts to the etc/base.cfg
 #
@@ -7,6 +7,8 @@
 #         ${sane_name}_hudson_env
 #         ${sane_name}_hudson_job
 #         ${sane_name}_hudson_deploy
+#echo '#\n'
+#echo '#\n'
 # Hudson is a tool tha allow us to make conteneous integration, see: http://hudson-ci.org/
 # The scripts inside etc/hudson/build/*.sh are the scripts used as a build sequence for running our hudson job.
 #echo '#\n'
@@ -25,7 +27,7 @@
 # |-- etc/hudson/$project/build/test.sh                      -> run all needed test and produce reports inside parts/test/testreports n JUnit test xml format
 # |-- etc/hudson/$project/build/update_mrdeveloper.sh        -> udpate sources grabbed via mr.developer
 # |-- etc/hudson/$project/build/update_project.sh            -> udpate project code
-# |-- etc/hudson/$project/${project}.xml                     -> an hudson config.xml job file
+# |-- etc/hudson/$project/config.xml                         -> an hudson config.xml job file
 #echo '#\n'
 # etc/templates/hudson/
 # |-- etc/templates/hudson/$project/build/activate_env.sh.in -> template to put things in the environment used during scripts execution
@@ -43,6 +45,14 @@ recipe = collective.recipe.template
 input =\${buildout:directory}/etc/templates/hudson/$project/build/activate_env.sh.in
 output=\${buildout:directory}/etc/hudson/$project/build/activate_env.sh
 project=\${${sane_name}_hudson_job:project}
+# testrunner to use
+test-command=\${buildout:directory}/bin/${sane_name}.test
+# eggs to test
+tested-packages=
+    ${project}.skin 
+    ${project}.policy
+# where to find junit test reports to aggregate
+reports=\${buildout:directory}/parts/${sane_name}.test/testreports 
 
 # a template for a job configuration file
 [${sane_name}_hudson_job]
@@ -50,18 +60,19 @@ recipe = collective.recipe.template
 input =\${buildout:directory}/etc/templates/hudson/$project/config.xml.in
 output =\${buildout:directory}/etc/hudson/$project/config.xml
 project=$project
+update-project-cmd=\${buildout:directory}/etc/hudson/build/update_project.sh
+update-mrdeveloper-cmd=\${buildout:directory}/etc/hudson/build/update_mrdeveloper.sh
+build-cmd=\${buildout:directory}/etc/hudson/build/build.sh
+test-cmd=\${buildout:directory}/etc/hudson/build/test.sh
 
-# where to send mails
-recipients=$author
-# component used to view the sources and the asociated url  (websvn, trac etc)
-repoviewser_type=ViewSVN
-websvn_url=
+# where to send mails (comma separated)
+recipients=$author_email
 # component used to checkout the sources and the asociated url
 scm_type=SubversionSCM
 # where are our sources living
 scm_url=$uri
-# where to find junit test reports to aggregate
-reports=\${buildout:directory}/parts/test/testreports
+# cron to determine how is built the project (be careful, no whitespace!)
+cron =$buildbot_cron
 
 # make this thing easy to integrate with an hudson instance deployed via minitage
 [${sane_name}_hudson_deploy]
@@ -70,6 +81,12 @@ update-command = \${${sane_name}_hudson_deploy:command}
 hudson-instance=${sane_name}buildbot
 command =
     mkdir -pv \${buildout:directory}/sys/var/data/hudson/\${${sane_name}_hudson_deploy:hudson-instance}/hudson/jobs/\${${sane_name}_hudson_job:project};
-    cp -vf \${icsuplone_hudson_job:output} \${buildout:directory}/sys/var/data/hudson/\${${sane_name}_hudson_deploy:hudson-instance}/hudson/jobs/\${${sane_name}_hudson_job:project}/config.xml
+    cp -vf \${${sane_name}_hudson_job:output} \${buildout:directory}/sys/var/data/hudson/\${${sane_name}_hudson_deploy:hudson-instance}/hudson/jobs/\${${sane_name}_hudson_job:project}/config.xml
+
+[${sane_name}_hudson_chmod]
+recipe = plone.recipe.command
+update-command = \${${sane_name}_hudson_chmod:command}
+command =
+    chmod -v 750 \${buildout:directory}/etc/hudson/${project}/build/*.sh
 
 # vim:set ft=cfg:

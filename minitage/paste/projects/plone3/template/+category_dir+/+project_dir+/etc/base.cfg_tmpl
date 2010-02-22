@@ -75,6 +75,7 @@ $hr
 # Contineous integration
 # `-- minitage/minitage.buildout-buildbot.cfg    -> buildout for deploying a buildbot related to your project (requires to be inside a minitage)
 # |   |__ etc/hudson                             -> see files inside to know how to integrate this project with hudson
+# |   |__ etc/template/hudson                    -> see the hudson buildout to have details about those template you generate for the hudson job and the build helpers
 #echo '#\n'
 # Minitage support
 # |   |-- minitage/minitage.cfg                  -> some buildout tweaks to run in the best of the world with minitage
@@ -172,7 +173,7 @@ extensions = buildout.minitagificator mr.developer
 extends-cache = \${buildout:directory}/etc/cache
 # this allow you to run buildout on offline mode and to use only the downloaded plonev3.versions.cfg
 extends -= http://dist.plone.org/1elease/${plone_version}/versions.cfg
-extends = plone/plone3.versions.cfg plone/plone3.buildout.cfg project/patches.cfg project/sources-dev.cfg  project/sources.cfg sys.cfg #slurp
+extends = plone/plone3.versions.cfg plone/plone3.buildout.cfg project/patches.cfg project/sources-dev.cfg  project/sources.cfg sys.cfg etc/hudson/${project}/hudson.cfg #slurp
 #if $with_indexing_solr:
     backends/solr.cfg#slurp
 #end if
@@ -197,7 +198,12 @@ ${solrcomment}    solrinstance
     mkdirs
     omelette
     fakeproducts
-    test
+    ${sane_name}.test
+# hudson integration    
+    ${sane_name}_hudson_env
+    ${sane_name}_hudson_job
+    ${sane_name}_hudson_deploy 
+    ${sane_name}_hudson_chmod
 
 find-links = \${groups:find-links}
 eggs += zopelib

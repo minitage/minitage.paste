@@ -31,8 +31,6 @@
 parts += buildbot-master
          buildbot-slave
          b-${project}
-         zeoserver-buildbot
-         instance-buildbot
          bmkdirs
 extends=etc/minitage/minitage.cfg etc/base.cfg
 
@@ -93,7 +91,7 @@ test-sequence=\${buildout:directory}/bin/instance-buildbot test -m ${project}.po
 # build every 3 hours
 cron-scheduler=\${crons:buildbot-${project}}
 
-[zeoserver-buildbot]
+[zeoserver]
 recipe = plone.recipe.zope2zeoserver
 zope2-location = \${zope2:location}
 zeo-address = \${hosts:zeo-buildbot}:\${ports:zeo-buildbot}
@@ -104,15 +102,14 @@ zeo-conf-additional =
     </temporarystorage>
 
 
-[instance-buildbot]
-<= instance
+[instance]
 http-address = \${hosts:instance-buildbot}:\${ports:instance-buildbot}
 zeo-client-cache-size = \${cache:zeo-client-cache-size}
 zeo-client = on
-zeo-address = \${zeoserver-buildbot:zeo-address}
+zeo-address = \${zeoserver:zeo-address}
 temporary-storage =
     <zeoclient>
-    server  \${zeoserver-buildbot:zeo-address}
+    server  \${zeoserver:zeo-address}
         storage temp
         name zeostorage
         var \${buildout:directory}/var

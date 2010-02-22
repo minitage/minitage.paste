@@ -290,7 +290,10 @@ Template.vars = common.Template.vars + \
                     default = sys.executable,),
          common.var('author',
                     'Author signature',
-                    default = '%s <%s@localhost>' % (running_user, running_user),) 
+                    default = '%s <%s@localhost>' % (running_user, running_user),) ,
+         common.var('author_email',
+                    'Author email',
+                    default = '%s@localhost' % (running_user),)  
         ]
 
 

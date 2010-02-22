@@ -104,7 +104,7 @@ command =
 # See http://pypi.python.org/pypi/zc.recipe.testrunner/
 # It can do xml reports addon if you supply -x as a command line argument
 # It is useful for generating reports for hudson or other contineous integration
-[test]
+[${sane_name}.test]
 recipe = collective.xmltestreport
 eggs = \${instance:eggs}
 extra-paths = \${instance:extra-paths}

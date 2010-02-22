@@ -429,6 +429,7 @@ Template.vars = common.Template.vars \
            pvar('buildbot_master_control_port', 'Buildbot master control port', default = '9081',),
            pvar('buildbot_master_host', 'Buildbot master host', default = '127.0.0.1',),
            pvar('buildbot_slave_password',  'Buildbot password', default = 'i_am_a_buildbot_slave_password',),
+           pvar('buildbot_cron',  'Buildbot cron to schedule builds', default = '0 3 * * *',),
            pvar('with_haproxy', 'haproxy configuration file generation support (loadbalancing), http://haproxy.1wt.eu/ y/n', default = 'y',),
            pvar('haproxy_host', 'Haproxy host', default = '127.0.0.1',),
            pvar('haproxy_port', 'Haproxy port', default = '8201',),
