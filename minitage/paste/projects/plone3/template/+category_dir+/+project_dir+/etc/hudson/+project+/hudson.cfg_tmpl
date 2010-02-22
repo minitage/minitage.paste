@@ -70,6 +70,6 @@ update-command = \${${sane_name}_hudson_deploy:command}
 hudson-instance=${sane_name}buildbot
 command =
     mkdir -pv \${buildout:directory}/sys/var/data/hudson/\${${sane_name}_hudson_deploy:hudson-instance}/hudson/jobs/\${${sane_name}_hudson_job:project};
-    cp -vf \${buildout:directory}/etc/hudson/$project/config.xml \${buildout:directory}/sys/var/data/hudson/\${${sane_name}_hudson_deploy:hudson-instance}/hudson/jobs/\${${sane_name}_hudson_job:project}/config.xml
+    cp -vf \${icsuplone_hudson_job:output} \${buildout:directory}/sys/var/data/hudson/\${${sane_name}_hudson_deploy:hudson-instance}/hudson/jobs/\${${sane_name}_hudson_job:project}/config.xml
 
 # vim:set ft=cfg:
