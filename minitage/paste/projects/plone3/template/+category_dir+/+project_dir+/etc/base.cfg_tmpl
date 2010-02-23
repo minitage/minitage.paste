@@ -42,6 +42,14 @@ $hr
 # You must enter speicfic project settings in the etc/${project}.cfg file.
 #echo '#\n'
 #echo '#\n'
+# CONTINEOUS INTEGRATION
+# --------------------------
+# We currently offer 2 ways to setup some contineous integration of this buildout based installation:
+#   - Via hudson by generating the build helpers and a configuration file for an hudson job
+#   - Via buildbot by using collective.buildbot
+# This is described in details on the related configuration files you will find in the layout below.
+#echo '#\n'
+#echo '#\n'
 # LAYOUT
 # ---------
 # Think you have the most important sections of this buildout configuration in etc/${project}.cfg
@@ -199,10 +207,10 @@ ${solrcomment}    solrinstance
     omelette
     fakeproducts
     ${sane_name}.test
-# hudson integration    
+# hudson integration
     ${sane_name}_hudson_env
     ${sane_name}_hudson_job
-    ${sane_name}_hudson_deploy 
+    ${sane_name}_hudson_deploy
     ${sane_name}_hudson_chmod
 
 find-links = \${groups:find-links}
