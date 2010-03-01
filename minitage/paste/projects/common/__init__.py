@@ -52,32 +52,43 @@ INSTANCES_DESCRIPTION = """\
 # And most of all, you ll surelly have head aches to make those init-scripts or rotation logs configurations right.
 # Because the recipe which do them don't support it or other problems more or less spiritual.
 #
-# Keep in mind that in  Unix, one thing must do  one purpose, and do it well. And many sysadmins don't want to run a buildout
+# Keep in mind that in Unix, one thing must do one purpose, and do it well. And many sysadmins don't want to run a buildout
 # to generate a configuration file or build their loadbalancer, They want to edit in place, at most fetch the configuration file from somewhere and adapt,that's all.
 #
 # Nevertheless, as usual, they are exceptions:
-#      - supervisor which is well integrated. So supervisor is deployed along in the production buildout if any.
-#      - We generate through buildout a haproxy  configuration file
+#      - supervisord which is well integrated. So supervisor is deployed along in the production buildout if any.
+#      - We generate through buildout a haproxy configuration file or hudson related stuff
 #
 # That's because we support that throught 'minitage.paste.instances'. Those are templates which create some instance of some program
 # inside a subdirectory which is:
-#    * sys/ inside a minitage project
-#    * ADirectoryOfYourChoice/ if your are not using minitage
+#    - sys/ inside a minitage project
+#    - ADirectoryOfYourChoice/ if your are not using minitage
+#
 # This significate that you can install a lot of things along with your project with:
-#    - minitage/bin/easy_install -U minitage.paste (or get it via buildout)
-#    - paster create -t <TEMPLATE_NAME> projectname|subdirectoryName inside_minitage=y|n
+#    - minitage/bin/easy_install -U minitage.paste(.extras) (or get it via buildout)
+#    - paster create -t <TEMPLATE_NAME> projectname_OR_subdirectoryName inside_minitage=y/n
 #      Where TEMPLATE_NAME can be (run paster create --list-templates|grep minitage.instances to get an up2date version):
-#            * minitage.instances.apache:          Template for creating an apache instance
-#            * minitage.instances.env:             Template for creating a file to source to get the needed environnment variables for playing in the shell or for other templates
-#            * minitage.instances.mysql:           Template for creating a postgresql instance
-#            * minitage.instances.nginx:           Template for creating a nginx instance
-#            * minitage.instances.paste-initd:     Template for creating init script for paster serve
-#            * minitage.instances.postgresql:      Template for creating a postgresql instance
-#            * minitage.instances.varnish:         Template for creating a varnish instance
-#            * minitage.instances.varnish2:        Template for creating a varnish2 instance
+#
+#      * minitage.instances.apache:          Template for creating an apache instance
+#      * minitage.instances.env:             Template for creating a file to source to get the needed environnment variables for playing in the shell or for other templates
+#      * minitage.instances.mysql:           Template for creating a postgresql instance
+#      * minitage.instances.nginx:           Template for creating a nginx instance
+#      * minitage.instances.paste-initd:     Template for creating init script for paster serve
+#      * minitage.instances.postgresql:      Template for creating a postgresql instance
+#      * minitage.instances.varnish:         Template for creating a varnish instance
+#      * minitage.instances.varnish2:        Template for creating a varnish2 instance
+#
+#      The minitage.paste package as the following extras:
+#     
+#      * minitage.instances.openldap:      Template for creating an openldap instance
+#      * minitage.instances.tomcat:        Template for creating a tomcat instance
+#      * minitage.instances.cas:           Template for creating a Jisag CAS instance
+#      * minitage.instances.hudson:        Template for creating an hudson instance
+#
 # Note that if you are using minitage, you ll have better to add dependencies inside your minibuild and run minimerge to build them prior to run the paster command
+#
 # For example, to add a postgresql instance to your project, you will have to issue those steps:
-#     * $EDITOR minitage/minilays/%(project)s_minilay/%(project)s  -> add postgresql-8.4 to the dependencies list
+#     * $EDITOR minitage/minilays/%(project)s_minilay/%(project)s -> add postgresql-8.4 to the dependencies list
 #     * minimerge -v  %(project)s # install what was not, and surely at least postgresql-8.4
 #     * minitage/bin/paster create -t minitage.instance.postgresql %(project)s
 #     * Then to start the postgres : zope/%(project)s/sys/etc/init.d/%(project)s_postgresql restart

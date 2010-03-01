@@ -44,7 +44,7 @@ flickrapi-1.4.1-patches=\${zopepy:flickrapi-1.4.1-patches}
 flickrapi-1.4-patches=\${zopepy:flickrapi-1.4-patches}
 flickrapi-patch-options=\${zopepy:flickrapi-patch-options}
 hachoir-core-1.3.2-patches=\${zopepy:hachoir-core-1.3.2-patches}
-hachoir-core-1.3.2-patch-options=\${zopepy:hachoir-core-1.3.2-patch-options} 
+hachoir-core-1.3.2-patch-options=\${zopepy:hachoir-core-1.3.2-patch-options}
 
 # make sur the patchs are applied
 [test]
@@ -56,8 +56,8 @@ ipython-patches=      \${zopepy:ipython-patches}
 ipython-patch-options=\${zopepy:ipython-patch-options}
 flickrapi-1.4.1-patches=\${zopepy:flickrapi-1.4.1-patches}
 flickrapi-1.4-patches=\${zopepy:flickrapi-1.4-patches}
-flickrapi-patch-options=\${zopepy:flickrapi-patch-options} 
+flickrapi-patch-options=\${zopepy:flickrapi-patch-options}
 hachoir-core-1.3.2-patches=\${zopepy:hachoir-core-1.3.2-patches}
-hachoir-core-1.3.2-patch-options=\${zopepy:hachoir-core-1.3.2-patch-options} 
+hachoir-core-1.3.2-patch-options=\${zopepy:hachoir-core-1.3.2-patch-options}
 
 # vim:set ft=cfg:

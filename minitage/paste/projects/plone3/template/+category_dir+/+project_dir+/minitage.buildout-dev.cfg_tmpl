@@ -1,13 +1,11 @@
 # Plone installation with minitage support
 
 # It will install your plone in debug mode and a bunch of debug tools.
-# Launch it:
+# Launch it with
 # bin/buildout -c minitage.buildout-dev.cfg
-
-# minimerge -NuUvR ${project}
-# look at the extenended buildout: ./buildout-dev.cfg for other details of your plone installation
+# or minimerge -NuUvR ${project}
+# look at the base buildout: ./buildout-dev.cfg for other details of your plone installation
 
 # We want the production buildout + the debug bits.
 [buildout]
-extends= etc/minitage/minitage.cfg
-    buildout-dev.cfg
+extends=etc/minitage/minitage.cfg buildout-dev.cfg etc/minitage/minitage.cfg

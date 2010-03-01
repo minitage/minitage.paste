@@ -1,0 +1,88 @@
+#echo '#\n'
+# Cron and logrotation related stuff
+#echo '#\n'
+
+# crontabs are:
+# * make an incremental backup per day
+# * make a full backup per week
+# * pack datafs everyday
+# * restart zope instance every night
+#if $with_ploneproduct_fss:
+# * backup FSS every day
+#end if
+
+
+# Think to include the logrotate configuration file inside your logrotate configuration (ln ?)
+#if $with_ploneproduct_sgdcg
+#set $sgdgcomment=''
+#else
+#set $sgdgcomment='#'
+#end if
+#if $with_ploneproduct_fss
+#set $fsscomment=''
+#else
+#set $fsscomment='#'
+#end if
+
+# make an incremental backup per day
+[repozodaily]
+recipe = z3c.recipe.usercrontab
+times = \${crons:repozo-daily}
+command = \${buildout:directory}/bin/backup
+
+# make a full backup per week
+[repozoweekly]
+recipe = z3c.recipe.usercrontab
+times = \${crons:repozo-weekly}
+command = \${buildout:directory}/bin/snapshotbackup
+
+# pack datafs everyday
+# eventually, change wget to your platform CLI http browser
+[zopepackdaily]
+recipe = z3c.recipe.usercrontab
+times = \${crons:zope-pack}
+command = wget "http://$address:$http_port/Control_Panel/Database/manage_pack"  --http-user '$zope_user'  --http-passwd '$zope_password' --post-data '?days:float=0' -O /dev/null
+
+
+# restart zope instance every night
+[zoperestartdaily]
+recipe = z3c.recipe.usercrontab
+times = \${crons:zope-restart}
+command = \${buildout:directory}/bin/instance restart
+
+[chmodcron]
+order=\${fssdaily:recipe}
+recipe = plone.recipe.command
+update-command = \${chmodcron:command}
+command =
+    chmod -v 750 \${buildout:directory}/cron_scripts/*.sh
+
+[backupdirs]
+order=\${fssdaily:recipe}
+recipe = plone.recipe.command
+update-command = \${chmodcron:command}
+command =
+    mkdir -pv \${buildout:directory}/var/backups
+    mkdir -pv \${buildout:directory}/var/snapshotbackups
+
+# if $with_ploneproduct_fss:
+# please edit the .in file to fit your needs if you change the fss storage layout.
+[fssdaily]
+recipe = collective.recipe.template
+input =\${buildout:directory}/etc/templates/fss_daily.sh.in
+output =\${buildout:directory}/cron_scripts/fss_daily.sh
+backuppath=\${buildout:directory}/var/fssbackups
+
+# backup FSS every day
+[fssdailycron]
+recipe = z3c.recipe.usercrontab
+times = 15 1 * * *
+command =  \${buildout:directory}/cron_scripts/fss_daily.sh
+# end if
+
+[logrotate.conf]
+recipe = collective.recipe.template
+input =  \${buildout:directory}/etc/templates/logrotate.conf.template
+output = \${buildout:directory}/etc/logrotate.conf
+
+\# vim:set ft=cfg:

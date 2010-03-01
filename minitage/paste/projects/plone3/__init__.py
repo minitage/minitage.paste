@@ -139,7 +139,8 @@ class Template(common.Template):
         vars = common.Template.read_vars(self, command)
         for i, var in enumerate(vars[:]):
             if var.name in ['relstorage_dbname', 'relstorage_dbuser'] and command:
-                vars[i].default = command.args[0]
+                sane_name = common.SPECIALCHARS.sub('', command.args[0])
+                vars[i].default = sane_name
         return vars
 
     def pre(self, command, output_dir, vars):
@@ -407,7 +408,7 @@ Template.vars = common.Template.vars \
         + [pvar('plone_version', 'Plone version, default is the one supported and packaged', default = Template.packaged_version,),
            pvar('address', 'Address to listen on', default = 'localhost',),
            pvar('http_port', 'Port to listen to', default = '8081',),
-           pvar('mode', 'Mode to use : zodb|relstorage|zeo', default = 'zodb'),
+           pvar('mode', 'Mode to use : zodb|relstorage|zeo', default = 'zeo'),
            pvar('devmode', 'Mode to use in development mode: zodb|relstorage|zeo', default = 'zeo'),
            pvar('zeo_host', 'Address for the zeoserver (zeo mode only)', default = 'localhost',),
            pvar('zeo_port', 'Port for the zeoserver (zeo mode only)', default = '8100',),
@@ -416,7 +417,7 @@ Template.vars = common.Template.vars \
            pvar('relstorage_type', 'Relstorage database type (only useful for relstorage mode)', default = 'postgresql',),
            pvar('relstorage_host', 'Relstorage database host (only useful for relstorage mode)', default = 'localhost',),
            pvar('relstorage_port', 'Relstorage databse port (only useful for relstorage mode). (postgresql : 5432, mysql : 3306)', default = '5432',),
-           pvar('relstorage_dbname', 'Relstorage databse name (only useful for relstorage mode)', default = 'minitagedb',),
+           pvar('relstorage_dbname', 'Relstorage database name (only useful for relstorage mode)', default = 'minitagedb',),
            pvar('relstorage_dbuser', 'Relstorage user (only useful for relstorage mode)', default = common.running_user),
            pvar('relstorage_password', 'Relstorage password (only useful for relstorage mode)', default = 'secret',),
            pvar('solr_host', 'Solr host (only useful if you want solr)', default = '127.0.0.1',),

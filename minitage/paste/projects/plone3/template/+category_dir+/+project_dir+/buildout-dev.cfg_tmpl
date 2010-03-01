@@ -2,8 +2,8 @@
 # It will install your plone in debug mode and a bunch of debug tools.
 # Launch it:
 # bin/buildout -c buildout-dev.cfg
-# minimerge -NuUvR ${project}
-# look at the extenended buildout: ./buildout.cfg for other details of your plone installation
+# or minimerge -NuUvR ${project}-light
+# Look at the base buildout: ./etc/base.cfg for other details of your plone installation
 
 # We want the production buildout + the debug bits.
 [buildout]
@@ -17,7 +17,7 @@ ctypes=1.0.2
 
 [instance]
 verbose-security = on
-debug-mode=ON
+debug-mode=on
 #if $linux:
 #zcml+=collective.autorestart
 #end if

@@ -51,9 +51,3 @@ executable=\${python2.4:executable}
 includes-dirs = $includesdirs
 #end if
 
-[mirrors]
-sourceforge = ovh.dl.sourceforge.net
-minitage = distfiles.minitage.org/public/externals/minitage
-plone = plone.org
-zope = download.zope.org
-

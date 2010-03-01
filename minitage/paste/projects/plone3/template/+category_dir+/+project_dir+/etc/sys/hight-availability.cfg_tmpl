@@ -1,0 +1,47 @@
+$hr
+# Hight availability settings (production instances and load balanacer)
+$hr
+
+# for haproxy, look at the template in etc/templates/balancer.conf.template
+# regenerate with: buildout -c <CONFIG_FILE> install balancer.config
+# Think for enabling the log statement!
+
+# Think to include the logrotate configuration file inside your logrotate configuration (ln ?)
+#if $with_ploneproduct_sgdcg
+#set $sgdgcomment=''
+#else
+#set $sgdgcomment='#'
+#end if
+#if $with_indexing_solr
+#set $solrcomment=''
+#else
+#set $solrcomment='#'
+#end if
+
+
+[haproxy-build]
+recipe = plone.recipe.haproxy
+url = http://dist.jarn.com/public/haproxy-1.3.15.7.zip
+
+[supervisor]
+recipe = collective.recipe.supervisor
+port = \${ports:supervisor}
+user = admin
+password = admin
+serverurl = http://\${hosts:supervisor}:\${ports:supervisor}
+haproxy-path=\${buildout:directory}/bin/haproxy
+programs =
+${solrcomment}    20 solr (startsecs=10) java [-Djava.security.egd=file:/dev/urandom -jar start.jar] \${buildout:parts-directory}/solrinstance true \${users:zope}
+    20 instance1 \${buildout:directory}/parts/instance1/bin/runzope                                          true \${users:zope}
+    20 instance2 \${buildout:directory}/parts/instance2/bin/runzope                                          true \${users:zope}
+    20 instance3 \${buildout:directory}/parts/instance3/bin/runzope                                          true \${users:zope}
+    20 instance4 \${buildout:directory}/parts/instance4/bin/runzope                                          true \${users:zope}
+${sgdgcomment}    40 instance4 \${buildout:directory}/parts/instance-newsletter/bin/runzope                                          true \${users:zope}
+    50 balancer  \${supervisor:haproxy-path} [-f \${buildout:directory}/etc/loadbalancing/balancer.conf -db]       true \${users:balancer}
+
+[balancer.config]
+recipe = collective.recipe.template
+input =  \${buildout:directory}/etc/templates/balancer.conf.template
+output = \${buildout:directory}/etc/loadbalancing/balancer.conf
+
+\# vim:set ft=cfg:

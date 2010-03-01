@@ -18,13 +18,13 @@ http-address = \${hosts:instance3}:\${ports:instance3}
 http-address = \${hosts:instance4}:\${ports:instance4}
 
 [fss1]
-zope-instances=\${instance1:location} 
+zope-instances=\${instance1:location}
 [fss2]
-zope-instances=\${instance2:location}  
+zope-instances=\${instance2:location}
 [fss3]
-zope-instances=\${instance3:location}  
+zope-instances=\${instance3:location}
 [fss4]
-zope-instances=\${instance4:location}  
+zope-instances=\${instance4:location}
 
 [mkdirs]
 command +=
@@ -43,6 +43,6 @@ command +=
 #    mkdir -pv \${locations:fss-storage1}/var/fss_storage;
 #    mkdir -pv \${locations:fss-storage2}/var/fss_storage;
 #    mkdir -pv \${locations:fss-storage3}/var/fss_storage;
-#    mkdir -pv \${locations:fss-storage4}/var/fss_storage; 
+#    mkdir -pv \${locations:fss-storage4}/var/fss_storage;
 
 # vim:set ft=cfg:

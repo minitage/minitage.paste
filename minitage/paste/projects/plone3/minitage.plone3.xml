@@ -43,7 +43,6 @@
   <option order="1200" name="with_ploneproduct_p4a_vid"          description="p4a Video, see http://www.plone4artists.org/products/plone4artistsvideo y/n"/>
   <option order="1250" name="with_ploneproduct_plomino"          description="Plomino, see http://plone.org/products/plomino y/n"/>
   <option order="1300" name="fss_strategy"                       description='File System Storage strategy, see http://pypi.python.org/pypi/iw.fss/#storage-strategies (directory, flat, site1, site2)'  default='directory'/>
-  <option order="1350" name="plomino_revision"                   description='Plomino Revision to checkout, see http://plone.org/products/plomino/ y/n'  default='HEAD'/>
   <option order="1400" name="with_ploneproduct_plonearticle"     description="Plone Article, see http://plone.org/products/plonearticle/ y/n"/>
   <option order="1450" name="with_ploneproduct_ploneboard"       description="Plone Board, see http://plone.org/products/ploneboard/ y/n"/>
   <option order="1400" name="with_ploneproduct_quillsenabled"    description="Quills Enabled, see http://pypi.python.org/pypi/Products.QuillsEnabled/ y/n"/>
@@ -155,9 +154,10 @@
     <egg name="plone.app.z3cform"              options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"  zcml="configure" order="110"/>
     <egg name="plone.directives.form"          options="with_ploneproduct_pz3cform"                                 zcml="configure,meta"/>
     <egg name="plone.z3cform"                  options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"        zcml="configure"/>
+    <egg name="Plomino" options="with_ploneproduct_plomino"/>
     <egg name="Products.ATBackRef"             options="with_ploneproduct_atbackref"        zproduct="y" zcml="configure"/>
     <egg name="Products.CacheSetup"            options="with_ploneproduct_cachesetup"       zproduct="y" zcml="configure"/>
-    <egg name="Products.CMFPlacefulWorkflow"   options="with_ploneproduct_cpwkf"            zproduct="y" zcml="configure"/>
+    <egg name="Products.CMFPlacefulWorkflow"   options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard"            zproduct="y" zcml="configure"/>
     <egg name="Products.Collage"               options="with_ploneproduct_collage"          zproduct="y" zcml="configure"/>
     <egg name="Products.csvreplicata"          options="with_ploneproduct_csvreplica"       zproduct="y"/>
     <egg name="Products.FacultyStaffDirectory" options="with_ploneproduct_facultystaff"     zproduct="FacultyStaffDirectory,ATReferenceBrowserWidget,Relations,Archetypes,MimetypesRegistry,PortalTransforms,membrane" zcml="configure"/>
@@ -193,7 +193,7 @@
     -->
   <qi>
     <product name="ATBackRef"                      options="with_ploneproduct_atbackref"        />
-    <product name="CMFPlacefulWorkflow"            options="with_ploneproduct_cpwkf"            />
+    <product name="CMFPlacefulWorkflow"            options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard" />
     <product name="CMFSquidTool"                   options="with_ploneproduct_cachesetup"       />
     <product name="CacheSetup"                     options="with_ploneproduct_cachesetup"       />
     <product name="Collage"                        options="with_ploneproduct_collage"          />
@@ -246,6 +246,7 @@
     <version p="zope.component"        v="3.5.1"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
     <version p="zope.proxy"            v="3.5.0"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
     <version p="Products.Archetypes"   v="1.5.15"  name="Needed for fixing https://dev.plone.org/plone/ticket/10088"/>
+    <version p="Products.DataGridField"   v="1.6"  name="Needed for work on plone before 4"/>
     <version p="Products.validation"   v="1.6.4"  name="Needed for fixing https://dev.plone.org/plone/ticket/10088"/>
     <version p="plone.app.portlets"    v="1.2.1"   name="Fix http://dev.plone.org/plone/ticket/9437"/>
   </versions>
@@ -264,7 +265,7 @@
 
     <version p='hachoir-parser'                 v='1.3.1'   options="with_ploneproduct_p4a_vid"/>
     <version p='hachoir-metadata'               v='1.3.2'   options="with_ploneproduct_p4a_vid"/>
-    <version p='hachoir-core'                   v='1.3.2'   options="with_ploneproduct_p4a_vid"/>
+    <version p='hachoir-core'                   v='1.3.3'   options="with_ploneproduct_p4a_vid"/>
 
     <version p='p4a.fileimage'                  v='1.0.2'   options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.video'                      v='1.1.1'   options="with_ploneproduct_p4a_vid"/>
@@ -377,6 +378,7 @@
     <source name="Products.TinyMCE"          type="svn" url="http://svn.plone.org/svn/collective/Products.TinyMCE/trunk" options="with_ploneproduct_tinymce"/>
     <source name="quills.remoteblogging"     type="svn" url="http://svn.plone.org/svn/collective/quills.remoteblogging/trunk" options="with_ploneproduct_quillsenabled,with_ploneproduct_quills"/>
     <source name="webcouturier.dropdownmenu" type="svn" url="https://svn.plone.org/svn/collective/webcouturier.dropdownmenu/trunk" options="with_ploneproduct_wc_dd_menu"/>
+    <source name="Products.CMFPlomino" type="svn" url="https://plomino.svn.sourceforge.net/svnroot/plomino/trunk/Plomino"  options="with_ploneproduct_plomino"/>
   </sources>
   <!--
     Some very ecliptic products doesnt fit with previous declaration, we will describe how to add the options to the underlying policy there.
@@ -387,7 +389,7 @@
   <miscproducts>
     <product name="vaporisation" zpackage="vaporisation" zcml="configure" options="with_ploneproduct_vaporisation"/>
     <product name="Products.Maps" zproduct="Maps" zcml="configure" options="with_ploneproduct_maps"/>
-    <product name="Products.CMFPlomino"           zcml="configure" options="with_ploneproduct_plomino"/>
+    <product name="Products.CMFPlomino" zproduct="CMFPlomino"  zcml="configure" options="with_ploneproduct_plomino"/>
   </miscproducts>
 </root>
 

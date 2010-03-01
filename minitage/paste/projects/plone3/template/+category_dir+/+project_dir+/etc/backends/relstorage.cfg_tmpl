@@ -16,7 +16,7 @@ rel-storage =
     passwd \${database:password}
 #elif $relstorage_type == 'postgresql':
     type postgresql
-    dsn  dbname='\${database:dbname}' user='\${database:user}' host='\${database:host}' password='\${database:password}'
+    dsn  dbname='\${database:dbname}' user='\${database:user}' host='\${database:host}' port=\${database:port} password='\${database:password}'
 #else
     type $relstorage_type
     dbname \${database:dbname}

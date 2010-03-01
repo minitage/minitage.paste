@@ -1,0 +1,239 @@
+==============================================================
+MINITAGE.PLONE3 BUILDOUT FOR $project
+==============================================================
+
+WARNING ABOUT BUILOOUT BOOTSTRAP WARNING
+--------------------------------------------
+
+        !!!    Be sure to use zc.buildout >= 1.4.3, or you ll have errors or bugs.    !!!
+
+If you are using the standalone (choose to answer inside_minitage=no), you must ensure to do the
+\$python bootstrap.py dance with a python compatible with the targeted zope installation (python 2.4/plone3 python 2.6/plone4)
+eg: cd $project && python2.4 bootstrap.py && bin/buildout -vvvvvvc <CONFIG_FILE>
+
+
+Minitage users, don't worry about that, all is setted for you in the two minibuilds created for you,
+just issue minimerge -v <MINIBUILD_NAME> after installing the minilay in your MINITAGE/minilays directory.
+
+
+CREATE A FIRST PLONESITE OBJECT
+---------------------------------
+Run bin/buildout -c <CONFIG_FILE> install newplonesite
+
+
+DEVELOP MODE
+---------------
+To develop your application, run the ``(minitage.)buildout-dev.cfg`` buildout, it extends this one but:
+  * it comes with development tools.
+  * it configures the instance to be more verbose (debug mode & verbose security)
+
+
+PRODUCTION MODE
+---------------
+To make your application safe for production, run the ``(minitage.)buildout-prod.cfg`` buildout'.
+It extends this one with additionnal crontabs and backup scripts and some additionnal instances creation.
+
+
+PLONE Official buildouts Integration
+--------------------------------------------
+The original ``etc/plone/plone3.version.cfg`` is the original pinned version file for your plone3 release maintened by the official plone folks.
+The original ``etc/plone/plone3.buildout.cfg`` is the one maintened by the plone.org's guys through the package ZopeSkel (plone3_buildout).
+The parts in this buildout extends/overwrite this file, you can read it to get additionnal documentation.
+You must enter speicfic project settings in the ``etc/${project}.cfg`` file.
+
+
+CONTINEOUS INTEGRATION
+--------------------------
+We currently offer 2 ways to setup some contineous integration of this buildout based installation:
+  - Via *hudson* by generating the build helpers and a configuration file for an hudson job
+  - Via *buildbot* by using collective.buildbot
+
+This is described in details on the related configuration files you will find in the layout below.
+
+
+LAYOUT
+---------
+Think you have the most important sections of this buildout configuration in etc/${project}.cfg
+
+
+Base buildouts which do only aggragate parts from there & there
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+::
+
+    |-- buildout-dev.cfg                     -> buildout for development
+    |-- buildout-prod.cfg                    -> buildout for production
+    |-- minitage/minitage.buildout-dev.cfg   -> buildout for development with minitage support
+    `-- minitage/minitage.buildout-prod.cfg  -> buildout for production  with minitage support
+
+Minitage support  (includes xml libs, ldap, dbs; python, dependencies & common eggs cache for things like lxml or PIL)
+
+System administrators related files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+    etc/sys/
+    |-- hight-availability.cfg  -> Project production settings like supervision, loadbalancer and so on
+    |-- maintenance.cfg         -> Project maintenance settings (crons, logs)
+    `-- settings.cfg_tmp        -> various settings (crons hours, hosts, installation paths, ports, passwords)
+
+Base Configuration file
+~~~~~~~~~~~~~~~~~~~~~~~~
+::
+
+    |-- etc
+        `-- base.cfg       -> The base buildout
+
+
+Crons
+~~~~~~
+::
+
+    |-- etc/cron_scripts
+        `-- fss_daily.sh   -> backup script for fss
+
+
+OS Specific system installers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Thos popular tools around zope/plone dev (not supported, just here for your conveniance, READ BEFORE USING THEM)
+And you'd  better have to learn how to bootstrap some minitage environement out there, funny and more secure & reproductible!
+::
+
+    |-- etc/os
+        |-- debian.sh       -> debian specific
+        |-- opensuse-dev.sh -> opensuse/dev specific
+        |-- opensuse.sh     -> suse specific
+        |-- osx.sh          -> osx specific
+        `-- ubuntu.sh       -> ubuntu specific
+
+
+Contineous integration
+~~~~~~~~~~~~~~~~~~~~~~~~~
+Here ae the files needed for our hudson and/or buildbot integration.
+
+For hudson we provide some shell helpers more or less generated to run 'a build':
+
+    - an helper which set some variables in the current environement for others helpers
+    - an helper which update the project
+    - an helper which update the associated sources grabbed via mr.developer
+    - an helper which run all the tests
+
+::
+
+
+    |-- minitage.buildout-buildbot.cfg     -> buildout for deploying a buildbot related to your project (requires to be inside a minitage)
+    |-- etc/hudson/
+    |   `-- $project
+    |       |-- build
+    |           |-- build.sh               -> the project build helper
+    |           |-- test.sh                -> the project test executor helper (launch all tests needed)
+    |           |-- update_mrdeveloper.sh  -> update sources grabbed via mrdeveloper
+    |           `-- update_project.sh      -> update this layout
+    |
+    |-- etc/templates/hudson/
+        `-- ${project}
+            |-- build
+            |   `-- activate_env.sh.in   -> buildout template to generate etc/hudson/${project}/build/activate.env.sh
+            `-- config.xml.in            -> buildout template to generate etc/hudson/${project}/config.xml (hudson job/build file)
+
+
+Minitage support
+~~~~~~~~~~~~~~~~~~~~~
+This buildout grabs all options needed to use the underlying mintiage environment
+::
+   |-- minitage/minitage.cfg -> some buildout tweaks to run in the best of the world with minitage
+
+
+Project settings
+~~~~~~~~~~~~~~~~~~~~~~~~
+Set the project developement  specific settings there
+::
+
+    etc/project/
+    |-- ${project}.cfg       -> your project needs (packages, sources, products)
+    |-- sources.cfg          -> externals sources of your project:
+    |                           - Sources not packaged as python eggs.
+    |                           - Eggs Grabbed from svn, add here your develoment eggs.
+    |                           - Links to find distributions.
+    |-- patches.cfg          -> patches used on the project
+    |-- cluster.cfg          -> define new zope instances here & also their FileSystemStorage if any.
+    |-- newsletter.cfg       -> singing & dancing integration (new instance with clockserver, version pinning, fss if any)
+    |-- ${project}-kgs.cfg   -> Generated KGS for your project (minitage's printer or buildout.dumppickledversion)
+    `-- versions.cfg         -> minimal version pinning for installing your project
+
+Configuration templates
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+::
+
+    etc/templates/
+    |-- balancer.conf.template      -> haproxy template.
+    |                                  Copy or ln the generated file 'etc/loadbalancing/balancer.conf' to your haproxy installation if any.
+    |-- fss_daily.sh.in             -> FSS daily backup script template
+    `-- logrotate.conf.template     -> logrotate configuration file template for your Zope logs
+
+Plone specific
+~~~~~~~~~~~~~~~~~~~
+::
+
+    etc/plone/
+    `-- plone3.buildout.cfg    -> official plone3 buildout
+    `-- plone3.versions.cfg    -> official plone3 buildout kgs
+    `-- experimental.cfg       -> experimental plone code (not used by default just here for your convenients & personal manual use)
+
+
+Paster (WSGI)
+~~~~~~~~~~~~~~~~~~~~
+::
+
+    etc/wsgi/
+    |-- dev.ini      -> paster production configuration for running in wsgi mode
+    `-- prod.ini     -> paster development configuration for running in wsgi mode
+
+
+Backends
+~~~~~~~~~~~
+::
+
+    etc/backends/
+    |-- etc/backends/fss.cfg                   -> Filestorage configuration if any
+    |-- etc/backends/relstorage.cfg            -> relstorage configuration if any
+    |-- etc/backends/solr.cfg                  -> Solr configuration if any
+    |-- etc/backends/zeo.cfg                   -> zeoserver configuration if any
+    `-- etc/backends/zodb.cfg                  -> zodb configuration if any
+
+
+KGS FILE
+----------
+We provide a part to generate the etc/${project}-kgs.cfg file.
+This will allow you to freeze software versions known to work with your project and make reproducible environment.
+This file will be generated the first time that you run buildout.
+To un it, just run bin/buildout -vvvvvvc <CONFIG_FILE> install kgs
+To unlock the versions, cmment out the according statement ``etc/project/${project}-kgs}.cfg`` in the extends option of the ${project}.cfg gile.
+
+
+NOTES ABOUT  RELSTORAGE SUPPORT
+------------~~~~~~~-------------
+We use the ZODB as an egg which is patched during installation, please see
+
+
+NOTES ABOUT WSGI SUPPORT
+-------------------------
+the zoopy section and also the minitage.recipe documentation on patching an
+egg.
+The egg is on your cache with a particular version, the classical ZODB3 egg wont be touched if you have one.
+WHAT IS VERY IMPORTANT is that [zopepy] part must run BEFORE [instance] to get the version with appropriate patches pinned.
+
+
+As we support WSGI, there is an important thing to know:
+  - ``zopelib`` is an egg from repoze where live the zope code, we totally do not NEED it.
+        * It's useless and make things buggy.
+        * We build zopelib as a fake egg, as we have already zope in our PYTHONPATH.
+  - If you raelly want zopelib as an egg, (un)comment things in the buildout(develop, patch). But we are sure, you surely dont have to !
+  - To run in WSGI with repoze.zope2, issue::
+
+      bin/paster serve etc/wsgi/dev.ini
+      or bin/paster serve etc/wsgi/prod.ini
+
+$instances_description.replace('# ', '')
+
+# vim:set ft=rst:

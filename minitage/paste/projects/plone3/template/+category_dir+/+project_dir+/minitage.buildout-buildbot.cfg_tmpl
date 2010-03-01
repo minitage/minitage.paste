@@ -32,7 +32,7 @@ parts += buildbot-master
          buildbot-slave
          b-${project}
          bmkdirs
-extends=etc/minitage/minitage.cfg etc/base.cfg
+extends=etc/minitage/minitage.cfg etc/base.cfg etc/minitage/minitage.cfg
 
 [buildbot-master]
 recipe = collective.buildbot:master

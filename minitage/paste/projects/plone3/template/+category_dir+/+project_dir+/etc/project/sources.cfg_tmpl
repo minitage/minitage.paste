@@ -1,7 +1,14 @@
- 
-# Externals mr.developer products
+$hr
+# Externals mr.developer products & software not packages as python eggs.
+$hr
+
 [buildout]
 sources=sources
+auto-checkout +=
+# $autocheckout.sort()
+#for $item in $autocheckout:
+    $item
+#end for
 
 [sources]
 #set $psources_keys = $plone_sources.keys()
@@ -10,7 +17,6 @@ sources=sources
 #set source=$plone_sources[item]
 $source['name'] = $source['type'] $source['url']
 #end for
-plomino=svn http://plomino.svn.sourceforge.net/svnroot/plomino/trunk/Plomino/
 
 [groups]
 # OLD ZOPE2 PRODUCTS SUPPORT
@@ -57,10 +63,8 @@ find-links = http://pypi.python.org/simple/ZODB3
 find-links = http://download.zope.org/distribution/
 #end if
 
-
 [vaporisation]
 recipe=minitage.recipe.fetch
 urls=\${groups:vaporization}|svn||\${zope2:location}/lib/python/vaporisation
-
 
 # vim:set ft=cfg:

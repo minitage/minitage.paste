@@ -1,5 +1,6 @@
-
+$hr
 # Project specific settings
+$hr
 
 #if 'zeo' in $mode:
 #set $zeocomment=''
@@ -20,23 +21,19 @@
 [buildout]
 sources-dir=\${buildout:directory}/src.mrdeveloper
 parts += #slurp
-#if $with_ploneproduct_plomino:
-    plomino
-#end if
 #if $with_ploneproduct_vaporisation:
     vaporisation
 #end if
 
 # extra directories oto add to the python path
 extra-paths=
+# better to edit ./sources.cfg
 auto-checkout +=
-#     my.package
 
 # auto tracked developement products
 [sources]
 # see http://pypi.python.org/pypi/mr.developer for documentation
-#my.package = svn http://example.com/svn/my.package/trunk
-#some.other.package = git git://example.com/git/some.other.package.git
+# better to edit ./sources.cfg
 
 [instance]
 # attacking zopepy:eggs make instance be built after zopepy
@@ -52,6 +49,8 @@ $product
 
 develop+=
 
+products+=
+
 zcml +=#slurp
 #for $product in $plone_zcml:
 #if product.startswith('#'):
@@ -60,11 +59,6 @@ ${product}
     ${product}
 #end if
 #end for
-
-#if $with_ploneproduct_plomino:
-products+=
-    \${plomino:location}
-#end if
 
 [kgs]
 file=\${buildout:directory}/etc/${project}-kgs.cfg
@@ -84,7 +78,7 @@ ${product}
     ${product}
 #end if
 #end for
- 
+
 # zope.testing testrunner support
 [testenv]
 INSTANCE_HOME=\${instance:location}
@@ -94,11 +88,10 @@ CONFIG_FILE=\${instance:location}/etc/zope.conf
 [fakeproducts]
 recipe=plone.recipe.command
 update-command = \${fakeproducts:command}
-
 command =
     mkdir -pv \${buildout:directory}/parts/fakeproducts/Products/;
     touch  \${buildout:directory}/parts/fakeproducts/Products/__init__.py;
-    for i in \$(echo "\${instance:products}");do for j in \$i/*;do if [[ "\$j" != "\$i/" ]] && [[ -d \$j ]];then ln -sfv \$j \${buildout:directory}/parts/fakeproducts/Products/\$(basename \$j);fi;done;done; 
+    for i in \$(echo "\${instance:products}");do for j in \$i/*;do if [ "\$j" != "\$i/" ] && [ -d \$j ];then ln -sfv \$j \${buildout:directory}/parts/fakeproducts/Products/\$(basename \$j);fi;done;done;
 
 # This testrunner is a zc.recipe.testrunner like
 # See http://pypi.python.org/pypi/zc.recipe.testrunner/
@@ -108,7 +101,8 @@ command =
 recipe = collective.xmltestreport
 eggs = \${instance:eggs}
 extra-paths = \${instance:extra-paths}
-    \${buildout:directory}/parts/fakeproducts 
+    \${zope2:location}/lib/python
+    \${buildout:directory}/parts/fakeproducts
 defaults = ['--exit-with-status', '--auto-color', '--auto-progress']
 environment = testenv
 
