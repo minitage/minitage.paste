@@ -60,8 +60,8 @@ recipe = collective.recipe.template
 input =\${buildout:directory}/etc/templates/hudson/$project/config.xml.in
 output =\${buildout:directory}/etc/hudson/$project/config.xml
 project=$project
-update-project-cmd=\${buildout:directory}/etc/hudson/build/update_project.sh
-update-mrdeveloper-cmd=\${buildout:directory}/etc/hudson/build/update_mrdeveloper.sh
+update-project-cmd=\${buildout:directory}/etc/hudson/$project/build/update_project.sh
+update-mrdeveloper-cmd=\${buildout:directory}/etc/hudson/$project/build/update_mrdeveloper.sh
 build-cmd=\${buildout:directory}/etc/hudson/build/build.sh
 test-cmd=\${buildout:directory}/etc/hudson/build/test.sh
 
