@@ -54,13 +54,12 @@ extends = #slurp
     hudson/${project}/hudson.cfg#slurp
 
 
-parts +=#slurp
+parts +=backup
 ${sgdgcomment}    instance-newsletter
 ${fsscomment}${sgdgcomment}    fss-newsletter
 ${fsscomment}    fss
 ${solrcomment}    solr
 ${solrcomment}    solrinstance
-    backup
     mkdirs
     omelette
     fakeproducts
