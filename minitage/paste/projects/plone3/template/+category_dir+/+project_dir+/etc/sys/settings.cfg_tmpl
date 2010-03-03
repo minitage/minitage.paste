@@ -46,8 +46,8 @@ buildbot-master-web=${buildbot_master_web_port}
 slave-password=${buildbot_slave_password}
 
 [crons]
-# at 3:00am
-buildbot-${project} = 0 3 * * *
+# at 3:00am NO WHITESPACE!!!
+buildbot-${project}=$buildbot_cron 
 # at 1:03am
 zope-restart=15 1 * * *
 zope-pack=30 1 * * * 

@@ -72,7 +72,7 @@ scm_type=SubversionSCM
 # where are our sources living
 scm_url=$uri
 # cron to determine how is built the project (be careful, no whitespace!)
-cron =$buildbot_cron
+cron =\${crons:buildbot-${project}}
 
 # make this thing easy to integrate with an hudson instance deployed via minitage
 [${sane_name}_hudson_deploy]
