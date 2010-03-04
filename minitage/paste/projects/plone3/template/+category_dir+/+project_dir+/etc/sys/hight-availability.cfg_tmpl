@@ -18,6 +18,37 @@ $hr
 #set $solrcomment='#'
 #end if
 
+#if $with_haproxy
+#set $hapcomment=''
+#else:
+#set $hapcomment='#'
+#end if 
+
+#if 'zeo' in $mode:
+#set $zeocomment=''
+#else
+#set $zeocomment='#'
+#end if 
+#if $with_supervisor_instance1
+#set $si1=''
+#else:
+#set $si1='#'
+#end if  
+#if $with_supervisor_instance2
+#set $si2=''
+#else:
+#set $si2='#'
+#end if  
+#if $with_supervisor_instance3
+#set $si3=''
+#else:
+#set $si3='#'
+#end if  
+#if $with_supervisor_instance4
+#set $si4=''
+#else:
+#set $si4='#'
+#end if  
 
 [haproxy-build]
 recipe = plone.recipe.haproxy
@@ -31,13 +62,25 @@ password = admin
 serverurl = http://\${hosts:supervisor}:\${ports:supervisor}
 haproxy-path=\${buildout:directory}/bin/haproxy
 programs =
+${zeocomment}    10 zeo \${zeoserver:location}/bin/runzeo \${zeoserver:location} true \${users:zope}
 ${solrcomment}    20 solr (startsecs=10) java [-Djava.security.egd=file:/dev/urandom -jar start.jar] \${buildout:parts-directory}/solrinstance true \${users:zope}
-    20 instance1 \${buildout:directory}/parts/instance1/bin/runzope                                          true \${users:zope}
-    20 instance2 \${buildout:directory}/parts/instance2/bin/runzope                                          true \${users:zope}
-    20 instance3 \${buildout:directory}/parts/instance3/bin/runzope                                          true \${users:zope}
-    20 instance4 \${buildout:directory}/parts/instance4/bin/runzope                                          true \${users:zope}
+${si1}    20 instance1 \${buildout:directory}/parts/instance1/bin/runzope                                          true \${users:zope}
+${si2}    20 instance2 \${buildout:directory}/parts/instance2/bin/runzope                                          true \${users:zope}
+${si3}    20 instance3 \${buildout:directory}/parts/instance3/bin/runzope                                          true \${users:zope}
+${si4}    20 instance4 \${buildout:directory}/parts/instance4/bin/runzope                                          true \${users:zope}
 ${sgdgcomment}    40 instance4 \${buildout:directory}/parts/instance-newsletter/bin/runzope                                          true \${users:zope}
-    50 balancer  \${supervisor:haproxy-path} [-f \${buildout:directory}/etc/loadbalancing/balancer.conf -db]       true \${users:balancer}
+${hapcomment}    50 balancer  \${supervisor:haproxy-path} [-f \${buildout:directory}/etc/loadbalancing/balancer.conf -db]       true \${users:balancer}
+
+[supervisor-initd]
+recipe = collective.recipe.template
+input =  \${buildout:directory}/etc/templates/supervisor.initd
+output =  \${buildout:directory}/etc/init.d/supervisor.initd
+
+[initd-chmod]
+recipe = plone.recipe.command
+update-command = \${initd-chmod:command}
+command =
+    chmod -v 750 \${buildout:directory}/etc/init.d/*
 
 [balancer.config]
 recipe = collective.recipe.template

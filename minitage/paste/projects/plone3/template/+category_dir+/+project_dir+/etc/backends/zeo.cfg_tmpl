@@ -1,8 +1,4 @@
 # ZEO backend support and configuration
-#
-[buildout]
-storage-mode=zeo
-parts+=zeoserver
 
 [instance]
 zeo-client-cache-size = \${cache:zeo-client-cache-size}

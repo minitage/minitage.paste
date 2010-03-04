@@ -72,6 +72,7 @@ System administrators related files
 
 ::
 
+    etc/init.d/                 -> various init script (eg supervisor)
     etc/sys/
     |-- hight-availability.cfg  -> Project production settings like supervision, loadbalancer and so on
     |-- maintenance.cfg         -> Project maintenance settings (crons, logs)
@@ -170,6 +171,7 @@ Configuration templates
     |                                  Copy or ln the generated file 'etc/loadbalancing/balancer.conf' to your haproxy installation if any.
     |-- fss_daily.sh.in             -> FSS daily backup script template
     `-- logrotate.conf.template     -> logrotate configuration file template for your Zope logs
+    `-- supervisor.initd            -> template for supervisor init script
 
 Plone specific
 ~~~~~~~~~~~~~~~~~~~

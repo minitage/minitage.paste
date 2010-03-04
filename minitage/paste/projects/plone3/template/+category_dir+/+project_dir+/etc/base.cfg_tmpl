@@ -64,6 +64,7 @@ ${solrcomment}    solrinstance
     omelette
     fakeproducts
     ${sane_name}.test
+${zeocomment}    zeoserver
 # hudson integration
     ${sane_name}_hudson_env
     ${sane_name}_hudson_job

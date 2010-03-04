@@ -35,6 +35,7 @@ parts+=#slurp
     instance3
     instance4
     zopepackdaily
+    supervisor-initd
     zoperestartdaily
 #if not 'relstorage' in $mode:
     repozodaily
@@ -51,6 +52,7 @@ ${fsscomment}    fss4
     chmodcron
     backupdirs
     logrotate.conf
+    initd-chmod
 #if $with_haproxy
     balancer.config
     haproxy-build
