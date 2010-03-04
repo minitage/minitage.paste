@@ -226,6 +226,7 @@
     <product name="plone.app.iterate"              options="with_ploneproduct_iterate"          />
     <product name="collective.contentlicensing"    options="with_ploneproduct_contentlicensing" />
     <product name="ContentWellPortlets"            options="with_ploneproduct_contentwellportlet"/>
+    <product name="TinyMCE"                        options="with_ploneproduct_tinymce"/>
   </qi>
   <!--
     Enter here mandatory version pinnings
