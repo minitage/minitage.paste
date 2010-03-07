@@ -141,6 +141,4 @@ sourceforge = ovh.dl.sourceforge.net
 minitage = distfiles.minitage.org/public/externals/minitage
 plone = plone.org
 zope = download.zope.org
- 
-
 # vim:set ft=cfg:

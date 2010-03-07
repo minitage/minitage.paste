@@ -178,8 +178,10 @@ Plone specific
 ::
 
     etc/plone/
-    `-- plone3.buildout.cfg    -> official plone3 buildout
-    `-- plone3.versions.cfg    -> official plone3 buildout kgs
+    `-- plone${major}.versions.cfg    -> official plone buildout kgs
+#if $major > 3:
+    `-- zope2.versions.cfg    -> official zope2 buildout kgs
+#end if
     `-- experimental.cfg       -> experimental plone code (not used by default just here for your convenients & personal manual use)
 
 

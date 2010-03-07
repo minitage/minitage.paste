@@ -5,13 +5,21 @@
 # or minimerge -NuUvR ${project}-light
 # Look at the base buildout: ./etc/base.cfg for other details of your plone installation
 
+#if $with_tool_i18ndude:
+#set $i18ncomment=''
+#else
+#set $i18ncomment='#'
+#end if  
+
 # We want the production buildout + the debug bits.
 [buildout]
 extends=etc/base.cfg etc/backends/${devmode}.cfg
 parts+= omelette
         ipzope
-        i18ndude
+${i18ncomment}    i18ndude
 
+
+ 
 [versions]
 ctypes=1.0.2
 
@@ -99,10 +107,12 @@ eggs = ipython
         \${instance:eggs}
 initialization =
         import sys, os
+#if $major < 4:
         os.environ["SOFTWARE_HOME"] = "\${zope2:location}/lib/python"
+#end if
         os.environ["INSTANCE_HOME"] = "\${instance:location}"
         sys.argv[1:1] = "-p zope".split()
-extra-paths = \${zope2:location}/lib/python
+extra-paths = \${zopepy:extra-paths}
 scripts = ipython=ipzope
 
 # not compatible with latest sphinx !
@@ -121,5 +131,6 @@ scripts = ipython=ipzope
 [i18ndude]
 recipe=minitage.recipe.scripts
 eggs=i18ndude
+scripts=i18ndude
 
 # vim:set ft=cfg:

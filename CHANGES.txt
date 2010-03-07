@@ -3,8 +3,18 @@ CHANGES
 ==============
 
 
-UP
-------
+Up
+----------
+
+    - add plone core mr.developer configs, you can now develop each plone subpackage
+    - upgrade eggs versions in plone configuration files
+    - better handle of kgs, and mr.developer buildouts
+    - add inheritance in the plone configuration parser
+    - added some tests for the plone configuration parser
+    - activated the minitage.plone4 template (beta state)
+
+1.3.149
+----------
 
     - plone3 template maintenance
     - plone3 auto project buildbot support

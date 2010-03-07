@@ -28,6 +28,15 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 
-wget http://dist.plone.org/release/$1/versions.cfg -O versions.cfg
 
-# vim:set et sts=4 ts=4 tw=80:
+plone=${1:-4.0a5}
+
+ver=$(python -c "print '$plone'[:3]")
+zope2=${2:-2.12.3}
+
+echo  $plone/ $ver / $zope2
+wget http://dist.plone.org/release/$plone/versions.cfg -O versions.cfg
+wget http://dist.plone.org/release/$plone/sources.cfg -O -|egrep -v "(\[buildout\]|sources = sources)">sources.cfg
+wget http://download.zope.org/Zope2/index/$zope2/versions.cfg -O  zope2.versions.cfg
+
+# vim:set et sts=4 ts=4 tw=0:

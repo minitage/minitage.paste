@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!-- This configuration file supports some kind of inheritment.
+  You can overwrite, add things or purge
+  To purge,only write your element in the purge node like the others and read the code to see what you can do
+-->
+<root>
+  <template>
+    <options>
+      <option order="200"  name="with_binding_ldap"                  description="FOO bindings support y/n"/>
+      <option order="100"  name="foo"                                description="LDAP bindings support y/n"/>
+    </options>
+    <eggs>
+      <egg name="collective.contentlicensing"  scripts="z" options="with_ploneproduct_contentlicensing"/>
+      <egg name="myfoo"  options="with_ploneproduct_contentliceqzzaensing" zcml="bar"/>
+      <egg name="collective.dancing"           options="with_ploneproduct_sgdcg" />
+    </eggs>
+    <versions>
+      <version p="ZODB3"   v="XXX"   name="RelStorage"/>
+      <version p="ZODB4"   v="XXX"   name="RelStorage"/>
+      <version p="Foo"     v="YYY"   name="FooStorage"/>
+    </versions>
+    <checkedversions>
+      <version p='five.grok'  v='1.1'     options='with_ploneproduct_fivegrok' />
+      <version p='grok'       v='1.1'     options='with_ploneproduct_fivegrok' />
+      <version p='five.grok2' v='1.2'     options='Foo' />
+    </checkedversions>
+    <sources>
+      <source name="archetypes.tuning"     type="git" url="http://git.plone.org/svn/archetypes/" options="with_ploneproduct_schematuning"/>
+      <source name="archetypes.foo"     type="git" url="http://git.plone.org/svn/foo/" options="with_ploneproduct_foo"/>
+    </sources>
+    <qi>
+      <product name="ATBackRef2"   options="with_ploneproduct_atbackref"/> 
+    </qi>
+    <productdistros>
+      <productdistro url="http://plone.org/products/maps/releases/1.1/maps-1-1.tgz1" options="with_ploneproduct_maps3"/>
+    </productdistros>
+  </template>
+  <purge>
+    <eggs>
+      <egg name="PILwoTK"                       scripts="a,b" options="with_binding_pil"                  />
+      <egg name="collective.contentlicensing"   scripts="e,f" options="with_ploneproduct_contentlicensing" zproduct="y" zpackage="y" zcml="configure"/>
+    </eggs>
+    <sources>
+      <source name="collective.contentlicensing" />
+    </sources>
+    <checkedversions>
+      <version p='bar'  options='with_foo' />
+    </checkedversions>
+    <versions>
+      <version name="IPython py2.4 compatible version"/>
+    </versions>
+    <qi>
+      <product name="CMFPlacefulWorkflow"            options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard" />
+    </qi>
+    <productdistros>
+      <productdistro url="http://plone.org/products/maps/releases/1.1/maps-1-1.tgz1" options="with_ploneproduct_maps2"/>
+    </productdistros>
+    <options>
+      <option name="with_ploneproduct_plonesurvey"/>
+    </options>
+    <miscproducts>
+      <product name="foo"                zproduct="foofoo"       zpackage="foofoo" zcml="foofoo" options="with_ploneproduct_vaporisation"/>
+    </miscproducts> 
+  </purge>
+</root>
+
+
+

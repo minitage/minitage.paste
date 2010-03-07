@@ -16,13 +16,19 @@ temporary-storage =
 
 # may be not used but it is good to have it in case.
 [zeoserver]
+#if $major < 4:
 recipe = plone.recipe.zope2zeoserver
 zope2-location = \${zope2:location}
+#else
+recipe = plone.recipe.zeoserver
+#end if 
 zeo-address = \${hosts:zeo}:\${ports:zeo}
+#if $major < 4:
 zeo-conf-additional =
     %import tempstorage
     <temporarystorage temp>
         name temporary storage for sessioning
     </temporarystorage>
+#end if
 
 # vim:set ft=cfg:

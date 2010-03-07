@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<!--
+  GOAL OF THIS CONFIGURATION IS TO CUSTOMIZE THE minitage.plone3 paster template options to fit to your needs
+  You can even override by copy/edit it on your ~/.minitage.plone3.cfg.
+  Goal is to stop to spread new templates for special use, and to configure them.
+  A subsidiary goal is to remove so useless logic in templates.
+  You can, i think, customzize the whole template via this configuration.
+  Please note that minitage.plone3 is coupled with collectige.generic.skel.* templates.
+  They will use it's variables/API to construct themselves.
+-->
+<root>
+  <template>
+    <!--
+      PASTER OPTIONS to be added on the fly to minitage.paste.plone3 product
+      <option name="foo" description="SOMETEXT>
+      -->
+    <options>
+      <option order="100"  name="with_binding_ldap"                  description="LDAP bindings support y/n"/>
+      <option order="150"  name="with_database_sa"                   description="SQLAlchemy support, see http://www.sqlalchemy.org y/n"/>
+      <option order="150"  name="with_database_mysql"                description="Mysql python bindings support y/n"/>
+      <option order="200"  name="with_database_oracle"               description="Oracle python bindings support y/n"/>
+      <option order="250"  name="with_database_postgresql"           description="Postgresql python bindings support y/n"/>
+      <option order="253"  name="with_indexing_solr"                 description="Solr support y/n"/>
+      <option order="300"  name="with_binding_pil"                   description="Python imaging support (dangerous to disable) y/n" default="y"/>
+      <option order="350"  name="with_tool_ipython"                  description="ipython support http://ipython.scipy.org/ y/n" default="y"/>
+      <option order="350"  name="with_tool_i18ndude"                 description="i18n support http://pypi.python.org/pypi/i18ndude y/n" default="n"/>
+      <option order="400"  name="with_tool_zopeskel"                 description="ZopeSkel http://pypi.python.org/pypi/ZopeSkel y/n" default="y"/>
+      <option order="400"  name="with_tool_colgenskelcommon"         description="Common GenericSkel,see http://pypi.python.org/pypi/collective.generic.skel.common y/n" default="y"/>
+      <option order="450"  name="with_wsgi_support"                  description="WSGI capabilities y/n"/>
+      <option order="500"  name="with_ploneproduct_atbackref"        description="ATBAckRef, see http://pypi.python.org/pypi/Products.ATBackRef y/n"/>
+      <option order="550"  name="with_ploneproduct_fss"              description="File System Storage support, see http://plone.org/products/filesystemstorage y/n" default="y"/>
+      <option order="600"  name="with_ploneproduct_cachesetup"       description="Cachefu caching Support, see http://plone.org/products/cachefu/ y/n" default="y"/>
+      <option order="650"  name="with_ploneproduct_collage"          description="Collage, see http://pypi.python.org/pypi/Products.Collage/ y/n"/>
+      <option order="700"  name="with_ploneproduct_facultystaff"     description="FalcultyStaff, see http://plone.org/products/faculty-staff-directory y/n"/>
+      <option order="750"  name="with_ploneproduct_contentlicensing" description="Content Licensing, see http://pypi.python.org/pypi/collective.contentlicensing y/n"/>
+      <option order="800"  name="with_ploneproduct_cpwkf"            description="CMFPlacefulWorkflow, see http://plone.org/products/cmfplacefulworkflow/ y/n"/>
+      <option order="850"  name="with_ploneproduct_csvreplica"       description="CSV Replicata, see http://pypi.python.org/pypi/Products.csvreplicata (makina users, do not untick) y/n" default="y" />
+      <option order="900"  name="with_ploneproduct_easyshop"         description="Easy Shop, see http://www.geteasyshop.com y/n"/>
+      <option order="950"  name="with_ploneproduct_flowplayer"       description="FlowPlayer, see http://plone.org/products/collective-flowplayer/ y/n"/>
+      <option order="1000" name="with_ploneproduct_ldap"             description="Plone LDAP support, see http://plone.org/products/ploneldap/ y/n"/>
+      <option order="1050" name="with_ploneproduct_lingua"           description="LinguaPlone support, see http://plone.org/products/linguaplone y/n"/>
+      <option order="1100" name="with_ploneproduct_maps"             description="Maps, see http://plone.org/products/maps/ y/n"/>
+      <option order="1150" name="with_ploneproduct_p4a_cal"          description="p4a Calendar, see http://pypi.python.org/pypi/p4a.calendar y/n"/>
+      <option order="1200" name="with_ploneproduct_p4a_vid"          description="p4a Video, see http://www.plone4artists.org/products/plone4artistsvideo y/n"/>
+      <option order="1250" name="with_ploneproduct_plomino"          description="Plomino, see http://plone.org/products/plomino y/n"/>
+      <option order="1300" name="fss_strategy"                       description='File System Storage strategy, see http://pypi.python.org/pypi/iw.fss/#storage-strategies (directory, flat, site1, site2)'  default='directory'/>
+      <option order="1400" name="with_ploneproduct_plonearticle"     description="Plone Article, see http://plone.org/products/plonearticle/ y/n"/>
+      <option order="1450" name="with_ploneproduct_ploneboard"       description="Plone Board, see http://plone.org/products/ploneboard/ y/n"/>
+      <option order="1400" name="with_ploneproduct_quillsenabled"    description="Quills Enabled, see http://pypi.python.org/pypi/Products.QuillsEnabled/ y/n"/>
+      <option order="1450" name="with_ploneproduct_plonesurvey"      description="PloneSurvey, see http://plone.org/products/plone-survey/releases/1.3.0 y/n"/>
+      <option order="1550" name="with_ploneproduct_quills"           description="Quills, see http://pypi.python.org/pypi/Products.Quills/ y/n"/>
+      <option order="1500" name="with_ploneproduct_schematuning"     description="Schematuning patch, see http://pypi.python.org/pypi/archetypes.schematuning/ y/n"/>
+      <option order="1500" name="with_ploneproduct_tinymce"          description="Tinymce, see http://plone.org/products/tinymce y/n"/>
+      <option order="1500" name="with_ploneproduct_fivegrok"         description="five.grok integration, see http://pypi.python.org/pypi/five.grok y/n" default="y"/>
+      <option order="1600" name="with_ploneproduct_sgdcg"            description="Singing / Dancing NewsLetter, see http://plone.org/products/dancing S/D is known to lead to multiple buildout installation errors.Be sure to activate it and debug the errors. y/n"/>
+      <option order="1650" name="with_ploneproduct_tal_portlet"      description="Tal Portlet, see http://pypi.python.org/pypi/collective.portlet.tal y/n"/>
+      <option order="1750" name="with_ploneproduct_truegallery"      description="PloneTrueGallery, see http://plone.org/products/plone-true-gallery/ y/n"/>
+      <option order="1800" name="with_ploneproduct_vaporisation"     description="Vaporisation, see http://plone.org/products/vaporisation/ y/n"/>
+      <option order="1850" name="with_ploneproduct_ploneformgen"     description="PloneFormGen, see http://plone.org/products/ploneformgen y/n"/>
+      <option order="1950" name="with_ploneproduct_wc_dd_menu"       description="WebCouturier Dropdown Menu, see http://plone.org/products/webcouturier-dropdownmenu y/n"/>
+      <option order="1951" name="with_ploneproduct_pz3cform"         description="Plone z3c.form support, see http://pypi.python.org/pypi/plone.z3cform y/n" default="y"/>
+      <option order="1962" name="with_ploneproduct_iterate"          description="Plone Iterate support, see http://pypi.python.org/pypi/plone.app.iterate y/n" default="n"/>
+      <option order="1973" name="with_ploneproduct_schemaextender"   description="Plone Archetypes schema extender support, see http://pypi.python.org/pypi/archetypes.schemaextender y/n" default="n"/>
+      <option order="1984" name="with_ploneproduct_cz3cformgrok"     description="Plone + z3cform light grok integration support, see http://pypi.python.org/pypi/collective.z3cform.grok y/n" default="n"/>
+      <option order="1994" name="with_ploneproduct_contentwellportlet"     description="Content well porlets, see http://pypi.python.org/pypi/Products.ContentWellPortlets y/n" default="n"/>
+      <option order="2000" name="with_experimental"                  description="Plone experimental improvments y/n" default="n"/>
+      <option order="2194" name="with_ploneproduct_ci"               description="collective.indexing Support, see http://pypi.python.org/pypi/collective.indexing y/n" default="n"/>
+    </options>
+    <!--
+      LINK THERE YOUR EGGS TO BE Installed on option triggering.
+
+      Some notes:
+
+      If you choose to tell that your egg is a/are some 'zpackage', this will cause them to be registered in the minitage.projects.plone3.z2packages.
+
+      As an incidence in the collective.generic.skel.policy template, they will be recorded
+      in the policy tests as someting to be installed with "ztc.installPackage(eggname)" or
+      "ztc.installProduct(eggname)".
+
+      <eggs>
+        <egg name="" options="" zpackage="" zproduct="" />
+        </eggs>
+
+        name: name of the product to install
+        options: comma sepated list of options that trigger the installation of this item
+        zcml: zcml to add to the buildout ([instance]), by default -configure
+        zcmlorder : zcml load order from 0 to XXXXXX, default 50000
+        zpackage/zproduct: install resp. modules as a Zope2 Package or Product during tests
+        For each of those values:
+        y -> install it with the name as product name
+        comma sepaated values != 'y' -> install the list of products
+      -->
+    <eggs>
+      <egg name="PILwoTK"                       scripts="a,b" options="with_binding_pil"                  />
+      <egg name="Bar"                           scripts="c,d" options="with_binding_pil"                  />
+      <egg name="collective.contentlicensing"   scripts="e,f" options="with_ploneproduct_contentlicensing" zproduct="y" zpackage="y" zcml="configure"/>
+      <egg name="collective.dancing"            scripts="g,h" options="with_ploneproduct_sgdcg"            zproduct="y" zpackage="y" zcml="configure,meta"/>
+    </eggs>
+    <!--
+      As you know you are configurating a plone3 environment, and hell, you will have to register your products throught the quickinstaller at a time.
+      What about having a list of what to register when you choose an option?
+      So, it is evident that the following list map an option with a value to be registred throuht the quickinstaller.
+
+      A subsidiary note is that with collective.generic.webbuilder, the policy generated will have its app_config.py generated with those var preselections
+
+      A valid mapping is:
+      <product name="product" option="option"/>
+        name=Name in the quickinstaller to install
+        option=Name of the paster option to use to trigger the installation
+      -->
+    <qi>
+      <product name="ATBackRef"                      options="with_ploneproduct_atbackref"        />
+      <product name="CMFPlacefulWorkflow"            options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard" />
+    </qi>
+    <!--
+      Enter here mandatory version pinnings
+      Valid items are:
+
+      <version p="" v="" options=""/>
+
+        p: egg name
+        v: egg version
+        name: description to add as comment into the resulting buildout
+      -->
+    <versions>
+      <version p="ZODB3"                 v="3.7.2"   name="RelStorage"/>
+      <version p="ZODB2"                 v="YYY"   name="RelStorage"/>
+      <version p="ipython"               v="0.10"    name="IPython py2.4 compatible version"/>
+      <version p="Cheetah"               v="2.2.1"   name="Markdown crazy stuff"/>
+      <version p="zope.site"             v="3.5.1"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
+      <version p="zope.schema"           v="3.5.4"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
+      <version p="zope.component"        v="3.5.1"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
+      <version p="zope.proxy"            v="3.5.0"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
+      <version p="Products.Archetypes"   v="1.5.15"  name="Needed for fixing https://dev.plone.org/plone/ticket/10088"/>
+      <version p="Products.DataGridField"   v="1.6"  name="Needed for work on plone before 4"/>
+      <version p="Products.validation"   v="1.6.4"   name="Needed for fixing https://dev.plone.org/plone/ticket/10088"/>
+      <version p="plone.app.portlets"    v="1.2.1"   name="Fix http://dev.plone.org/plone/ticket/9437"/>
+    </versions>
+    <!--
+      Enter here know good set versions stuff
+      Valid items are:
+
+      <version p="" v="" options=""/>
+
+        p: egg name
+        v: egg version
+        options: comma separated list of options to enable the pinning
+      -->
+    <checkedversions>
+      <!-- FIVE.GROK -->
+      <version p='five.grok'                v='1.0'     options='with_ploneproduct_fivegrok' />
+      <version p='five'                     v='1.0'     options='with_ploneproduct_fivegrok' />
+      <version p='bar'                      v='1.0'     options='with_foo' />
+    </checkedversions>
+    <!--
+      Old style plone products to checkout using the [productsdistros] part
+    -->
+    <productdistros>
+      <!-- PLone Maps -->
+      <productdistro url="http://plone.org/products/maps/releases/1.1/maps-1-1.tgz" options="with_ploneproduct_maps"/>
+      <productdistro url="http://plone.org/products/maps/releases/1.1/maps-1-1.tgz1" options="with_ploneproduct_maps2"/>
+      <productdistro url="http://plone.org/products/maps/releases/1.1/maps-1-1.tgz2" options="with_ploneproduct_maps2"/>
+    </productdistros>
+    <!--
+      Sources for mr.developer
+      links to the SCM of a product, autocheckout will be enabled when option in in options.
+
+    --> 
+    <sources>
+      <source name="archetypes.tuning"     type="svn" url="http://svn.plone.org/svn/archetypes/" options="with_ploneproduct_schematuning"/>
+      <source name="collective.contentlicensing"    type="svn" url="https://svn.plone.org/svn/collective/" options="with_ploneproduct_contentlicensing" />
+    </sources>
+    <!--
+      Some very ecliptic products doesnt fit with previous declaration, we will describe how to add the options to the underlying policy there.
+      (the packages/products that we want into the tests to be added.
+      <product name="" zpackage="" zcml="" zcmlorder="" zcml=""/>
+        name is mandatory only for zcml slugs.
+      --> 
+    <miscproducts>
+      <product name="foo"                zproduct="foofoo"       zpackage="foofoo" zcml="foofoo"  options="with_ploneproduct_vaporisation"/>
+      <product name="vaporisation"                       zpackage="vaporisation" zcml="configure" options="with_ploneproduct_vaporisation"/>
+      <product name="Products.Maps"       zproduct="Maps"                        zcml="configure" options="with_ploneproduct_maps"        />
+      <product name="Products.CMFPlomino" zproduct="CMFPlomino"                  zcml="configure" options="with_ploneproduct_plomino"     />
+    </miscproducts>
+  </template>
+</root>

@@ -28,6 +28,11 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 
+
+ver=$(python -c "print '$1'[:3]")
+echo $ver
+
+svn export https://svn.plone.org/svn/plone/buildouts/plone-coredev/branches/$ver/sources.cfg sources.cfg --force
 wget http://dist.plone.org/release/$1/versions.cfg -O versions.cfg
 
-# vim:set et sts=4 ts=4 tw=80:
+# vim:set et sts=4 ts=4 tw=0:

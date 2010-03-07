@@ -3,7 +3,11 @@
 ipython-patches=\${buildout:directory}/patches/ipython.readline.patch
                 \${buildout:directory}/patches/ipython.withoutpdb.patch
 ipython-patch-options= -Np0
-extra-paths = \${instance:extra-paths}
+
+
+
+#if $major < 4:
+
 # first patch is for maintenance scripts inclusion bug
 # second is for relstorage
 ZODB3-patches=
@@ -13,15 +17,19 @@ ZODB3-patches=
 #else
 #   \${buildout:directory}/patches/minitage.poll-invalidation-1-zodb-3-7-1.patch
 #end if
-
-# fix 'elementree' dependency
-Markdown-2.0.1-patches=\${buildout:directory}/patches/mardown-elementtree.patch
-Markdown-patch-options=-Np1
-
 Products.Archetypes-patches=
 # Fix part of http://dev.plone.org/plone/ticket/8794
 # fix old 'isImplementedByInstancesOf' calls
                             \${buildout:directory}/patches/archetypes_implby.patch
+
+
+
+#end if
+# fix 'elementree' dependency
+Markdown-2.0.1-patches=\${buildout:directory}/patches/mardown-elementtree.patch
+Markdown-patch-options=-Np1
+
+
 # packaging problem in and only flickrapi==1.4
 flickrapi-1.4-patches=\${buildout:directory}/patches/flickrapi.patch
 flickrapi-1.4.1-patches=\${buildout:directory}/patches/flickrapi141.patch
@@ -34,10 +42,12 @@ hachoir-core-1.3.2-patch-options=-Np1
 
 # make sur the patchs are applied
 [instance]
+#if $major < 4:
 ZODB3-patches=\${zopepy:ZODB3-patches}
+Products.Archetypes-patches=\${zopepy:Products.Archetypes-patches}
+#end if
 Markdown-2.0.1-patches=\${zopepy:Markdown-2.0.1-patches}
 Markdown-patch-options=\${zopepy:Markdown-patch-options}
-Products.Archetypes-patches=\${zopepy:Products.Archetypes-patches}
 ipython-patches=      \${zopepy:ipython-patches}
 ipython-patch-options=\${zopepy:ipython-patch-options}
 flickrapi-1.4.1-patches=\${zopepy:flickrapi-1.4.1-patches}
@@ -48,10 +58,12 @@ hachoir-core-1.3.2-patch-options=\${zopepy:hachoir-core-1.3.2-patch-options}
 
 # make sur the patchs are applied
 [test]
+#if $major < 4:
 ZODB3-patches=\${zopepy:ZODB3-patches}
+Products.Archetypes-patches=\${zopepy:Products.Archetypes-patches}
+#end if
 Markdown-2.0.1-patches=\${zopepy:Markdown-2.0.1-patches}
 Markdown-patch-options=\${zopepy:Markdown-patch-options}
-Products.Archetypes-patches=\${zopepy:Products.Archetypes-patches}
 ipython-patches=      \${zopepy:ipython-patches}
 ipython-patch-options=\${zopepy:ipython-patch-options}
 flickrapi-1.4.1-patches=\${zopepy:flickrapi-1.4.1-patches}

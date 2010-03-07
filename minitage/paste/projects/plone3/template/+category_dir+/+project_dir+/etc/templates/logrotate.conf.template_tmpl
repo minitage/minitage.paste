@@ -53,3 +53,13 @@ delaycompress
         /bin/kill -USR1 \$(cat \${buildout:directory}/var/transform.pid)
     endscript
 }
+\${buildout:directory}/var/log/supervisor*.log {
+    compress
+    rotate 10
+    daily
+    notifempty
+    size 10M
+    sharedscripts
+    missingok
+    copytruncate
+}

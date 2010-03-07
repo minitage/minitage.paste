@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# RedHat startup script for a supervisor instance
+# description: supervisor init script
+
+
+INSTANCE_PATH="${buildout:directory}"
+INSTANCE_NAME="$(basename ${buildout:directory})"
+supervisorctl="${buildout:directory}/bin/supervisorctl"
+supervisord="${buildout:directory}/bin/supervisord"
+name="supervisord_$INSTANCE_NAME"
+lock="${buildout:directory}/var/$name "
+
+[ -f $supervisord ] || exit 1
+[ -f $supervisorctl ] || exit 1
+
+RETVAL=0
+start() {
+     echo -n "Starting $name: "
+     $supervisord
+     RETVAL=$?
+     [ $RETVAL -eq 0 ] && touch $lock
+     echo
+     return $RETVAL
+}
+
+stop() {
+    echo -n "Stopping $name: "
+    $supervisorctl shutdown
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && rm -f $lock
+    echo
+    return $RETVAL
+}
+
+case "$1" in
+         start)
+             start
+             ;;
+
+         stop)
+             stop
+             ;;
+
+         restart)
+             stop
+             start
+             ;;
+esac
+
+exit $REVAL
+
+# vim:set ft=sh:

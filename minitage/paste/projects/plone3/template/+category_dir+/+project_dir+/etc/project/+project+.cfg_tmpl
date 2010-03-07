@@ -35,10 +35,18 @@ auto-checkout +=
 # see http://pypi.python.org/pypi/mr.developer for documentation
 # better to edit ./sources.cfg
 
+# to integrate fancy stuff to your plone install, you can have a look to
+# http://svn.plone.org/svn/plone/buildouts/plone-coredev/branches/4.0/experimental/
+# where you can find sources section to grab back to your buildout (extend, or local download/edit)
+
+
 [instance]
 # attacking zopepy:eggs make instance be built after zopepy
 # in any case thx to the buildout automatic parts sort.
-eggs += \${buildout:eggs} #slurp
+extra-paths+=\${buildout:extra-paths}
+eggs += \${buildout:eggs}
+    Plone
+
 #for $product in $additional_eggs:
 #if product.startswith('#'):
 $product
@@ -47,9 +55,9 @@ $product
 #end if
 #end for
 
-develop+=
-
-products+=
+products =
+    \${buildout:directory}/products
+    \${productdistros:location}
 
 zcml +=#slurp
 #for $product in $plone_zcml:
@@ -65,7 +73,8 @@ file=\${buildout:directory}/etc/${project}-kgs.cfg
 
 [zopepy]
 # Scripts generated filtering
-scripts +=
+scripts =
+    zopepy
 #zope2
     repozo
     zeoctl
@@ -78,6 +87,13 @@ ${product}
     ${product}
 #end if
 #end for
+
+
+extra-paths += \${instance:extra-paths}
+#if $major < 4
+    \${zope2:location}/lib/python
+#end if
+    \${buildout:directory}/parts/fakeproducts
 
 # zope.testing testrunner support
 [testenv]
@@ -105,7 +121,7 @@ extra-paths = \${instance:extra-paths}
     \${buildout:directory}/parts/fakeproducts
 defaults = ['--exit-with-status', '--auto-color', '--auto-progress']
 environment = testenv
-
+extra-paths = \${zopepy:extra-paths}
 
 # Plone site creation if no other plonesite preset
 [plonesite]
@@ -117,6 +133,7 @@ enabled=true
 instance = instance
 # products to autoinstall
 products-initial=
+#   ${sane_name}.policy
 # profils to autorun
 profils-initial=
 ${zeocomment}zeoserver = zeoserver

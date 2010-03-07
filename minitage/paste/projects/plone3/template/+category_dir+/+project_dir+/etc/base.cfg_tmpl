@@ -23,16 +23,19 @@ $hr
 #set $sgdgcomment='#'
 #end if
 
-
 [buildout]
 timeout=3
 extensions = buildout.minitagificator mr.developer
 extends-cache = \${buildout:directory}/etc/cache
 # this allow you to run buildout on offline mode and to use only the downloaded plonev3.versions.cfg
-extends -= http://dist.plone.org/release/${plone_version}/versions.cfg
+extends -= $versions_url
+           http://download.zope.org/Zope2/index/2.12.3/versions.cfg
 extends = #slurp
-    plone/plone3.versions.cfg#slurp
-    plone/plone3.buildout.cfg#slurp
+#if $major > 3:
+    plone/zope2.versions.cfg#slurp
+#end if
+    plone/plone${major}.versions.cfg#slurp
+    plone/plone${major}.sources.cfg#slurp
     project/patches.cfg#slurp
     sys/settings.cfg#slurp
 #if $with_indexing_solr:
@@ -54,7 +57,14 @@ extends = #slurp
     hudson/${project}/hudson.cfg#slurp
 
 
-parts +=backup
+parts =
+#if $major < 4:
+    zope2
+#end if
+    productdistros
+    instance
+    zopepy
+    backup
 ${sgdgcomment}    instance-newsletter
 ${fsscomment}${sgdgcomment}    fss-newsletter
 ${fsscomment}    fss
@@ -79,13 +89,22 @@ versions = versions
 # auto tracked developement products, see project/sources.cfg
 sources = sources
 auto-checkout +=
+# Add additional eggs here
+eggs =
+
+# Reference any eggs you are developing here, one per line
+# e.g.: develop = src/my.package
+develop =
 
 # auto tracked developement products, see project/sources.cfg
 [sources]
 
+#if $major < 4
 # Zope operating instances are created elsewhere.
 # For options see http://pypi.python.org/pypi/plone.recipe.zope2install
 [zope2]
+recipe = plone.recipe.zope2install
+url = \${versions:zope2-url}
 # fake eggs are required to satisfy Zope dependencies while
 # zope is not yet eggified.
 fake-zope-eggs = true
@@ -95,6 +114,7 @@ additional-fake-eggs +=
     zope.testing
 skip-fake-eggs +=
     ZODB3
+#end if
 
 # eggs & scripts installation
 [zopepy]
@@ -108,11 +128,31 @@ eggs = \${instance:eggs}
 interpreter = zopepy
 env-file=\${buildout:directory}/etc/${project}.env
 
+# Use this section to download additional old-style products.
+# List any number of URLs for product tarballs under URLs (separate
+# with whitespace, or break over several lines, with subsequent lines
+# indented). If any archives contain several products inside a top-level
+# directory, list the archive file name (i.e. the last part of the URL,
+# normally with a .tar.gz suffix or similar) under 'nested-packages'.
+# If any archives extract to a product directory with a version suffix, list
+# the archive name under 'version-suffix-packages'.
+[productdistros]
+# For more information on this step and configuration options see:
+# http://pypi.python.org/pypi/plone.recipe.distros
+recipe = plone.recipe.distros
+urls =
+nested-packages =
+version-suffix-packages =
+
 # here is defined the Zope instance running your plone site
 # beware that zopepy part must run before isntance in order to have the right version
 # pinned for relstorage
 [instance]
 order=\${zopepy:recipe}
+recipe = plone.recipe.zope2instance
+#if $major < 4
+zope2-location = \${zope2:location}
+#end if
 http-address=\${hosts:instance}:\${ports:instance}
 user = \${zope:user}:\${zope:password}
 session-timeout-minutes = \${cache:session-timeout-minutes}
@@ -120,8 +160,9 @@ verbose-security=\${zope:verbose-security}
 debug-mode=\${zope:debug-mode}
 event-log-level=\${zope:event-log-level}
 z2-log-level=\${zope:z2-log-level}
-extra-paths+=
-    \${buildout:extra-paths}
+environment-vars =
+    zope_i18n_compile_mo_files = true
+
 
 # KGS generation
 [kgs]

@@ -32,36 +32,35 @@
 
 
 
-bin/paster create -t minitage.plone4 p4 inside_minitage=${1:-yes}\
-mode=relstorage                             \
-with_ploneproduct_fss=y                     \
-with_ploneproduct_atbackref=y               \
-with_ploneproduct_cachesetup=y              \
-with_ploneproduct_collage=y                 \
-with_ploneproduct_contentlicensing=y        \
-with_ploneproduct_cpwkf=y                   \
-with_ploneproduct_csvreplica=y              \
-with_ploneproduct_easyshop=y                \
-inside_minitage=n                \
-with_ploneproduct_flowplayer=y              \
-with_ploneproduct_ldap=y                    \
-with_ploneproduct_lingua=y                  \
-with_ploneproduct_maps=y                    \
-with_ploneproduct_plomino=y                 \
-with_ploneproduct_plonearticle=y            \
-with_ploneproduct_ploneboard=y              \
-with_ploneproduct_p4a_cal=y                 \
-with_ploneproduct_p4a_vid=y                 \
-with_ploneproduct_ploneformgen=y            \
-with_ploneproduct_quillsenabled=y           \
-with_ploneproduct_quills=y                  \
-with_ploneproduct_schematuning=y            \
-with_ploneproduct_sgdcg=y                   \
-with_ploneproduct_tal_portlet=y             \
-with_ploneproduct_truegallery=y             \
-with_ploneproduct_vaporisation=y            \
-with_ploneproduct_wc_dd_menu=y              \
-with_checked_versions=y              \
-
-
- # vim:set et sts=4 ts=4 tw=80:
+~/minitage/bin/paster create -t minitage.plone4 p4 inside_minitage=${1:-yes} $2 $3 $4 $5 $6 \
+    mode=zodb\
+    with_ploneproduct_fss=y                     \
+    with_ploneproduct_atbackref=y               \
+    with_ploneproduct_cachesetup=y              \
+    with_ploneproduct_collage=y                 \
+    with_ploneproduct_contentlicensing=y        \
+    with_ploneproduct_cpwkf=y                   \
+    with_ploneproduct_csvreplica=y              \
+    with_ploneproduct_easyshop=y                \
+    with_ploneproduct_flowplayer=y              \
+    with_ploneproduct_ldap=y                    \
+    with_ploneproduct_lingua=y                  \
+    with_ploneproduct_maps=y                    \
+    with_ploneproduct_plomino=y                 \
+    with_ploneproduct_plonearticle=y            \
+    with_ploneproduct_ploneboard=y              \
+    with_ploneproduct_p4a_cal=y                 \
+    with_ploneproduct_p4a_vid=y                 \
+    with_ploneproduct_ploneformgen=y            \
+    with_ploneproduct_quillsenabled=y           \
+    with_ploneproduct_quills=y                  \
+    with_ploneproduct_schematuning=y            \
+    with_ploneproduct_sgdcg=y                   \
+    with_ploneproduct_tal_portlet=y             \
+    with_ploneproduct_truegallery=y             \
+    with_ploneproduct_vaporisation=y            \
+    with_ploneproduct_wc_dd_menu=y              \
+    with_checked_versions=y              \
+        --no-interactive
+    
+ # vim:set et sts=4 ts=4 tw=0:

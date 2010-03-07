@@ -11,6 +11,7 @@ auto-checkout +=
 #end for
 
 [sources]
+
 #set $psources_keys = $plone_sources.keys()
 # $psources_keys.sort()
 #for $item in $psources_keys:
@@ -53,14 +54,14 @@ vaporization=http://svn.plone.org/svn/collective/Vaporisation/trunk
 
 # on Upgrades
 # Think to change the plone release URL !!!
+find-links = http://dist.plone.org/release/${plone_version}
+             http://pypi.python.org/simple/ZODB4
+# FOR PILWTOK
+             http://download.zope.org/distribution/
 #if $with_wsgi_support:
-find-links = http://pypi.python.org/simple/ZODB3
-            http://dist.repoze.org/zope2/latest/
-# FOR PILWTOK
-            http://download.zope.org/distribution/
+             http://dist.repoze.org/zope2/latest/
 #else
-# FOR PILWTOK
-find-links = http://download.zope.org/distribution/
+#             http://dist.repoze.org/zope2/latest/
 #end if
 
 [vaporisation]

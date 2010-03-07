@@ -1,0 +1,318 @@
+The plone templates xml configuration file parser
+=====================================================
+The file can be either in your home folder (~/.<FILENAME> eg:~/minitage.plone3.xml))  or those which are distributed with this disitribution.
+If the file is present in your home folder, it will take precedence
+
+Goal is to make the maintenance of the plone templates easier.
+
+The parsed Files represent all the info we need to describe the final plone installation.
+
+Useless to say that The xml configuration files will influence the minitage.plone paster
+templates and collective.generic.skel.plone templates behaviour by adding or deleting functionnalities..
+
+    - paster options
+    - eggs to install
+      for each:
+
+        - scripts
+        - zcml
+        - zope2 product or package
+
+    - Mandatory versions
+    - Checked versions versions
+    - QuickInstaller products name
+    - Old style Products to download
+    - For each product, its repository information (mr.developer source section )
+    - a misc section to aggregate all non standart information (zcml, products, co)
+      THIS SECTION IS UNDOCUMENTED AND NOT INHERITED !
+
+We use the ``read_vars`` method that returns a mapping which represents the parsed file(s).
+
+One thing to know is that there is an inferit mecanism between the xml files over the plone3 and the plon4 template.::
+
+    >>> from minitage.paste.projects.common import read_vars
+    >>> import copy
+    >>> c1 = os.path.join(cwd, '1.xml')
+    >>> c2 = os.path.join(cwd, '2.xml')
+
+Each subsection is mapped somehow to the ``purge_nodes`` method to pûrge from the iherited stuff.
+
+All the xml leaf nodes  support an "options" (comma separated list of options id)  attribute to let them selected via the paster questions answers.
+
+File Format
+-------------
+- The root node is 'root'
+- The configuration part is done in a 'template' node (one per file)
+- The purge part is done in 'purge' nodes (note that just one is neccesary per file ;)).
+
+in a short, a common configuration file looks like::
+
+    <xml>
+    <root>
+        <template>
+            ...
+        </template>
+        <purge/>
+        <purge/>
+    </root>
+
+
+The options
+-------------------
+They are contained in an <options/> node.
+Options to add to paster questions, they can have defaults.
+::
+
+ <options><option name="" description="" default="" order"int"/></options
+
+Take a look to the distributed xml files to have details and examples.::
+
+    >>> xmlvars1 = read_vars(c1)
+    >>> xmlvars1['addons_vars']['with_ploneproduct_plonesurvey']
+    (1450, <var with_ploneproduct_plonesurvey default=None should_echo=True>)
+
+Purge, adding,  and overriding mecanism is in place::
+
+    >>> xmlvars2 = read_vars(c2, base_vars=copy.deepcopy(xmlvars1))
+    >>> 'with_ploneproduct_plonesurvey' in xmlvars2['addons_vars']
+    False
+    >>> xmlvars2['addons_vars']['foo']
+    (100, <var foo default=None should_echo=True>)
+    >>> xmlvars2['addons_vars']['with_binding_ldap'][0], xmlvars2['addons_vars']['with_binding_ldap'][1].description
+    (200, u'FOO bindings support y/n')
+
+Pinning versions in buildout
+-------------------------------
+Mandatory versions
+~~~~~~~~~~~~~~~~~~~~~~~~
+Those versions will be set in any case weither you check checked versions or not
+If the name is the same for multiple (p,v) couples, they will be grouped in the buildout.
+
+They are contained in an <versions/> node.
+::
+
+    <versions><version p="PackageName" v="VersionToBePinned" name="dictionnary key and comment in buildout"/></versions>
+
+
+Take a look to the distributed xml files to have details and examples.::
+
+    >>> xmlvars1 = read_vars(c1)
+    >>> xmlvars1['versions_mappings']['RelStorage']
+    [(u'ZODB3', u'3.7.2'), (u'ZODB2', u'YYY')]
+
+
+Purge, adding,  and overriding mecanism is in place::
+
+    >>> xmlvars2 = read_vars(c2, base_vars=copy.deepcopy(xmlvars1))
+    >>> 'IPython py2.4 compatible version' in xmlvars2['versions_mappings']
+    False
+    >>> 'Markdown crazy stuff' in xmlvars2['versions_mappings']
+    True
+    >>> xmlvars2['versions_mappings']['FooStorage']
+    [(u'Foo', u'YYY')]
+    >>> xmlvars2['versions_mappings']['RelStorage']
+    [(u'ZODB2', u'YYY'), (u'ZODB3', u'XXX'), (u'ZODB4', u'XXX')]
+
+
+Checked versions
+~~~~~~~~~~~~~~~~~~
+Those versions are enabled when you check ''checked versions in the ui''.
+Those are normally well tested set of versions for the products you ll choose.
+
+They are contained in a <checkedversions/> node.
+::
+
+    <checkedversions><version p="PackageName" v="VersionToBePinned" options="comma separated options to select this versions"/></checkedversions>
+
+Take a look to the distributed xml files to have details and examples.::
+
+    >>> xmlvars1 = read_vars(c1)
+    >>> xmlvars1['checked_versions_mappings']
+    {u'with_ploneproduct_fivegrok': {u'five.grok': u'1.0', u'five': u'1.0'}, u'with_foo': {u'bar': u'1.0'}}
+
+
+Purge, adding,  and overriding mecanism is in place::
+
+    >>> xmlvars2 = read_vars(c2, base_vars=copy.deepcopy(xmlvars1))
+    >>> xmlvars2['checked_versions_mappings']['with_foo'] == {}
+    True
+    >>> xmlvars2['checked_versions_mappings']['Foo']
+    {u'five.grok2': u'1.2'}
+    >>> xmlvars2['checked_versions_mappings']['with_ploneproduct_fivegrok']
+    {u'grok': u'1.1', u'five.grok': u'1.1', u'five': u'1.0'}
+
+
+Development sources
+-------------------------
+Sources to add to the mr.developer configuration (name, type and url of a repository)
+
+They are contained in a <sources/> node.
+::
+
+    <sources><source name="" type="" url="" [autocheckout="y"]/></sources>
+
+Take a look to the distributed xml files to have details and examples.::
+
+    >>> xmlvars1 = read_vars(c1)
+    >>> pprint(xmlvars1['plone_sources'])
+    {u'archetypes.tuning': {'autocheckout': '',
+                            'default': '',
+                            'name': u'archetypes.tuning',
+                            'options': [u'with_ploneproduct_schematuning'],
+                            'type': u'svn',
+                            'url': u'http://svn.plone.org/svn/archetypes/'},
+     u'collective.contentlicensing': {'autocheckout': '',
+                                      'default': '',
+                                      'name': u'collective.contentlicensing',
+                                      'options': [u'with_ploneproduct_contentlicensing'],
+                                      'type': u'svn',
+                                      'url': u'https://svn.plone.org/svn/collective/'}}
+
+
+Purge, adding,  and overriding mecanism is in place::
+
+    >>> xmlvars2 = read_vars(c2, base_vars=copy.deepcopy(xmlvars1))
+    >>> 'collective.contentlicensing' in xmlvars2['plone_sources']
+    False
+    >>> [xmlvars2['plone_sources']['archetypes.tuning'][v] for v in ('url', 'type')]
+    [u'http://git.plone.org/svn/archetypes/', u'git']
+    >>> [xmlvars2['plone_sources']['archetypes.foo'][k] for k in ('type', 'name', 'options', 'url')]
+    [u'git', u'archetypes.foo', [u'with_ploneproduct_foo'], u'http://git.plone.org/svn/foo/']
+
+
+QuickInstallable products
+-----------------------------
+Name of the id to install via the quickinstaller (installed automaticly via the policy)
+
+::
+
+  <qi><product name=""/></qi>
+
+Take a look to the distributed xml files to have details and examples.::
+
+    >>> xmlvars1 = read_vars(c1)
+    >>> pprint(xmlvars1['qi_mappings'])
+    {u'with_ploneproduct_atbackref': [u'ATBackRef'],
+     u'with_ploneproduct_cpwkf': [u'CMFPlacefulWorkflow'],
+     u'with_ploneproduct_ploneboard': [u'CMFPlacefulWorkflow']}
+
+Purge, adding,  and overriding mecanism is in place::
+
+    >>> xmlvars2 = read_vars(c2, base_vars=copy.deepcopy(xmlvars1))
+    >>> pprint(xmlvars2['qi_mappings'])
+    {u'with_ploneproduct_atbackref': [u'ATBackRef', u'ATBackRef2'],
+     u'with_ploneproduct_cpwkf': [],
+     u'with_ploneproduct_ploneboard': []}
+
+OldStyle zope2  products
+-----------------------------
+Name of the url to fetch
+
+::
+
+    <productdistros><productdistro url=""/></productdistros>
+
+Take a look to the distributed xml files to have details and examples.::
+
+    >>> xmlvars1 = read_vars(c1)
+    >>> pprint(xmlvars1['urls_mappings'])
+    {u'with_ploneproduct_maps': [u'http://plone.org/products/maps/releases/1.1/maps-1-1.tgz'],
+     u'with_ploneproduct_maps2': [u'http://plone.org/products/maps/releases/1.1/maps-1-1.tgz1',
+                                  u'http://plone.org/products/maps/releases/1.1/maps-1-1.tgz2']}
+
+Purge, adding,  and overriding mecanism is in place::
+
+    >>> xmlvars2 = read_vars(c2, base_vars=copy.deepcopy(xmlvars1))
+    >>> pprint(xmlvars2['urls_mappings'])
+    {u'with_ploneproduct_maps': [u'http://plone.org/products/maps/releases/1.1/maps-1-1.tgz'],
+     u'with_ploneproduct_maps2': [u'http://plone.org/products/maps/releases/1.1/maps-1-1.tgz2'],
+     u'with_ploneproduct_maps3': [u'http://plone.org/products/maps/releases/1.1/maps-1-1.tgz1']}
+
+
+Python eggs
+-----------------------------
+Section to describe
+
+    * wich python eggs to install
+    *  which stuff those eggs contain
+
+        - zcml
+        - zope2 package?
+        - zope2 product?
+        - which scripts can they install
+
+If you want to modify an egg entry, you must purge the egg
+and add it again in the modified form  to the template node.
+
+::
+
+  <eggs><egg name="" zpackage="y/n" zproduct="y/n" zcml="commaseparated list of zcmls"/></eggs>
+
+Take a look to the distributed xml files to have details and examples.::
+
+    >>> xmlvars1 = read_vars(c1)
+    >>> pprint(xmlvars1['eggs_mappings'])
+    {u'with_binding_pil': [u'PILwoTK', u'Bar'],
+     u'with_ploneproduct_contentlicensing': [u'collective.contentlicensing'],
+     u'with_ploneproduct_sgdcg': [u'collective.dancing']}
+    >>> pprint(xmlvars1['scripts_mappings'])
+    {u'with_binding_pil': [u'a', u'b', u'c', u'd'],
+     u'with_ploneproduct_contentlicensing': [u'e', u'f'],
+     u'with_ploneproduct_sgdcg': [u'g', u'h']}
+    >>> xmlvars1['zcml_mappings']['with_ploneproduct_contentlicensing']
+    [(u'collective.contentlicensing', u'configure')]
+    >>> xmlvars1['zcml_mappings']['with_ploneproduct_sgdcg']
+    [(u'collective.dancing', u'configure'), (u'collective.dancing', u'meta')]
+    >>> xmlvars1['z2packages']['with_ploneproduct_sgdcg'], xmlvars1['z2packages']['with_ploneproduct_contentlicensing']
+    ([u'collective.dancing'], [u'collective.contentlicensing'])
+    >>> xmlvars1['z2products']['with_ploneproduct_sgdcg'], xmlvars1['z2products']['with_ploneproduct_contentlicensing']
+    ([u'collective.dancing'], [u'collective.contentlicensing'])
+
+
+Purge, adding, and overriding mecanism is in place::
+
+    >>> xmlvars2 = read_vars(c2, base_vars=copy.deepcopy(xmlvars1))
+    >>> pprint(xmlvars2['eggs_mappings'])
+    {u'with_binding_pil': [u'Bar'],
+     u'with_ploneproduct_contentlicensing': [u'collective.contentlicensing'],
+     u'with_ploneproduct_contentliceqzzaensing': [u'myfoo'],
+     u'with_ploneproduct_sgdcg': [u'collective.dancing']}
+    >>> pprint(xmlvars2['scripts_mappings'])
+    {u'with_binding_pil': [u'c', u'd'],
+     u'with_ploneproduct_contentlicensing': [u'z'],
+     u'with_ploneproduct_sgdcg': [u'g', u'h']}
+    >>> xmlvars2['zcml_mappings']['with_ploneproduct_contentlicensing']
+    []
+    >>> xmlvars2['zcml_mappings']['with_ploneproduct_contentliceqzzaensing']
+    [(u'myfoo', u'bar')]
+    >>> xmlvars2['z2packages']['with_ploneproduct_sgdcg'], xmlvars2['z2packages']['with_ploneproduct_contentlicensing']
+    ([u'collective.dancing'], [])
+    >>> xmlvars2['z2products']['with_ploneproduct_sgdcg'], xmlvars2['z2products']['with_ploneproduct_contentlicensing']
+    ([u'collective.dancing'], [])
+
+
+
+Misc
+----------
+This an handle non standart products (add something to zproduct, zpackage and zcml mappings)::
+
+    <miscproducts><product name="foo" zcml=configure" zpackage="packagename" zproduct="productname" /></miscproducts>
+
+    >>> xmlvars1['zcml_mappings']['with_ploneproduct_vaporisation']
+    [(u'foo', u'foofoo'), (u'vaporisation', u'configure')]
+    >>> xmlvars2['zcml_mappings']['with_ploneproduct_vaporisation']
+    [(u'vaporisation', u'configure')]
+
+    >>> [xmlvars1['z2products'][a] for a in ("with_ploneproduct_vaporisation", "with_ploneproduct_maps",  "with_ploneproduct_plomino")]
+    [[u'foofoo'], [u'Maps'], [u'CMFPlomino']]
+    >>> [xmlvars2['z2products'][a] for a in ("with_ploneproduct_vaporisation", "with_ploneproduct_maps",  "with_ploneproduct_plomino")]
+    [[], [u'Maps'], [u'CMFPlomino']]
+
+    >>> [xmlvars1['z2packages'][a] for a in ("with_ploneproduct_vaporisation",)]
+    [[u'foofoo', u'vaporisation']]
+    >>> [xmlvars2['z2packages'][a] for a in ("with_ploneproduct_vaporisation",)]
+    [[u'vaporisation']]
+
+
+
+.. vim;set ft=rst :
