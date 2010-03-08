@@ -197,6 +197,7 @@
     <product name="CacheSetup"                     options="with_ploneproduct_cachesetup"       />
     <product name="Collage"                        options="with_ploneproduct_collage"          />
     <product name="FacultyStaffDirectory"          options="with_ploneproduct_facultystaff"     />
+    <product name="plone.app.z3cform"              options="with_ploneproduct_cz3cformgrok,with_ploneproduct_pz3cform"/>
     <product name="LinguaPlone"                    options="with_ploneproduct_lingua"           />
     <product name="Maps"                           options="with_ploneproduct_maps"             />
     <product name="PloneArticle"                   options="with_ploneproduct_plonearticle"     />
