@@ -568,9 +568,7 @@ def parse_xmlconfig(xml,
                                     #d[option].append('#%s' % oattrs['name'])
                                     zp = [z.strip() for z in oattrs[package].split(',')]
                                     noecho = [d[option].append(z)
-                                              for z in zp if overrides or (not z
-                                                                           in
-                                                                           d[option])]
+                                              for z in zp if not z in d[option]]
         # misc product discovery
         miscproducts = xmlTemplate.getElementsByTagName('miscproducts')
         if miscproducts:
@@ -599,7 +597,9 @@ def parse_xmlconfig(xml,
                                 else:
                                     #d[option].append('#%s' % oattrs['name'])
                                     zp = [z.strip() for z in oattrs[package].split(',')]
-                                    noecho = [d[option].append(z) for z in zp if not z in d[option]]
+                                    noecho = [d[option].append(z) 
+                                              for z in zp 
+                                              if not z in d[option]]
 
         # productdistros handling
         productsdistros = xmlTemplate.getElementsByTagName('productdistros')

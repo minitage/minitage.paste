@@ -22,6 +22,9 @@ ${i18ncomment}    i18ndude
  
 [versions]
 ctypes=1.0.2
+#if $major >3:
+plone.reload = 1.3
+#end if
 
 [instance]
 verbose-security = on
@@ -38,7 +41,8 @@ eggs+= plone.reload
     Products.Clouseau
     Products.DocFinderTab
     Products.Gloworm
-    Products.PDBDebugMode
+# Uncomment/Activate only if you want
+#    Products.PDBDebugMode
     Products.ZopeProfiler
     Sphinx
     zest.releaser

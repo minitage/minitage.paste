@@ -163,6 +163,8 @@ class Template(common.Template):
 
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
+        if not 'with_ploneproduct_fss' in vars:
+            vars['with_ploneproduct_fss'] = False
         vars['plonesite'] = common.SPECIALCHARS.sub('', vars['project'])
         vars['major'] = int(vars['plone_version'][0])
         vars['versions_url'] = self.get_versions_url(vars)
@@ -189,10 +191,13 @@ class Template(common.Template):
                 )
         for var in self.plone_sources:
             if self.plone_sources[var].get('autocheckout', '') == 'y':
-                if not self.plone_sources[var]['name']  in vars['autocheckout']:
-                    vars['autocheckout'].append(
-                        self.plone_sources[var]['name']
-                    )                                  
+                if not self.plone_sources[var]['name'] in vars['autocheckout']:
+                    if ((True in [vars.get(o, False)
+                                  for o in self.plone_sources[var]['options']])
+                        and (self.plone_sources[var]['name'] not in vars['autocheckout'])):
+                        vars['autocheckout'].append(
+                            self.plone_sources[var]['name']
+                        )                                  
 
         lps = copy.deepcopy(self.plone_sources)
         for item in self.plone_sources:
@@ -262,7 +267,7 @@ class Template(common.Template):
 
         if vars["with_checked_versions"]:
             for var in self.checked_versions_mappings:
-                if vars[var]:
+                if vars.get(var, False):
                     vars['plone_versions'].append(('# %s' % var, '',))
                     for pin in self.checked_versions_mappings[var]:
                         vars['plone_versions'].append((pin, self.checked_versions_mappings[var][pin]))
