@@ -189,9 +189,10 @@ class Template(common.Template):
                 )
         for var in self.plone_sources:
             if self.plone_sources[var].get('autocheckout', '') == 'y':
-                vars['autocheckout'].append(
-                    self.plone_sources[var]['name']
-                )                                  
+                if not self.plone_sources[var]['name']  in vars['autocheckout']:
+                    vars['autocheckout'].append(
+                        self.plone_sources[var]['name']
+                    )                                  
 
         lps = copy.deepcopy(self.plone_sources)
         for item in self.plone_sources:
