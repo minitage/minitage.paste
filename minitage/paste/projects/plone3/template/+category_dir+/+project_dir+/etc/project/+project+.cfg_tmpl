@@ -20,10 +20,6 @@ $hr
 
 [buildout]
 sources-dir=\${buildout:directory}/src.mrdeveloper
-parts += #slurp
-#if $with_ploneproduct_vaporisation:
-    vaporisation
-#end if
 
 # extra directories oto add to the python path
 extra-paths=

@@ -64,8 +64,5 @@ find-links = http://dist.plone.org/release/${plone_version}
 #             http://dist.repoze.org/zope2/latest/
 #end if
 
-[vaporisation]
-recipe=minitage.recipe.fetch
-urls=\${groups:vaporization}|svn||\${zope2:location}/lib/python/vaporisation
 
 # vim:set ft=cfg:
