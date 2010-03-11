@@ -6,7 +6,7 @@ setupdir = os.path.abspath(
 os.chdir(setupdir)
 
 name='minitage.paste'
-version = '1.3.154'
+version = '1.3.155'
 
 
 def read(rnames):
@@ -23,6 +23,8 @@ long_description = (
 if 'RST_TEST' in os.environ:
     print long_description
     sys.exit(0)
+
+
 setup(
     name=name,
     version=version,
