@@ -34,7 +34,7 @@
   <option order="700"  name="with_ploneproduct_facultystaff"     description="FalcultyStaff, see http://plone.org/products/faculty-staff-directory y/n"/>
   <option order="750"  name="with_ploneproduct_contentlicensing" description="Content Licensing, see http://pypi.python.org/pypi/collective.contentlicensing y/n"/>
   <option order="800"  name="with_ploneproduct_cpwkf"            description="CMFPlacefulWorkflow, see http://plone.org/products/cmfplacefulworkflow/ y/n"/>
-  <option order="850"  name="with_ploneproduct_csvreplica"       description="CSV Replicata, see http://pypi.python.org/pypi/Products.csvreplicata (makina users, do not untick) y/n" default="y" />
+  <option order="850"  name="with_ploneproduct_csvreplica"       description="CSV Replicata, see http://pypi.python.org/pypi/Products.csvreplicata (makina users, do not untick) y/n" default="n" />
   <option order="900"  name="with_ploneproduct_easyshop"         description="Easy Shop, see http://www.geteasyshop.com y/n"/>
   <option order="950"  name="with_ploneproduct_flowplayer"       description="FlowPlayer, see http://plone.org/products/collective-flowplayer/ y/n"/>
   <option order="1000" name="with_ploneproduct_ldap"             description="Plone LDAP support, see http://plone.org/products/ploneldap/ y/n"/>
@@ -50,13 +50,13 @@
   <option order="1550" name="with_ploneproduct_quills"           description="Quills, see http://pypi.python.org/pypi/Products.Quills/ y/n"/>
   <option order="1500" name="with_ploneproduct_schematuning"     description="Schematuning patch, see http://pypi.python.org/pypi/archetypes.schematuning/ y/n"/>
   <option order="1500" name="with_ploneproduct_tinymce"          description="Tinymce, see http://plone.org/products/tinymce y/n"/>
-  <option order="1500" name="with_ploneproduct_fivegrok"         description="five.grok integration, see http://pypi.python.org/pypi/five.grok y/n" default="y"/>
+  <option order="1500" name="with_ploneproduct_fivegrok"         description="five.grok integration, see http://pypi.python.org/pypi/five.grok y/n" default="n"/>
   <option order="1600" name="with_ploneproduct_sgdcg"            description="Singing / Dancing NewsLetter, see http://plone.org/products/dancing S/D is known to lead to multiple buildout installation errors.Be sure to activate it and debug the errors. y/n"/>
   <option order="1650" name="with_ploneproduct_tal_portlet"      description="Tal Portlet, see http://pypi.python.org/pypi/collective.portlet.tal y/n"/>
   <option order="1750" name="with_ploneproduct_truegallery"      description="PloneTrueGallery, see http://plone.org/products/plone-true-gallery/ y/n"/>
   <option order="1850" name="with_ploneproduct_ploneformgen"     description="PloneFormGen, see http://plone.org/products/ploneformgen y/n"/>
   <option order="1950" name="with_ploneproduct_wc_dd_menu"       description="WebCouturier Dropdown Menu, see http://plone.org/products/webcouturier-dropdownmenu y/n"/>
-  <option order="1951" name="with_ploneproduct_pz3cform"         description="Plone z3c.form support, see http://pypi.python.org/pypi/plone.z3cform y/n" default="y"/>
+  <option order="1951" name="with_ploneproduct_pz3cform"         description="Plone z3c.form support, see http://pypi.python.org/pypi/plone.z3cform y/n" default="n"/>
   <option order="1962" name="with_ploneproduct_iterate"          description="Plone Iterate support, see http://pypi.python.org/pypi/plone.app.iterate y/n" default="n"/>
   <option order="1973" name="with_ploneproduct_schemaextender"   description="Plone Archetypes schema extender support, see http://pypi.python.org/pypi/archetypes.schemaextender y/n" default="n"/>
   <option order="1984" name="with_ploneproduct_cz3cformgrok"     description="Plone + z3cform light grok integration support, see http://pypi.python.org/pypi/collective.z3cform.grok y/n" default="n"/>
