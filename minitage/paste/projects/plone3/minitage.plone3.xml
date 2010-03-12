@@ -138,7 +138,7 @@
     <egg name="easyshop.shop"                  options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
     <egg name="easyshop.stocks"                options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/> 
     <egg name="easyshop.taxes"                 options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
-    <egg name="five.grok"                      options="with_ploneproduct_fivegrok,with_ploneproduct_pz3cform"      zcml="configure" order="100"/>
+    <egg name="five.grok"                      options="with_ploneproduct_fivegrok,with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"      zcml="configure" order="100"/>
     <egg name="iw.fss"                         options="with_ploneproduct_fss"          zcml="configure,meta"      zcmlorder="150"/>
     <egg name="Products.Maps"                  options="with_ploneproduct_maps"             zpackage="y" zcml="configure" />
     <egg name="p4a.common"                     options="with_ploneproduct_p4a_vid"          />
@@ -306,22 +306,22 @@
     <version p='z3c.form'                       v='1.9.0'   options='with_ploneproduct_pz3cform,with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok,with_ploneproduct_pz3cform' />
 
     <!-- FIVE.GROK -->
-    <version p='five.grok'                      v='1.0'     options='with_ploneproduct_fivegrok' />
-    <version p='grokcore.annotation'            v='1.0.1'   options='with_ploneproduct_fivegrok' />
-    <version p='grokcore.component'             v='1.7'     options='with_ploneproduct_fivegrok' />
-    <version p='grokcore.formlib'               v='1.4'     options='with_ploneproduct_fivegrok' />
-    <version p='grokcore.security'              v='1.2'     options='with_ploneproduct_fivegrok' />
-    <version p='grokcore.site'                  v='1.0.1'   options='with_ploneproduct_fivegrok' />
-    <version p='grokcore.view'                  v='1.12.1'  options='with_ploneproduct_fivegrok' />
-    <version p='grokcore.viewlet'               v='1.3'     options='with_ploneproduct_fivegrok' />
-    <version p='five.localsitemanager'          v='1.1'     options='with_ploneproduct_fivegrok' />
-    <version p='martian'                        v='0.11'    options='with_ploneproduct_fivegrok' />
-    <version p='zope.app.publisher'             v='3.5.1'   options='with_ploneproduct_fivegrok' />
-    <version p='zope.app.zcmlfiles'             v='3.4.3'   options='with_ploneproduct_fivegrok' />
-    <version p='zope.i18n'                      v='3.4.0'   options='with_ploneproduct_fivegrok' />
-    <version p='zope.interface'                 v='3.4.1'   options='with_ploneproduct_fivegrok' />
-    <version p='zope.securitypolicy'            v='3.4.1'   options='with_ploneproduct_fivegrok' />
-    <version p='zope.testing'                   v='3.7.6'   options='with_ploneproduct_fivegrok' />
+    <version p='five.grok'                      v='1.0'     options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+    <version p='grokcore.annotation'            v='1.0.1'   options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+    <version p='grokcore.component'             v='1.7'     options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+    <version p='grokcore.formlib'               v='1.4'     options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+    <version p='grokcore.security'              v='1.2'     options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+    <version p='grokcore.site'                  v='1.0.1'   options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+    <version p='grokcore.view'                  v='1.12.1'  options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+    <version p='grokcore.viewlet'               v='1.3'     options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+    <version p='five.localsitemanager'          v='1.1'     options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+    <version p='martian'                        v='0.11'    options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+    <version p='zope.app.publisher'             v='3.5.1'   options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+    <version p='zope.app.zcmlfiles'             v='3.4.3'   options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+    <version p='zope.i18n'                      v='3.4.0'   options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+    <version p='zope.interface'                 v='3.4.1'   options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+    <version p='zope.securitypolicy'            v='3.4.1'   options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+    <version p='zope.testing'                   v='3.7.6'   options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
   </checkedversions>
   <!--
     Old style plone products to checkout using the [productsdistros] part
