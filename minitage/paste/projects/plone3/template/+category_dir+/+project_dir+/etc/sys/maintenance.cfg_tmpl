@@ -89,15 +89,15 @@ update-command = \${chmodcron:command}
 [upload-datafs]
 recipe = collective.recipe.rsync
 command =
-     rsync -av --partial --progress \${buildout:directory}/var/backups/         \${users:staging}@\${hosts:staging}/\${locations:staging}/var/backups/;
-     rsync -av --partial --progress \${buildout:directory}/var/snapshotbackups/ \${users:staging}@\${hosts:staging}/\${locations:staging}/var/snapshotbackups/;
+     rsync -av --partial --progress \${buildout:directory}/var/backups/         \${users:staging}@\${hosts:staging}/\${locations:staging}/backups/;
+     rsync -av --partial --progress \${buildout:directory}/var/snapshotbackups/ \${users:staging}@\${hosts:staging}/\${locations:staging}/snapshotbackups/;
  
 
 [get-datafs]
 recipe = collective.recipe.rsync
 command =
-     rsync -av --partial --progress \${users:staging}@\${hosts:staging}/\${locations:staging}/var/backups/         \${buildout:directory}/var/backups/;
-     rsync -av --partial --progress \${users:staging}@\${hosts:staging}/\${locations:staging}/var/snapshotbackups/ \${buildout:directory}/var/snapshotbackups/;
+     rsync -av --partial --progress \${users:staging}@\${hosts:staging}/\${locations:staging}/backups/         \${buildout:directory}/var/backups/;
+     rsync -av --partial --progress \${users:staging}@\${hosts:staging}/\${locations:staging}/snapshotbackups/ \${buildout:directory}/var/snapshotbackups/;
 
 
 [logrotate.conf]
