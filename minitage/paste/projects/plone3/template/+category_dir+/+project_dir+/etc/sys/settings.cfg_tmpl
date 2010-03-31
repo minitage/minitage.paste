@@ -22,6 +22,7 @@ balancer=$haproxy_host
 syslog = 127.0.0.1
 solr = $solr_host
 buildbot-master=${buildbot_master_host}
+staging=$staging_host
 
 
 [ports]
@@ -94,6 +95,7 @@ site = $plonesite
 zope=$running_user
 #haproxy user
 balancer=$running_user
+staging=$staging_user
 
 [locations]
 # aboslute paths to avoid buildout auto build of reffered part
@@ -108,6 +110,7 @@ ${sgdgcomment}testfss-backup-newsletter= \${buildout:directory}/parts/instance-n
 ${sgdgcomment}testfss-storage-newsletter=\${buildout:directory}/parts/instance-newsletter/var/fss_storage
 ${sgdgcomment}fss-backup-newsletter= \${buildout:directory}/var/fss_backupnewsletter_${project}
 ${sgdgcomment}fss-storage-newsletter=\${buildout:directory}/var/fss_storagenewsletter_${project}
+staging=$staging_path
 
 # if you want separated FSS directories, you can use that
 #testfss-backup1= \${buildout:directory}/parts/instance1/var/fss_backup

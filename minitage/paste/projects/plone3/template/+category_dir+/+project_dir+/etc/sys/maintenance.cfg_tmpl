@@ -80,6 +80,26 @@ times = 15 1 * * *
 command =  \${buildout:directory}/cron_scripts/fss_daily.sh
 # end if
 
+[backupdirs]
+order=\${fssdaily:recipe}
+recipe = plone.recipe.command
+update-command = \${chmodcron:command}
+
+
+[upload-datafs]
+recipe = collective.recipe.rsync
+command =
+     rsync -av --partial --progress \${buildout:directory}/var/backups/         \${users:staging}@\${hosts:staging}/\${locations:staging}/var/backups/;
+     rsync -av --partial --progress \${buildout:directory}/var/snapshotbackups/ \${users:staging}@\${hosts:staging}/\${locations:staging}/var/snapshotbackups/;
+ 
+
+[get-datafs]
+recipe = collective.recipe.rsync
+command =
+     rsync -av --partial --progress \${users:staging}@\${hosts:staging}/\${locations:staging}/var/backups/         \${buildout:directory}/var/backups/;
+     rsync -av --partial --progress \${users:staging}@\${hosts:staging}/\${locations:staging}/var/snapshotbackups/ \${buildout:directory}/var/snapshotbackups/;
+
+
 [logrotate.conf]
 recipe = collective.recipe.template
 input =  \${buildout:directory}/etc/templates/logrotate.conf.template

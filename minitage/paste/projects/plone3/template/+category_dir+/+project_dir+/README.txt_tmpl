@@ -219,14 +219,48 @@ NOTES ABOUT  RELSTORAGE SUPPORT
 ------------~~~~~~~-------------
 We use the ZODB as an egg which is patched during installation, please see
 
+GET THE LATEST DATAFS FROM PRODUCTION
+---------------------------------------
+::
+
+    bin/buildout -vNc <CONFIG> get-datafs
+
+GET/UPLOAD THE LATEST DATAFS FROM PRODUCTION TO STAGING SERVER
+------------------------------------------------------------
+::
+
+    bin/buildout -vNc <CONFIG> upload-datafs
+    bin/buildout -vNc <CONFIG> get-datafs
+
+
+INSTALLING THIS PROJECT VITH MINITAGE
+--------------------------------------
+::
+
+    export MT=/minitage 
+    virtualenv --no-site-packages --distribute \$MT
+    source /minitage/bin/activate
+    easy_install -U minitage.core minitage.paste
+    svn co $uri/minilays/${project} \$MT/minilays/${project}
+    minimerge -v $project
+    #minimerge -v ${project}-prod
+    \$MT/bin/paster create -t minitage.instances.env ${project} #(-prod)
+    source \$MT/zope/${project}/sys/share/minitage/minitage.env
+    cd \$INS #enjoy !
+
+ALWAYS USE THE MINITAGE ENVIRONMENT FILE INSIDE A MINITAGE
+--------------------------------------------------------------
+
+Before doing anything in your project just after being installed, just source the environment file in your current shell::
+
+    source \$MT/zope/${project}/sys/share/minitage/minitage.env # env file is generated with \$MT/bin/paster create -t minitage.instances.env ${project}
+
 
 NOTES ABOUT WSGI SUPPORT
 -------------------------
-the zoopy section and also the minitage.recipe documentation on patching an
-egg.
 The egg is on your cache with a particular version, the classical ZODB3 egg wont be touched if you have one.
 WHAT IS VERY IMPORTANT is that [zopepy] part must run BEFORE [instance] to get the version with appropriate patches pinned.
-
+This WSGI support is nowodays deprecated (on the plone side), unmaintened and not supported, use it at our own risks.
 
 As we support WSGI, there is an important thing to know:
   - ``zopelib`` is an egg from repoze where live the zope code, we totally do not NEED it.

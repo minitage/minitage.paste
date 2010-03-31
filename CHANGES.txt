@@ -12,6 +12,7 @@ Up
     - add inheritance in the plone configuration parser
     - added some tests for the plone configuration parser
     - activated the minitage.plone4 template (beta state)
+    - support for staging development (get state from production)
 
 1.3.149
 ----------
