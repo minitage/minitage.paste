@@ -165,6 +165,8 @@ class Template(common.Template):
         """register catogory, and roll in common,"""
         if not 'with_ploneproduct_fss' in vars:
             vars['with_ploneproduct_fss'] = False
+        if vars['with_ploneproduct_ploneappblob']:
+            vars['with_ploneproduct_fss'] = False
         vars['plonesite'] = common.SPECIALCHARS.sub('', vars['project'])
         vars['major'] = int(vars['plone_version'][0])
         vars['versions_url'] = self.get_versions_url(vars)

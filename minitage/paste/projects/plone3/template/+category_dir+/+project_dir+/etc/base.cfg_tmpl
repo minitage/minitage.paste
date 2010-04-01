@@ -44,6 +44,9 @@ extends = #slurp
 #if $with_ploneproduct_fss:
     backends/fss.cfg#slurp
 #end if
+#if $with_ploneproduct_ploneappblob:
+    backends/blobstorage.cfg#slurp
+#end if 
 #if $with_experimental:
     plone/experimental.cfg#slurp
 #end if

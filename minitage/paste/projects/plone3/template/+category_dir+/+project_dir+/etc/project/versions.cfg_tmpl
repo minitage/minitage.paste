@@ -6,6 +6,17 @@
 zc.buildout =
 zc.recipe.egg -= 1.1.0
 distribute -= 0.6.8
+
+#if $with_ploneproduct_ploneappblob and ($major < 4)
+# needed for BlobStorage
+ZODB3 = 3.8.3
+#else
+#if $major < 4
+# version with barebone zope2 eggified
+ZODB3 = 3.7.2 
+#end if 
+#end if
+
 # do not fix latest templates
 ZopeSkel=
 # do not fix for latest Cheetah sake
@@ -24,6 +35,9 @@ $version[0]
 $version[0] = $version[1]
 #end if
 #end for
+
+
+
 
 # on Upgrades
 # Think to change the plone release URL !!!

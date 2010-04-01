@@ -1,0 +1,32 @@
+# blobstorage product support and configuration
+
+
+[zeoserver]
+blob-storage = \${locations:blob-storage}
+eggs = plone.app.blob
+
+[instance]
+blobstorage = \${zeoserver:blob-storage}
+shared-blob = on
+
+[instance1]
+blobstorage = \${zeoserver:blob-storage}
+shared-blob = on
+
+[instance2]
+blobstorage = \${zeoserver:blob-storage}
+shared-blob = on
+
+[instance3]
+blobstorage = \${zeoserver:blob-storage}
+shared-blob = on
+
+[instance4]
+blobstorage = \${zeoserver:blob-storage}
+shared-blob = on
+
+[mkdirs]
+command +=
+    mkdir -pv \${locations:blob-storage};
+
+# vim:set ft=cfg:

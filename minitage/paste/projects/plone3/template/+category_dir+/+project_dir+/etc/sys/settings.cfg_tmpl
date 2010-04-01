@@ -100,6 +100,7 @@ staging=$staging_user
 [locations]
 # aboslute paths to avoid buildout auto build of reffered part
 solr = \$solr_path
+blob-storage=\${buildout:directory}/var/blobstorage
 testfss-backup=  \${buildout:directory}/parts/instance/var/fss_backup
 testfss-storage= \${buildout:directory}/parts/instance/var/fss_storage
 fss-backup=  \${buildout:directory}/var/fss_backup_${project}

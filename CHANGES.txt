@@ -13,6 +13,7 @@ Up
     - added some tests for the plone configuration parser
     - activated the minitage.plone4 template (beta state)
     - support for staging development (get state from production)
+    - blobstorage support
 
 1.3.149
 ----------

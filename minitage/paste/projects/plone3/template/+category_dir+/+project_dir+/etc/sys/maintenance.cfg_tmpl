@@ -23,6 +23,11 @@
 #else
 #set $fsscomment='#'
 #end if
+#if $with_ploneproduct_ploneappblob
+#set $blobcomment=''
+#else
+#set $blobcomment='#'
+#end if 
 
 # make an incremental backup per day
 [repozodaily]
@@ -91,6 +96,11 @@ recipe = collective.recipe.rsync
 command =
      rsync -av --partial --progress \${buildout:directory}/var/backups/         \${users:staging}@\${hosts:staging}/\${locations:staging}/backups/;
      rsync -av --partial --progress \${buildout:directory}/var/snapshotbackups/ \${users:staging}@\${hosts:staging}/\${locations:staging}/snapshotbackups/;
+${blobcomment}     rsync -av --partial --progress \${buildout:directory}/var/blobstorage/  \${users:staging}@\${hosts:staging}/\${locations:staging}/blobstorage/;
+${fsscomment}     rsync -av --partial --progress \${buildout:directory}/var/fss_backup_${project}/  \${users:staging}@\${hosts:staging}/\${locations:staging}/fss_backup_${project}/;
+${fsscomment}     rsync -av --partial --progress \${buildout:directory}/var/fss_storage_global/     \${users:staging}@\${hosts:staging}/\${locations:staging}/fss_storage_global/;
+${fsscomment}     rsync -av --partial --progress \${buildout:directory}/var/fss_storage_${project}/ \${users:staging}@\${hosts:staging}/\${locations:staging}/fss_storage_${project}/;
+${fsscomment}     rsync -av --partial --progress \${buildout:directory}/var/fss_backup_global/      \${users:staging}@\${hosts:staging}/\${locations:staging}/fss_backup_global/;
  
 
 [get-datafs]
@@ -98,6 +108,11 @@ recipe = collective.recipe.rsync
 command =
      rsync -av --partial --progress \${users:staging}@\${hosts:staging}/\${locations:staging}/backups/         \${buildout:directory}/var/backups/;
      rsync -av --partial --progress \${users:staging}@\${hosts:staging}/\${locations:staging}/snapshotbackups/ \${buildout:directory}/var/snapshotbackups/;
+${blobcomment}     rsync -av --partial --progress \${users:staging}@\${hosts:staging}/\${locations:staging}/blobstorage/ \${buildout:directory}/var/blobstorage/;
+${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}/\${locations:staging}/fss_backup_${project}/  \${buildout:directory}/var/fss_backup_${project}/;
+${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}/\${locations:staging}/fss_storage_global/     \${buildout:directory}/var/fss_storage_global/;
+${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}/\${locations:staging}/fss_storage_${project}/ \${buildout:directory}/var/fss_storage_${project}/;
+${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}/\${locations:staging}/fss_backup_global/      \${buildout:directory}/var/fss_backup_global/; 
 
 
 [logrotate.conf]

@@ -10,17 +10,17 @@ ipython-patch-options= -Np0
 
 # first patch is for maintenance scripts inclusion bug
 # second is for relstorage
-ZODB3-patches=
+ZODB3-3.7.2-patches=
     \${buildout:directory}/patches/zodb3-3.7-scripts.patch
 #if 'relstorage' in $mode:
     \${buildout:directory}/patches/minitage.poll-invalidation-1-zodb-3-7-1.patch
 #else
 #   \${buildout:directory}/patches/minitage.poll-invalidation-1-zodb-3-7-1.patch
 #end if
-Products.Archetypes-patches=
+#Products.Archetypes-patches=
 # Fix part of http://dev.plone.org/plone/ticket/8794
 # fix old 'isImplementedByInstancesOf' calls
-                            \${buildout:directory}/patches/archetypes_implby.patch
+#                            \${buildout:directory}/patches/archetypes_implby.patch
 
 
 
@@ -43,8 +43,8 @@ hachoir-core-1.3.2-patch-options=-Np1
 # make sur the patchs are applied
 [instance]
 #if $major < 4:
-ZODB3-patches=\${zopepy:ZODB3-patches}
-Products.Archetypes-patches=\${zopepy:Products.Archetypes-patches}
+ZODB3-3.7.2-patches=\${zopepy:ZODB3-3.7.2-patches}
+#Products.Archetypes-patches=\${zopepy:Products.Archetypes-patches}
 #end if
 Markdown-2.0.1-patches=\${zopepy:Markdown-2.0.1-patches}
 Markdown-patch-options=\${zopepy:Markdown-patch-options}
@@ -59,8 +59,8 @@ hachoir-core-1.3.2-patch-options=\${zopepy:hachoir-core-1.3.2-patch-options}
 # make sur the patchs are applied
 [test]
 #if $major < 4:
-ZODB3-patches=\${zopepy:ZODB3-patches}
-Products.Archetypes-patches=\${zopepy:Products.Archetypes-patches}
+ZODB3-3.7.2-patches=\${zopepy:ZODB3-3.7.2-patches}
+#Products.Archetypes-patches=\${zopepy:Products.Archetypes-patches}
 #end if
 Markdown-2.0.1-patches=\${zopepy:Markdown-2.0.1-patches}
 Markdown-patch-options=\${zopepy:Markdown-patch-options}

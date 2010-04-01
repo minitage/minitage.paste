@@ -63,6 +63,7 @@
   <option order="1994" name="with_ploneproduct_contentwellportlet"     description="Content well porlets, see http://pypi.python.org/pypi/Products.ContentWellPortlets y/n" default="n"/>
   <option order="2000" name="with_experimental"                  description="Plone experimental improvments y/n" default="n"/>
   <option order="2194" name="with_ploneproduct_ci"               description="collective.indexing Support, see http://pypi.python.org/pypi/collective.indexing y/n" default="n"/>
+  <option order="2294" name="with_ploneproduct_ploneappblob"               description="BlobStorage support, see http://plone.org/products/plone.app.blob y/n" default="n"/>
   </options>
   <!--
     LINK THERE YOUR EGGS TO BE Installed on option triggering.
@@ -151,6 +152,7 @@
     <egg name="p4a.plonecalendar"              options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
     <egg name="p4a.ploneevent"                 options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
     <egg name="plone.app.iterate"              options="with_ploneproduct_iterate"          zpackage="y" zcml="configure"/>
+    <egg name="plone.app.blob"              options="with_ploneproduct_ploneappblob"  zcml="configure" zpackage="y" order="109"/>
     <egg name="plone.app.z3cform"              options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"  zcml="configure" order="110"/>
     <egg name="plone.directives.form"          options="with_ploneproduct_pz3cform"                                 zcml="configure,meta"/>
     <egg name="plone.z3cform"                  options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"        zcml="configure"/>
@@ -211,6 +213,7 @@
     <product name="collective.plonetruegallery"    options="with_ploneproduct_truegallery"      />
     <product name="collective.portlet.tal"         options="with_ploneproduct_tal_portlet"      />
     <product name="csvreplicata"                   options="with_ploneproduct_csvreplica"       />
+    <product name="plone.app.blob"                 options="with_ploneproduct_ploneappblob"       />
     <product name="easyshop.core"                  options="with_ploneproduct_easyshop"         />
     <product name="iw.fss"                         options="with_ploneproduct_fss"              />
     <product name="p4a.plonecalendar"              options="with_ploneproduct_p4a_cal"          />
@@ -237,14 +240,13 @@
       name: description to add as comment into the resulting buildout
     -->
   <versions>
-    <version p="ZODB3"                 v="3.7.2"   name="RelStorage"/>
     <version p="ipython"               v="0.10"    name="IPython py2.4 compatible version"/>
     <version p="Cheetah"               v="2.2.1"   name="Markdown crazy stuff"/>
     <version p="zope.site"             v="3.5.1"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
     <version p="zope.schema"           v="3.5.4"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
     <version p="zope.component"        v="3.5.1"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
     <version p="zope.proxy"            v="3.5.0"   name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
-    <version p="Products.Archetypes"   v="1.5.15"  name="Needed for fixing https://dev.plone.org/plone/ticket/10088"/>
+    <version p="Products.Archetypes"   v="1.5.16"  name="Needed for fixing https://dev.plone.org/plone/ticket/10088"/>
     <version p="Products.DataGridField"   v="1.6"  name="Needed for work on plone before 4"/>
     <version p="Products.validation"   v="1.6.4"   name="Needed for fixing https://dev.plone.org/plone/ticket/10088"/>
     <version p="plone.app.portlets"    v="1.2.1"   name="Fix http://dev.plone.org/plone/ticket/9437"/>
@@ -260,6 +262,7 @@
       options: comma separated list of options to enable the pinning
     -->
   <checkedversions>
+    <version p="plone.app.blob"                 v="1.0b14"  options="with_ploneproduct_ploneappblob"/>
     <version p='Products.PloneArticle'          v='4.1.9'   options="with_ploneproduct_plonearticle"/>
 
     <version p='hachoir-parser'                 v='1.3.1'   options="with_ploneproduct_p4a_vid"/>
@@ -336,6 +339,7 @@
 
   --> 
   <sources>
+    <source name="plone.app.blob" type="svn" url="http://svn.plone.org/svn/plone/plone.app.blob/trunk" options="with_ploneproduct_ploneappblob"/>
     <source name="archetypes.schemaextender" type="svn" url="http://svn.plone.org/svn/archetypes/archetypes.schemaextender/trunk" options="with_ploneproduct_schemaextender,with_ploneproduct_facultystaff"/>
     <source name="archetypes.tuning"     type="svn" url="http://svn.plone.org/svn/archetypes/archetypes.schematuning/trunk" options="with_ploneproduct_schematuning"/>
     <source name="collective.contentlicensing"    type="svn" url="https://svn.plone.org/svn/collective/collective.contentlicensing/trunk" options="with_ploneproduct_contentlicensing" />
