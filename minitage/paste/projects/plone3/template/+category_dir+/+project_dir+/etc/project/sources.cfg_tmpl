@@ -5,6 +5,9 @@ $hr
 [buildout]
 sources=sources
 auto-checkout +=
+#if $with_ploneproduct_ploneappblob and ($major < 4)
+    plone.app.blob
+#end if
 # $autocheckout.sort()
 #for $item in $autocheckout:
     $item
@@ -12,12 +15,18 @@ auto-checkout +=
 
 [sources]
 
+
 #set $psources_keys = $plone_sources.keys()
 # $psources_keys.sort()
 #for $item in $psources_keys:
 #set source=$plone_sources[item]
 $source['name'] = $source['type'] $source['url']
 #end for
+
+#if $with_ploneproduct_ploneappblob and ($major < 4)
+plone.app.blob = svn http://svn.plone.org/svn/collective/Products.CMFEditions/trunk
+#end if
+
 
 [groups]
 # OLD ZOPE2 PRODUCTS SUPPORT

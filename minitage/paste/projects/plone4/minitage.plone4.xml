@@ -32,6 +32,7 @@
       <version p='martian'                        v='0.11.1'    options='with_ploneproduct_fivegrok' />
     </checkedversions>
     <sources>
+      <source name="plone.app.blob" type="svn" url="http://svn.plone.org/svn/plone/plone.app.blob/trunk" options="with_ploneproduct_ploneappblob"/>
       <source name="Products.Ploneboard"   autocheckout="y"    type="svn" url="https://svn.plone.org/svn/collective/Products.Ploneboard/trunk" options="with_ploneproduct_ploneboard"/>
       <source name="Products.Quills"       autocheckout="y" type="svn" url="https://svn.plone.org/svn/collective/Products.Quills/trunk" options="with_ploneproduct_quills"/>
       <source name="quills.remoteblogging" autocheckout="y" type="svn" url="http://svn.plone.org/svn/collective/quills.remoteblogging/trunk" options="with_ploneproduct_quills"/>

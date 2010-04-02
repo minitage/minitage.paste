@@ -21,7 +21,7 @@ recipe = plone.recipe.zope2zeoserver
 zope2-location = \${zope2:location}
 #else
 recipe = plone.recipe.zeoserver
-#end if 
+#end if
 zeo-address = \${hosts:zeo}:\${ports:zeo}
 #if $major < 4:
 zeo-conf-additional =

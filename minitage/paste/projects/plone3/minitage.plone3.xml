@@ -64,6 +64,8 @@
   <option order="2000" name="with_experimental"                  description="Plone experimental improvments y/n" default="n"/>
   <option order="2194" name="with_ploneproduct_ci"               description="collective.indexing Support, see http://pypi.python.org/pypi/collective.indexing y/n" default="n"/>
   <option order="2294" name="with_ploneproduct_ploneappblob"               description="BlobStorage support, see http://plone.org/products/plone.app.blob y/n" default="n"/>
+  <option order="2394" name="with_ploneproduct_plonejqtools"               description="Jquery Tools support, see http://pypi.python.org/pypi/plone.app.jquerytools y/n" default="n"/>
+  <option order="2395" name="with_ploneproduct_cjqui"               description="Jquery UI support, see http://pypi.python.org/pypi/collective.js.jqueryui y/n" default="n"/>
   </options>
   <!--
     LINK THERE YOUR EGGS TO BE Installed on option triggering.
@@ -119,6 +121,8 @@
     <egg name="collective.indexing"            options="with_ploneproduct_ci"               zpackage="y" zcml="configure"/>
     <egg name="collective.plonetruegallery"    options="with_ploneproduct_truegallery"      zpackage="y" zcml="configure"/>
     <egg name="collective.portlet.tal"         options="with_ploneproduct_tal_portlet"      zpackage="y" zcml="configure"/>
+    <egg name="plone.app.jquerytools"         options="with_ploneproduct_plonejqtools"       zcml="configure"/>
+    <egg name="collective.js.jqueryui" options="with_ploneproduct_cjqui"  zpackage="y" zcml="configure"/>
     <egg name="collective.singing"             options="with_ploneproduct_sgdcg"            zpackage="y" zcml="configure"/>
     <egg name="collective.z3cform.grok"        options="with_ploneproduct_cz3cformgrok"      zcml="configure"/>
     <egg name="easyshop.carts"                 options="with_ploneproduct_easyshop"                      zcml="configure"/>
@@ -213,7 +217,8 @@
     <product name="collective.plonetruegallery"    options="with_ploneproduct_truegallery"      />
     <product name="collective.portlet.tal"         options="with_ploneproduct_tal_portlet"      />
     <product name="csvreplicata"                   options="with_ploneproduct_csvreplica"       />
-    <product name="plone.app.blob"                 options="with_ploneproduct_ploneappblob"       />
+    <product name="plone.app.blob"                 options="with_ploneproduct_ploneappblob"     />
+    <product name="plone.app.jquerytools"          options="with_ploneproduct_plonejqtools"     />
     <product name="easyshop.core"                  options="with_ploneproduct_easyshop"         />
     <product name="iw.fss"                         options="with_ploneproduct_fss"              />
     <product name="p4a.plonecalendar"              options="with_ploneproduct_p4a_cal"          />
@@ -262,6 +267,8 @@
       options: comma separated list of options to enable the pinning
     -->
   <checkedversions>
+    <version p='collective.js.jqueryui'         v='1.7.2.7' options='with_ploneproduct_cjqui' />
+    <version p="plone.app.jquerytools"          v="1.0b17"  options="with_ploneproduct_plonejqtools"/>
     <version p="plone.app.blob"                 v="1.0b14"  options="with_ploneproduct_ploneappblob"/>
     <version p='Products.PloneArticle'          v='4.1.9'   options="with_ploneproduct_plonearticle"/>
 
@@ -339,7 +346,6 @@
 
   --> 
   <sources>
-    <source name="plone.app.blob" type="svn" url="http://svn.plone.org/svn/plone/plone.app.blob/trunk" options="with_ploneproduct_ploneappblob"/>
     <source name="archetypes.schemaextender" type="svn" url="http://svn.plone.org/svn/archetypes/archetypes.schemaextender/trunk" options="with_ploneproduct_schemaextender,with_ploneproduct_facultystaff"/>
     <source name="archetypes.tuning"     type="svn" url="http://svn.plone.org/svn/archetypes/archetypes.schematuning/trunk" options="with_ploneproduct_schematuning"/>
     <source name="collective.contentlicensing"    type="svn" url="https://svn.plone.org/svn/collective/collective.contentlicensing/trunk" options="with_ploneproduct_contentlicensing" />
@@ -387,6 +393,8 @@
     <source name="webcouturier.dropdownmenu" type="svn" url="https://svn.plone.org/svn/collective/webcouturier.dropdownmenu/trunk" options="with_ploneproduct_wc_dd_menu"/>
     <source name="Products.CMFPlomino" type="svn" url="https://plomino.svn.sourceforge.net/svnroot/plomino/trunk/Plomino"  options="with_ploneproduct_plomino"/>
     <source name="iw.fss" type="svn" url="http://svn.plone.org/svn/collective/iw.fss/trunk/"  options="with_ploneproduct_fss"/>
+    <source name="plone.app.jquerytools" type="svn" url="http://svn.plone.org/svn/plone/plone.app.jquerytools/trunk"  options="with_ploneproduct_plonejqtools"/>
+    <source name="collective.js.jqueryui" type="svn" url="http://svn.plone.org/svn/collective/collective.js.jqueryui/branches/1.7/"  options="with_ploneproduct_cjqui"/>
   </sources>
   <!--
     Some very ecliptic products doesnt fit with previous declaration, we will describe how to add the options to the underlying policy there.

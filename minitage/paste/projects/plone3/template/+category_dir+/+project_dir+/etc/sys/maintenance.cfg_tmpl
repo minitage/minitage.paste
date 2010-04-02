@@ -27,7 +27,7 @@
 #set $blobcomment=''
 #else
 #set $blobcomment='#'
-#end if 
+#end if
 
 # make an incremental backup per day
 [repozodaily]
@@ -46,14 +46,19 @@ command = \${buildout:directory}/bin/snapshotbackup
 [zopepackdaily]
 recipe = z3c.recipe.usercrontab
 times = \${crons:zope-pack}
-command = wget "http://$address:\${ports:instance1}/Control_Panel/Database/manage_pack"  --http-user '$zope_user'  --http-passwd '$zope_password' --post-data '?days:float=0' -O /dev/null
+command = wget "http://$address:\${ports:instance1}/Control_Panel/Database/manage_pack"  --http-user '\${zope:user}'  --http-passwd '\${zope:password}' --post-data '?days:float=0' -O /dev/null
 
 
 # restart zope instance every night
 [zoperestartdaily]
 recipe = z3c.recipe.usercrontab
 times = \${crons:zope-restart}
-command = \${buildout:directory}/bin/instance restart
+#if $with_supervisor
+command = \${buildout:directory}/bin/supervisorctl restart instance1
+#else
+#command = \${buildout:directory}/bin/supervisorctl instance1 restart
+#command = \${buildout:directory}/bin/instance1 restart
+#end if
 
 [chmodcron]
 order=\${fssdaily:recipe}
@@ -92,27 +97,16 @@ update-command = \${chmodcron:command}
 
 
 [upload-datafs]
-recipe = collective.recipe.rsync
+recipe = plone.recipe.command
+update-command = \${upload-datafs:command}
 command =
-     rsync -av --partial --progress \${buildout:directory}/var/backups/         \${users:staging}@\${hosts:staging}/\${locations:staging}/backups/;
-     rsync -av --partial --progress \${buildout:directory}/var/snapshotbackups/ \${users:staging}@\${hosts:staging}/\${locations:staging}/snapshotbackups/;
-${blobcomment}     rsync -av --partial --progress \${buildout:directory}/var/blobstorage/  \${users:staging}@\${hosts:staging}/\${locations:staging}/blobstorage/;
-${fsscomment}     rsync -av --partial --progress \${buildout:directory}/var/fss_backup_${project}/  \${users:staging}@\${hosts:staging}/\${locations:staging}/fss_backup_${project}/;
-${fsscomment}     rsync -av --partial --progress \${buildout:directory}/var/fss_storage_global/     \${users:staging}@\${hosts:staging}/\${locations:staging}/fss_storage_global/;
-${fsscomment}     rsync -av --partial --progress \${buildout:directory}/var/fss_storage_${project}/ \${users:staging}@\${hosts:staging}/\${locations:staging}/fss_storage_${project}/;
-${fsscomment}     rsync -av --partial --progress \${buildout:directory}/var/fss_backup_global/      \${users:staging}@\${hosts:staging}/\${locations:staging}/fss_backup_global/;
- 
-
-[get-datafs]
-recipe = collective.recipe.rsync
-command =
-     rsync -av --partial --progress \${users:staging}@\${hosts:staging}/\${locations:staging}/backups/         \${buildout:directory}/var/backups/;
-     rsync -av --partial --progress \${users:staging}@\${hosts:staging}/\${locations:staging}/snapshotbackups/ \${buildout:directory}/var/snapshotbackups/;
-${blobcomment}     rsync -av --partial --progress \${users:staging}@\${hosts:staging}/\${locations:staging}/blobstorage/ \${buildout:directory}/var/blobstorage/;
-${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}/\${locations:staging}/fss_backup_${project}/  \${buildout:directory}/var/fss_backup_${project}/;
-${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}/\${locations:staging}/fss_storage_global/     \${buildout:directory}/var/fss_storage_global/;
-${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}/\${locations:staging}/fss_storage_${project}/ \${buildout:directory}/var/fss_storage_${project}/;
-${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}/\${locations:staging}/fss_backup_global/      \${buildout:directory}/var/fss_backup_global/; 
+     rsync -av --partial --progress               \${buildout:directory}/var/backups/                \${users:staging}@\${hosts:staging}:\${locations:staging}/backups/;
+     rsync -av --partial --progress               \${buildout:directory}/var/snapshotbackups/        \${users:staging}@\${hosts:staging}:\${locations:staging}/snapshotbackups/;
+${blobcomment}     rsync -av --partial --progress \${buildout:directory}/var/blobstorage/            \${users:staging}@\${hosts:staging}:\${locations:staging}/blobstorage/;
+${fsscomment}     rsync -av --partial --progress  \${buildout:directory}/var/fss_backup_${project}/  \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_backup_${project}/;
+${fsscomment}     rsync -av --partial --progress  \${buildout:directory}/var/fss_storage_global/     \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_storage_global/;
+${fsscomment}     rsync -av --partial --progress  \${buildout:directory}/var/fss_storage_${project}/ \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_storage_${project}/;
+${fsscomment}     rsync -av --partial --progress  \${buildout:directory}/var/fss_backup_global/      \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_backup_global/;
 
 
 [logrotate.conf]

@@ -57,8 +57,8 @@ url = http://dist.jarn.com/public/haproxy-1.3.15.7.zip
 [supervisor]
 recipe = collective.recipe.supervisor
 port = \${ports:supervisor}
-user = admin
-password = admin
+user = \${supervisor-webadmin:user}
+password = \${supervisor-webadmin:password}
 serverurl = http://\${hosts:supervisor}:\${ports:supervisor}
 haproxy-path=\${buildout:directory}/bin/haproxy
 programs =
@@ -68,7 +68,7 @@ ${si1}    20 instance1 \${buildout:directory}/parts/instance1/bin/runzope       
 ${si2}    20 instance2 \${buildout:directory}/parts/instance2/bin/runzope                                          true \${users:zope}
 ${si3}    20 instance3 \${buildout:directory}/parts/instance3/bin/runzope                                          true \${users:zope}
 ${si4}    20 instance4 \${buildout:directory}/parts/instance4/bin/runzope                                          true \${users:zope}
-${sgdgcomment}    40 instance4 \${buildout:directory}/parts/instance-newsletter/bin/runzope                                          true \${users:zope}
+${sgdgcomment}    40 instance-newsletter \${buildout:directory}/parts/instance-newsletter/bin/runzope                                          true \${users:zope}
 ${hapcomment}    50 balancer  \${supervisor:haproxy-path} [-f \${buildout:directory}/etc/loadbalancing/balancer.conf -db]       true \${users:balancer}
 
 [supervisor-initd]

@@ -18,6 +18,12 @@ $hr
 #set $solrcomment='#'
 #end if
 
+#if $with_ploneproduct_ploneappblob
+#set $blobcomment=''
+#else
+#set $blobcomment='#'
+#end if
+                                
 [buildout]
 sources-dir=\${buildout:directory}/src.mrdeveloper
 
@@ -139,4 +145,16 @@ ${zeocomment}zeoserver = zeoserver
 <= plonesite
 site-replace=true
 
+[get-datafs]
+recipe = plone.recipe.command
+update-command = \${get-datafs:command}
+command =
+     rsync -av --partial --progress               \${users:staging}@\${hosts:staging}:\${locations:staging}/backups/                \${buildout:directory}/var/backups/;
+     rsync -av --partial --progress               \${users:staging}@\${hosts:staging}:\${locations:staging}/snapshotbackups/        \${buildout:directory}/var/snapshotbackups/;
+${blobcomment}     rsync -av --partial --progress \${users:staging}@\${hosts:staging}:\${locations:staging}/blobstorage/            \${buildout:directory}/var/blobstorage/;
+${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_backup_${project}/  \${buildout:directory}/var/fss_backup_${project}/;
+${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_storage_global/     \${buildout:directory}/var/fss_storage_global/;
+${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_storage_${project}/ \${buildout:directory}/var/fss_storage_${project}/;
+${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_backup_global/      \${buildout:directory}/var/fss_backup_global/;
+ 
 # vim:set ft=cfg:

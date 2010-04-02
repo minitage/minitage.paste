@@ -4,6 +4,17 @@ create
 compress
 delaycompress
 
+#if $with_ploneproduct_sgdcg
+#set $sgdgcomment=''
+#else
+#set $sgdgcomment='#'
+#end if
+#if $with_indexing_solr
+#set $solrcomment=''
+#else
+#set $solrcomment='#'
+#end if
+ 
 \${buildout:directory}/var/log/instance1*.log {
     sharedscripts
     postrotate
@@ -32,6 +43,13 @@ delaycompress
         /bin/kill -USR2 \$(cat \${buildout:directory}/var/instance4.pid)
     endscript
 }
+
+${sgdgcomment}\${buildout:directory}/var/log/instance-newsletter*.log {
+${sgdgcomment}    sharedscripts
+${sgdgcomment}    postrotate
+${sgdgcomment}        /bin/kill -USR2 \$(cat \${buildout:directory}/var/instance-newsletter.pid)
+${sgdgcomment}    endscript
+${sgdgcomment}} 
 
 
 \${buildout:directory}/var/log/zeoserver.log {
