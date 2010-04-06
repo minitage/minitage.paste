@@ -103,9 +103,9 @@ command =
      rsync -av --partial --progress               \${buildout:directory}/var/backups/                \${users:staging}@\${hosts:staging}:\${locations:staging}/backups/;
      rsync -av --partial --progress               \${buildout:directory}/var/snapshotbackups/        \${users:staging}@\${hosts:staging}:\${locations:staging}/snapshotbackups/;
 ${blobcomment}     rsync -av --partial --progress \${buildout:directory}/var/blobstorage/            \${users:staging}@\${hosts:staging}:\${locations:staging}/blobstorage/;
-${fsscomment}     rsync -av --partial --progress  \${buildout:directory}/var/fss_backup_${project}/  \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_backup_${project}/;
+${fsscomment}     rsync -av --partial --progress  \${locations:fss-backup}/                          \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_backup_${project}/;
+${fsscomment}     rsync -av --partial --progress  \${locations:fss-storage}/                         \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_storage_${project}/;
 ${fsscomment}     rsync -av --partial --progress  \${buildout:directory}/var/fss_storage_global/     \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_storage_global/;
-${fsscomment}     rsync -av --partial --progress  \${buildout:directory}/var/fss_storage_${project}/ \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_storage_${project}/;
 ${fsscomment}     rsync -av --partial --progress  \${buildout:directory}/var/fss_backup_global/      \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_backup_global/;
 
 

@@ -5,7 +5,7 @@ recipe = iw.recipe.fss
 zope-instances=\${instance:location}
 storages =
     global /
-    ${project} /${project} $fss_strategy \${locations:fss-storage} \${locations:fss-backup} 
+    \${plone:site}} /\${plone:site} $fss_strategy \${locations:fss-storage} \${locations:fss-backup} 
 
 
 # see also etc/project/cluster.cfg
