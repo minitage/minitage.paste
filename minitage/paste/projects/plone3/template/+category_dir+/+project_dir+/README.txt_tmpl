@@ -214,30 +214,30 @@ This file will be generated the first time that you run buildout.
 To un it, just run bin/buildout -vvvvvvc <CONFIG_FILE> install kgs
 To unlock the versions, cmment out the according statement ``etc/project/${project}-kgs}.cfg`` in the extends option of the ${project}.cfg gile.
 
-
-NOTES ABOUT  RELSTORAGE SUPPORT
+NOTES ABOUT RELSTORAGE SUPPORT
 ------------~~~~~~~-------------
-We use the ZODB as an egg which is patched during installation, please see
+We use the ZODB as an egg which is patched during installation, please see ``etc/project/patches.cfg``
 
-GET THE LATEST DATAFS FROM PRODUCTION
----------------------------------------
-::
 
-    bin/buildout -vNc <CONFIG> get-datafs
-
-GET/UPLOAD THE LATEST DATAFS FROM PRODUCTION TO STAGING SERVER
+UPLOAD THE LATEST DATAFS FROM PRODUCTION TO STAGING SERVER
 ------------------------------------------------------------
-::
+Upload to staging server::
 
-    bin/buildout -vNc <CONFIG> upload-datafs
-    bin/buildout -vNc <CONFIG> get-datafs
+    bin/buildout -vNc <CONFIG>-prod.cfg install upload-datafs
+
+
+GET THE LATEST DATAFS FROM PRODUCTION TO STAGING SERVER
+---------------------------------------------------------
+Get the latest datafs from production/staging server::
+
+    bin/buildout -vNc <CONFIG> install get-datafs
 
 
 INSTALLING THIS PROJECT VITH MINITAGE
 --------------------------------------
 ::
 
-    export MT=/minitage 
+    export MT=/minitage
     virtualenv --no-site-packages --distribute \$MT
     source /minitage/bin/activate
     easy_install -U minitage.core minitage.paste
