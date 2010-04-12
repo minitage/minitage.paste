@@ -157,4 +157,15 @@ ${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:sta
 ${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_storage_${project}/ \${locations:fss-storage}/;
 ${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_backup_${project}/  \${locations:fss-backup}/;
  
+
+
+[cg.devmode]
+recipe=minitage.recipe.scripts
+eggs=\${instance:eggs}
+    collective.generic.devmode
+scripts=cg.devmode
+mail = foo@localhost
+extra-paths = \${instance:extra-paths}
+    \${buildout:directory}/parts/fakeproducts
+
 # vim:set ft=cfg:

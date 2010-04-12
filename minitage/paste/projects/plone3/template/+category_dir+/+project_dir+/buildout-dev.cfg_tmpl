@@ -10,12 +10,33 @@
 #else
 #set $i18ncomment='#'
 #end if  
+#if 'zeo' in $mode:
+#set $zeocomment=''
+#else
+#set $zeocomment='#'
+#end if
+#if $with_ploneproduct_fss
+#set $fsscomment=''
+#else
+#set $fsscomment='#'
+#end if
+#if $with_indexing_solr
+#set $solrcomment=''
+#else
+#set $solrcomment='#'
+#end if
+#if $with_ploneproduct_sgdcg
+#set $sgdgcomment=''
+#else
+#set $sgdgcomment='#'
+#end if 
 
 # We want the production buildout + the debug bits.
 [buildout]
 extends=etc/base.cfg etc/backends/${devmode}.cfg
 parts+= omelette
         ipzope
+        cg.devmode
 ${i18ncomment}    i18ndude
 
 
@@ -131,6 +152,29 @@ scripts = ipython=ipzope
 #suffix = .rst
 #author = You
 #dot = _
+
+[devmode]
+recipe=minitage.recipe.scripts
+eggs=\${instance:eggs}
+    collective.generic.devmode
+scripts=cg.devmode=devmode
+mail = foo@localhost
+extra-paths = \${instance:extra-paths}
+    \${buildout:directory}/parts/fakeproducts
+initialization=
+    import sys
+    sys.argv[1:] = ['-m', '\${devmode:mail}', '-p', '--password', '\${zope:password}', '-l', '\${plone:site}', '-u', '\${zope:user}']
+
+[goto-devmode]
+recipe = plone.recipe.command
+update-command = \${goto-datafs:command}
+command =
+${zeocomment}    \${buildout:directory}/bin/zeoserver stop;
+    \${get-datafs:command}
+    \${buildout:directory}/bin/snapshotrestore;
+${zeocomment}    \${buildout:directory}/bin/zeoserver start;
+    \${buildout:directory}/bin/devmode;
+
 
 [i18ndude]
 recipe=minitage.recipe.scripts

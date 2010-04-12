@@ -66,6 +66,7 @@
   <option order="2294" name="with_ploneproduct_ploneappblob"               description="BlobStorage support, see http://plone.org/products/plone.app.blob y/n" default="n"/>
   <option order="2394" name="with_ploneproduct_plonejqtools"               description="Jquery Tools support, see http://pypi.python.org/pypi/plone.app.jquerytools y/n" default="n"/>
   <option order="2395" name="with_ploneproduct_cjqui"               description="Jquery UI support, see http://pypi.python.org/pypi/collective.js.jqueryui y/n" default="n"/>
+  <option order="2495" name="with_ploneproduct_patransmo"               description="plone.app.transmogrifier support, http://pypi.python.org/pypi/plone.app.transmogrifier y/n" default="n"/>
   </options>
   <!--
     LINK THERE YOUR EGGS TO BE Installed on option triggering.
@@ -143,7 +144,7 @@
     <egg name="easyshop.shop"                  options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
     <egg name="easyshop.stocks"                options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/> 
     <egg name="easyshop.taxes"                 options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
-    <egg name="five.grok"                      options="with_ploneproduct_fivegrok,with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"      zcml="configure" order="100"/>
+    <egg name="five.grok"                      options="with_ploneproduct_fivegrok,with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"      zcml="configure" order="100" zcmlorder="101"/>
     <egg name="iw.fss"                         options="with_ploneproduct_fss"          zcml="configure,meta"      zcmlorder="150"/>
     <egg name="Products.Maps"                  options="with_ploneproduct_maps"             zpackage="y" zcml="configure" />
     <egg name="p4a.common"                     options="with_ploneproduct_p4a_vid"          />
@@ -156,10 +157,14 @@
     <egg name="p4a.plonecalendar"              options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
     <egg name="p4a.ploneevent"                 options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
     <egg name="plone.app.iterate"              options="with_ploneproduct_iterate"          zpackage="y" zcml="configure"/>
-    <egg name="plone.app.blob"              options="with_ploneproduct_ploneappblob"  zcml="configure" zpackage="y" order="109"/>
-    <egg name="plone.app.z3cform"              options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"  zcml="configure" order="110"/>
+    <egg name="plone.app.blob"                 options="with_ploneproduct_ploneappblob"  zcml="configure" zpackage="y" order="109" zcmlorder="109"/>
+    <egg name="plone.app.z3cform"              options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"  zcml="configure" order="110" zcmlorder="110"/>
     <egg name="plone.directives.form"          options="with_ploneproduct_pz3cform"                                 zcml="configure,meta"/>
     <egg name="plone.z3cform"                  options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"        zcml="configure"/>
+    <egg name="plone.app.transmogrifier"       options="with_ploneproduct_patransmo"        zcml="configure"    />
+    <egg name="collective.transmogrifier"      options="with_ploneproduct_patransmo"        zcml="configure,meta" order="720" zcmlorder="720"/>
+    <egg name="transmogrify.filesystem"        options="with_ploneproduct_patransmo"        zcml="configure" />
+    <egg name="transmogrify.sqlalchemy"        options="with_ploneproduct_patransmo"        zcml="configure" />
     <egg name="Plomino" options="with_ploneproduct_plomino"/>
     <egg name="Products.ATBackRef"             options="with_ploneproduct_atbackref"        zproduct="y" zcml="configure"/>
     <egg name="Products.CacheSetup"            options="with_ploneproduct_cachesetup"       zproduct="y" zcml="configure"/>
@@ -395,6 +400,10 @@
     <source name="iw.fss" type="svn" url="http://svn.plone.org/svn/collective/iw.fss/trunk/"  options="with_ploneproduct_fss"/>
     <source name="plone.app.jquerytools" type="svn" url="http://svn.plone.org/svn/plone/plone.app.jquerytools/trunk"  options="with_ploneproduct_plonejqtools"/>
     <source name="collective.js.jqueryui" type="svn" url="http://svn.plone.org/svn/collective/collective.js.jqueryui/branches/1.7/"  options="with_ploneproduct_cjqui"/>
+    <source name="plone.app.transmogrifier" type="svn" url="http://svn.plone.org/svn/collective/plone.app.transmogrifier/trunk"  options="with_ploneproduct_patransmo"/>
+    <source name="collective.transmogrifier" type="svn" url="http://svn.plone.org/svn/collective/collective.transmogrifier/trunk"  options="with_ploneproduct_patransmo"/>
+    <source name="transmogrify.filesystem" type="svn" url="http://svn.plone.org/svn/collective/transmogrify.filesystem/trunk"  options="with_ploneproduct_patransmo"/>
+    <source name="transmogrify.sqlalchemy" type="svn" url="http://svn.plone.org/svn/collective/transmogrify.sqlalchemy/trunk/"  options="with_ploneproduct_patransmo"/>
   </sources>
   <!--
     Some very ecliptic products doesnt fit with previous declaration, we will describe how to add the options to the underlying policy there.
