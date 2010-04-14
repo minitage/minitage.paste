@@ -1,0 +1,15 @@
+Index: deliverance/middleware.py
+===================================================================
+--- deliverance/middleware.py	(révision 73719)
++++ deliverance/middleware.py	(copie de travail)
+@@ -634,7 +634,9 @@
+         filename = self.filename
+ 
+         try:
+-            doc = parse(filename, base_url='file://'+os.path.abspath(filename)).getroot()
++            fd = filename
++            if os.path.exists(filename): fd = open(filename)
++            doc = parse(fd, base_url='file://'+os.path.abspath(filename)).getroot()
+         except XMLSyntaxError, e:
+             raise Exception('Invalid syntax in %s: %s' % (filename, e))
+         assert doc.tag == 'ruleset', (

@@ -39,6 +39,11 @@ parts+= omelette
         cg.devmode
 ${i18ncomment}    i18ndude
 
+[hosts]
+deliverance-backend=\${hosts:instance}
+
+[ports]
+deliverance-backend=\${ports:instance}
 
  
 [versions]

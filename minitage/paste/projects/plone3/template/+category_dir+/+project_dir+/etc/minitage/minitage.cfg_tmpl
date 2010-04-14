@@ -20,6 +20,17 @@ executable=$python
 python=python2.4
 name=python2.4
 
+[python2.6]
+#if $inside_minitage:
+executable=$python26
+#else
+#executable=$python26
+#end if
+
+
+
+python=python2.4
+name=python2.4 
 [buildout]
 #if $inside_minitage:
 python=python2.4
@@ -51,3 +62,12 @@ executable=\${python2.4:executable}
 includes-dirs = $includesdirs
 #end if
 
+[deliverance]
+#if $inside_minitage:
+#executable=\${python2.6:executable}
+#else
+#executable=\${python2.4:executable}
+#end if
+#if $with_binding_ldap:
+#includes-dirs = $includesdirs
+#end if 

@@ -1,0 +1,57 @@
+<VirtualHost *:\${reverse_proxy:port}>
+ServerAdmin     ${author_email}
+DocumentRoot    \${buildout:directory}
+ServerName      \${reverse_proxy:host}
+#for domain in  $sreverseproxy_aliases
+ServerAlias     $domain
+#end for
+ErrorLog        \${buildout:directory}/var/log/apache/\${reverse_proxy:host}_log
+TransferLog     \${buildout:directory}/var/log/apache/\${reverse_proxy:host}-access_log
+CustomLog       \${buildout:directory}/var/log/apache/\${reverse_proxy:host}-access_log combined
+DirectoryIndex   index.html index.htm
+<Directory "\${buildout:directory}">
+    Options  ExecCGI IncludesNOEXEC FollowSymLinks -Indexes
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+</Directory>
+RewriteEngine  on
+
+#if $reverseproxy_mountpoint == '/'
+#set $rpmpcomment='#'
+#else
+#set $rpmpcomment=''
+#end if
+#if $reverseproxy_mountpoint != '/'
+#set $rpnompcomment='#'
+#else
+#set $rpnompcomment=''
+#end if
+
+# deliverance + plone behind apache mounts 3 things:
+# /(mountpoint) /(mountpoint)zmiroot and /mountpoint)/_themes
+
+# /_themes -> no vhmonster
+RewriteCond %{REQUEST_URI} ^(/(_themes|\.deliverance).*)$
+${rpnompcomment}RewriteRule ^\/(.*) http://\${hosts:deliverance}:\${ports:deliverance}/$1 [L,P]
+
+${rpnompcomment}# application mounted on / does not needs _vh_
+${rpnompcomment}# /zmiroot -> access to zmi
+${rpnompcomment}RewriteRule ^\${reverse_proxy:mount-point}zmiroot(.*) http://\${hosts:deliverance}:\${ports:deliverance}/VirtualHostBase/http/%{HTTP_HOST}:\${reverse_proxy:port}/VirtualHostRoot/_vh_\${reverse_proxy:mount-point}zmiroot$1 [L,P]
+${rpnompcomment}# /-> vhmonster
+${rpnompcomment}RewriteCond %{REQUEST_URI} !^(/_themes.*)$
+${rpnompcomment}RewriteRule ^\/(.*) http://\${hosts:deliverance}:\${ports:deliverance}/VirtualHostBase/http/%{HTTP_HOST}:\${reverse_proxy:port}/\${plone:site}/VirtualHostRoot/$1 [L,P]
+
+${rpmpcomment}# application mounted on /subpath needs _vh_
+${rpmpcomment}# /zmiroot -> access to zmi
+${rpmpcomment}RewriteRule ^\${reverse_proxy:mount-point}zmiroot(.*) http://\${hosts:deliverance}:\${ports:deliverance}/VirtualHostBase/http/%{HTTP_HOST}:\${reverse_proxy:port}/VirtualHostRoot/_vh_\${reverse_proxy:mount-point}zmiroot$1 [L,P]
+${rpmpcomment}# /-> vhmonster
+${rpmpcomment}RewriteCond %{REQUEST_URI} !^(/_themes.*)$
+${rpmpcomment}RewriteRule ^\${reverse_proxy:mount-point}(.*) http://\${hosts:deliverance}:\${ports:deliverance}/VirtualHostBase/http/%{HTTP_HOST}:\${reverse_proxy:port}/\${plone:site}/VirtualHostRoot/_vh_\${reverse_proxy:mount-point}$1 [L,P]
+
+#RewriteLog "\${buildout:directory}/var/log/apache/rewrite.log"
+#RewriteLogLevel 3
+
+
+# vim: set ft=xml:
+</VirtualHost>

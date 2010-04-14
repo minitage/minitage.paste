@@ -136,9 +136,12 @@ class Template(common.Template):
                     print msg
         vars = common.Template.read_vars(self, command)
         for i, var in enumerate(vars[:]):
-            if var.name in ['relstorage_dbname', 'relstorage_dbuser'] and command:
+            if var.name in ['deliverance_project', 'relstorage_dbname', 'relstorage_dbuser'] and command:
                 sane_name = common.SPECIALCHARS.sub('', command.args[0])
                 vars[i].default = sane_name
+            if var.name in ['reverseproxy_host',] and command:
+                sane_name = '%s.localhost' % common.SPECIALCHARS.sub('', command.args[0])
+                vars[i].default = sane_name 
         return vars
 
     def get_versions_url(self, cvars=None):
@@ -371,6 +374,9 @@ class Template(common.Template):
         vars['zeo_port_buildbot'] = int(vars['zeo_port']) + 1
         vars['running_user'] = common.running_user
         vars['instances_description'] = common.INSTANCES_DESCRIPTION % vars
+        if not vars['reverseproxy_aliases']:
+            vars['reverseproxy_aliases'] = ''
+        vars['sreverseproxy_aliases'] = vars['reverseproxy_aliases'].split(',')
 
     def post(self, command, output_dir, vars):
         common.Template.post(self, command, output_dir, vars)
@@ -448,6 +454,8 @@ class Template(common.Template):
                     " you connected to the internet (%s).\n" % e
                 )
 
+
+    
     def post_default_template_hook(self, command, output_dir, vars, ep):
         """No more used."""
         pass

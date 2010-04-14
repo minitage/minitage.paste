@@ -16,9 +16,44 @@ Minitage users, don't worry about that, all is setted for you in the two minibui
 just issue minimerge -v <MINIBUILD_NAME> after installing the minilay in your MINITAGE/minilays directory.
 
 
+ALWAYS USE THE MINITAGE ENVIRONMENT FILE INSIDE A MINITAGE
+--------------------------------------------------------------
+
+Before doing anything in your project just after being installed, just source the environment file in your current shell::
+
+    source \$MT/zope/${project}/sys/share/minitage/minitage.env # env file is generated with \$MT/bin/paster create -t minitage.instances.env ${project}
+
+
+INSTALLING THIS PROJECT VITH MINITAGE
+--------------------------------------
+::
+
+    export MT=/minitage
+    virtualenv --no-site-packages --distribute \$MT
+    source /minitage/bin/activate
+    easy_install -U minitage.core minitage.paste
+    svn co $uri/minilays/${project} \$MT/minilays/${project}
+    minimerge -v $project
+    #minimerge -v ${project}-prod
+    \$MT/bin/paster create -t minitage.instances.env ${project} #(-prod)
+    source \$MT/zope/${project}/sys/share/minitage/minitage.env
+    cd \$INS #enjoy !
+
+
 CREATE A FIRST PLONESITE OBJECT
 ---------------------------------
 Run bin/buildout -c <CONFIG_FILE> install newplonesite
+
+
+PLAYING WITH DATAFS & PROJECT DATABASES
+-------------------------------------------
+- Upload the latest datafs from production to staging server::
+
+    bin/buildout -vNc <CONFIG>-prod.cfg install upload-datafs
+
+- Get the latest datafs from production to staging server::
+
+    bin/buildout -vNc <CONFIG> install get-datafs
 
 
 DEVELOP MODE
@@ -26,6 +61,7 @@ DEVELOP MODE
 To develop your application, run the ``(minitage.)buildout-dev.cfg`` buildout, it extends this one but:
   * it comes with development tools.
   * it configures the instance to be more verbose (debug mode & verbose security)
+  * it has only one instance and not all the hassles from production.
 
 
 PRODUCTION MODE
@@ -34,119 +70,37 @@ To make your application safe for production, run the ``(minitage.)buildout-prod
 It extends this one with additionnal crontabs and backup scripts and some additionnal instances creation.
 
 
-PLONE Official buildouts Integration
---------------------------------------------
-The original ``etc/plone/plone3.version.cfg`` is the original pinned version file for your plone3 release maintened by the official plone folks.
-The original ``etc/plone/plone3.buildout.cfg`` is the one maintened by the plone.org's guys through the package ZopeSkel (plone3_buildout).
-The parts in this buildout extends/overwrite this file, you can read it to get additionnal documentation.
-You must enter speicfic project settings in the ``etc/${project}.cfg`` file.
-
-
-CONTINEOUS INTEGRATION
---------------------------
-We currently offer 2 ways to setup some contineous integration of this buildout based installation:
-  - Via *hudson* by generating the build helpers and a configuration file for an hudson job
-  - Via *buildbot* by using collective.buildbot
-
-This is described in details on the related configuration files you will find in the layout below.
-
-
-LAYOUT
----------
-Think you have the most important sections of this buildout configuration in etc/${project}.cfg
-
-
-Base buildouts which do only aggragate parts from there & there
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+BASE BUILDOUTS WHICH DO ONLY AGGREGATE PARTS FROM THERE & THERE
+-------------------------------------------------------------------
+Love to know that Minitage support includes xml libs, ldap, dbs; python, dependencies & common eggs cache for things like lxml or PIL), subversion & much more.
 ::
 
+    |-- minitage.buildout-dev.cfg   -> buildout for development with minitage support
     |-- buildout-dev.cfg                     -> buildout for development
+    |-- minitage.buildout-prod.cfg  -> buildout for production  with minitage support
     |-- buildout-prod.cfg                    -> buildout for production
-    |-- minitage/minitage.buildout-dev.cfg   -> buildout for development with minitage support
-    `-- minitage/minitage.buildout-prod.cfg  -> buildout for production  with minitage support
+    |-- etc/minitage/minitage.cfg -> some buildout tweaks to run in the best of the world with minitage
+    |-- etc/base.cfg       -> The base buildout
 
-Minitage support  (includes xml libs, ldap, dbs; python, dependencies & common eggs cache for things like lxml or PIL)
 
-System administrators related files
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+PLONE OFFICIAL BUILDOUTS INTEGRATION
+--------------------------------------
+The original ``etc/plone/plone3.version.cfg`` is the original pinned version file for your plone3 release maintened by the official plone folks.
+The parts in this buildout extends/overwrite this file, you can read it to get additionnal documentation.
+You must enter specific project settings in the ``etc/${project}.cfg`` file.
 ::
 
-    etc/init.d/                 -> various init script (eg supervisor)
-    etc/sys/
-    |-- hight-availability.cfg  -> Project production settings like supervision, loadbalancer and so on
-    |-- maintenance.cfg         -> Project maintenance settings (crons, logs)
-    `-- settings.cfg_tmp        -> various settings (crons hours, hosts, installation paths, ports, passwords)
+    etc/plone/
+    `-- plone${major}.versions.cfg    -> official plone buildout kgs
+#if $major > 3:
+    `-- zope2.versions.cfg    -> official zope2 buildout kgs
+#end if
+    `-- experimental.cfg       -> experimental plone code (not used by default just here for your convenients & personal manual use)
 
-Base Configuration file
+
+PROJECT SETTINGS
 ~~~~~~~~~~~~~~~~~~~~~~~~
-::
-
-    |-- etc
-        `-- base.cfg       -> The base buildout
-
-
-Crons
-~~~~~~
-::
-
-    |-- etc/cron_scripts
-        `-- fss_daily.sh   -> backup script for fss
-
-
-OS Specific system installers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Thos popular tools around zope/plone dev (not supported, just here for your conveniance, READ BEFORE USING THEM)
-And you'd  better have to learn how to bootstrap some minitage environement out there, funny and more secure & reproductible!
-::
-
-    |-- etc/os
-        |-- debian.sh       -> debian specific
-        |-- opensuse-dev.sh -> opensuse/dev specific
-        |-- opensuse.sh     -> suse specific
-        |-- osx.sh          -> osx specific
-        `-- ubuntu.sh       -> ubuntu specific
-
-
-Contineous integration
-~~~~~~~~~~~~~~~~~~~~~~~~~
-Here ae the files needed for our hudson and/or buildbot integration.
-
-For hudson we provide some shell helpers more or less generated to run 'a build':
-
-    - an helper which set some variables in the current environement for others helpers
-    - an helper which update the project
-    - an helper which update the associated sources grabbed via mr.developer
-    - an helper which run all the tests
-
-::
-
-
-    |-- minitage.buildout-buildbot.cfg     -> buildout for deploying a buildbot related to your project (requires to be inside a minitage)
-    |-- etc/hudson/
-    |   `-- $project
-    |       |-- build
-    |           |-- build.sh               -> the project build helper
-    |           |-- test.sh                -> the project test executor helper (launch all tests needed)
-    |           |-- update_mrdeveloper.sh  -> update sources grabbed via mrdeveloper
-    |           `-- update_project.sh      -> update this layout
-    |
-    |-- etc/templates/hudson/
-        `-- ${project}
-            |-- build
-            |   `-- activate_env.sh.in   -> buildout template to generate etc/hudson/${project}/build/activate.env.sh
-            `-- config.xml.in            -> buildout template to generate etc/hudson/${project}/config.xml (hudson job/build file)
-
-
-Minitage support
-~~~~~~~~~~~~~~~~~~~~~
-This buildout grabs all options needed to use the underlying mintiage environment
-::
-   |-- minitage/minitage.cfg -> some buildout tweaks to run in the best of the world with minitage
-
-
-Project settings
-~~~~~~~~~~~~~~~~~~~~~~~~
+- Think you have the most important sections of this buildout configuration in etc/${project}.cfg
 Set the project developement  specific settings there
 ::
 
@@ -162,7 +116,81 @@ Set the project developement  specific settings there
     |-- ${project}-kgs.cfg   -> Generated KGS for your project (minitage's printer or buildout.dumppickledversion)
     `-- versions.cfg         -> minimal version pinning for installing your project
 
-Configuration templates
+
+SYSTEM ADMINISTRATORS RELATED FILES
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+::
+
+    etc/init.d/                 -> various init script (eg supervisor)
+    etc/logrotate.d/            -> various logrotate configuration files
+    etc/sys/
+    |-- hight-availability.cfg  -> Project production settings like supervision, loadbalancer and so on
+    |-- maintenance.cfg         -> Project maintenance settings (crons, logs)
+    `-- settings.cfg            -> various settings (crons hours, hosts, installation paths, ports, passwords)
+
+
+CRONS
+~~~~~~
+::
+
+    |-- etc/cron_scripts/fss_daily.sh   -> backup script for fss
+
+DELIVERANCE SUPPORT
+-----------------------
+
+To setup correctly the reverse proxy front end: 
+*PLEASE READ THE REVERSE PROXY SECTION BELOW*
+
+
+Layout
+~~~~~~~~~
+::
+
+    |-- etc/deliverance
+        |-- etc/deliverance/deliverance.cfg -> buildout used for deliverance component installations
+        |-- etc/deliverance/deliverance.ini -> PasteDeploy configuration file (paster serve etc/deliverance/deliverance.ini)
+        `-- etc/deliverance/deliverance.xml -> Main Deliverance rules file
+    |-- etc/templates
+        |-- etc/templates/deliverance/deliverance.ini.in -> PasteDeploy configuration file template (paster serve etc/deliverance/deliverance.ini)
+        `-- etc/templates/deliverance/deliverance.xml.in -> Main Deliverance rules file template
+
+notes
+~~~~~~~~~~~~~~
+- deliverance is launched and monitored with supervisord
+- it's rules file is located in ``etc/deliverance/deliverance.xml`` but it's a generated file from the ``etc/template/deliverance.xml.in``
+  Feel free to comment the ``deliverance_rules`` part in ``etc/base.cfg`` to disable generation (eg: you want to use your own static ruleset.
+- Deliverance do not use the proxy mode but *the WSGI middleware*, and use PasteDeploy to fire the server.
+  Again we use a template : ``etc/templates/deliverance.ini.in`` (result after a buildout run is in ``etc/deliverance/deliverance.ini``.
+  The part triggering its contruction is ``deliverance_ini``
+- Settings can be as usual changed by editing ``etc/sys/settings.cfg``
+  Some important settings are:
+  * The deliverance server itself
+
+      * hosts:deliverance
+      * ports:deliverance
+      * location :deliverance-themes
+
+  * The proxied backend (eg: zope server):
+
+      * hosts:deliverance-backend
+      * ports:deliverance-backend
+
+dev mode
+*********~
+In development mode, we switched the host and url of the deliveranced host to be the development instance instead of either haproxy or the first instance.
+You can launch manually deliverance via::
+
+    ./bin/deliverance-paster serve etc/deliverance/deliverance.ini
+
+REVERSE PROXY
+--------------
+If you use deliverance, to setup the virtualmonster trick we use 'repoze.vhm' and it's "explicit" middleware
+
+We generate two virtualhosts, mostly ready but feel free to copy/adapt.
+    - One is for use with a standalone plone (even with haproxy in front of.)
+
+
+CONFIGURATION TEMPLATES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ::
 
@@ -173,28 +201,8 @@ Configuration templates
     `-- logrotate.conf.template     -> logrotate configuration file template for your Zope logs
     `-- supervisor.initd            -> template for supervisor init script
 
-Plone specific
-~~~~~~~~~~~~~~~~~~~
-::
 
-    etc/plone/
-    `-- plone${major}.versions.cfg    -> official plone buildout kgs
-#if $major > 3:
-    `-- zope2.versions.cfg    -> official zope2 buildout kgs
-#end if
-    `-- experimental.cfg       -> experimental plone code (not used by default just here for your convenients & personal manual use)
-
-
-Paster (WSGI)
-~~~~~~~~~~~~~~~~~~~~
-::
-
-    etc/wsgi/
-    |-- dev.ini      -> paster production configuration for running in wsgi mode
-    `-- prod.ini     -> paster development configuration for running in wsgi mode
-
-
-Backends
+BACKENDS
 ~~~~~~~~~~~
 ::
 
@@ -214,50 +222,64 @@ This file will be generated the first time that you run buildout.
 To un it, just run bin/buildout -vvvvvvc <CONFIG_FILE> install kgs
 To unlock the versions, cmment out the according statement ``etc/project/${project}-kgs}.cfg`` in the extends option of the ${project}.cfg gile.
 
+
 NOTES ABOUT RELSTORAGE SUPPORT
 ------------~~~~~~~-------------
 We use the ZODB as an egg which is patched during installation, please see ``etc/project/patches.cfg``
 
 
-UPLOAD THE LATEST DATAFS FROM PRODUCTION TO STAGING SERVER
-------------------------------------------------------------
-Upload to staging server::
-
-    bin/buildout -vNc <CONFIG>-prod.cfg install upload-datafs
-
-
-GET THE LATEST DATAFS FROM PRODUCTION TO STAGING SERVER
----------------------------------------------------------
-Get the latest datafs from production/staging server::
-
-    bin/buildout -vNc <CONFIG> install get-datafs
-
-
-INSTALLING THIS PROJECT VITH MINITAGE
---------------------------------------
+OS SPECIFIC SYSTEM INSTALLERS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Thos popular tools around zope/plone dev (not supported, just here for your conveniance, READ BEFORE USING THEM)
+And you'd  better have to learn how to bootstrap some minitage environement out there, funny and more secure & reproductible!
 ::
 
-    export MT=/minitage
-    virtualenv --no-site-packages --distribute \$MT
-    source /minitage/bin/activate
-    easy_install -U minitage.core minitage.paste
-    svn co $uri/minilays/${project} \$MT/minilays/${project}
-    minimerge -v $project
-    #minimerge -v ${project}-prod
-    \$MT/bin/paster create -t minitage.instances.env ${project} #(-prod)
-    source \$MT/zope/${project}/sys/share/minitage/minitage.env
-    cd \$INS #enjoy !
+    |-- etc/os
+        |-- debian.sh       -> debian specific
+        |-- opensuse-dev.sh -> opensuse/dev specific
+        |-- opensuse.sh     -> suse specific
+        |-- osx.sh          -> osx specific
+        `-- ubuntu.sh       -> ubuntu specific
 
-ALWAYS USE THE MINITAGE ENVIRONMENT FILE INSIDE A MINITAGE
---------------------------------------------------------------
 
-Before doing anything in your project just after being installed, just source the environment file in your current shell::
+CONTINEOUS INTEGRATION
+~~~~~~~~~~~~~~~~~~~~~~~~~
+Here ae the files needed for our hudson and/or buildbot integration.
 
-    source \$MT/zope/${project}/sys/share/minitage/minitage.env # env file is generated with \$MT/bin/paster create -t minitage.instances.env ${project}
+For hudson we provide some shell helpers more or less generated to run 'a build':
+
+    - an helper which set some variables in the current environement for others helpers
+    - an helper which update the project
+    - an helper which update the associated sources grabbed via mr.developer
+    - an helper which run all the tests
+
+This is described in details on the related configuration files you will find in the layout below.
+::
+
+    |-- minitage.buildout-buildbot.cfg     -> buildout for deploying a buildbot related to your project (requires to be inside a minitage)
+    |-- etc/hudson/
+    |   `-- $project
+    |       |-- build
+    |           |-- build.sh               -> the project build helper
+    |           |-- test.sh                -> the project test executor helper (launch all tests needed)
+    |           |-- update_mrdeveloper.sh  -> update sources grabbed via mrdeveloper
+    |           `-- update_project.sh      -> update this layout
+    |
+    |-- etc/templates/hudson/
+        `-- ${project}
+            |-- build
+            |   `-- activate_env.sh.in   -> buildout template to generate etc/hudson/${project}/build/activate.env.sh
+            `-- config.xml.in            -> buildout template to generate etc/hudson/${project}/config.xml (hudson job/build file)
 
 
 NOTES ABOUT WSGI SUPPORT
 -------------------------
+::
+
+    etc/wsgi/
+    |-- dev.ini      -> paster production configuration for running in wsgi mode
+    `-- prod.ini     -> paster development configuration for running in wsgi mode 
+
 The egg is on your cache with a particular version, the classical ZODB3 egg wont be touched if you have one.
 WHAT IS VERY IMPORTANT is that [zopepy] part must run BEFORE [instance] to get the version with appropriate patches pinned.
 This WSGI support is nowodays deprecated (on the plone side), unmaintened and not supported, use it at our own risks.
@@ -271,6 +293,7 @@ As we support WSGI, there is an important thing to know:
 
       bin/paster serve etc/wsgi/dev.ini
       or bin/paster serve etc/wsgi/prod.ini
+
 
 $instances_description.replace('# ', '')
 

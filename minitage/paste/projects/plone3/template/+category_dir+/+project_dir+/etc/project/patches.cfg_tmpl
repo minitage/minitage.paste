@@ -72,4 +72,20 @@ flickrapi-patch-options=\${zopepy:flickrapi-patch-options}
 hachoir-core-1.3.2-patches=\${zopepy:hachoir-core-1.3.2-patches}
 hachoir-core-patch-options=\${zopepy:hachoir-core-patch-options}
 
+# make sur the patchs are applied
+[deliverance]
+#if $major < 4:
+ZODB3-3.7.2-patches=\${zopepy:ZODB3-3.7.2-patches}
+#Products.Archetypes-patches=\${zopepy:Products.Archetypes-patches}
+#end if
+Markdown-2.0.1-patches=\${zopepy:Markdown-2.0.1-patches}
+Markdown-patch-options=\${zopepy:Markdown-patch-options}
+ipython-patches=      \${zopepy:ipython-patches}
+ipython-patch-options=\${zopepy:ipython-patch-options}
+flickrapi-1.4.1-patches=\${zopepy:flickrapi-1.4.1-patches}
+flickrapi-1.4-patches=\${zopepy:flickrapi-1.4-patches}
+flickrapi-patch-options=\${zopepy:flickrapi-patch-options}
+hachoir-core-1.3.2-patches=\${zopepy:hachoir-core-1.3.2-patches}
+hachoir-core-patch-options=\${zopepy:hachoir-core-patch-options} 
+
 # vim:set ft=cfg:

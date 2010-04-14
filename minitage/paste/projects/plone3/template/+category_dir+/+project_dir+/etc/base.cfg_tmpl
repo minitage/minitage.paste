@@ -22,6 +22,11 @@ $hr
 #else
 #set $sgdgcomment='#'
 #end if
+#if $with_deliverance_support
+#set $delicomment=''
+#else
+#set $delicomment='#'
+#end if 
 
 [buildout]
 timeout=3
@@ -57,7 +62,11 @@ extends = #slurp
     project/sources.cfg#slurp
     project/${project}-kgs.cfg #slurp
     project/${project}.cfg#slurp
+    apache/apache.cfg#slurp
     hudson/${project}/hudson.cfg#slurp
+#if $with_deliverance_support:
+    deliverance/deliverance.cfg#slurp
+#end if  
 
 
 parts =
@@ -78,6 +87,13 @@ ${solrcomment}    solrinstance
     fakeproducts
     ${sane_name}.test
 ${zeocomment}    zeoserver
+${delicomment}    deliverance
+${delicomment}    deliverance_ini
+${delicomment}    deliverance_prod_ini
+${delicomment}    deliverance_rules
+${delicomment}    deliverance_patches
+${delicomment}    apache_deliverance_vhost
+    apache_vhost
 # hudson integration
     ${sane_name}_hudson_env
     ${sane_name}_hudson_job

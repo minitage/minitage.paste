@@ -273,6 +273,7 @@ class Template(common.Template):
             raise Exception('Python interpreter not found')
 
         vars['python'] = interpreter
+        vars['python26'] = re.sub('(2|3)\..', '2.6', interpreter)
         vars['python_minibuild'] = 'python-%s' % pyver
         vars['python_version'] = executable_version
         vars['executable_site_packages'] = os.path.join(

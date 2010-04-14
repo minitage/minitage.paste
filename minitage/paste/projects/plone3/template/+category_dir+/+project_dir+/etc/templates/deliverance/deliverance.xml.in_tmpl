@@ -1,0 +1,21 @@
+<ruleset>
+
+  <!-- Get the theme to apply -->
+  <!--
+    <theme pyref="${project}.skin:get_theme" />
+    -->
+
+  <!-- Map domains to rules set -->
+  <match domain="$reverseproxy_host" class="${deliverance_project}" />
+  #for domain in $sreverseproxy_aliases
+  <match domain="$domain" class="${deliverance_project}" />
+  #end for
+
+  <!-- Rules for the ${project} -->
+  <rule class="${deliverance_project}">
+    <!-- Copy over the contents of the page body -->
+    <replace content='//*[@id="content"]' theme='//*[@id="my-content-area"]' />
+  </rule>
+
+  <!-- vim:set ft=xml: -->
+</ruleset>

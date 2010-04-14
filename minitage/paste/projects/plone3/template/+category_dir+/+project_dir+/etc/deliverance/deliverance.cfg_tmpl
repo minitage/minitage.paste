@@ -1,0 +1,62 @@
+
+# eggs & scripts installation
+[deliverance]
+recipe = minitage.recipe.scripts
+eggs = 
+    lxml
+    Paste
+    PasteScript
+    WebOb
+    WebError
+    pyquery
+    wsgiproxy
+    ipython
+    repoze.vhm
+    tempita
+    Deliverance
+interpreter = deliverance-py
+scripts=
+    ipython=deliverance-ipython
+    paster=deliverance-paster
+    deliverance-proxy
+extra-paths = \${instance:extra-paths}
+    \${buildout:directory}/parts/fakeproducts 
+
+[buildout]
+auto-checkout +=
+    Deliverance
+    DevAuth
+[versions]
+#Deliverance=0.3c3 
+lxml = 2.2.6
+
+[deliverance_prod_ini]
+recipe = collective.recipe.template
+input =\${buildout:directory}/etc/templates/deliverance/deliverance-prod.ini.in
+output =\${buildout:directory}/etc/deliverance/deliverance-prod.ini 
+
+[deliverance_ini]
+recipe = collective.recipe.template
+input =\${buildout:directory}/etc/templates/deliverance/deliverance.ini.in
+output =\${buildout:directory}/etc/deliverance/deliverance.ini
+
+[deliverance_rules]
+recipe = collective.recipe.template
+input =\${buildout:directory}/etc/templates/deliverance/deliverance.xml.in
+output =\${buildout:directory}/etc/deliverance/deliverance.xml 
+
+[deliverance_patches]
+patches=\${buildout:directory}/patches/deliverance.etreefd.nosegfault.patch
+recipe = plone.recipe.command
+update-command = \${deliverance_patches:command}
+command =for patch in \${deliverance_patches:patches};do cd \${buildout:sources-dir}/Deliverance;patch -Np0 < \$patch;cd \${buildout:directory};done;
+
+
+[sources]
+# it will install deliverance & devautg from
+# - http://codespeak.net/svn/z3/deliverance/trunk/
+# - https://svn.openplans.org/svn/DevAuth/trunk
+# see project/sources.cfg
+Deliverance =svn http://codespeak.net/svn/z3/deliverance/trunk
+DevAuth     =svn https://svn.openplans.org/svn/DevAuth/trunk
+\# vim: set ft=cfg:

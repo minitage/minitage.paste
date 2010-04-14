@@ -5,6 +5,17 @@
 #set $sgdgcomment='#'
 #end if
 
+#if $with_haproxy
+#set $hapcomment=''
+#else:
+#set $hapcomment='#'
+#end if
+
+[reverse_proxy]
+host=$reverseproxy_host
+port=$reverseproxy_port
+mount-point=$reverseproxy_mountpoint
+
 [hosts]
 # setted here but just as information, it may not be used.
 zeo = $zeo_host
@@ -23,7 +34,11 @@ syslog = 127.0.0.1
 solr = $solr_host
 buildbot-master=${buildbot_master_host}
 staging=$staging_host
-
+deliverance=$deliverance_host
+#if not $with_haproxy
+deliverance-backend=\${hosts:instance1}
+#end if
+${hapcomment}deliverance-backend=\${hosts:balancer}
 
 [ports]
 # other instances, in case.
@@ -42,6 +57,13 @@ balancer=$haproxy_port
 solr = $solr_port
 buildbot-master-control=${buildbot_master_control_port}
 buildbot-master-web=${buildbot_master_web_port}
+deliverance=$deliverance_port
+#if not $with_haproxy
+deliverance-backend=\${ports:instance1}
+#end if
+${hapcomment}deliverance-backend=\${ports:balancer}
+
+
 
 [buildbot]
 slave-password=${buildbot_slave_password}
@@ -103,6 +125,7 @@ password=$supervisor_password
 
 [locations]
 # aboslute paths to avoid buildout auto build of reffered part
+deliverance-themes=\${buildout:directory}/src/themes
 solr = \$solr_path
 blob-storage=\${buildout:directory}/var/blobstorage
 testfss-backup=  \${buildout:directory}/parts/instance/var/fss_backup
