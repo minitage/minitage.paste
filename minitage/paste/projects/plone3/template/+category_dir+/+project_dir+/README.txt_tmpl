@@ -138,7 +138,7 @@ CRONS
 DELIVERANCE SUPPORT
 -----------------------
 
-To setup correctly the reverse proxy front end: 
+To setup correctly the reverse proxy front end:
 *PLEASE READ THE REVERSE PROXY SECTION BELOW*
 
 
@@ -147,48 +147,58 @@ Layout
 ::
 
     |-- etc/deliverance
-        |-- etc/deliverance/deliverance.cfg -> buildout used for deliverance component installations
-        |-- etc/deliverance/deliverance.ini -> PasteDeploy configuration file (paster serve etc/deliverance/deliverance.ini)
-        `-- etc/deliverance/deliverance.xml -> Main Deliverance rules file
+        |-- etc/deliverance/deliverance.cfg      -> buildout used for deliverance component installations
+        |-- etc/deliverance/deliverance.ini      -> PasteDeploy configuration file (paster serve etc/deliverance/deliverance.ini)
+        |-- etc/deliverance/deliverance-prod.ini -> PasteDeploy configuration file (paster serve etc/deliverance/deliverance.ini) (PRODUCTIO?)
+        `-- etc/deliverance/deliverance.xml      -> Main Deliverance rules file
     |-- etc/templates
-        |-- etc/templates/deliverance/deliverance.ini.in -> PasteDeploy configuration file template (paster serve etc/deliverance/deliverance.ini)
-        `-- etc/templates/deliverance/deliverance.xml.in -> Main Deliverance rules file template
+        |-- etc/templates/deliverance/deliverance.ini.in      -> PasteDeploy configuration file template (paster serve etc/deliverance/deliverance.ini)
+        |-- etc/templates/deliverance/deliverance-prod.ini.in -> PasteDeploy configuration file template (paster serve etc/deliverance/deliverance.ini)
+        `-- etc/templates/deliverance/deliverance.xml.in      -> Main Deliverance rules file template
 
 notes
 ~~~~~~~~~~~~~~
 - deliverance is launched and monitored with supervisord
-- it's rules file is located in ``etc/deliverance/deliverance.xml`` but it's a generated file from the ``etc/template/deliverance.xml.in``
-  Feel free to comment the ``deliverance_rules`` part in ``etc/base.cfg`` to disable generation (eg: you want to use your own static ruleset.
 - Deliverance do not use the proxy mode but *the WSGI middleware*, and use PasteDeploy to fire the server.
-  Again we use a template : ``etc/templates/deliverance.ini.in`` (result after a buildout run is in ``etc/deliverance/deliverance.ini``.
-  The part triggering its contruction is ``deliverance_ini``
+  The part triggering its contruction is ``deliverance_ini`` && ``deliverance_prod_ini``
 - Settings can be as usual changed by editing ``etc/sys/settings.cfg``
-  Some important settings are:
-  * The deliverance server itself
+  * hosts:deliverance / ports:deliverance / locations:deliverance-themes -> The deliverance server itself  & the default theme
+  * hosts:deliverance-backend / ports:deliverance-backend  -> The proxied backend (eg: zope server):
+In development mode, we switched the host and url of the deliveranced host to be the development instance instead of either haproxy or the first instance.
 
-      * hosts:deliverance
-      * ports:deliverance
-      * location :deliverance-themes
-
-  * The proxied backend (eg: zope server):
-
-      * hosts:deliverance-backend
-      * ports:deliverance-backend
 
 dev mode
-*********~
-In development mode, we switched the host and url of the deliveranced host to be the development instance instead of either haproxy or the first instance.
+~~~~~~~~
 You can launch manually deliverance via::
 
     ./bin/deliverance-paster serve etc/deliverance/deliverance.ini
 
+- Hit thz deliverance server vith a virtualhostmonster url, if not you won't have the links rewritten.::
+
+     http://$deliverance_host:$deliverance_port/VirtualHostBase/http/$deliverance_host:$deliverance_port/${plonesite}/VirtualHostRoot/<REQUEST>
+
+- You can copy/symlink the below apache deliverance vhost to your apache configuration to test in a full environment
+- To complete your apache installation, you must add ::
+
+    127.0.0.1 ${project}.localhost
+
+And then hit http://${project}.localhost to view your proxified deliverance server
+
 REVERSE PROXY
 --------------
-If you use deliverance, to setup the virtualmonster trick we use 'repoze.vhm' and it's "explicit" middleware
+We generate two virtualhosts for a cliassical apache setup, mostly ready but feel free to copy/adapt.
+::
+    etc/apache/
+    |-- ${apache_vhost_number}-${project}.reverseproxy.conf                     -> a vhost for ruse with a standalone plone (even with haproxy in front of.)
+    |-- ${apache_vhost_number}-${project}.reverseproxy.deliverance.conf         -> a vhost for use with a plone behind a deliverance server.
+    `-- apache.cfg
+    etc/templates/apache/
+    |-- ${apache_vhost_number}-${project}.reverseproxy.conf.in                   -> Template for a vhost for ruse with a standalone plone (even with haproxy in front of.)
+    `-- ${apache_vhost_number}-${project}.reverseproxy.deliverance.conf.in       -> Template for a vhost for use with a plone behind a deliverance server.
 
-We generate two virtualhosts, mostly ready but feel free to copy/adapt.
-    - One is for use with a standalone plone (even with haproxy in front of.)
-
+In settings.cfg you have now some settings for declaring which host is your reverse proxy backend & the vhost mounting:
+    * hosts:zope-front / ports:zope-front                              -> zope front backend
+    * reverseproxy:host / reverseproxy:port / reverseproxy:mount-point -> host / port / mountpoint on the reverse proxy)
 
 CONFIGURATION TEMPLATES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -231,7 +241,7 @@ We use the ZODB as an egg which is patched during installation, please see ``etc
 OS SPECIFIC SYSTEM INSTALLERS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Thos popular tools around zope/plone dev (not supported, just here for your conveniance, READ BEFORE USING THEM)
-And you'd  better have to learn how to bootstrap some minitage environement out there, funny and more secure & reproductible!
+And you'd  better have to learn how to bootstrap some minitage environment out there, funny and more secure & reproductible!
 ::
 
     |-- etc/os
@@ -278,7 +288,7 @@ NOTES ABOUT WSGI SUPPORT
 
     etc/wsgi/
     |-- dev.ini      -> paster production configuration for running in wsgi mode
-    `-- prod.ini     -> paster development configuration for running in wsgi mode 
+    `-- prod.ini     -> paster development configuration for running in wsgi mode
 
 The egg is on your cache with a particular version, the classical ZODB3 egg wont be touched if you have one.
 WHAT IS VERY IMPORTANT is that [zopepy] part must run BEFORE [instance] to get the version with appropriate patches pinned.

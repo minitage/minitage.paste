@@ -75,8 +75,8 @@ ${si2}    22 instance2 \${buildout:directory}/parts/instance2/bin/runzope       
 ${si3}    23 instance3 \${buildout:directory}/parts/instance3/bin/runzope                                          true \${users:zope}
 ${si4}    24 instance4 \${buildout:directory}/parts/instance4/bin/runzope                                          true \${users:zope}
 ${sgdgcomment}    40 instance-newsletter \${buildout:directory}/parts/instance-newsletter/bin/runzope                                          true \${users:zope}
-${hapcomment}     50 balancer  \${supervisor:haproxy-path} [-f \${buildout:directory}/etc/loadbalancing/balancer.conf -db]       true \${users:balancer}
-${delicomment}    60 deliverance \${buildout:directory}/bin/deliverance-paster [serve \${buildout:directory}/etc/deliverance/deliverance-prod.ini] \${buildout:directory} true \${users:zope}
+${hapcomment}     50 balancer  \${supervisor:haproxy-path} [-f \${buildout:directory}/etc/loadbalancing/balancer.conf -db]       true \${users:zope}
+${delicomment}    60 deliverance \${buildout:directory}/bin/deliverance-paster [serve --log-file=\${buildout:directory}/var/log/deliverance.log \${buildout:directory}/etc/deliverance/deliverance-prod.ini] \${buildout:directory} true \${users:zope}
 
 [supervisor-initd]
 recipe = collective.recipe.template

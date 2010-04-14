@@ -16,6 +16,11 @@ delaycompress
 #end if
  
 \${buildout:directory}/var/log/instance1*.log {
+    compress
+    rotate 10
+    daily
+    notifempty
+    size 10M  
     sharedscripts
     postrotate
         /bin/kill -USR2 \$(cat \${buildout:directory}/var/instance1.pid)
@@ -23,6 +28,11 @@ delaycompress
 }
 
 \${buildout:directory}/var/log/instance2*.log {
+    compress
+    rotate 10
+    daily
+    notifempty
+    size 10M  
     sharedscripts
     postrotate
         /bin/kill -USR2 \$(cat \${buildout:directory}/var/instance2.pid)
@@ -30,6 +40,11 @@ delaycompress
 }
 
 \${buildout:directory}/var/log/instance3*.log {
+    compress
+    rotate 10
+    daily
+    notifempty
+    size 10M  
     sharedscripts
     postrotate
         /bin/kill -USR2 \$(cat \${buildout:directory}/var/instance3.pid)
@@ -38,6 +53,11 @@ delaycompress
 
 
 \${buildout:directory}/var/log/instance4*.log {
+    compress
+    rotate 10
+    daily
+    notifempty
+    size 10M  
     sharedscripts
     postrotate
         /bin/kill -USR2 \$(cat \${buildout:directory}/var/instance4.pid)
@@ -45,6 +65,11 @@ delaycompress
 }
 
 ${sgdgcomment}\${buildout:directory}/var/log/instance-newsletter*.log {
+${sgdgcomment}    compress
+${sgdgcomment}    rotate 10
+${sgdgcomment}    daily
+${sgdgcomment}    notifempty
+${sgdgcomment}    size 10M  
 ${sgdgcomment}    sharedscripts
 ${sgdgcomment}    postrotate
 ${sgdgcomment}        /bin/kill -USR2 \$(cat \${buildout:directory}/var/instance-newsletter.pid)
@@ -53,12 +78,22 @@ ${sgdgcomment}}
 
 
 \${buildout:directory}/var/log/zeoserver.log {
+    compress
+    rotate 10
+    daily
+    notifempty
+    size 10M  
     postrotate
         /bin/kill -USR2 \$(cat \${buildout:directory}/var/zeoserver.pid)
     endscript
 }
 
 \${buildout:directory}/var/log/main*.log {
+    compress
+    rotate 10
+    daily
+    notifempty
+    size 10M  
     sharedscripts
     postrotate
         /bin/kill -USR1 \$(cat \${buildout:directory}/var/main.pid)
@@ -66,6 +101,11 @@ ${sgdgcomment}}
 }
 
 \${buildout:directory}/var/log/transform*.log {
+    compress
+    rotate 10
+    daily
+    notifempty
+    size 10M 
     sharedscripts
     postrotate
         /bin/kill -USR1 \$(cat \${buildout:directory}/var/transform.pid)
@@ -81,3 +121,15 @@ ${sgdgcomment}}
     missingok
     copytruncate
 }
+
+\${buildout:directory}/var/log/apache/*.log {
+    compress
+    rotate 10
+    daily
+    notifempty
+    size 10M
+    sharedscripts
+    missingok
+    copytruncate 
+}
+ 

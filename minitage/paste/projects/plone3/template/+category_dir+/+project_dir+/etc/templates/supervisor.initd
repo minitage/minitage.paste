@@ -3,6 +3,7 @@
 # description: supervisor init script
 
 
+EFFECTIVE_USER="${users:zope}"
 INSTANCE_PATH="${buildout:directory}"
 INSTANCE_NAME="$(basename ${buildout:directory})"
 supervisorctl="${buildout:directory}/bin/supervisorctl"
@@ -15,23 +16,30 @@ lock="${buildout:directory}/var/$name "
 
 RETVAL=0
 start() {
-     echo -n "Starting $name: "
-     $supervisord
-     RETVAL=$?
-     [ $RETVAL -eq 0 ] && touch $lock
-     echo
-     return $RETVAL
+    echo -n "Starting $name: "
+    if [[ `whoami` == root ]];then
+        su $effectiveuser -c "$supervisord"
+    else
+        "$supervisord"
+    fi 
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && touch $lock
+    chown $EFFECTIVE_USER $lock
+    echo
+    return $RETVAL
 }
-
 stop() {
     echo -n "Stopping $name: "
-    $supervisorctl shutdown
+    if [[ `whoami` == root ]];then
+        su $effectiveuser -c "$supervisorctl shutdown"
+    else
+        $supervisorctl shutdown
+    fi 
     RETVAL=$?
     [ $RETVAL -eq 0 ] && rm -f $lock
     echo
     return $RETVAL
 }
-
 case "$1" in
          start)
              start
@@ -43,10 +51,9 @@ case "$1" in
 
          restart)
              stop
+             sleep 2
              start
              ;;
 esac
-
 exit $REVAL
-
 # vim:set ft=sh:

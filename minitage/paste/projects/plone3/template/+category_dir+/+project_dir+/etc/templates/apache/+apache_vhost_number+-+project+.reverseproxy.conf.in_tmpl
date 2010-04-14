@@ -4,7 +4,7 @@ DocumentRoot    \${buildout:directory}
 ServerName      \${reverse_proxy:host}
 #for domain in  $sreverseproxy_aliases
 ServerAlias     $domain
-#end for 
+#end for
 ErrorLog        \${buildout:directory}/var/log/apache/\${reverse_proxy:host}_log
 TransferLog     \${buildout:directory}/var/log/apache/\${reverse_proxy:host}-access_log
 CustomLog       \${buildout:directory}/var/log/apache/\${reverse_proxy:host}-access_log combined
@@ -17,23 +17,26 @@ DirectoryIndex   index.html index.htm
 </Directory>
 RewriteEngine  on
 
-#if $reverseproxy_mountpoint == '/'
-#set $rpmpcomment='#'
-#else
-#set $rpmpcomment=''
-#end if
-#if $reverseproxy_mountpoint != '/'
-#set $rpnompcomment='#'
-#else
-#set $rpnompcomment=''
-#end if
-
 # application mounted on / does not needs _vh_
-${rpnompcomment}RewriteRule ^\${reverse_proxy:mount-point}zmiroot(.*) http://\${hosts:deliverance}:\${ports:deliverance}/VirtualHostBase/http/%{HTTP_HOST}:\${reverse_proxy:port}/VirtualHostRoot/_vh_\${reverse_proxy:mount-point}zmiroot$1 [L,P]
-${rpnompcomment}RewriteRule ^\/(.*)                                   http://\${hosts:deliverance}:\${ports:deliverance}/VirtualHostBase/http/%{HTTP_HOST}:\${reverse_proxy:port}/\${plone:site}/VirtualHostRoot/                            [L,P]
+# /zmiroot -> access to zmi
+RewriteCond %{REQUEST_URI} ^(/zmiroot.*)$ 
+RewriteRule      ^/zmiroot(.*) http://\${hosts:zope-front}:\${ports:zope-front}/VirtualHostBase/http/%{HTTP_HOST}:\${reverse_proxy:port}/VirtualHostRoot/_vh_zmiroot$1 [L,P]
 
-# application mounted on /subpath needs _vh_
-${rpmpcomment}RewriteRule ^\${reverse_proxy:mount-point}zmiroot(.*) http://\${hosts:deliverance}:\${ports:deliverance}/VirtualHostBase/http/%{HTTP_HOST}:\${reverse_proxy:port}/VirtualHostRoot/_vh_\${reverse_proxy:mount-point}zmiroot$1 [L,P]
-${rpmpcomment}RewriteRule ^\${reverse_proxy:mount-point}(.*)        http://\${hosts:deliverance}:\${ports:deliverance}/VirtualHostBase/http/%{HTTP_HOST}:\${reverse_proxy:port}/\${plone:site}/VirtualHostRoot/_vh_\${reverse_proxy:mount-point}$1 [L,P]
+# /plone-${project}-> vhmonster without deliverance filtering
+RewriteCond %{REQUEST_URI} ^(/plone-${project}.*)$ 
+RewriteRule      ^/plone-${project}(.*) http://\${hosts:zope-front}:\${ports:zope-front}/VirtualHostBase/http/%{HTTP_HOST}:\${reverse_proxy:port}/\${plone:site}/VirtualHostRoot/_vh_plone-${project}$1 [L,P] 
+
+# supervisor
+ProxyPass         /supervisor/ http://\${hosts:supervisor}:\${ports:supervisor}/
+ProxyPassReverse  /supervisor/ http://\${hosts:supervisor}:\${ports:supervisor}/ 
+
+# /-> vhmonster proxyreverse because of redirects !
+ProxyPass         /     http://\${hosts:zope-front}:\${ports:zope-front}/VirtualHostBase/http/\${reverse_proxy:host}:\${reverse_proxy:port}/\${plone:site}/VirtualHostRoot/
+ProxyPassReverse  /     http://\${hosts:zope-front}:\${ports:zope-front}/VirtualHostBase/http/\${reverse_proxy:host}:\${reverse_proxy:port}/\${plone:site}/VirtualHostRoot/  
+
+#RewriteLog "\${buildout:directory}/var/log/apache/rewrite.log"
+#RewriteLogLevel 3
+
+
 # vim: set ft=xml:
-</VirtualHost>
+</VirtualHost> 

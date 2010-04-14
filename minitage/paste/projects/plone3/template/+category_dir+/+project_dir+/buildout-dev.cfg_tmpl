@@ -40,10 +40,10 @@ parts+= omelette
 ${i18ncomment}    i18ndude
 
 [hosts]
-deliverance-backend=\${hosts:instance}
+zope-front=\${hosts:instance}
 
 [ports]
-deliverance-backend=\${ports:instance}
+zope-front=\${ports:instance}
 
  
 [versions]

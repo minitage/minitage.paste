@@ -91,7 +91,6 @@ ${delicomment}    deliverance
 ${delicomment}    deliverance_ini
 ${delicomment}    deliverance_prod_ini
 ${delicomment}    deliverance_rules
-${delicomment}    deliverance_patches
 ${delicomment}    apache_deliverance_vhost
     apache_vhost
 # hudson integration

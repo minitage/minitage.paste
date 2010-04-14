@@ -77,7 +77,6 @@
   <option order="2498" name="reverseproxy_host"       description="domain name which be used in the reverse proxy" default="localhost.com"/>
   <option order="2498" name="reverseproxy_aliases"    description="domain name aliases (comma separated) which be used in the reverse proxy" default="bis.localhost.com.bis,ter.localhost.com"/>
   <option order="2498" name="reverseproxy_port"       description="port of the reverse proxy" default="80"/>
-  <option order="2498" name="reverseproxy_mountpoint" description="mountpoint on the reverse proxy host REMOVE  THE TRAILING SLASH" default="/"/> 
   </options>
   <!--
     LINK THERE YOUR EGGS TO BE Installed on option triggering.

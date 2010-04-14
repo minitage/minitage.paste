@@ -45,11 +45,12 @@ recipe = collective.recipe.template
 input =\${buildout:directory}/etc/templates/deliverance/deliverance.xml.in
 output =\${buildout:directory}/etc/deliverance/deliverance.xml 
 
-[deliverance_patches]
-patches=\${buildout:directory}/patches/deliverance.etreefd.nosegfault.patch
-recipe = plone.recipe.command
-update-command = \${deliverance_patches:command}
-command =for patch in \${deliverance_patches:patches};do cd \${buildout:sources-dir}/Deliverance;patch -Np0 < \$patch;cd \${buildout:directory};done;
+# merged upstream !
+#[deliverance_patches]
+#patches=\${buildout:directory}/patches/deliverance.etreefd.nosegfault.patch
+#recipe = plone.recipe.command
+#update-command = \${deliverance_patches:command}
+#command =for patch in \${deliverance_patches:patches};do cd \${buildout:sources-dir}/Deliverance;patch -Np0 < \$patch;cd \${buildout:directory};done;
 
 
 [sources]

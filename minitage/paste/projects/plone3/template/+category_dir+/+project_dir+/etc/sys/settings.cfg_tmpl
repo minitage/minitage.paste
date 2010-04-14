@@ -14,7 +14,6 @@
 [reverse_proxy]
 host=$reverseproxy_host
 port=$reverseproxy_port
-mount-point=$reverseproxy_mountpoint
 
 [hosts]
 # setted here but just as information, it may not be used.
@@ -34,11 +33,12 @@ syslog = 127.0.0.1
 solr = $solr_host
 buildbot-master=${buildbot_master_host}
 staging=$staging_host
-deliverance=$deliverance_host
 #if not $with_haproxy
-deliverance-backend=\${hosts:instance1}
+zope-front=\${hosts:instance1}
 #end if
-${hapcomment}deliverance-backend=\${hosts:balancer}
+${hapcomment}zope-front=\${hosts:balancer} 
+deliverance=$deliverance_host
+deliverance-backend=\${hosts:zope-front}
 
 [ports]
 # other instances, in case.
@@ -57,11 +57,13 @@ balancer=$haproxy_port
 solr = $solr_port
 buildbot-master-control=${buildbot_master_control_port}
 buildbot-master-web=${buildbot_master_web_port}
-deliverance=$deliverance_port
 #if not $with_haproxy
-deliverance-backend=\${ports:instance1}
+zope-front=\${ports:instance1}
 #end if
-${hapcomment}deliverance-backend=\${ports:balancer}
+${hapcomment}zope-front=\${ports:balancer}
+deliverance=$deliverance_port
+deliverance-backend=\${ports:zope-front}
+
 
 
 
@@ -116,7 +118,6 @@ site = $plonesite
 #system user
 zope=$running_user
 #haproxy user
-balancer=$running_user
 staging=$staging_user
 
 [supervisor-webadmin]

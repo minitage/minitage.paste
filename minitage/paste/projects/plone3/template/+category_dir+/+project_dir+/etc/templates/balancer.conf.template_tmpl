@@ -8,7 +8,7 @@ global
   log \${hosts:syslog} local6
 
   # We manage this with supervisor
-  #  user \${users:balancer}
+  #  user \${users:zope}
 
   maxconn  1024
   ulimit-n 65536
