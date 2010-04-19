@@ -39,7 +39,7 @@ ${fsscomment}zope-instances=\${instance-newsletter:location}
 [instance-newsletter]
 <= instance
 http-address = \${hosts:instance-newsletter}:\${ports:instance-newsletter}
-zope-conf-additional +=
+zope-conf-additional =
     <clock-server>
     # the traversal path (from the Zope root) to an executable Zope method (Python Script, external method, product method, etc). The method must take no arguments.
     method /\${plone:site}/@@dancing.utils/tick_and_dispatch

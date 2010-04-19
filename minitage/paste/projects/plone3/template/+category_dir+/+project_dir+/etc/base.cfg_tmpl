@@ -92,6 +92,7 @@ ${delicomment}    deliverance_ini
 ${delicomment}    deliverance_prod_ini
 ${delicomment}    deliverance_rules
 ${delicomment}    apache_deliverance_vhost
+${delicomment}    deliverance.test
     apache_vhost
 # hudson integration
     ${sane_name}_hudson_env

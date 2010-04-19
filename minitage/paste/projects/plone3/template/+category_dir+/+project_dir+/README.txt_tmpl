@@ -182,6 +182,10 @@ You can launch manually deliverance via::
 
     127.0.0.1 ${project}.localhost
 
+- To access the deliverane log, append 'deliv_log'to the GET parmaters::
+
+     http://$deliverance_host:$deliverance_port/VirtualHostBase/http/$deliverance_host:$deliverance_port/${plonesite}/VirtualHostRoot/<REQUEST>?deliv_log=1
+
 And then hit http://${project}.localhost to view your proxified deliverance server
 
 REVERSE PROXY

@@ -12,6 +12,7 @@
 #end if
 
 [reverse_proxy]
+scheme=$reverseproxy_scheme
 host=$reverseproxy_host
 port=$reverseproxy_port
 

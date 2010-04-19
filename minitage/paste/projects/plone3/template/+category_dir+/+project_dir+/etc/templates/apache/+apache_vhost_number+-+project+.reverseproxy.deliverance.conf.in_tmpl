@@ -15,30 +15,42 @@ DirectoryIndex   index.html index.htm
     Order allow,deny
     Allow from all
 </Directory>
+
+ProxyRequests off
+<Proxy *>
+  Order allow,deny
+  Allow from all
+</Proxy>
+
+# we need to have
+#    - a vhm url for the zope2 server
+#    - one set of request environment variables for the deliverance server .
+RequestHeader add        X-Vhm-Host \${reverse_proxy:scheme}://\${reverse_proxy:host}:\${reverse_proxy:port}/
+#RequestHeader add        X-Vhm-Root /submountpoint
+
 RewriteEngine  on
 
 # application mounted on / does not needs _vh_
 # /zmiroot -> access to zmi
-RewriteCond %{REQUEST_URI} ^(/zmiroot.*)$ 
-RewriteRule      ^/zmiroot(.*) http://\${hosts:zope-front}:\${ports:zope-front}/VirtualHostBase/http/%{HTTP_HOST}:\${reverse_proxy:port}/VirtualHostRoot/_vh_zmiroot$1 [L,P]
+ProxyPassMatch   ^/zmiroot(.*) http://\${hosts:zope-front}:\${ports:zope-front}/VirtualHostBase/\${reverse_proxy:scheme}/\${reverse_proxy:host}:\${reverse_proxy:port}/VirtualHostRoot/_vh_zmiroot$1
+ProxyPassReverse ^/zmiroot/    http://\${hosts:zope-front}:\${ports:zope-front}/VirtualHostBase/\${reverse_proxy:scheme}/\${reverse_proxy:host}:\${reverse_proxy:port}/VirtualHostRoot/_vh_zmiroot/
 
 # /plone-${project}-> vhmonster without deliverance filtering
-RewriteCond %{REQUEST_URI} ^(/plone-${project}.*)$ 
-RewriteRule      ^/plone-${project}(.*) http://\${hosts:zope-front}:\${ports:zope-front}/VirtualHostBase/http/%{HTTP_HOST}:\${reverse_proxy:port}/\${plone:site}/VirtualHostRoot/_vh_plone-${project}$1 [L,P] 
+ProxyPassMatch   ^/plone-${project}(.*) http://\${hosts:zope-front}:\${ports:zope-front}/VirtualHostBase/\${reverse_proxy:scheme}/\${reverse_proxy:host}:\${reverse_proxy:port}/\${plone:site}/VirtualHostRoot/_vh_plone-${project}$1
+ProxyPassReverse ^/plone-${project}/    http://\${hosts:zope-front}:\${ports:zope-front}/VirtualHostBase/\${reverse_proxy:scheme}/\${reverse_proxy:host}:\${reverse_proxy:port}/\${plone:site}/VirtualHostRoot/_vh_plone-${project}/
 
 # /_themes -> no vhmonster
-ProxyPass         /_themes/          http://\${hosts:deliverance}:\${ports:deliverance}/_themes/
-ProxyPassReverse  /_themes/          http://\${hosts:deliverance}:\${ports:deliverance}/_themes/
-ProxyPass         /.deliverance/     http://\${hosts:deliverance}:\${ports:deliverance}/.deliverance/
-ProxyPassReverse  /.deliverance/     http://\${hosts:deliverance}:\${ports:deliverance}/.deliverance/
+ProxyPassMatch   /(_themes|\.deliverance)(.*) http://\${hosts:deliverance}:\${ports:deliverance}/$1$2
+ProxyPassReverse /_themes/                    http://\${hosts:deliverance}:\${ports:deliverance}/_themes/
+ProxyPassReverse /.deliverance/               http://\${hosts:deliverance}:\${ports:deliverance}/.deliverance/
 
 # supervisor
-ProxyPass         /supervisor/ http://\${hosts:supervisor}:\${ports:supervisor}/
-ProxyPassReverse  /supervisor/ http://\${hosts:supervisor}:\${ports:supervisor}/ 
+ProxyPass        /supervisor http://\${hosts:supervisor}:\${ports:supervisor}
+ProxyPassReverse /supervisor http://\${hosts:supervisor}:\${ports:supervisor}
 
 # /-> vhmonster proxyreverse because of redirects !
-ProxyPass         /     http://\${hosts:deliverance}:\${ports:deliverance}/VirtualHostBase/http/\${reverse_proxy:host}:\${reverse_proxy:port}/\${plone:site}/VirtualHostRoot/
-ProxyPassReverse  /     http://\${hosts:deliverance}:\${ports:deliverance}/VirtualHostBase/http/\${reverse_proxy:host}:\${reverse_proxy:port}/\${plone:site}/VirtualHostRoot/ 
+ProxyPass        /               http://\${hosts:deliverance}:\${ports:deliverance}/VirtualHostBase/\${reverse_proxy:scheme}/\${reverse_proxy:host}:\${reverse_proxy:port}/\${plone:site}/VirtualHostRoot/
+ProxyPassReverse /               http://\${hosts:deliverance}:\${ports:deliverance}/VirtualHostBase/\${reverse_proxy:scheme}/\${reverse_proxy:host}:\${reverse_proxy:port}/\${plone:site}/VirtualHostRoot/
 
 #RewriteLog "\${buildout:directory}/var/log/apache/rewrite.log"
 #RewriteLogLevel 3

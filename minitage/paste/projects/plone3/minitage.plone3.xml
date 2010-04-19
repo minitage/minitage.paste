@@ -77,6 +77,7 @@
   <option order="2498" name="reverseproxy_host"       description="domain name which be used in the reverse proxy" default="localhost.com"/>
   <option order="2498" name="reverseproxy_aliases"    description="domain name aliases (comma separated) which be used in the reverse proxy" default="bis.localhost.com.bis,ter.localhost.com"/>
   <option order="2498" name="reverseproxy_port"       description="port of the reverse proxy" default="80"/>
+  <option order="2498" name="reverseproxy_scheme"       description="HHTP(s) scheme of the reverse proxy (http/https)" default="http"/>
   </options>
   <!--
     LINK THERE YOUR EGGS TO BE Installed on option triggering.
@@ -127,6 +128,7 @@
     <egg name="archetypes.schematuning"        options="with_ploneproduct_schematuning" />
     <egg name="collective.contentlicensing"    options="with_ploneproduct_contentlicensing" zpackage="y" zcml="configure"/>
     <egg name="collective.dancing"             options="with_ploneproduct_sgdcg"            zpackage="y" zcml="configure"/>
+    <egg name="z3c.unconfigure"                options="with_ploneproduct_sgdcg"            />
     <egg name="collective.flowplayer"          options="with_ploneproduct_flowplayer"   zcml="configure"/>
     <egg name="collective.indexing"            options="with_ploneproduct_ci"               zpackage="y" zcml="configure"/>
     <egg name="collective.plonetruegallery"    options="with_ploneproduct_truegallery"      zpackage="y" zcml="configure"/>
@@ -414,7 +416,6 @@
     <source name="collective.transmogrifier" type="svn" url="http://svn.plone.org/svn/collective/collective.transmogrifier/trunk"  options="with_ploneproduct_patransmo"/>
     <source name="transmogrify.filesystem"   type="svn" url="http://svn.plone.org/svn/collective/transmogrify.filesystem/trunk"    options="with_ploneproduct_patransmo"/>
     <source name="transmogrify.sqlalchemy"   type="svn" url="http://svn.plone.org/svn/collective/transmogrify.sqlalchemy/trunk/"   options="with_ploneproduct_patransmo"/>
-
   </sources>
   <!--
     Some very ecliptic products doesnt fit with previous declaration, we will describe how to add the options to the underlying policy there.
