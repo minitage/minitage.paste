@@ -28,7 +28,7 @@ if 'RST_TEST' in os.environ:
 setup(
     name=name,
     version=version,
-    description='PasteScripts to facilitate use of minitage and creation of minitage based projects sponsorised by Makina Corpus.',
+    description='PasteScripts to facilitate use of minitage and creation of minitage based projects sponsored by Makina Corpus.',
     long_description = long_description,
     classifiers=[
         "Framework :: Django",
