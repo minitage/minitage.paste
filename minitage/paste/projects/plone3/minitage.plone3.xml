@@ -214,42 +214,80 @@
     -->
   <qi>
     <product name="ATBackRef"                      options="with_ploneproduct_atbackref"        />
-    <product name="CMFPlacefulWorkflow"            options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard" />
-    <product name="CMFSquidTool"                   options="with_ploneproduct_cachesetup"       />
     <product name="CacheSetup"                     options="with_ploneproduct_cachesetup"       />
+    <product name="CMFPlacefulWorkflow"            options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard" />
+    <product name="CMFPlomino"                     options="with_ploneproduct_plomino"          />
+    <product name="CMFSquidTool"                   options="with_ploneproduct_cachesetup"       />
     <product name="Collage"                        options="with_ploneproduct_collage"          />
-    <product name="FacultyStaffDirectory"          options="with_ploneproduct_facultystaff"     />
-    <product name="plone.app.z3cform"              options="with_ploneproduct_cz3cformgrok,with_ploneproduct_pz3cform"/>
-    <product name="LinguaPlone"                    options="with_ploneproduct_lingua"           />
-    <product name="Maps"                           options="with_ploneproduct_maps"             />
-    <product name="PloneArticle"                   options="with_ploneproduct_plonearticle"     />
-    <product name="PloneFormGen"                   options="with_ploneproduct_ploneformgen"     />
-    <product name="PloneSurvey"                    options="with_ploneproduct_plonesurvey "     />
-    <product name="Quills"                         options="with_ploneproduct_quills"           />
-    <product name="fatsyndication"                 options="with_ploneproduct_quills"           />
-    <product name="Relations"                      options="with_ploneproduct_facultystaff"     />
+    <product name="collective.contentlicensing"    options="with_ploneproduct_contentlicensing" />
     <product name="collective.dancing"             options="with_ploneproduct_sgdcg"            />
     <product name="collective.flowplayer"          options="with_ploneproduct_flowplayer"       />
     <product name="collective.plonetruegallery"    options="with_ploneproduct_truegallery"      />
     <product name="collective.portlet.tal"         options="with_ploneproduct_tal_portlet"      />
-    <product name="csvreplicata"                   options="with_ploneproduct_csvreplica"       />
-    <product name="plone.app.blob"                 options="with_ploneproduct_ploneappblob"     />
-    <product name="plone.app.jquerytools"          options="with_ploneproduct_plonejqtools"     />
-    <product name="easyshop.core"                  options="with_ploneproduct_easyshop"         />
     <product name="iw.fss"                         options="with_ploneproduct_fss"              />
-    <product name="p4a.plonecalendar"              options="with_ploneproduct_p4a_cal"          />
+    <!----><product name="p4a.plonecalendar"              options="with_ploneproduct_p4a_cal"          />
     <product name="p4a.ploneevent"                 options="with_ploneproduct_p4a_cal"          />
     <product name="p4a.plonevideoembed"            options="with_ploneproduct_p4a_vid"          />
-    <product name="p4a.plonevideo"                 options="with_ploneproduct_p4a_vid"          />
-    <product name="CMFPlomino"                     options="with_ploneproduct_plomino"          />
-    <product name="webcouturier.dropdownmenu"      options="with_ploneproduct_wc_dd_menu"       />
-    <product name="Ploneboard"                     options="with_ploneproduct_ploneboard"       />
-    <product name="SimpleAttachment"               options="with_ploneproduct_ploneboard"       />
+    <product name="p4a.plonevideo"                 options="with_ploneproduct_p4a_vid"          />        
+    <product name="plone.app.blob"                 options="with_ploneproduct_ploneappblob"     />
     <product name="plone.app.iterate"              options="with_ploneproduct_iterate"          />
-    <product name="collective.contentlicensing"    options="with_ploneproduct_contentlicensing" />
+    <product name="plone.app.jquerytools"          options="with_ploneproduct_plonejqtools"     />
+    <product name="plone.app.z3cform"              options="with_ploneproduct_cz3cformgrok,with_ploneproduct_pz3cform"/>     
+    <product name="webcouturier.dropdownmenu"      options="with_ploneproduct_wc_dd_menu"       />
     <product name="ContentWellPortlets"            options="with_ploneproduct_contentwellportlet"/>
+    <product name="csvreplicata"                   options="with_ploneproduct_csvreplica"       />
+    <product name="easyshop.core"                  options="with_ploneproduct_easyshop"         />
+    <product name="FacultyStaffDirectory"          options="with_ploneproduct_facultystaff"     />
+    <product name="fatsyndication"                 options="with_ploneproduct_quills"           />
+    <product name="LinguaPlone"                    options="with_ploneproduct_lingua"           />
+    <product name="Maps"                           options="with_ploneproduct_maps"             />
+    <product name="PloneArticle"                   options="with_ploneproduct_plonearticle"     />
+    <product name="Ploneboard"                     options="with_ploneproduct_ploneboard"       />
+    <product name="PloneFormGen"                   options="with_ploneproduct_ploneformgen"     />
+    <product name="PloneSurvey"                    options="with_ploneproduct_plonesurvey "     />
+    <product name="Quills"                         options="with_ploneproduct_quills"           />
+    <product name="Relations"                      options="with_ploneproduct_facultystaff"     />
+    <product name="SimpleAttachment"               options="with_ploneproduct_ploneboard"       />
     <product name="TinyMCE"                        options="with_ploneproduct_tinymce"/>
   </qi>
+
+  <gs>
+    <product name="collective.contentlicensing"    options="with_ploneproduct_contentlicensing" />
+    <product name="collective.dancing"             options="with_ploneproduct_sgdcg"            />
+    <product name="collective.flowplayer"          options="with_ploneproduct_flowplayer"       />
+    <product name="collective.plonetruegallery"    options="with_ploneproduct_truegallery"      />
+    <product name="collective.portlet.tal"         options="with_ploneproduct_tal_portlet"      />
+    <product name="easyshop.core"                  options="with_ploneproduct_easyshop"         />
+    <product name="p4a.ploneevent"                 options="with_ploneproduct_p4a_cal"          />
+    <product name="p4a.plonevideoembed"            options="with_ploneproduct_p4a_vid"          />
+    <product name="p4a.plonevideo"                 options="with_ploneproduct_p4a_vid"          />     
+    <product name="iw.fss"                         options="with_ploneproduct_fss"              />
+    <product name="plone.app.blob"                 options="with_ploneproduct_ploneappblob"     />
+    <product name="plone.app.iterate"              options="with_ploneproduct_iterate"          />
+    <product name="plone.app.jquerytools"          options="with_ploneproduct_plonejqtools"     />
+    <product name="webcouturier.dropdownmenu"      options="with_ploneproduct_wc_dd_menu"       />
+    <product name="plone.app.z3cform"              options="with_ploneproduct_cz3cformgrok,with_ploneproduct_pz3cform"/>           
+    <product name="Products.ATBackRef"             options="with_ploneproduct_atbackref"        />
+    <product name="Products.CacheSetup"            options="with_ploneproduct_cachesetup"       />
+    <product name="Products.CMFPlacefulWorkflow"   options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard" />
+    <product name="Products.CMFPlomino"            options="with_ploneproduct_plomino"          />
+    <product name="Products.CMFSquidTool"          options="with_ploneproduct_cachesetup"       />
+    <product name="Products.Collage"               options="with_ploneproduct_collage"          />
+    <product name="Products.ContentWellPortlets"   options="with_ploneproduct_contentwellportlet"/>
+    <product name="Products.csvreplicata"          options="with_ploneproduct_csvreplica"       />
+    <product name="Products.FacultyStaffDirectory" options="with_ploneproduct_facultystaff"     />
+    <product name="Products.fatsyndication"        options="with_ploneproduct_quills"           />
+    <product name="Products.LinguaPlone"           options="with_ploneproduct_lingua"           />
+    <product name="Products.Maps"                  options="with_ploneproduct_maps"             />
+    <product name="Products.PloneArticle"          options="with_ploneproduct_plonearticle"     />
+    <product name="Products.Ploneboard"            options="with_ploneproduct_ploneboard"       />
+    <product name="Products.PloneFormGen"          options="with_ploneproduct_ploneformgen"     />
+    <product name="Products.PloneSurvey"           options="with_ploneproduct_plonesurvey "     />
+    <product name="Products.Quills"                options="with_ploneproduct_quills"           />
+    <product name="Products.Relations"             options="with_ploneproduct_facultystaff"     />
+    <product name="Products.SimpleAttachment"      options="with_ploneproduct_ploneboard"       />
+    <product name="Products.TinyMCE"               options="with_ploneproduct_tinymce"/> 
+  </gs>
   <!--
     Enter here mandatory version pinnings
     Valid items are:
