@@ -9,7 +9,7 @@ What is minitage.paste
 
 Those are PasteScripts to help creating out projects living inside minitage.
 You ll find in there:
-======================================
+
 Makina Corpus sponsorised software
 ======================================
 |makinacom|_
