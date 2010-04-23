@@ -3,7 +3,7 @@
 
 [zeoserver]
 blob-storage = \${locations:blob-storage}
-eggs = plone.app.blob
+eggs += plone.app.blob
 
 [instance]
 blob-storage = \${zeoserver:blob-storage}

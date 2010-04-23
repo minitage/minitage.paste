@@ -48,7 +48,6 @@ auto-checkout +=
 extra-paths+=\${buildout:extra-paths}
 eggs += \${buildout:eggs}
     Plone
-
 #for $product in $additional_eggs:
 #if product.startswith('#'):
 $product
@@ -107,6 +106,7 @@ CONFIG_FILE=\${instance:location}/etc/zope.conf
 recipe=plone.recipe.command
 update-command = \${fakeproducts:command}
 command =
+    rm -rf \${buildout:directory}/parts/fakeproducts/Products/;
     mkdir -pv \${buildout:directory}/parts/fakeproducts/Products/;
     touch  \${buildout:directory}/parts/fakeproducts/Products/__init__.py;
     for i in \$(echo "\${instance:products}");do for j in \$i/*;do if [ "\$j" != "\$i/" ] && [ -d \$j ];then ln -sfv \$j \${buildout:directory}/parts/fakeproducts/Products/\$(basename \$j);fi;done;done;

@@ -1,5 +1,20 @@
 # ZEO backend support and configuration
 
+
+
+
+#if $zeo_port.strip():
+#set $zeo_sep = ''
+#else
+#set $zeo_sep = ''
+#end if
+#if $with_zeo_socket:
+#set zeoa = '${buildout:directory}/var/zeocl.sock'
+#set zeoh = '#${hosts:zeo}:${ports:zeo}'
+#else
+#set zeoa= '${hosts:zeo}:${ports:zeo}'
+#end if
+
 [instance]
 zeo-client-cache-size = \${cache:zeo-client-cache-size}
 zeo-client = on
@@ -22,7 +37,11 @@ zope2-location = \${zope2:location}
 #else
 recipe = plone.recipe.zeoserver
 #end if
-zeo-address = \${hosts:zeo}:\${ports:zeo}
+#if $with_zeo_socket:
+# zeo-address = $zeoh
+#end if
+zeo-address = $zeoa
+socket-name =\${buildout:directory}/var/zeo.zdsock
 #if $major < 4:
 zeo-conf-additional =
     %import tempstorage
@@ -30,5 +49,7 @@ zeo-conf-additional =
         name temporary storage for sessioning
     </temporarystorage>
 #end if
+eggs +=
+  ZODB3
 
 # vim:set ft=cfg:

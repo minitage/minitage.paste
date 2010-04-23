@@ -46,6 +46,10 @@ extra-paths+=
 eggs-directory=\${minitage:location}/eggs/cache
 #end if
 
+#if $with_binding_mapscript
+minitage-globalenv=true
+#end if
+
 [versions]
 # bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
 # the one packaged in minitage !

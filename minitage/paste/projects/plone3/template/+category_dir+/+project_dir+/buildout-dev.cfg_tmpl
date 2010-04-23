@@ -45,6 +45,8 @@ zope-front=\${hosts:instance}
 [ports]
 zope-front=\${ports:instance}
 
+[sources]
+experimental.catalogqueryplan = svn https://svn.plone.org/svn/collective/experimental.catalogqueryplan/trunk
  
 [versions]
 ctypes=1.0.2
@@ -59,6 +61,8 @@ debug-mode=on
 #zcml+=collective.autorestart
 #end if
 #
+zcml+=
+    experimental.catalogqueryplan
 eggs+= plone.reload
     collective.dist
     collective.releaser
@@ -66,6 +70,7 @@ eggs+= plone.reload
     gprof2dot
     Products.Clouseau
     Products.DocFinderTab
+    experimental.catalogqueryplan
     Products.Gloworm
 # Uncomment/Activate only if you want
 #    Products.PDBDebugMode

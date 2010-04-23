@@ -169,6 +169,11 @@ staging=$staging_path
 command =
 #    mkdir -pv \${buildout:directory}/foo
 
+
+#do not remove, internal for zeoserver eggs buildout & extends
+[zeoserver]
+eggs=
+
 [mirrors]
 sourceforge = ovh.dl.sourceforge.net
 minitage = distfiles.minitage.org/public/externals/minitage

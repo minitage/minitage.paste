@@ -64,9 +64,13 @@ extends = #slurp
     project/${project}.cfg#slurp
     apache/apache.cfg#slurp
     hudson/${project}/hudson.cfg#slurp
-#if $with_deliverance_support:
     deliverance/deliverance.cfg#slurp
-#end if  
+
+#if not $with_deliverance_support
+# to enable deliverance support, before uncommenting things there & there, think to add to those extends:
+#    deliverance/deliverance.cfg
+#
+#end if
 
 
 parts =
@@ -223,5 +227,6 @@ packages = \${zope2:location}/lib/python ./
 recipe = plone.recipe.command
 update-command = \${mkdirs:command}
 command +=
+
 
 \# vim: set ft=cfg:

@@ -141,7 +141,7 @@ class Template(common.Template):
                 vars[i].default = sane_name
             if var.name in ['reverseproxy_host',] and command:
                 sane_name = '%s.localhost' % common.SPECIALCHARS.sub('', command.args[0])
-                vars[i].default = sane_name 
+                vars[i].default = sane_name
         return vars
 
     def get_versions_url(self, cvars=None):
@@ -194,6 +194,7 @@ class Template(common.Template):
                 vars['autocheckout'].append(
                     self.plone_sources[vn]['name']
                 )
+
         for var in self.plone_sources:
             if self.plone_sources[var].get('autocheckout', '') == 'y':
                 if not self.plone_sources[var]['name'] in vars['autocheckout']:
@@ -202,7 +203,7 @@ class Template(common.Template):
                         and (self.plone_sources[var]['name'] not in vars['autocheckout'])):
                         vars['autocheckout'].append(
                             self.plone_sources[var]['name']
-                        )                                  
+                        )
 
         lps = copy.deepcopy(self.plone_sources)
         for item in self.plone_sources:
@@ -230,6 +231,9 @@ class Template(common.Template):
         for db in minitage_dbs:
             if vars['with_database_%s' % db] and vars['inside_minitage']:
                 vars['opt_deps'] += ' %s' % search_latest('%s-\d\.\d*'% db, vars['minilays'])
+        # databases
+        if vars['with_binding_mapscript'] and vars['inside_minitage']:
+            vars['opt_deps'] += ' %s' % search_latest('mapserver-\d\.\d*', vars['minilays'])
 
         # openldap
         if vars['with_binding_ldap'] and vars['inside_minitage']:
@@ -370,8 +374,9 @@ class Template(common.Template):
         vars['http_port4'] = int(vars['http_port']) + 4
         vars['http_port5'] = int(vars['http_port']) + 5
         vars['http_port_buildbot'] = int(vars['http_port']) + 6
-
-        vars['zeo_port_buildbot'] = int(vars['zeo_port']) + 1
+        vars['zeo_port_buildbot'] = ''
+        if 'oscket' == vars['zeo_port'].strip():
+            vars['zeo_port_buildbot'] = int(vars['zeo_port']) + 1
         vars['running_user'] = common.running_user
         vars['instances_description'] = common.INSTANCES_DESCRIPTION % vars
         if not vars['reverseproxy_aliases']:
@@ -455,7 +460,7 @@ class Template(common.Template):
                 )
 
 
-    
+
     def post_default_template_hook(self, command, output_dir, vars, ep):
         """No more used."""
         pass
@@ -474,6 +479,7 @@ plone_vars = [pvar('address', 'Address to listen on', default = 'localhost',),
               pvar('devmode', 'Mode to use in development mode: zodb|relstorage|zeo', default = 'zeo'),
               pvar('zeo_host', 'Address for the zeoserver (zeo mode only)', default = 'localhost',),
               pvar('zeo_port', 'Port for the zeoserver (zeo mode only)', default = '8100',),
+              pvar('with_zeo_socket', 'Use socket for zeo, y/n', default = 'n',),
               pvar('zope_user', 'Administrator login', default = 'admin',),
               pvar('zope_password', 'Admin Password in the ZMI', default = 'secret',),
               pvar('relstorage_type', 'Relstorage database type (only useful for relstorage mode)', default = 'postgresql',),
@@ -487,7 +493,7 @@ plone_vars = [pvar('address', 'Address to listen on', default = 'localhost',),
               pvar('solr_path', 'Solr path (only useful if you want solr)', default = '/solr',),
               pvar('staging_host', 'Host to get a datafs from address', default = 'host',),
               pvar('staging_user', 'User for connecting to the staging host', default = 'user',),
-              pvar('staging_path', 'Path to the buildout root on the staging host', default = '/',),  
+              pvar('staging_path', 'Path to the buildout root on the staging host', default = '/',),
               pvar('supervisor_host', 'Supervisor host', default = '127.0.0.1',),
               pvar('supervisor_port', 'Supervisor port', default = '9001',),
               pvar('supervisor_user', 'Supervisor web user', default = 'admin',),

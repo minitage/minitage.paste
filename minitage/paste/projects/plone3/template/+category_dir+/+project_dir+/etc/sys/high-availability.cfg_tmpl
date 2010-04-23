@@ -1,5 +1,5 @@
 $hr
-# Hight availability settings (production instances and load balanacer)
+# High availability settings (production instances and load balancer)
 $hr
 
 # for haproxy, look at the template in etc/templates/balancer.conf.template

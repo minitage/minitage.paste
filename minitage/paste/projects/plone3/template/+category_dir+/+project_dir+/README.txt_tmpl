@@ -124,7 +124,7 @@ SYSTEM ADMINISTRATORS RELATED FILES
     etc/init.d/                 -> various init script (eg supervisor)
     etc/logrotate.d/            -> various logrotate configuration files
     etc/sys/
-    |-- hight-availability.cfg  -> Project production settings like supervision, loadbalancer and so on
+    |-- high-availability.cfg   -> Project production settings like supervision, loadbalancer and so on
     |-- maintenance.cfg         -> Project maintenance settings (crons, logs)
     `-- settings.cfg            -> various settings (crons hours, hosts, installation paths, ports, passwords)
 
