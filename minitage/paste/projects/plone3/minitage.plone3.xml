@@ -115,7 +115,6 @@
   <option order="4862" name="with_ploneproduct_autocomplete"           description="Autocomplete Widget, see http://pypi.python.org/pypi/plone.formwidget.autocomplete y/n"/>
   <option order="4863" name="with_ploneproduct_masterselect"           description="MasterSelect Widget, see http://pypi.python.org/pypi/Products.MasterSelectWidget y/n"/>
   <option order="4864" name="with_ploneproduct_atschemaeditor"         description="ATSchemaEditorNG, see http://svn.plone.org/svn/collective/Products.ATSchemaEditorNG y/n"/>
-
 </options>
   <!--
     LINK THERE YOUR EGGS TO BE Installed on option triggering.
@@ -164,8 +163,7 @@
     <egg name="ZopeSkel"                       options="with_tool_zopeskel"                />
     <egg name="xlwt"                           options="with_binding_xlwt"                />
     <egg name="BeautifulSoup"                  options="with_binding_bsoup"   />
-
-
+    <egg name="imsvdex"                        options="with_ploneproduct_atvmanager"   />
 
     <!-- pure zope/plone eggs -->
     <egg name="archetypes.schemaextender"      options="with_ploneproduct_schemaextender,with_ploneproduct_facultystaff" zcml="configure" />
@@ -589,7 +587,7 @@
     <source name="z3c.relationfieldui"              type="svn"  url="svn://svn.zope.org/repos/main/z3c.relationfieldui/trunk"                                              options="with_ploneproduct_z3crelationfieldui"/>
     <source name="Products.remember"                type="svn"  url="https://svn.plone.org/svn/collective/Products.remember/trunk"                                         options="with_ploneproduct_remember"/>
     <source name="Products.membrane"                type="svn"  url="https://svn.plone.org/svn/collective/Products.membrane/trunk"                                         options="with_ploneproduct_remember,with_ploneproduct_membrane"/>
-    <source name="Products.ATVocabularyManager"     type="svn"  url="https://svn.plone.org/svn/archetypes/Products.ATVocabularyManager/trunk/Products/ATVocabularyManager" options="with_ploneproduct_atvmanager"/>
+    <source name="Products.ATVocabularyManager"     type="svn"  url="https://svn.plone.org/svn/archetypes/Products.ATVocabularyManager/trunk"                              options="with_ploneproduct_atvmanager"/>
     <source name="Products.AddRemoveWidget"         type="svn"  url="https://svn.plone.org/svn/archetypes/Products.AddRemoveWidget/trunk"                                  options="with_ploneproduct_addremovewidget"/>
     <source name="plone.formwidget.autocomplete"    type="svn"  url="https://svn.plone.org/svn/plone/plone.formwidget.autocomplete/trunk"                                  options="with_ploneproduct_autocomplete"/>
     <source name="Products.MasterSelectWidget"      type="svn"  url="https://svn.plone.org/svn/archetypes/MoreFieldsAndWidgets/Products.MasterSelectWidget/trunk"          options="with_ploneproduct_masterselect"/>
