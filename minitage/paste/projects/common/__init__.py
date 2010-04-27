@@ -375,6 +375,8 @@ def parse_xmlconfig(xml,
     mainly used in plone templates."""
     result = {
         'qi_mappings' :                  {},
+        'qi_hidden_mappings' :           {},
+        'gs_mappings' :                  {},
         'z2packages' :                   {},
         'z2products' :                   {},
         'addons_vars' :                  {},
@@ -403,6 +405,8 @@ def parse_xmlconfig(xml,
     scripts_mappings          = result.get('scripts_mappings')
     zcml_loading_order        = result.get('zcml_loading_order')
     zcml_mappings             = result.get('zcml_mappings')
+    gs_mappings               = result.get('gs_mappings')
+    qi_hidden_mappings        = result.get('qi_hidden_mappings')
     versions_mappings         = result.get('versions_mappings')
     checked_versions_mappings = result.get('checked_versions_mappings')
     urls_mappings             = result.get('urls_mappings')
@@ -416,6 +420,7 @@ def parse_xmlconfig(xml,
         purge_nodes(xml, 'checkedversions', 'version', checked_versions_mappings, 'p', peroption=True)
         purge_nodes(xml, 'sources', 'source', plone_sources)
         purge_nodes(xml, 'qi', 'product', qi_mappings, peroption=True)
+        purge_nodes(xml, 'gs', 'product', gs_mappings, peroption=True)
         purge_nodes(xml, 'productdistros', 'productdistro', urls_mappings, key="url", peroption=True)
         purge_nodes(xml, 'eggs', 'egg', eggs_mappings, peroption=True)
         purge_nodes(xml, 'eggs', 'egg', scripts_mappings, 'scripts', peroption=True)
@@ -521,10 +526,31 @@ def parse_xmlconfig(xml,
                     oattrs = dict(e.attributes.items())
                     for option in oattrs['options'].split(','):
                         option = option.strip()
-                        if not option in qi_mappings:
-                            qi_mappings[option] = []
-                        if not oattrs['name'] in qi_mappings:
-                            qi_mappings[option].append(oattrs['name'])
+                        hidden = 'true' == oattrs.get('hidden', 'true')
+                        if hidden and (not option in qi_hidden_mappings):
+                            qi_hidden_mappings[option] = [] 
+                        if not hidden and (not option in qi_mappings):
+                            qi_mappings[option] = [] 
+                        if hidden and (not oattrs['name'] in qi_hidden_mappings):
+                            qi_hidden_mappings[option].append(oattrs['name'])
+                        if not hidden and (not oattrs['name'] in qi_mappings):
+                            qi_mappings[option].append(oattrs['name']) 
+
+        # genericsetup mappings discovery
+        gs = xmlTemplate.getElementsByTagName('gs')
+        gs_added_profiles = []
+        if gs:
+            for elem in gs:
+                nodes = elem.getElementsByTagName('product')
+                for e in nodes:
+                    oattrs = dict(e.attributes.items())
+                    for option in oattrs['options'].split(','):
+                        option = option.strip()
+                        profile = (oattrs['name'], oattrs.get('profile', 'default'), int(oattrs.get('order', 99999)))
+                        if not profile in gs_mappings:
+                            gs_mappings[profile] = []
+                        if not option in gs_mappings[profile]:
+                            gs_mappings[profile].append(option)
 
         # eggs/zcml discovery
         eggs = xmlTemplate.getElementsByTagName('eggs')
@@ -598,8 +624,8 @@ def parse_xmlconfig(xml,
                                 else:
                                     #d[option].append('#%s' % oattrs['name'])
                                     zp = [z.strip() for z in oattrs[package].split(',')]
-                                    noecho = [d[option].append(z) 
-                                              for z in zp 
+                                    noecho = [d[option].append(z)
+                                              for z in zp
                                               if not z in d[option]]
 
         # productdistros handling

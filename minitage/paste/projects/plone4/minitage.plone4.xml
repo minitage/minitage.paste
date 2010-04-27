@@ -7,6 +7,7 @@
   <template>
     <versions>
       <version p="zope.schema"           v="3.6.1"   name="we will need this version to avoid problems with eg: z3c.form"/>
+      <version p='five.intid'             v='0.5.0'  name='various zope3 packages needed by various products in a zope2 installation'/>
     </versions>
     <checkedversions>
       <version p='Products.LinguaPlone' v='3.1a1'      options="with_ploneproduct_lingua"/>

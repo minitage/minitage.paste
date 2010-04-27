@@ -10,25 +10,26 @@ versions = versions
 [versions]
 # https://bugs.launchpad.net/singing-dancing/+bug/301082
 #if $major < 4:
-zope.app.catalog = 3.5.2
-zope.component = 3.5.1
-zope.i18n = 3.6.0
-zope.sendmail = 3.5.1
-zope.testing = 3.7.1
-five.intid = 0.3.0
-zope.securitypolicy = 3.4.0
-zope.app.zcmlfiles = 3.4.3 
+#zope.app.catalog = 3.5.2
+#zope.component = 3.5.1
+#zope.i18n = 3.6.0
+#zope.sendmail = 3.5.1
+#zope.testing = 3.7.1
+#five.intid = 0.3.0
+#zope.securitypolicy = 3.4.0
+#zope.app.zcmlfiles = 3.4.3 
 #end if
 
 
 [zope2]
-fake-zope-eggs = true
-skip-fake-eggs =
-    ZConfig
-    ZODB3
-    pytz
-    zope.container
-    zope.intid
+#fake-zope-eggs = true
+#skip-fake-eggs +=
+#    ZConfig
+#    ZODB3
+#    pytz
+#    zope.container
+#    zope.lifecycleevent
+#    zope.intid
 
 ${fsscomment}[fss-newsletter]
 ${fsscomment}<= fss

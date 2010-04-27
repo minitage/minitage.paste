@@ -23,6 +23,12 @@ $hr
 #else
 #set $blobcomment='#'
 #end if
+
+#if $with_no_zcml
+#set $zcmlcomment='#'
+#else
+#set $zcmlcomment=''
+#end if 
                                 
 [buildout]
 sources-dir=\${buildout:directory}/src.mrdeveloper
@@ -60,12 +66,12 @@ products =
     \${buildout:directory}/products
     \${productdistros:location}
 
-zcml +=#slurp
+zcml +=
 #for $product in $plone_zcml:
 #if product.startswith('#'):
 ${product}
 #else:
-    ${product}
+${zcmlcomment}    ${product}
 #end if
 #end for
 

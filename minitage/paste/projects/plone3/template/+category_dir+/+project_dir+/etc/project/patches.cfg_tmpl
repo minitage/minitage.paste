@@ -17,10 +17,11 @@ ZODB3-3.7.2-patches=
 #else
 #   \${buildout:directory}/patches/minitage.poll-invalidation-1-zodb-3-7-1.patch
 #end if
-#Products.Archetypes-patches=
+Products.Archetypes-1.5.16-patches=
 # Fix part of http://dev.plone.org/plone/ticket/8794
+# its needed at least for plonearticle-4.1.9
 # fix old 'isImplementedByInstancesOf' calls
-#                            \${buildout:directory}/patches/archetypes_implby.patch
+                            \${buildout:directory}/patches/archetypes_implby.patch
 
 
 
@@ -44,7 +45,7 @@ hachoir-core-patch-options=-Np1
 [instance]
 #if $major < 4:
 ZODB3-3.7.2-patches=\${zopepy:ZODB3-3.7.2-patches}
-#Products.Archetypes-patches=\${zopepy:Products.Archetypes-patches}
+Products.Archetypes-1.5.16-patches=\${zopepy:Products.Archetypes-1.5.16-patches}
 #end if
 Markdown-2.0.1-patches=\${zopepy:Markdown-2.0.1-patches}
 Markdown-patch-options=\${zopepy:Markdown-patch-options}
@@ -60,7 +61,7 @@ hachoir-core-patch-options=\${zopepy:hachoir-core-patch-options}
 [test]
 #if $major < 4:
 ZODB3-3.7.2-patches=\${zopepy:ZODB3-3.7.2-patches}
-#Products.Archetypes-patches=\${zopepy:Products.Archetypes-patches}
+Products.Archetypes-1.5.16-patches=\${zopepy:Products.Archetypes-1.5.16-patches}
 #end if
 Markdown-2.0.1-patches=\${zopepy:Markdown-2.0.1-patches}
 Markdown-patch-options=\${zopepy:Markdown-patch-options}
@@ -76,7 +77,7 @@ hachoir-core-patch-options=\${zopepy:hachoir-core-patch-options}
 [deliverance]
 #if $major < 4:
 ZODB3-3.7.2-patches=\${zopepy:ZODB3-3.7.2-patches}
-#Products.Archetypes-patches=\${zopepy:Products.Archetypes-patches}
+Products.Archetypes-1.5.16-patches=\${zopepy:Products.Archetypes-1.5.16-patches}
 #end if
 Markdown-2.0.1-patches=\${zopepy:Markdown-2.0.1-patches}
 Markdown-patch-options=\${zopepy:Markdown-patch-options}

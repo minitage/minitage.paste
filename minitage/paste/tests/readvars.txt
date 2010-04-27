@@ -192,17 +192,18 @@ Take a look to the distributed xml files to have details and examples.::
 
     >>> xmlvars1 = read_vars(c1)
     >>> pprint(xmlvars1['qi_mappings'])
+    {u'with_ploneproduct_p4a_vid': [u'p4a.plonevideoembed']}
+    >>> pprint(xmlvars1['qi_hidden_mappings'])
     {u'with_ploneproduct_atbackref': [u'ATBackRef'],
      u'with_ploneproduct_cpwkf': [u'CMFPlacefulWorkflow'],
      u'with_ploneproduct_ploneboard': [u'CMFPlacefulWorkflow']}
+
 
 Purge, adding,  and overriding mecanism is in place::
 
     >>> xmlvars2 = read_vars(c2, base_vars=copy.deepcopy(xmlvars1))
     >>> pprint(xmlvars2['qi_mappings'])
-    {u'with_ploneproduct_atbackref': [u'ATBackRef', u'ATBackRef2'],
-     u'with_ploneproduct_cpwkf': [],
-     u'with_ploneproduct_ploneboard': []}
+    {u'with_ploneproduct_p4a_vid': [u'p4a.plonevideoembed']}
 
 OldStyle zope2  products
 -----------------------------
@@ -291,7 +292,6 @@ Purge, adding, and overriding mecanism is in place::
     ([u'collective.dancing'], [])
 
 
-
 Misc
 ----------
 This an handle non standart products (add something to zproduct, zpackage and zcml mappings)::
@@ -314,5 +314,16 @@ This an handle non standart products (add something to zproduct, zpackage and zc
     [[u'vaporisation']]
 
 
+Generic setup
+--------------------------------
+
+    >>> xmlvars2 = read_vars(c1)
+    >>> pprint(xmlvars2['gs_mappings'])
+    {(u'archetypes.newschemaextender', u'foo', 666): [u'with_ploneproduct_schemaextender',
+                                                        u'with_ploneproduct_facultystaff'],
+     (u'archetypes.schemaextender', 'default', 99999): [u'with_ploneproduct_schemaextender',
+                                                        u'with_ploneproduct_facultystaff'],
+     (u'archetypes.schematuning', 'default', 99999): [u'with_ploneproduct_schematuning'],
+     (u'collective.contentlicensing', 'default', 99999): [u'with_ploneproduct_contentlicensing']}
 
 .. vim;set ft=rst :

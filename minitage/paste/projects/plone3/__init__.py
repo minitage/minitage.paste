@@ -48,6 +48,8 @@ user_config = os.path.join( os.path.expanduser('~'), '.minitage.plone3.xml')
 xmlvars = common.read_vars(default_config, user_config)
 # plone quickinstaller option/names mappings
 qi_mappings = xmlvars.get('qi_mappings', {})
+qi_hidden_mappings = xmlvars.get('qi_hidden_mappings', {})
+gs_mappings = xmlvars.get('gs_mappings', {})
 # eggs registered as Zope2 packages
 z2packages = xmlvars.get('z2packages', {})
 z2products = xmlvars.get('z2products', {})
@@ -115,6 +117,8 @@ class Template(common.Template):
         'plone_scripts': scripts_mappings,
     }
     qi_mappings               = qi_mappings
+    qi_hidden_mappings        = qi_hidden_mappings
+    gs_mappings               = gs_mappings
     z2packages                = z2packages
     z2products                = z2products
     addons_vars               = common.get_ordered_discovered_options(addons_vars.values())
@@ -519,6 +523,7 @@ plone_vars = [pvar('address', 'Address to listen on', default = 'localhost',),
               pvar('plone_vsp', 'comma separeted list of versionned suffix packages for product distro part', default = '',),
               pvar('plone_scripts', 'comma separeted list of scripts to generate from installed eggs', default = '',),
               pvar('with_checked_versions', 'Use product versions that interact well together (can be outdated, check [versions] in buildout.', default = 'n',),
+              pvar('with_no_zcml', 'Do not include zcml information', default = 'n',),
              ]
 
 Template.vars = common.Template.vars +\

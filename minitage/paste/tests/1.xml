@@ -111,7 +111,14 @@
     <qi>
       <product name="ATBackRef"                      options="with_ploneproduct_atbackref"        />
       <product name="CMFPlacefulWorkflow"            options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard" />
+      <product name="p4a.plonevideoembed"   hidden="false"  options="with_ploneproduct_p4a_vid"/>
     </qi>
+    <gs>
+      <product name="archetypes.schemaextender"    options="with_ploneproduct_schemaextender,with_ploneproduct_facultystaff"/>
+      <product name="archetypes.newschemaextender"  profile="foo"  order="666"    options="with_ploneproduct_schemaextender,with_ploneproduct_facultystaff"/>
+      <product name="archetypes.schematuning"        options="with_ploneproduct_schematuning"/>
+      <product name="collective.contentlicensing"    options="with_ploneproduct_contentlicensing" />
+    </gs>
     <!--
       Enter here mandatory version pinnings
       Valid items are:
@@ -165,7 +172,7 @@
       Sources for mr.developer
       links to the SCM of a product, autocheckout will be enabled when option in in options.
 
-    --> 
+    -->
     <sources>
       <source name="archetypes.tuning"     type="svn" url="http://svn.plone.org/svn/archetypes/" options="with_ploneproduct_schematuning"/>
       <source name="collective.contentlicensing"    type="svn" url="https://svn.plone.org/svn/collective/" options="with_ploneproduct_contentlicensing" />
@@ -175,7 +182,7 @@
       (the packages/products that we want into the tests to be added.
       <product name="" zpackage="" zcml="" zcmlorder="" zcml=""/>
         name is mandatory only for zcml slugs.
-      --> 
+      -->
     <miscproducts>
       <product name="foo"                zproduct="foofoo"       zpackage="foofoo" zcml="foofoo"  options="with_ploneproduct_vaporisation"/>
       <product name="vaporisation"                       zpackage="vaporisation" zcml="configure" options="with_ploneproduct_vaporisation"/>

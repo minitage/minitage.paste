@@ -26,7 +26,7 @@ $hr
 #set $delicomment=''
 #else
 #set $delicomment='#'
-#end if 
+#end if
 
 [buildout]
 timeout=3
@@ -51,7 +51,7 @@ extends = #slurp
 #end if
 #if $with_ploneproduct_ploneappblob:
     backends/blobstorage.cfg#slurp
-#end if 
+#end if
 #if $with_experimental:
     plone/experimental.cfg#slurp
 #end if
@@ -134,9 +134,28 @@ fake-zope-eggs = true
 additional-fake-eggs +=
     ZConfig
     pytz
+    Zope2
+    Acquisition
     zope.testing
 skip-fake-eggs +=
+    pytz
+    ZConfig
     ZODB3
+# inter zope2.10 / zope 2.12
+    five.localsitemanager
+    zope.app.publisher
+    zope.component
+    zope.container
+    zope.lifecycleevent
+    zope.i18n
+    zope.interface
+    zope.location
+    zope.proxy
+    zope.publisher
+    zope.schema
+    zope.sendmail
+    zope.site
+    zope.testing
 #end if
 
 # eggs & scripts installation

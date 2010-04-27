@@ -43,6 +43,8 @@ user_config = os.path.join( os.path.expanduser('~'), '.minitage.plone4.xml')
 xmlvars = common.read_vars(default_config, user_config, plone3.xmlvars)
 # plone quickinstaller option/names mappings
 qi_mappings = xmlvars.get('qi_mappings', {})
+qi_hidden_mappings = xmlvars.get('qi_hidden_mappings', {})
+gs_mappings = xmlvars.get('gs_mappings', {}) 
 # eggs registered as Zope2 packages
 z2packages = xmlvars.get('z2packages', {})
 z2products = xmlvars.get('z2products', {})
@@ -114,6 +116,8 @@ class Template(plone3.Template):
         'plone_scripts': scripts_mappings,
     }
     qi_mappings               = qi_mappings
+    qi_hidden_mappings        = qi_hidden_mappings
+    gs_mappings               = gs_mappings
     z2packages                = z2packages
     z2products                = z2products
     addons_vars               = common.get_ordered_discovered_options(addons_vars.values())
