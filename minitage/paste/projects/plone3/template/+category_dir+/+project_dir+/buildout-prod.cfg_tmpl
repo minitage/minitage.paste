@@ -1,5 +1,5 @@
-# Plone development buildout
-# It will install your plone in debug mode and a bunch of debug tools.
+# Plone production buildout
+# It will install your plone in production mode
 # Launch it:
 # bin/buildout -c buildout-prod.cfg
 # or minimerge -NuUvR ${project}-prod-light
@@ -25,7 +25,7 @@
 extends=#slurp
     etc/project/cluster.cfg#slurp
     etc/sys/maintenance.cfg#slurp
-    etc/sys/hight-availability.cfg#slurp
+    etc/sys/high-availability.cfg#slurp
     etc/backends/${mode}.cfg#slurp
     etc/base.cfg#slurp
 

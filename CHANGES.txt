@@ -17,6 +17,7 @@ Up
     - transmogrifier support
     - devmode support
     - apache & deliverance integration for plone3
+    - lot of new plone products
 
 1.3.149
 ----------

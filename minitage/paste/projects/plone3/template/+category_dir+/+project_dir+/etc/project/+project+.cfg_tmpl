@@ -141,9 +141,9 @@ enabled=true
 instance = instance
 # products to autoinstall
 products-initial=
-#   ${sane_name}.policy
 # profils to autorun
-profils-initial=
+profiles-initial=
+#   ${sane_name}.policy:default
 ${zeocomment}zeoserver = zeoserver
 
 # Plone site (re)creation
