@@ -18,7 +18,7 @@ RETVAL=0
 start() {
     echo -n "Starting $name: "
     if [[ `whoami` == root ]];then
-        su $effectiveuser -c "$supervisord"
+        su $EFFECTIVE_USER -c "$supervisord"
     else
         "$supervisord"
     fi 
@@ -31,7 +31,7 @@ start() {
 stop() {
     echo -n "Stopping $name: "
     if [[ `whoami` == root ]];then
-        su $effectiveuser -c "$supervisorctl shutdown"
+        su $EFFECTIVE_USER -c "$supervisorctl shutdown"
     else
         $supervisorctl shutdown
     fi 

@@ -253,6 +253,9 @@ class Template(common.Template):
         # haproxy
         if vars['with_haproxy'] and vars['inside_minitage']:
             vars['opt_deps'] += ' %s' % search_latest('haproxy-\d\.\d*', vars['minilays'])
+        # htmldoc
+        if vars['with_ploneproduct_awspdfbook'] and vars['inside_minitage']:
+            vars['opt_deps'] += ' %s' % search_latest('htmldoc-\d\.\d*', vars['minilays']) 
 
         # relstorage
         if 'relstorage' in vars['mode']:
