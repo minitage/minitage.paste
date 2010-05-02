@@ -15,110 +15,119 @@
   -->
   <template>
   <options>
-  <option order="100"  name="with_binding_ldap"                  description="LDAP bindings support y/n"/>
-  <option order="150"  name="with_database_sa"                   description="SQLAlchemy support, see http://www.sqlalchemy.org y/n"/>
-  <option order="150"  name="with_database_mysql"                description="Mysql python bindings support y/n"/>
-  <option order="200"  name="with_database_oracle"               description="Oracle python bindings support y/n"/>
-  <option order="250"  name="with_database_postgresql"           description="Postgresql python bindings support y/n"/>
-  <option order="253"  name="with_indexing_solr"                 description="Solr support y/n"/>
-  <option order="300"  name="with_binding_pil"                   description="Python imaging support (dangerous to disable) y/n" default="y"/>
-  <option order="300"  name="with_binding_sugar"                 description="Python SugarCrm bindings y/n" default="n"/>
-  <option order="350"  name="with_tool_ipython"                  description="ipython support http://ipython.scipy.org/ y/n" default="y"/>
-  <option order="350"  name="with_tool_i18ndude"                 description="i18n support http://pypi.python.org/pypi/i18ndude y/n" default="y"/>
-  <option order="400"  name="with_tool_zopeskel"                 description="ZopeSkel http://pypi.python.org/pypi/ZopeSkel y/n" default="y"/>
-  <option order="450"  name="with_wsgi_support"                  description="WSGI capabilities y/n"/>
-  <option order="450"  name="with_wsgi_cas"                      description="WSGI CAS (SSO) capabilities, see http://pypi.python.org/pypi/repoze.who.plugins.cas y/n"/>
-  <option order="500"  name="with_ploneproduct_atbackref"        description="ATBAckRef, see http://pypi.python.org/pypi/Products.ATBackRef y/n"/>
-  <option order="550"  name="with_ploneproduct_fss"              description="File System Storage support, see http://plone.org/products/filesystemstorage y/n" default="n"/>
-  <option order="600"  name="with_ploneproduct_cachesetup"       description="Cachefu caching Support, see http://plone.org/products/cachefu/ y/n" default="n"/>
-  <option order="650"  name="with_ploneproduct_collage"          description="Collage, see http://pypi.python.org/pypi/Products.Collage/ y/n"/>
-  <option order="700"  name="with_ploneproduct_facultystaff"     description="FalcultyStaff, see http://plone.org/products/faculty-staff-directory y/n"/>
-  <option order="750"  name="with_ploneproduct_contentlicensing" description="Content Licensing, see http://pypi.python.org/pypi/collective.contentlicensing y/n"/>
-  <option order="800"  name="with_ploneproduct_cpwkf"            description="CMFPlacefulWorkflow, see http://plone.org/products/cmfplacefulworkflow/ y/n"/>
-  <option order="900"  name="with_ploneproduct_easyshop"         description="Easy Shop, see http://www.geteasyshop.com y/n"/>
-  <option order="950"  name="with_ploneproduct_flowplayer"       description="FlowPlayer, see http://plone.org/products/collective-flowplayer/ y/n"/>
-  <option order="1000" name="with_ploneproduct_ldap"             description="Plone LDAP support, see http://plone.org/products/ploneldap/ y/n"/>
-  <option order="1050" name="with_ploneproduct_lingua"           description="LinguaPlone support, see http://plone.org/products/linguaplone y/n"/>
-  <option order="1100" name="with_ploneproduct_maps"             description="Maps, see http://plone.org/products/maps/ y/n"/>
-  <option order="1150" name="with_ploneproduct_p4a_cal"          description="p4a Calendar, see http://pypi.python.org/pypi/p4a.calendar y/n"/>
-  <option order="1200" name="with_ploneproduct_p4a_vid"          description="p4a Video, see http://www.plone4artists.org/products/plone4artistsvideo y/n"/>
-  <option order="1300" name="fss_strategy"                       description='File System Storage strategy, see http://pypi.python.org/pypi/iw.fss/#storage-strategies (directory, flat, site1, site2)'  default='directory'/>
-  <option order="1400" name="with_ploneproduct_plonearticle"     description="Plone Article, see http://plone.org/products/plonearticle/ y/n"/>
-  <option order="1450" name="with_ploneproduct_ploneboard"       description="Plone Board, see http://plone.org/products/ploneboard/ y/n"/>
-  <option order="1450" name="with_ploneproduct_plonesurvey"      description="PloneSurvey, see http://plone.org/products/plone-survey/releases/1.3.0 y/n"/>
-  <option order="1550" name="with_ploneproduct_quills"           description="Quills, see http://pypi.python.org/pypi/Products.Quills/ y/n"/>
-  <option order="1500" name="with_ploneproduct_schematuning"     description="Schematuning patch, see http://pypi.python.org/pypi/archetypes.schematuning/ y/n"/>
-  <option order="1500" name="with_ploneproduct_tinymce"          description="Tinymce, see http://plone.org/products/tinymce y/n" default="y"/>
-  <option order="1500" name="with_ploneproduct_fivegrok"         description="five.grok integration, see http://pypi.python.org/pypi/five.grok y/n" default="n"/>
-  <option order="1600" name="with_ploneproduct_sgdcg"            description="Singing / Dancing NewsLetter, see http://plone.org/products/dancing S/D is known to lead to multiple buildout installation errors.Be sure to activate it and debug the errors. y/n"/>
-  <option order="1650" name="with_ploneproduct_tal_portlet"      description="Tal Portlet, see http://pypi.python.org/pypi/collective.portlet.tal y/n"/>
-  <option order="1750" name="with_ploneproduct_truegallery"      description="PloneTrueGallery, see http://plone.org/products/plone-true-gallery/ y/n"/>
-  <option order="1850" name="with_ploneproduct_ploneformgen"     description="PloneFormGen, see http://plone.org/products/ploneformgen y/n"/>
-  <option order="1950" name="with_ploneproduct_wc_dd_menu"       description="WebCouturier Dropdown Menu, see http://plone.org/products/webcouturier-dropdownmenu y/n"/>
-  <option order="1951" name="with_ploneproduct_pz3cform"         description="Plone z3c.form support, see http://pypi.python.org/pypi/plone.z3cform y/n" default="n"/>
-  <option order="1962" name="with_ploneproduct_iterate"          description="Plone Iterate support, see http://pypi.python.org/pypi/plone.app.iterate y/n" default="n"/>
-  <option order="1973" name="with_ploneproduct_schemaextender"   description="Plone Archetypes schema extender support, see http://pypi.python.org/pypi/archetypes.schemaextender y/n" default="n"/>
-  <option order="1994" name="with_ploneproduct_contentwellportlet"  description="Content well porlets, see http://pypi.python.org/pypi/Products.ContentWellPortlets y/n" default="n"/>
-  <option order="2000" name="with_experimental"                  description="Plone experimental improvments y/n" default="n"/>
-  <option order="2194" name="with_ploneproduct_ci"               description="collective.indexing Support, see http://pypi.python.org/pypi/collective.indexing y/n" default="n"/>
-  <option order="2294" name="with_ploneproduct_ploneappblob"     description="BlobStorage support, see http://plone.org/products/plone.app.blob y/n" default="n"/>
-  <option order="2394" name="with_ploneproduct_plonejqtools"     description="Jquery Tools support, see http://pypi.python.org/pypi/plone.app.jquerytools y/n" default="n"/>
-  <option order="2495" name="with_ploneproduct_patransmo"        description="plone.app.transmogrifier support, http://pypi.python.org/pypi/plone.app.transmogrifier y/n" default="n"/>
-  <option order="2495" name="with_deliverance_support"           description="deliverance support, see http://pypi.python.org/pypi/Deliverance y/n" default="n"/>
-  <option order="2496" name="deliverance_host"                   description="deliverance proxy server host address" default="localhost"/>
-  <option order="2497" name="deliverance_port"                   description="deliverance proxy server port support" default="8078"/>
-  <option order="2499" name="deliverance_project"                description="default deliverance ruleset name" default="deliverance"/>
-  <option order="2599" name="apache_vhost_number"                description="Apache vhost number" default="100"/>
-  <option order="2498" name="reverseproxy_host"                  description="domain name which be used in the reverse proxy" default="localhost.com"/>
-  <option order="2498" name="reverseproxy_aliases"               description="domain name aliases (comma separated) which be used in the reverse proxy" default="bis.localhost.com.bis,ter.localhost.com"/>
-  <option order="2498" name="reverseproxy_port"                  description="port of the reverse proxy" default="80"/>
-  <option order="2498" name="reverseproxy_scheme"                description="HHTP(s) scheme of the reverse proxy (http/https)" default="http"/>
+  <option order="0000" name="apache_vhost_number"                description="Apache vhost number" default="100"/>
+  <option order="0000" name="deliverance_host"                   description="deliverance proxy server host address" default="localhost"/>
+  <option order="0000" name="deliverance_port"                   description="deliverance proxy server port" default="8078"/>
+  <option order="0000" name="deliverance_project"                description="default deliverance ruleset name" default="deliverance"/>
+  <option order="0000" name="fss_strategy"                       description='File System Storage strategy, see http://pypi.python.org/pypi/iw.fss/#storage-strategies (directory, flat, site1, site2)'  default='directory'/>
+  <option order="0000" name="reverseproxy_aliases"               description="domain name aliases (comma separated) which be used in the reverse proxy" default="bis.localhost.com.bis,ter.localhost.com"/>
+  <option order="0000" name="reverseproxy_host"                  description="domain name which be used in the reverse proxy" default="localhost.com"/>
+  <option order="0000" name="reverseproxy_port"                  description="port of the reverse proxy" default="80"/>
+  <option order="0000" name="reverseproxy_scheme"                description="HHTP(s) scheme of the reverse proxy (http/https)" default="http"/>
+  <option order="0000" name="with_binding_bsoup"                 description="BeautifulSoup,see http://pypi.python.org/pypi/BeautifulSoup/ y/n"/>
+  <option order="0000" name="with_binding_json"                  description="Json python various bindings (demjson, simplejson) y/n"/> 
+  <option order="0000" name="with_binding_ldap"                  description="LDAP bindings y/n"/>
+  <option order="0000" name="with_binding_pdf"                   description="PDF Python various bindings including pypdf Y/n"/>
+  <option order="0000" name="with_binding_pil"                   description="Python imaging (dangerous to disable) y/n" default="y"/>
+  <option order="0000" name="with_binding_sugar"                 description="Python SugarCrm bindings y/n" default="n"/>
+  <option order="0000" name="with_binding_xlwt"                  description="xlwt,see http://pypi.python.org/pypi/xlwt/ y/n"/>
+  <option order="0000" name="with_database_mysql"                description="Mysql python bindings y/n"/>
+  <option order="0000" name="with_database_oracle"               description="Oracle python bindings y/n"/> 
+  <option order="0000" name="with_database_postgresql"           description="Postgresql python bindings y/n"/>
+  <option order="0000" name="with_database_sa"                   description="SQLAlchemy, see http://www.sqlalchemy.org y/n"/> 
+  <option order="0000" name="with_deliverance_support"           description="deliverance, see http://pypi.python.org/pypi/Deliverance y/n" default="n"/>
+  <option order="0000" name="with_experimental"                  description="Plone experimental improvments y/n" default="n"/>
+  <option order="0000" name="with_indexing_solr"                 description="Solr y/n"/>
+  <option order="0000" name="with_tool_i18ndude"                 description="i18n http://pypi.python.org/pypi/i18ndude y/n" default="y"/>
+  <option order="0000" name="with_tool_ipython"                  description="ipython http://ipython.scipy.org/ y/n" default="y"/>
+  <option order="0000" name="with_tool_zopeskel"                 description="ZopeSkel http://pypi.python.org/pypi/ZopeSkel y/n" default="y"/>
+  <option order="0000" name="with_wsgi_cas"                      description="WSGI CAS (SSO) capabilities, see http://pypi.python.org/pypi/repoze.who.plugins.cas y/n"/>
+  <option order="0000" name="with_wsgi_support"                  description="WSGI capabilities y/n"/>
+
+  <!-- INFRA Products -->
+  <option order="1000" name="with_ploneproduct_fss"                description="File System Storage, see http://plone.org/products/filesystemstorage y/n" default="n"/>
+  <option order="1000" name="with_ploneproduct_cachesetup"         description="Cachefu caching, see http://plone.org/products/cachefu/ y/n" default="n"/>
+  <option order="1000" name="with_ploneproduct_ploneappblob"       description="BlobStorage, see http://plone.org/products/plone.app.blob y/n" default="n"/>
+  <!-- UI Products -->
+  <option order="1000" name="with_ploneproduct_addremovewidget"    description="AddRemoveWidget , see http://pypi.python.org/pypi/Products.AddRemoveWidget y/n"/>
+  <option order="1000" name="with_ploneproduct_wc_dd_menu"         description="WebCouturier Dropdown Menu, see http://plone.org/products/webcouturier-dropdownmenu y/n"/>
+  <option order="1000" name="with_ploneproduct_agridfield"         description="archetypes.gridfield, see http://pypi.python.org/pypi/archetypes.gridfield y/n"/>
+  <option order="1000" name="with_ploneproduct_autocomplete"       description="Autocomplete Widget, see http://pypi.python.org/pypi/plone.formwidget.autocomplete y/n"/>
+  <option order="1000" name="with_ploneproduct_collage"            description="Collage, see http://pypi.python.org/pypi/Products.Collage/ y/n"/>
+  <option order="1000" name="with_ploneproduct_contentwellportlet" description="Content well porlets, see http://pypi.python.org/pypi/Products.ContentWellPortlets y/n" default="n"/> 
+  <option order="1000" name="with_ploneproduct_masterselect"       description="MasterSelect Widget, see http://pypi.python.org/pypi/Products.MasterSelectWidget y/n"/>
+  <option order="1119" name="with_ploneproduct_plonejqtools"       description="Jquery Tools, see http://pypi.python.org/pypi/plone.app.jquerytools y/n" default="n"/>
+  <option order="1000" name="with_ploneproduct_tal_portlet"        description="Tal Portlet, see http://pypi.python.org/pypi/collective.portlet.tal y/n"/>
+  <option order="1000" name="with_ploneproduct_z3crelationfield"   description="z3c.relationfield, see http://pypi.python.org/pypi/z3c.relationfield y/n"/>
+  <!--Content-types related products"-->
+  <option order="1000" name="with_ploneproduct_atbackref"          description="ATBAckRef, see http://pypi.python.org/pypi/Products.ATBackRef y/n"/>
+  <option order="1000" name="with_ploneproduct_atextensions"       description="ATExtention, see http://pypi.python.org/pypi/Products.ATExtensions y/n" default="n" />
+  <option order="1000" name="with_ploneproduct_ploneformgen"       description="PloneFormGen, see http://plone.org/products/ploneformgen y/n"/>
+  <option order="1000" name="with_ploneproduct_atschemaeditor"     description="ATSchemaEditorNG, see http://svn.plone.org/svn/collective/Products.ATSchemaEditorNG y/n"/>
+  <option order="1000" name="with_ploneproduct_atvmanager"         description="ATVocabularyManager, see http://pypi.python.org/pypi/Products.ATVocabularyManager y/n"/>
+  <option order="1000" name="with_ploneproduct_ci"                 description="collective.indexing, see http://pypi.python.org/pypi/collective.indexing y/n" default="n"/>
+  <option order="1000" name="with_ploneproduct_cpwkf"              description="CMFPlacefulWorkflow, see http://plone.org/products/cmfplacefulworkflow/ y/n"/>
+  <option order="1000" name="with_ploneproduct_ldap"               description="Plone LDAP, see http://plone.org/products/ploneldap/ y/n"/>
+  <option order="1000" name="with_ploneproduct_schemaextender"     description="Archetypes schema extender, see http://pypi.python.org/pypi/archetypes.schemaextender y/n" default="n"/>
+  <option order="1000" name="with_ploneproduct_schematuning"       description="Schematuning patch, see http://pypi.python.org/pypi/archetypes.schematuning/ y/n"/>
+  <!-- Views helper products -->
+  <option order="1014" name="with_ploneproduct_fivegrok"           description="five.grok integration, see http://pypi.python.org/pypi/five.grok y/n" default="n"/>
+  <option order="1016" name="with_ploneproduct_patransmo"          description="transmogrifier, see http://pypi.python.org/pypi/plone.app.transmogrifier y/n" default="n"/>
+  <option order="1013" name="with_ploneproduct_pz3cform"           description="Plone z3c.form, see http://pypi.python.org/pypi/plone.z3cform y/n" default="n"/> 
+  <!-- Communication -->
+  <option order="1000" name="with_ploneproduct_atworkgroup"        description="ATWorkgroup, see http://plone.org/products/mxm-workgroup/ y/n"/>
+  <option order="1000" name="with_ploneproduct_facultystaff"       description="FalcultyStaff, see http://plone.org/products/faculty-staff-directory y/n"/>
+  <option order="1000" name="with_ploneproduct_flowplayer"         description="FlowPlayer, see http://plone.org/products/collective-flowplayer/ y/n"/>
+  <option order="1000" name="with_ploneproduct_lingua"             description="LinguaPlone, see http://plone.org/products/linguaplone y/n"/>
+  <option order="1007" name="with_ploneproduct_p4a_cal"            description="p4a Calendar, see http://pypi.python.org/pypi/p4a.calendar y/n"/>
+  <option order="1008" name="with_ploneproduct_p4a_vid"            description="p4a Video, see http://www.plone4artists.org/products/plone4artistsvideo y/n"/> 
+  <option order="1000" name="with_ploneproduct_plonearticle"       description="Plone Article, see http://plone.org/products/plonearticle/ y/n"/>
+  <option order="1000" name="with_ploneproduct_plonesurvey"        description="PloneSurvey, see http://plone.org/products/plone-survey/releases/1.3.0 y/n"/> 
+  <option order="1000" name="with_ploneproduct_quills"             description="Quills, see http://pypi.python.org/pypi/Products.Quills/ y/n"/>
+  <option order="1000" name="with_ploneproduct_sgdcg"              description="Singing / Dancing NewsLetter, see http://plone.org/products/dancing S/D is known to lead to multiple buildout installation errors.Be sure to activate it and debug the errors. y/n"/> 
+  <option order="1000" name="with_ploneproduct_truegallery"        description="PloneTrueGallery, see http://plone.org/products/plone-true-gallery/ y/n"/>
+  <option order="1002" name="with_ploneproduct_ploneboardnotify"   description="Ploneboard Notify, see http://pypi.python.org/pypi/Products.PloneboardNotify y/n"/> 
+  <option order="1003" name="with_ploneproduct_ploneboard"         description="Plone Board, see http://plone.org/products/ploneboard/ y/n"/>
+  <option order="1005" name="with_ploneproduct_membrane"           description="membrane, see http://pypi.python.org/pypi/membrane y/n"/>
+  <option order="1006" name="with_ploneproduct_remember"           description="remember, see http://pypi.python.org/pypi/Products.remember y/n"/>
+  <!-- Misc Extensions products-->
+  <option order="1000" name="with_ploneproduct_awspdfbook"         description="aws.pdfbook, see http://pypi.python.org/pypi/aws.pdfbook y/n"/>
+  <option order="1000" name="with_ploneproduct_contentlicensing"   description="Content Licensing, see http://pypi.python.org/pypi/collective.contentlicensing y/n"/>
+  <option order="1000" name="with_ploneproduct_easyshop"           description="Easy Shop, see http://www.geteasyshop.com y/n"/>
+  <option order="1000" name="with_ploneproduct_iterate"            description="Plone Iterate, see http://pypi.python.org/pypi/plone.app.iterate y/n" default="n"/>
+  <option order="1000" name="with_ploneproduct_maps"               description="Maps, see http://plone.org/products/maps/ y/n"/>
+  <option order="1000" name="with_ploneproduct_smartprintng"       description="SmartPrintNG, see http://pypi.python.org/pypi/Products.SmartPrintNG y/n"/> 
+  <option order="1000" name="with_ploneproduct_tinymce"            description="Tinymce, see http://plone.org/products/tinymce y/n" default="y"/>
   <!-- makina -->
-  <option order="1250" name="with_ploneproduct_plomino"                description="Plomino, see http://plone.org/products/plomino y/n"                                                                     />
-  <option order="1950" name="with_ploneproduct_cplocalcumulus"         description="collective.portlet.localcumulus, see http://pypi.python.org/pypi/collective.portlet.localcumulus y/n"                   />
-  <option order="1984" name="with_ploneproduct_cz3cformgrok"           description="Plone + z3cform light grok integration support, see http://pypi.python.org/pypi/collective.z3cform.grok y/n"          default="n"/>
-  <option order="2395" name="with_ploneproduct_cjqui"                  description="Jquery UI support, see http://pypi.python.org/pypi/collective.js.jqueryui y/n"                                        default="n"/>
-  <option order="2581" name="with_ploneproduct_cremovekss"             description="remove kss, see also http://pypi.python.org/pypi/collective.remove.kss y/n"                                           default="n"/>
-  <option order="2582" name="with_ploneproduct_cremovekupu"            description="remove kupu, see also http://pypi.python.org/pypi/collective.remove.kupu y/n"                                         default="n"/>
-  <option order="2583" name="with_ploneproduct_cremoverules"           description="remove.rules, see also http://pypi.python.org/pypi/collective.remove.rules y/n"                                       default="n"/>
-  <option order="2584" name="with_ploneproduct_csteps"                 description="collective.steps, see also http://pypi.python.org/pypi/collective.steps y/n"                                          default="n"/>
-  <option order="2585" name="with_ploneproduct_cz3cformnorobots"       description="collective.z3cform.norobots, see also http://pypi.python.org/pypi/collective.z3cform.norobots y/n"                    default="n"/>
-  <option order="2586" name="with_ploneproduct_eaggressivepagespeedup" description="experimental.aggressiveopaquespeedup, see also http://pypi.python.org/pypi/experimental.aggressiveopaquespeedup y/n"  default="n"/>
-  <option order="2587" name="with_ploneproduct_nmdlinkasvideo"         description="nmd.plonelinkasvideoembed, see also http://pypi.python.org/pypi/nmd.plonelinkasvideoembed y/n"                        default="n"/>
-  <option order="2588" name="with_minitage_devpackages"                description="include a bundle of minitage development tools y/n"                                                                   default="n"/>
-  <option order="2589" name="with_tool_cgeneric"                       description="include a bundle of collective.generic development tools y/n"                                                         default="n"/>
-  <option order="2589" name="with_minitage_otherpackages"              description="include a bundle of minitage extra development tools y/n"                                                             default="n"/>
-  <option order="2591" name="with_ploneproduct_cbdancing"              description="collective.blueprint.dancing, see also http://pypi.python.org/pypi/collective.blueprint.dancing y/n"                  default="n"/>
-  <option order="2592" name="with_ploneproduct_cdewplayer"             description="dewplayer, see also http://pypi.python.org/pypi/collective.dewplayer y/n"                                             default="n"/>
-  <option order="2593" name="with_ploneproduct_cdewslider"             description="dewslider, see also http://pypi.python.org/pypi/collective.dewslider y/n"                                             default="n"/>
-  <option order="2594" name="with_ploneproduct_cfunkbot"               description="funkbot, see also http://pypi.python.org/pypi/collective.funkbot y/n"                                                 default="n"/>
-  <option order="2595" name="with_ploneproduct_cgallery"               description="gallery, see also http://pypi.python.org/pypi/collective.gallery y/n"                                                 default="n"/>
-  <option order="2596" name="with_ploneproduct_inplacetopicview"       description="inplacetopicview, see also http://pypi.python.org/pypi/collective.inplacetopicview y/n"                               default="n"/>
-  <option order="2576" name="with_ploneproduct_harlequin"              description="harlequin, see also http://pypi.python.org/pypi/collective.harlequin y/n"                                             default="n"/>
-  <option order="2597" name="with_ploneproduct_jsgalleryview"          description="collective.js.galleryview, see also http://pypi.python.org/pypi/collective.js.galleryview y/n"                        default="n"/>
-  <option order="2598" name="with_ploneproduct_jss3slider"             description="collective.js.s3slider, see also http://pypi.python.org/pypi/collective.js.s3slider y/n"                              default="n"/>
-  <option order="2782" name="with_ploneproduct_quaestrio"              description="Quaestrio, see also http://pypi.python.org/pypi/Products.Quaestrio y/n"                                               default="n"/>
-  <option order="850"  name="with_ploneproduct_csvreplica"             description="CSV Replicata, see http://pypi.python.org/pypi/Products.csvreplicata (makina users, do not untick) y/n"               default="n"/>
-  <option order="3850" name="with_binding_mapscript"                   description="mapserver python bindings, see http://pypi.python.org/pypi/mapscript y/n"                                             default="n"/>
+  <option order="10000" name="with_binding_mapscript"                   description="mapserver python bindings, see http://pypi.python.org/pypi/mapscript y/n"                                             default="n"/>
+  <option order="10018" name="with_minitage_devpackages"                description="include a bundle of minitage development tools y/n"                                                                   default="n"/>
+  <option order="10020" name="with_minitage_otherpackages"              description="include a bundle of minitage extra development tools y/n"                                                             default="n"/> 
+  <option order="10030" name="with_tool_cgeneric"                       description="include a bundle of collective.generic development tools y/n"                                                         default="n"/>
+  <option order="00000" name="with_ploneproduct_cbdancing"              description="collective.blueprint.dancing, see http://pypi.python.org/pypi/collective.blueprint.dancing y/n"                  default="n"/>
+  <option order="01009" name="with_ploneproduct_cdewplayer"             description="dewplayer, see http://pypi.python.org/pypi/collective.dewplayer y/n"                                             default="n"/>
+  <option order="01010" name="with_ploneproduct_cdewslider"             description="dewslider, see http://pypi.python.org/pypi/collective.dewslider y/n"                                             default="n"/>
+  <option order="00000" name="with_ploneproduct_cfunkbot"               description="funkbot, see http://pypi.python.org/pypi/collective.funkbot y/n"                                                 default="n"/>
+  <option order="00000" name="with_ploneproduct_cgallery"               description="collective.gallery, see http://pypi.python.org/pypi/collective.gallery y/n"                                                 default="n"/>
+  <option order="01118" name="with_ploneproduct_cjqui"                  description="Jquery UI, see http://pypi.python.org/pypi/collective.js.jqueryui y/n"                                        default="n"/>
+  <option order="00000" name="with_ploneproduct_cplocalcumulus"         description="collective.portlet.localcumulus, see http://pypi.python.org/pypi/collective.portlet.localcumulus y/n"                 default="n"/>
+  <option order="00000" name="with_ploneproduct_cremovekss"             description="remove kss, see http://pypi.python.org/pypi/collective.remove.kss y/n"                                           default="n"/>
+  <option order="00000" name="with_ploneproduct_cremovekupu"            description="remove kupu, see http://pypi.python.org/pypi/collective.remove.kupu y/n"                                         default="n"/>
+  <option order="00000" name="with_ploneproduct_cremoverules"           description="remove.rules, see http://pypi.python.org/pypi/collective.remove.rules y/n"                                       default="n"/>
+  <option order="00000" name="with_ploneproduct_csteps"                 description="collective.steps, see http://pypi.python.org/pypi/collective.steps y/n"                                          default="n"/>
+  <option order="00000" name="with_ploneproduct_csvreplica"             description="CSV Replicata, see http://pypi.python.org/pypi/Products.csvreplicata (makina users, do not untick) y/n"               default="n"/>
+  <option order="01011" name="with_ploneproduct_cz3cformgrok"           description="Plone + z3cform light grok integration, see http://pypi.python.org/pypi/collective.z3cform.grok y/n"          default="n"/>
+  <option order="01012" name="with_ploneproduct_cz3cformnorobots"       description="collective.z3cform.norobots, see http://pypi.python.org/pypi/collective.z3cform.norobots y/n"                    default="n"/>
+  <option order="00000" name="with_ploneproduct_eaggressivepagespeedup" description="experimental.aggressiveopaquespeedup, see http://pypi.python.org/pypi/experimental.aggressiveopaquespeedup y/n"  default="n"/>
+  <option order="00000" name="with_ploneproduct_harlequin"              description="harlequin, see http://pypi.python.org/pypi/collective.harlequin y/n"                                             default="n"/>
+  <option order="00000" name="with_ploneproduct_inplacetopicview"       description="inplacetopicview, see http://pypi.python.org/pypi/collective.inplacetopicview y/n"                               default="n"/>
+  <option order="00000" name="with_ploneproduct_jsgalleryview"          description="collective.js.galleryview, see http://pypi.python.org/pypi/collective.js.galleryview y/n"                        default="n"/>
+  <option order="00000" name="with_ploneproduct_jss3slider"             description="collective.js.s3slider, see http://pypi.python.org/pypi/collective.js.s3slider y/n"                              default="n"/>
+  <option order="00000" name="with_ploneproduct_nmdlinkasvideo"         description="nmd.plonelinkasvideoembed, see http://pypi.python.org/pypi/nmd.plonelinkasvideoembed y/n"                        default="n"/>
+  <option order="01008" name="with_ploneproduct_plomino"                description="Plomino, see http://plone.org/products/plomino y/n"                                                                   default="n"/>
+  <option order="01007" name="with_ploneproduct_plominotinymce"         description="Plomino.tinymce, see http://pypi.python.org/pypi/plomino.tinymce/ y/n"                                        default="n"/>
+  <option order="00000" name="with_ploneproduct_quaestrio"              description="Quaestrio, see http://pypi.python.org/pypi/Products.Quaestrio y/n"                                               default="n"/>
   <!--END makina -->
-  <option order="4851" name="with_ploneproduct_atextensions"           description="ATExtention support, see http://pypi.python.org/pypi/Products.ATExtensions y/n" default="n" />
-  <option order="4852" name="with_ploneproduct_plominotinymce"         description="Plomino.tinymce support, see http://pypi.python.org/pypi/plomino.tinymce/ y/n"/>
-  <option order="4853" name="with_binding_xlwt"                        description="xlwt support,see http://pypi.python.org/pypi/xlwt/ y/n"/>
-  <option order="4853" name="with_binding_bsoup"                       description="BeautifulSoup support,see http://pypi.python.org/pypi/BeautifulSoup/ y/n"/>
-  <option order="4854" name="with_binding_json"                        description="Json python various bindings (demjson, simplejson) y/n"/>
-  <option order="4855" name="with_ploneproduct_agridfield"             description="archetypes.gridfield, see http://pypi.python.org/pypi/archetypes.gridfield y/n"/>
-  <option order="4856" name="with_ploneproduct_z3crelationfield"       description="z3c.relationfield, see http://pypi.python.org/pypi/z3c.relationfield y/n"/>
-  <option order="4858" name="with_ploneproduct_remember"               description="remember support, see http://pypi.python.org/pypi/Products.remember y/n"/>
-  <option order="4859" name="with_ploneproduct_membrane"               description="membrane support, see http://pypi.python.org/pypi/membrane y/n"/>
-  <option order="4860" name="with_ploneproduct_atvmanager"             description="Products.ATVocabularyManager support, see http://pypi.python.org/pypi/Products.ATVocabularyManager y/n"/>
-  <option order="4861" name="with_ploneproduct_addremovewidget"        description="Products.AddRemoveWidget , see http://pypi.python.org/pypi/Products.AddRemoveWidget y/n"/>
-  <option order="4862" name="with_ploneproduct_autocomplete"           description="Autocomplete Widget, see http://pypi.python.org/pypi/plone.formwidget.autocomplete y/n"/>
-  <option order="4863" name="with_ploneproduct_masterselect"           description="MasterSelect Widget, see http://pypi.python.org/pypi/Products.MasterSelectWidget y/n"/>
-  <option order="4864" name="with_ploneproduct_atschemaeditor"         description="ATSchemaEditorNG, see http://svn.plone.org/svn/collective/Products.ATSchemaEditorNG y/n"/>
-  <option order="4865" name="with_ploneproduct_ploneboardnotify"       description="Ploneboard Notify, see http://pypi.python.org/pypi/Products.PloneboardNotify y/n"/>
-  <option order="4865" name="with_ploneproduct_smartprintng"           description="SmartPrintNG, see http://pypi.python.org/pypi/Products.SmartPrintNG y/n"/>
-  <option order="4866" name="with_ploneproduct_awspdfbook"             description="aws.pdfbook, see http://pypi.python.org/pypi/aws.pdfbook y/n"/>
-  <option order="4867" name="with_ploneproduct_atworkgroup"            description="ATWorkgroup, see http://plone.org/products/mxm-workgroup/ y/n"/>
+
 </options>
   <!--
     LINK THERE YOUR EGGS TO BE Installed on option triggering.
@@ -196,6 +205,7 @@
     <egg name="zc.authorizedotnet"            options="with_ploneproduct_easyshop"/>
     <egg name="ZODB3"                         options="with_wsgi_support"                 />
     <egg name="ZopeSkel"                      options="with_tool_zopeskel"                />
+    <egg name="pypdf"                         options="with_binding_pdf"                />
 
     <!-- pure zope/plone eggs -->
     <egg name="Products.ATWorkgroup"           options="with_ploneproduct_atworkgroup"/>
@@ -265,6 +275,7 @@
     <egg name="Products.Maps"                  options="with_ploneproduct_maps"             zpackage="y" zcml="configure" />
     <egg name="Products.MasterSelectWidget"    options="with_ploneproduct_masterselect" zpackage="y" zcml="configure" />
     <egg name="Products.membrane"              options="with_ploneproduct_membrane"         zproduct="y" zcml="configure"/>
+    <egg name="Products.remember"              options="with_ploneproduct_remember"         zcml="configure"/>
     <egg name="Products.PloneArticle"          options="with_ploneproduct_plonearticle"     zproduct="y" zcml="configure"/>
     <egg name="Products.Ploneboard"            options="with_ploneproduct_ploneboard"       zproduct="y" zcml="configure"/>
     <egg name="Products.PloneFormGen"          options="with_ploneproduct_ploneformgen"     zproduct="y" zcml="configure"/>
@@ -272,7 +283,6 @@
     <egg name="plone.app.ldap"                 options="with_ploneproduct_ldap"             zproduct="y" zcml="configure"/>
     <egg name="Products.PloneSurvey"           options="with_ploneproduct_plonesurvey"      zproduct="y" zcml="configure"/>
     <egg name="Products.Quills"                options="with_ploneproduct_quills"           zpackage="y" zcml="configure"/>
-    <egg name="Products.remember"              options="with_ploneproduct_remember"         zcml="configure"/>
     <egg name="Products.SimpleAttachment"      options="with_ploneproduct_ploneboard"       zproduct="y" zcml="configure"/>
     <egg name="Products.TinyMCE"               options="with_ploneproduct_tinymce,with_ploneproduct_plominotinymce"          zproduct="y" zcml="configure"/>
     <egg name="transmogrify.filesystem"        options="with_ploneproduct_patransmo"        zcml="configure" />
@@ -675,6 +685,7 @@
     <source name="collective.generic.devmode"           type="svn" url="https://svn.plone.org/svn/collective/collective.generic.devmode/trunk"                    options="with_tool_cgeneric"/>
     <source name="Products.Quaestrio"                   type="svn" url="https://svn.plone.org/svn/collective/Quaestrio/trunk"                                     options="with_ploneproduct_quaestrio"/>
     <source name="repoze.who.plugins.cas"               type="git" url="http://github.com/kiorky/repoze.who.plugins.cas.git"                                      options="with_wsgi_cas"/>
+    <source name="pypdf"                                type="git" url="http://github.com/mfenniak/pyPdf.git"                                                     options="with_binding_pdf"/>
     <!-- makina -->
   </sources>
     <!--
