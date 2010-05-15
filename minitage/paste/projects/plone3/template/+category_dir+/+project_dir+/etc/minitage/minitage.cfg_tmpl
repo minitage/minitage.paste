@@ -53,7 +53,7 @@ minitage-globalenv=true
 [versions]
 # bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
 # the one packaged in minitage !
-PILwoTK  = 1.1.6.4
+PIL  = 1.1.7
 Spawning=0.8.11-minitage
 
 [zopepy]

@@ -54,7 +54,7 @@ setuptools>=0.6c9
 python-openid>=2.0.1
 elementtree = 1.2.7-20070827-preview
 lxml = 2.0.5
-PILwoTK  = 1.1.6.4
+PIL  = 1.1.7
 psycopg2=2.0.8
 # zope 2.10.7 compatible version of the ZODB where the RelStorage patch applies
 ZODB3 = 3.7.1
@@ -143,7 +143,7 @@ eggs =
     lxml
     elementtree
     wicked
-    PILwoTK
+    PIL
 #slurp
 #for $product in $plone_eggs.split():
     ${product}

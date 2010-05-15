@@ -227,7 +227,7 @@ class Template(common.Template):
 
         # plone system dependencies
         if vars['inside_minitage']:
-            for i in ['libxml2', 'libxslt', 'pilwotk', 'libiconv']:
+            for i in ['libxml2', 'libxslt', 'pil-1', 'libiconv']:
                 vars['opt_deps'] += ' %s' %  search_latest('%s.*' % i, vars['minilays'])
 
         # databases

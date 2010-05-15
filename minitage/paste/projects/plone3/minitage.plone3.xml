@@ -188,8 +188,8 @@
     <egg name="PasteDeploy"                   options="with_wsgi_support"                 />
     <egg name="Paste"                         options="with_wsgi_support"                 />
     <egg name="PasteScript"                   options="with_tool_zopeskel,with_wsgi_support" scripts="paster"/>
-    <egg name="PILwoTK"                       options="with_binding_pil" />
-    <egg name="PILwoTK"                       options="with_binding_pil"/>
+    <egg name="PIL"                       options="with_binding_pil" />
+    <egg name="PIL"                       options="with_binding_pil"/>
     <egg name="psycopg2"                      options="with_database_postgresql"/>
     <egg name="pypgoptimizator"               options="with_minitage_otherpackages"  scripts="pypgoptimizator" />
     <egg name="pysugarNG"                     options="with_binding_sugar"/>

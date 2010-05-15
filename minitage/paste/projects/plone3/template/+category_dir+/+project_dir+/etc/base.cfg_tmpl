@@ -164,7 +164,7 @@ recipe = minitage.recipe.scripts
 # Important for you to note the installation of the ZODB as an egg . We will not
 # use the zodb code from the zope source distribution !!!!!!!
 #if not $inside_minitage:
-urls=http://download.zope.org/distribution/PILwoTk-1.1.6.4.tar.gz
+urls=http://download.zope.org/distribution/PIL-1.1.7.tar.gz
 #end if
 eggs = \${instance:eggs}
 interpreter = zopepy
