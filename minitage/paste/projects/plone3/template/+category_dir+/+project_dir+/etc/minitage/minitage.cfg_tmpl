@@ -73,5 +73,5 @@ includes-dirs = $includesdirs
 #executable=\${python2.4:executable}
 #end if
 #if $with_binding_ldap:
-#includes-dirs = $includesdirs
+includes-dirs = $includesdirs
 #end if 

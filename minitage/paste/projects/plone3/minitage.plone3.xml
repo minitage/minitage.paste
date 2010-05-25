@@ -59,6 +59,7 @@
   <option order="1119" name="with_ploneproduct_plonejqtools"       description="Jquery Tools, see http://pypi.python.org/pypi/plone.app.jquerytools y/n" default="n"/>
   <option order="1000" name="with_ploneproduct_tal_portlet"        description="Tal Portlet, see http://pypi.python.org/pypi/collective.portlet.tal y/n"/>
   <option order="1000" name="with_ploneproduct_z3crelationfield"   description="z3c.relationfield, see http://pypi.python.org/pypi/z3c.relationfield y/n"/>
+  <option order="1000" name="with_ploneproduct_cportlettabber"     description="collective.portlettabber, see http://plone.org/products/collective.portlettabber y/n"/>
   <!--Content-types related products"-->
   <option order="1000" name="with_ploneproduct_atbackref"          description="ATBAckRef, see http://pypi.python.org/pypi/Products.ATBackRef y/n"/>
   <option order="1000" name="with_ploneproduct_atextensions"       description="ATExtention, see http://pypi.python.org/pypi/Products.ATExtensions y/n" default="n" />
@@ -314,6 +315,7 @@
     <egg name="archetypes.gridfield"                 options="with_ploneproduct_agridfield" zcml="configure"/>
     <egg name="Products.ATExtensions"                options="with_ploneproduct_atextensions"                        zcml="configure"/>
     <egg name="Products.Quaestrio"                   options="with_ploneproduct_quaestrio" zpackage="y" zcml="configure" />
+    <egg name="collective.portlettabber"                   options="with_ploneproduct_cportlettabber" zpackage="y" zcml="configure" />
     <!-- zope products -->
   </eggs>
   <!--
@@ -549,6 +551,7 @@
     <version p='Products.remember'              v='1.1b3'         options='with_ploneproduct_remember'/>
     <version p='Products.SimpleAttachment'      v='3.1'           options="with_ploneproduct_ploneboard"/>
     <version p='z3c.relationfield'              v='0.6.1'         options='with_ploneproduct_z3crelationfield'/>
+    <version p='collective.portlettabber'       v='0.1.0'         options='with_ploneproduct_cportlettabber'/>
     <!-- FIVE.GROK -->
     <version p='five.grok'                      v='1.0'     options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
     <version p='grokcore.annotation'            v='1.0.1'   options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
@@ -660,6 +663,7 @@
     <source name="collective.z3cform.grok"              type="svn" url="https://svn.plone.org/svn/collective/collective.z3cform.grok/trunk"                       options="with_ploneproduct_cz3cformgrok"/>
     <source name="collective.z3cform.norobots"          type="svn" url="https://svn.plone.org/svn/collective/collective.z3cform.norobots/trunk"                   options="with_ploneproduct_cz3cformnorobots"/>
     <source name="experimental.aggressiveopaquespeedup" type="svn" url="https://svn.plone.org/svn/collective/experimental.aggressiveopaquespeedup/trunk"          options="with_ploneproduct_eaggressivepagespeedup" />
+    <source name="collective.portlettabber" type="svn" url="http://svn.plone.org/svn/collective/collective.portlettabber/trunk/"                      options="with_ploneproduct_cportlettabber" />
     <source name="dj.paste"                             type="git" url="ssh://git.minitage.org/git/others/dj.paste"                                               options="with_minitage_otherpackages"/>
     <source name="mapscript"                            type="git" url="ssh://git.minitage.org/git/others/mapscript/mapscript-5.6"                                options="with_binding_mapscript"/>
     <source name="minitage.core"                        type="git" url="ssh://git.minitage.org/git/minitage/eggs/minitage.core"                                   options="with_minitage_devpackages"/>

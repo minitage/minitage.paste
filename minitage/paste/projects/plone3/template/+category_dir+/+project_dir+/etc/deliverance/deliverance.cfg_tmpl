@@ -23,7 +23,6 @@ scripts=
     deliverance-proxy
     nosetests
 extra-paths = \${instance:extra-paths}
-    \${buildout:directory}/parts/fakeproducts
 
 [buildout]
 auto-checkout +=

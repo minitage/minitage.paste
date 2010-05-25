@@ -100,22 +100,12 @@ extra-paths += \${instance:extra-paths}
 #if $major < 4
     \${zope2:location}/lib/python
 #end if
-    \${buildout:directory}/parts/fakeproducts
 
 # zope.testing testrunner support
 [testenv]
 INSTANCE_HOME=\${instance:location}
 CONFIG_FILE=\${instance:location}/etc/zope.conf
 
-# fake old zope2 products to let the testrunner work
-[fakeproducts]
-recipe=plone.recipe.command
-update-command = \${fakeproducts:command}
-command =
-    rm -rf \${buildout:directory}/parts/fakeproducts/Products/;
-    mkdir -pv \${buildout:directory}/parts/fakeproducts/Products/;
-    touch  \${buildout:directory}/parts/fakeproducts/Products/__init__.py;
-    for i in \$(echo "\${instance:products}");do for j in \$i/*;do if [ "\$j" != "\$i/" ] && [ -d \$j ];then ln -sfv \$j \${buildout:directory}/parts/fakeproducts/Products/\$(basename \$j);fi;done;done;
 
 # This testrunner is a zc.recipe.testrunner like
 # See http://pypi.python.org/pypi/zc.recipe.testrunner/
@@ -126,7 +116,6 @@ recipe = collective.xmltestreport
 eggs = \${instance:eggs}
 extra-paths = \${instance:extra-paths}
     \${zope2:location}/lib/python
-    \${buildout:directory}/parts/fakeproducts
 defaults = ['--exit-with-status', '--auto-color', '--auto-progress']
 environment = testenv
 extra-paths = \${zopepy:extra-paths}
@@ -162,8 +151,6 @@ ${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:sta
 ${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_backup_global/      \${buildout:directory}/var/fss_backup_global/;
 ${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_storage_${project}/ \${locations:fss-storage}/;
 ${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_backup_${project}/  \${locations:fss-backup}/;
- 
-
 
 [cg.devmode]
 recipe=minitage.recipe.scripts
@@ -172,6 +159,15 @@ eggs=\${instance:eggs}
 scripts=cg.devmode
 mail = foo@localhost
 extra-paths = \${instance:extra-paths}
-    \${buildout:directory}/parts/fakeproducts
 
+[devmode]
+recipe=minitage.recipe.scripts
+scripts=cg.devmode=devmode
+mail = foo@localhost
+extra-paths = \${instance:extra-paths}
+initialization=
+    import sys
+    sys.argv[1:] = ['-m', '\${devmode:mail}', '-p', '--password', '\${zope:password}', '-l', '\${plone:site}', '-u', '\${zope:user}']
+eggs=\${instance:eggs}
+    collective.generic.devmode 
 # vim:set ft=cfg:
