@@ -2,9 +2,13 @@
 CHANGES
 ==============
 
-
 Up
-----------
+--------
+
+    - blobstorage improvments
+
+-> 1.3.176
+-----------
 
     - add plone core mr.developer configs, you can now develop each plone subpackage
     - upgrade eggs versions in plone configuration files
@@ -18,6 +22,7 @@ Up
     - devmode support
     - apache & deliverance integration for plone3
     - lot of new plone products
+    - pilwotk 116 -> pil 117
     - pilwotk 116 -> pil 117
 
 

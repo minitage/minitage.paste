@@ -527,7 +527,7 @@
     <version p='p4a.videoembed'                 v='1.1'           options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.video'                      v='1.1.1'         options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.z2utils'                    v='1.0.2'         options="with_ploneproduct_p4a_vid"/>
-    <version p="plone.app.blob"                 v="1.0b14"        options="with_ploneproduct_ploneappblob"/>
+    <version p="plone.app.blob"                 v="1.0b16"        options="with_ploneproduct_ploneappblob"/>
     <version p="plone.app.jquerytools"          v="1.0b17"        options="with_ploneproduct_plonejqtools"/>
     <version p='plone.formwidget.autocomplete'  v='1.0'           options='with_ploneproduct_autocomplete'/>
     <version p='Products.AddRemoveWidget'       v='1.4.2'         options='with_ploneproduct_addremovewidget'/>
@@ -657,6 +657,7 @@
     <source name="collective.js.s3slider"               type="svn" url="https://svn.plone.org/svn/collective/collective.js.s3slider/trunk"                        options="with_ploneproduct_jss3slider"/>
     <source name="collective.portlet.localcumulus"      type="svn" url="https://svn.plone.org/svn/collective/colllective.portlet.localcumulus/trunk"              options="with_ploneproduct_cplocalcumulus"/>
     <source name="collective.remove.kss"                type="svn" url="https://svn.plone.org/svn/collective/collective.remove/kss/trunk"                         options="with_ploneproduct_cremovekss"/>
+    <source name="Products.csvreplicata"                type="svn" url="http://svn.plone.org/svn/collective/Products.csvreplicata/trunk/Products.csvreplicata"    options="with_ploneproduct_csvreplica"/>
     <source name="collective.remove.kupu"               type="svn" url="https://svn.plone.org/svn/collective/collective.remove/kupu/trunk"                        options="with_ploneproduct_cremovekupu"/>
     <source name="collective.remove.rules"              type="svn" url="https://svn.plone.org/svn/collective/collective.remove/rules/trunk"                       options="with_ploneproduct_cremoverules"/>
     <source name="collective.steps"                     type="svn" url="https://svn.plone.org/svn/collective/collective.steps/trunk"                              options="with_ploneproduct_csteps"/>
