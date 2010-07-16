@@ -39,6 +39,11 @@ parts+= omelette
         devmode
         cg.devmode
 ${i18ncomment}    i18ndude
+    zopeskel
+
+auto-checkout +=
+    zopeskel
+
 
 [hosts]
 zope-front=\${hosts:instance}
@@ -47,6 +52,7 @@ zope-front=\${hosts:instance}
 zope-front=\${ports:instance}
 
 [sources]
+zopeskel=svn https://svn.plone.org/svn/collective/ZopeSkel/trunk
 experimental.catalogqueryplan = svn https://svn.plone.org/svn/collective/experimental.catalogqueryplan/trunk
  
 [versions]
@@ -167,7 +173,7 @@ scripts = ipython=ipzope
 
 [goto-devmode]
 recipe = plone.recipe.command
-update-command = \${goto-datafs:command}
+update-command = \${goto-devmode:command}
 command =
 ${zeocomment}    \${buildout:directory}/bin/zeoserver stop;
     \${get-datafs:command}
@@ -180,5 +186,10 @@ ${zeocomment}    \${buildout:directory}/bin/zeoserver start;
 recipe=minitage.recipe.scripts
 eggs=i18ndude
 scripts=i18ndude
+
+[zopeskel]
+recipe=minitage.recipe.scripts
+eggs=zopeskel
+scripts=paster=zopeskel
 
 # vim:set ft=cfg:

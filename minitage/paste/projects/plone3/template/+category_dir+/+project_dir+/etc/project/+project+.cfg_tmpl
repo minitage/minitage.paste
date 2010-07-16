@@ -158,13 +158,13 @@ eggs=\${instance:eggs}
     collective.generic.devmode
 scripts=cg.devmode
 mail = foo@localhost
-extra-paths = \${instance:extra-paths}
+extra-paths = \${zopepy:extra-paths}
 
 [devmode]
 recipe=minitage.recipe.scripts
 scripts=cg.devmode=devmode
 mail = foo@localhost
-extra-paths = \${instance:extra-paths}
+extra-paths = \${zopepy:extra-paths}
 initialization=
     import sys
     sys.argv[1:] = ['-m', '\${devmode:mail}', '-p', '--password', '\${zope:password}', '-l', '\${plone:site}', '-u', '\${zope:user}']
