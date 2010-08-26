@@ -28,5 +28,6 @@ shared-blob = on
 [mkdirs]
 command +=
     mkdir -pv \${locations:blob-storage};
+    mkdir -pv \${locations:blob-backup};
 
 # vim:set ft=cfg:

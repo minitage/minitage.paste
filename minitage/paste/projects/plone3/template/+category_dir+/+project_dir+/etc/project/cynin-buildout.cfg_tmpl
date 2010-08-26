@@ -1,0 +1,82 @@
+#if $with_ploneproduct_fss
+#set $fsscomment=''
+#else
+#set $fsscomment='#'
+#end if
+
+${fsscomment}[fss-cynin]
+${fsscomment}<= fss
+${fsscomment}recipe = iw.recipe.fss
+${fsscomment}zope-instances=\${instance-cynin:location}
+
+[webdav]
+conf=
+    enable-ms-author-via on
+    <webdav-source-server>
+        # valid keys are "address" and "force-connection-close"
+        address \${hosts:instance-cynin}:\${ports:cynin-webdav}
+        force-connection-close off
+    </webdav-source-server> 
+
+[instance]
+zope-conf-additional +=
+     enable-ms-author-via on
+    <webdav-source-server>
+        address \${hosts:instance-cynin}:\${ports:cynin-webdav}
+        force-connection-close off
+    </webdav-source-server>  
+
+[instance1]
+zope-conf-additional +=
+    enable-ms-author-via on
+    <webdav-source-server>
+        address \${hosts:instance-cynin}:\${ports:cynin-webdav}
+        force-connection-close off
+    </webdav-source-server>  
+   
+# Singing & dancing clock server enabled instance
+[instance-cynin]
+<= instance
+http-address = \${hosts:instance-cynin}:\${ports:instance-cynin}
+zope-conf-additional +=
+    <clock-server>
+        method /\${plone:site}/@@tickupdate
+        period 60
+        user \${zope:user}
+        password \${zope:password}
+        #the hostname passed in via the "Host:" header in the faux request.
+        #Could be useful if you have virtual host rules set up inside Zope itself.
+        host localhost
+    </clock-server>
+
+[cynini18noverrides]
+recipe = collective.recipe.i18noverrides
+source = \${buildout:sources-dir}/ubify.policy/ubify/policy/plone-i18n-overrides
+
+[maildrophost]
+recipe = cns.recipe.maildrophost
+MAILDROP_USER=\${users:zope}
+SMTP_HOST=localhost
+SMTP_PORT=25
+MAILDROP_INTERVAL=30
+DEBUG=0
+DEBUG_RECEIVER=
+MAILDROP_BATCH=0
+MAILDROP_TLS=0
+MAILDROP_LOGIN=
+MAILDROP_PASSWORD=
+WAIT_INTERVAL=0.0
+ADD_MESSAGEID=1
+SUPERVISED_DAEMON=0
+
+[mkdirs]
+command +=
+    mkdir -pv \${locations:testfss-backup-cynin};
+    mkdir -pv \${locations:testfss-storage-cynin};
+    mkdir -pv \${locations:fss-backup-cynin};
+    mkdir -pv \${locations:fss-storage-cynin};
+    mkdir -pv \${buildout:directory}/var/cynin/mailqueue/cur;
+    mkdir -pv \${buildout:directory}/var/cynin/mailqueue/tmp;
+    mkdir -pv \${buildout:directory}/var/cynin/mailqueue/new;
+
+# vim:set ft=cfg:

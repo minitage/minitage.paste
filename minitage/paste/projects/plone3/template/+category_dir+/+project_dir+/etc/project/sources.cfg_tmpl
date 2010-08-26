@@ -22,7 +22,7 @@ auto-checkout +=
 # $psources_keys.sort()
 #for $item in $psources_keys:
 #set source=$plone_sources[item]
-$source['name'] = $source['type'] $source['url']
+$source['name'] = $source['type'] $source['url'] $source['path'] $source['asegg']
 #end for
 
 #if $with_ploneproduct_ploneappblob and ($major < 4)

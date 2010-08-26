@@ -27,6 +27,12 @@ $hr
 #else
 #set $delicomment='#'
 #end if
+#if $with_ploneproduct_cynin
+#set $cynincomment=''
+#else
+#set $cynincomment='#'
+#end if
+
 
 [buildout]
 timeout=3
@@ -35,41 +41,43 @@ extends-cache = \${buildout:directory}/etc/cache
 # this allow you to run buildout on offline mode and to use only the downloaded plonev3.versions.cfg
 extends -= $versions_url
            http://download.zope.org/Zope2/index/2.12.3/versions.cfg
-extends = #slurp
+extends =
 #if $major > 3:
-    plone/zope2.versions.cfg#slurp
+    plone/zope2.versions.cfg
 #end if
-    plone/plone${major}.versions.cfg#slurp
-    plone/plone${major}.sources.cfg#slurp
-    project/patches.cfg#slurp
-    sys/settings.cfg#slurp
+    plone/plone${major}.versions.cfg
+    plone/plone${major}.sources.cfg
+    project/patches.cfg
+    sys/settings.cfg
 #if $with_indexing_solr:
-    backends/solr.cfg#slurp
+    backends/solr.cfg
 #end if
 #if $with_ploneproduct_fss:
-    backends/fss.cfg#slurp
+    backends/fss.cfg
 #end if
 #if $with_ploneproduct_ploneappblob:
-    backends/blobstorage.cfg#slurp
+    backends/blobstorage.cfg
 #end if
 #if $with_experimental:
-    plone/experimental.cfg#slurp
+    plone/experimental.cfg
+#end if
+#if $with_ploneproduct_cynin:
+    project/cynin-buildout.cfg
 #end if
 #if $with_ploneproduct_sgdcg:
-    project/newsletter.cfg#slurp
+    project/newsletter.cfg
 #end if
-    project/versions.cfg#slurp
-    project/sources.cfg#slurp
-    project/${project}-kgs.cfg #slurp
-    project/${project}.cfg#slurp
-    apache/apache.cfg#slurp
-    hudson/${project}/hudson.cfg#slurp
-    deliverance/deliverance.cfg#slurp
-
+    project/versions.cfg
+    project/sources.cfg
+    project/${project}-kgs.cfg
+    project/${project}.cfg
+    apache/apache.cfg
+    hudson/${project}/hudson.cfg
 #if not $with_deliverance_support
 # to enable deliverance support, before uncommenting things there & there, think to add to those extends:
 #    deliverance/deliverance.cfg
-#
+#else
+    deliverance/deliverance.cfg
 #end if
 
 
@@ -81,6 +89,10 @@ parts =
     instance
     zopepy
     backup
+${cynincomment}    instance-cynin
+${cynincomment}    maildrophost
+${cynincomment}    cynini18noverrides
+${fsscomment}${cynincomment}    fss-cynin
 ${sgdgcomment}    instance-newsletter
 ${fsscomment}${sgdgcomment}    fss-newsletter
 ${fsscomment}    fss
@@ -102,6 +114,7 @@ ${delicomment}    deliverance.test
     ${sane_name}_hudson_job
     ${sane_name}_hudson_deploy
     ${sane_name}_hudson_chmod
+    chown
 
 find-links = \${groups:find-links}
 eggs += zopelib
@@ -245,6 +258,21 @@ packages = \${zope2:location}/lib/python ./
 recipe = plone.recipe.command
 update-command = \${mkdirs:command}
 command +=
+
+[chown]
+# This recipe is used to set permissions -- and ownership for root mode installs
+recipe = plone.recipe.command
+command =
+    chmod 600 .installed.cfg
+    find \${buildout:directory} -type d -name var -exec chown -R \${users:zope} {} \;
+    find \${buildout:eggs-directory} -type d -name LC_MESSAGES -exec chown -R \${users:zope} {} \;
+    find \${buildout:eggs-directory}/Products.kupu* -type d -name i18n -exec chown -R \${users:zope} {} \;
+    find \${buildout:directory} -name runzope -exec chown \${users:zope} {} \;
+    find \${buildout:directory}/var -type d -exec chmod 700 {} \;
+    chmod 744 \${buildout:directory}/bin/*
+update-command = \${chown:command}
+
+
 
 
 \# vim: set ft=cfg:

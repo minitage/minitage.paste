@@ -381,6 +381,8 @@ class Template(common.Template):
         vars['http_port4'] = int(vars['http_port']) + 4
         vars['http_port5'] = int(vars['http_port']) + 5
         vars['http_port_buildbot'] = int(vars['http_port']) + 6
+        vars['http_port6'] = int(vars['http_port']) + 7
+        vars['http_port7'] = int(vars['http_port']) + 8
         vars['zeo_port_buildbot'] = ''
         if 'oscket' == vars['zeo_port'].strip():
             vars['zeo_port_buildbot'] = int(vars['zeo_port']) + 1

@@ -15,6 +15,7 @@
 #set zeoa= '${hosts:zeo}:${ports:zeo}'
 #end if
 
+
 [instance]
 zeo-client-cache-size = \${cache:zeo-client-cache-size}
 zeo-client = on

@@ -4,6 +4,11 @@
 #else
 #set $sgdgcomment='#'
 #end if
+#if $with_ploneproduct_cynin
+#set $cynincomment=''
+#else
+#set $cynincomment='#'
+#end if 
 
 #if $with_haproxy
 #set $hapcomment=''
@@ -26,6 +31,7 @@ instance2=$address
 instance3=$address
 instance4=$address
 instance-newsletter=$address
+instance-cynin=$address
 instance-buildbot=$address
 #may not be used
 supervisor=$supervisor_host
@@ -51,6 +57,8 @@ instance2=$http_port2
 instance3=$http_port3
 instance4=$http_port4
 instance-newsletter=$http_port5
+instance-cynin=$http_port6
+cynin-webdav=$http_port7
 instance-buildbot=$http_port_buildbot
 #may not be used
 supervisor=$supervisor_port
@@ -129,17 +137,28 @@ password=$supervisor_password
 # aboslute paths to avoid buildout auto build of reffered part
 deliverance-themes=\${buildout:directory}/src/themes
 solr = \$solr_path
-blob-storage=\${buildout:directory}/var/blobstorage
+blob-storage=\${buildout:directory}/var/blobstorage/storage
+blob-backup=\${buildout:directory}/var/blobstorage/backup
+
 testfss-backup=  \${buildout:directory}/parts/instance/var/fss_backup
 testfss-storage= \${buildout:directory}/parts/instance/var/fss_storage
-fss-backup=  \${buildout:directory}/var/fss_backup_${project}
-fss-storage= \${buildout:directory}/var/fss_storage_${project}
+fss=\${buildout:directory}/var/fss
+global-fss-backup=  \${locations:fss}/fss_backup_global
+global-fss-storage= \${locations:fss}/fss_storage_global
+fss-backup=  \${locations:fss}/fss_backup_${project}
+fss-storage= \${locations:fss}/fss_storage_${project}
 buildbot-testfss-backup=  \${buildout:directory}/parts/instance-buildbot/var/fss_backup
 buildbot-testfss-storage= \${buildout:directory}/parts/instance-buildbot/var/fss_storage
 ${sgdgcomment}testfss-backup-newsletter= \${buildout:directory}/parts/instance-newsletter/var/fss_backup
 ${sgdgcomment}testfss-storage-newsletter=\${buildout:directory}/parts/instance-newsletter/var/fss_storage
-${sgdgcomment}fss-backup-newsletter= \${buildout:directory}/var/fss_backupnewsletter_${project}
-${sgdgcomment}fss-storage-newsletter=\${buildout:directory}/var/fss_storagenewsletter_${project}
+${sgdgcomment}fss-backup-newsletter= \${buildout:directory}/var/fss/fss_backupnewsletter_${project}
+${sgdgcomment}fss-storage-newsletter=\${buildout:directory}/var/fss/fss_storagenewsletter_${project} 
+${cynincomment}testfss-backup-cynin= \${buildout:directory}/parts/instance-cynin/var/fss_backup
+${cynincomment}testfss-storage-cynin=\${buildout:directory}/parts/instance-cynin/var/fss_storage
+${cynincomment}fss-backup-cynin= \${buildout:directory}/var/fss/fss_backupcynin_${project}
+${cynincomment}fss-storage-cynin=\${buildout:directory}/var/fss/fss_storagecynin_${project}
+blob-backups=\${buildout:directory}/var/blobbackups
+fss-backups=\${buildout:directory}/var/fssbackups 
 staging=$staging_path
 
 # if you want separated FSS directories, you can use that

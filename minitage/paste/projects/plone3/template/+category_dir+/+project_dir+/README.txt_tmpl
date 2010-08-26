@@ -285,6 +285,11 @@ This is described in details on the related configuration files you will find in
             |   `-- activate_env.sh.in   -> buildout template to generate etc/hudson/${project}/build/activate.env.sh
             `-- config.xml.in            -> buildout template to generate etc/hudson/${project}/config.xml (hudson job/build file)
 
+CYNIN integration if any
+------------------------
+
+     |-- etc/project/buildout-cynin.cfg -> cynin specific buildout
+
 
 NOTES ABOUT WSGI SUPPORT
 -------------------------

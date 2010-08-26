@@ -460,6 +460,12 @@ def parse_xmlconfig(xml,
                     options = [option.strip() for option in oattrs['options'].split(',')]
                     name = oattrs.get('name').strip()
                     if overrides or (not name in plone_sources):
+                        asegg = ''
+                        if oattrs.get('asegg', '').strip():
+                            asegg = 'egg=false'
+                        spath = ''
+                        if oattrs.get('path', '').strip():
+                            spath = 'path=%s' % oattrs.get('path', '').strip() 
                         item = {
                             'name':     name,
                             'type':     oattrs.get('type').strip(),
@@ -467,6 +473,8 @@ def parse_xmlconfig(xml,
                             'options': options,
                             'default': oattrs.get('default', '').strip(),
                             'autocheckout': oattrs.get('autocheckout', '').strip(),
+                            'asegg': asegg,
+                            'path': spath,
                         }
                         plone_sources[name] = item
 
@@ -530,11 +538,19 @@ def parse_xmlconfig(xml,
                         if hidden and (not option in qi_hidden_mappings):
                             qi_hidden_mappings[option] = [] 
                         if not hidden and (not option in qi_mappings):
-                            qi_mappings[option] = [] 
+                            qi_mappings[option] = []
                         if hidden and (not oattrs['name'] in qi_hidden_mappings):
                             qi_hidden_mappings[option].append(oattrs['name'])
                         if not hidden and (not oattrs['name'] in qi_mappings):
-                            qi_mappings[option].append(oattrs['name']) 
+                            qi_mappings[option].append(
+                                {
+                                    'name': oattrs['name'], 
+                                    'order': int(oattrs.get('order', '1'.strip()))
+                                }
+                            ) 
+            # order options
+            for option in qi_mappings:
+                qi_mappings[option].sort(lambda x,y:  -x['order'] + y['order'])
 
         # genericsetup mappings discovery
         gs = xmlTemplate.getElementsByTagName('gs')

@@ -20,6 +20,11 @@
 #else
 #set $solrcomment='#'
 #end if 
+#if $with_ploneproduct_ploneappblob
+#set $blobcomment=''
+#else
+#set $blobcomment='#'
+#end if 
 
 [buildout]
 extends=#slurp
@@ -45,6 +50,7 @@ parts+=#slurp
 #    repozoweekly
 #end if
 ${fsscomment}    fssdailycron
+${blobcomment}    blobdailycron
 ${fsscomment}    fss1
 ${fsscomment}    fss2
 ${fsscomment}    fss3

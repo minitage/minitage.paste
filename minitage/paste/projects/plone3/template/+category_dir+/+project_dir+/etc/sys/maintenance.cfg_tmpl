@@ -11,7 +11,6 @@
 # * backup FSS every day
 #end if
 
-
 # Think to include the logrotate configuration file inside your logrotate configuration (ln ?)
 #if $with_ploneproduct_sgdcg
 #set $sgdgcomment=''
@@ -28,6 +27,12 @@
 #else
 #set $blobcomment='#'
 #end if
+
+#if $with_ploneproduct_cynin
+#set $cynincomment=''
+#else
+#set $cynincomment='#'
+#end if  
 
 # make an incremental backup per day
 [repozodaily]
@@ -67,34 +72,42 @@ update-command = \${chmodcron:command}
 command =
     chmod -v 750 \${buildout:directory}/cron_scripts/*.sh
 
-[backupdirs]
-order=\${fssdaily:recipe}
-recipe = plone.recipe.command
-update-command = \${chmodcron:command}
-command =
-    mkdir -pv \${buildout:directory}/var/backups
-    mkdir -pv \${buildout:directory}/var/snapshotbackups
-
-# if $with_ploneproduct_fss:
 # please edit the .in file to fit your needs if you change the fss storage layout.
 [fssdaily]
 recipe = collective.recipe.template
 input =\${buildout:directory}/etc/templates/fss_daily.sh.in
 output =\${buildout:directory}/cron_scripts/fss_daily.sh
-backuppath=\${buildout:directory}/var/fssbackups
+backuppath=\${locations:fss-backups}
 
 # backup FSS every day
 [fssdailycron]
 recipe = z3c.recipe.usercrontab
 times = 15 1 * * *
 command =  \${buildout:directory}/cron_scripts/fss_daily.sh
-# end if
+
+# please edit the .in file to fit your needs if you change the blob storage layout.
+[blobdaily]
+recipe = collective.recipe.template
+input =\${buildout:directory}/etc/templates/blob_daily.sh.in
+output =\${buildout:directory}/cron_scripts/blob_daily.sh
+backuppath=\${locations:blob-backups}
+
+# backup BLOB every day
+[blobdailycron]
+recipe = z3c.recipe.usercrontab
+times = 15 1 * * *
+command =  \${buildout:directory}/cron_scripts/blob_daily.sh
 
 [backupdirs]
-order=\${fssdaily:recipe}
+${fsscomment}order=\${fssdaily:recipe}
+${blobcomment}order=\${blobdaily:recipe}
 recipe = plone.recipe.command
-update-command = \${chmodcron:command}
-
+update-command = \${backupdirs:command}
+command =
+${blobcomment}    mkdir -pv \${blobdaily:backuppath};\
+${fsscomment}     mkdir -pv \${fssdaily:backuppath};\
+    mkdir -pv \${buildout:directory}/var/backups;\
+    mkdir -pv \${buildout:directory}/var/snapshotbackups 
 
 [upload-datafs]
 recipe = plone.recipe.command
@@ -103,11 +116,7 @@ command =
      rsync -av --partial --progress               \${buildout:directory}/var/backups/                \${users:staging}@\${hosts:staging}:\${locations:staging}/backups/;
      rsync -av --partial --progress               \${buildout:directory}/var/snapshotbackups/        \${users:staging}@\${hosts:staging}:\${locations:staging}/snapshotbackups/;
 ${blobcomment}     rsync -av --partial --progress \${buildout:directory}/var/blobstorage/            \${users:staging}@\${hosts:staging}:\${locations:staging}/blobstorage/;
-${fsscomment}     rsync -av --partial --progress  \${locations:fss-backup}/                          \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_backup_${project}/;
-${fsscomment}     rsync -av --partial --progress  \${locations:fss-storage}/                         \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_storage_${project}/;
-${fsscomment}     rsync -av --partial --progress  \${buildout:directory}/var/fss_storage_global/     \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_storage_global/;
-${fsscomment}     rsync -av --partial --progress  \${buildout:directory}/var/fss_backup_global/      \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_backup_global/;
-
+${fsscomment}     rsync -av --partial --progress  \${locations:fss}/                          \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_${project}/;
 
 [logrotate.conf]
 recipe = collective.recipe.template

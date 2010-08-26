@@ -4,7 +4,7 @@
 recipe = iw.recipe.fss
 zope-instances=\${instance:location}
 storages =
-    global /
+    global / directory \${locations:global-fss-storage} \${locations:global-fss-backup}  
     \${plone:site}} /\${plone:site} $fss_strategy \${locations:fss-storage} \${locations:fss-backup} 
 
 
@@ -22,6 +22,8 @@ storages =
 command +=
     mkdir -pv \${locations:testfss-backup};
     mkdir -pv \${locations:testfss-storage};
+    mkdir -pv \${locations:global-fss-storage};
+    mkdir -pv \${locations:global-fss-backup};  
     mkdir -pv \${locations:fss-storage};
     mkdir -pv \${locations:fss-backup}; 
 

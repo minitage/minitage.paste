@@ -6,32 +6,38 @@
 <root>
   <template>
     <versions>
-      <version p="zope.schema"           v="3.6.1"   name="we will need this version to avoid problems with eg: z3c.form"/>
+      <version p="zope.schema"            v="3.6.1"   name="we will need this version to avoid problems with eg: z3c.form"/>
       <version p='five.intid'             v='0.5.0'  name='various zope3 packages needed by various products in a zope2 installation'/>
     </versions>
+    <eggs>
+      <egg name="bpython"                       options="with_tool_bpython"                 scripts="bpython" default="y" />
+    </eggs>
     <checkedversions>
-      <version p='Products.LinguaPlone' v='3.1a1'      options="with_ploneproduct_lingua"/>
+      <version p='Products.LinguaPlone' v='4.0a1'      options="with_ploneproduct_lingua"/>
       <!-- z3c.form -->
-      <version p='plone.z3cform'        v='0.5.10'     options="with_ploneproduct_pz3cform,with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok" />
+      <version p='plone.z3cform'        v='0.7.0'      options="with_ploneproduct_pz3cform,with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok" />
       <version p='rwproperty'           v='1.0'        options="with_ploneproduct_pz3cform,with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok" />
-      <version p='z3c.form'             v='2.2.0'      options="with_ploneproduct_pz3cform,with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok" />
+      <version p='z3c.form'             v='2.4.1'      options="with_ploneproduct_pz3cform,with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok" />
       <version p='z3c.formwidget.query' v='0.5'        options="with_ploneproduct_pz3cform,with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok" />
 
       <!-- FIVE.GROK -->
       <!-- pinned by plone4 KGS
         <version p='five.localsitemanager'          v='1.1'     options='with_ploneproduct_fivegrok' />
         -->
-      <version p='five.grok'                      v='1.1.1'     options='with_ploneproduct_fivegrok' />
-      <version p='grokcore.annotation'            v='1.1'   options='with_ploneproduct_fivegrok' />
-      <version p='grokcore.component'             v='1.7'     options='with_ploneproduct_fivegrok' />
-      <version p='grokcore.formlib'               v='1.4'     options='with_ploneproduct_fivegrok' />
-      <version p='grokcore.security'              v='1.2'     options='with_ploneproduct_fivegrok' />
-      <version p='grokcore.site'                  v='1.1'   options='with_ploneproduct_fivegrok' />
-      <version p='grokcore.view'                  v='1.12.2'  options='with_ploneproduct_fivegrok' />
-      <version p='grokcore.viewlet'               v='1.3'     options='with_ploneproduct_fivegrok' />
-
-      <version p='martian'                        v='0.11.1'    options='with_ploneproduct_fivegrok' />
+      <version p='five.grok'                      v='1.1.1'    options='with_ploneproduct_fivegrok' />
+      <version p='grokcore.annotation'            v='1.2'      options='with_ploneproduct_fivegrok' />
+      <version p='grokcore.component'             v='1.8'      options='with_ploneproduct_fivegrok' />
+      <version p='grokcore.formlib'               v='1.5'      options='with_ploneproduct_fivegrok' />
+      <version p='grokcore.security'              v='1.4'      options='with_ploneproduct_fivegrok' />
+      <version p='grokcore.site'                  v='1.2'      options='with_ploneproduct_fivegrok' />
+      <version p='grokcore.view'                  v='1.12.2'   options='with_ploneproduct_fivegrok' />
+      <version p='grokcore.viewlet'               v='1.4.1'    options='with_ploneproduct_fivegrok' />
+      <version p='martian'                        v='0.11.2'   options='with_ploneproduct_fivegrok' />
+      <version p='five.localsitemanager'          v='2.0.3'    options='with_ploneproduct_fivegrok' />
     </checkedversions>
+    <options>
+      <option order="0000" name="with_tool_bpython"                  description="bpython, see http://www.bpython-interpreter.org/ y/n" default="y"/>
+    </options>
     <sources>
       <source name="plone.app.blob" type="svn" url="http://svn.plone.org/svn/plone/plone.app.blob/trunk" options="with_ploneproduct_ploneappblob"/>
       <source name="Products.Ploneboard"   autocheckout="y"    type="svn" url="https://svn.plone.org/svn/collective/Products.Ploneboard/trunk" options="with_ploneproduct_ploneboard"/>
@@ -46,7 +52,6 @@
   </template>
   <purge>
     <eggs>
-
       <egg name="easyshop.carts"                 options="with_ploneproduct_easyshop"                      zcml="configure"/>
       <egg name="easyshop.catalog"               options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
       <egg name="easyshop.checkout"              options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
@@ -68,7 +73,7 @@
       <egg name="zc.authorizedotnet"             options="with_ploneproduct_easyshop"     />
       <egg name="Products.ATBackRef"             options="with_ploneproduct_atbackref"        zproduct="y" zcml="configure"/>
       <egg name="Products.CacheSetup"            options="with_ploneproduct_cachesetup"       zproduct="y" zcml="configure"/>
-      <egg name="Products.PloneArticle"          options="with_ploneproduct_plonearticle"     zproduct="y" zcml="configure"/> 
+      <egg name="Products.PloneArticle"          options="with_ploneproduct_plonearticle"     zproduct="y" zcml="configure"/>
       <egg name="iw.fss"                         options="with_ploneproduct_fss"          zcml="configure,meta"      zcmlorder="150"/>
       <egg name="p4a.plonecalendar"              options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
       <egg name="p4a.ploneevent"                 options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
@@ -78,7 +83,7 @@
       <egg name="p4a.videoembed"                 options="with_ploneproduct_p4a_vid"          zpackage="y" zcml="configure"/>
       <egg name="p4a.plonevideo"                 options="with_ploneproduct_p4a_vid"          zpackage="y" zcml="configure"/>
       <egg name="p4a.video"                      options="with_ploneproduct_p4a_vid"                       zcml="configure"/>
-      <egg name="p4a.z2utils"                    options="with_ploneproduct_p4a_vid"          />                             
+      <egg name="p4a.z2utils"                    options="with_ploneproduct_p4a_vid"          />
     </eggs>
     <sources>
       <source name="Products.SimpleAttachment" />
@@ -134,7 +139,7 @@
       <product name="p4a.plonecalendar"              options="with_ploneproduct_p4a_cal"          />
       <product name="p4a.ploneevent"                 options="with_ploneproduct_p4a_cal"          />
       <product name="p4a.plonevideoembed"            options="with_ploneproduct_p4a_vid"          />
-      <product name="p4a.plonevideo"                 options="with_ploneproduct_p4a_vid"          /> 
+      <product name="p4a.plonevideo"                 options="with_ploneproduct_p4a_vid"          />
     </qi>
     <options>
       <option order="1400" name="with_ploneproduct_plonearticle"     description="Plone Article, see http://plone.org/products/plonearticle/ y/n"/>

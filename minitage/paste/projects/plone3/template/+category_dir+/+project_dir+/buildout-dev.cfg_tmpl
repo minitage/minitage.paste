@@ -9,7 +9,7 @@
 #set $i18ncomment=''
 #else
 #set $i18ncomment='#'
-#end if  
+#end if
 #if 'zeo' in $mode:
 #set $zeocomment=''
 #else
@@ -29,7 +29,7 @@
 #set $sgdgcomment=''
 #else
 #set $sgdgcomment='#'
-#end if 
+#end if
 
 # We want the production buildout + the debug bits.
 [buildout]
@@ -54,7 +54,7 @@ zope-front=\${ports:instance}
 [sources]
 zopeskel=svn https://svn.plone.org/svn/collective/ZopeSkel/trunk
 experimental.catalogqueryplan = svn https://svn.plone.org/svn/collective/experimental.catalogqueryplan/trunk
- 
+
 [versions]
 ctypes=1.0.2
 #if $major >3:
@@ -75,15 +75,18 @@ eggs+= plone.reload
     collective.releaser
     docutils
     gprof2dot
+    Products.signalstack
     Products.Clouseau
     Products.DocFinderTab
     experimental.catalogqueryplan
     Products.Gloworm
 # Uncomment/Activate only if you want
 #    Products.PDBDebugMode
+    profilehooks
+    Products.MemoryProfiler
+    Products.PTProfiler
     Products.ZopeProfiler
     Sphinx
-    zest.releaser
     ZopeSkel
 #if $linux:
 # plone auto reloading facility relying on inotify.
@@ -100,12 +103,7 @@ eggs+= plone.reload
 
 [zopepy]
 scripts += project_deploy
-    project_diff
-    project_eggs
-    project_md5
-    project_release
-    package_svn_prepare
-    release_eggs
+
 #Sphinx
     sphinx-build
     sphinx-quickstart

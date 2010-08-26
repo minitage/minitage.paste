@@ -54,6 +54,10 @@ auto-checkout +=
 extra-paths+=\${buildout:extra-paths}
 eggs += \${buildout:eggs}
     Plone
+# release helpers
+    zest.releaser
+    jarn.mkrelease
+    z3c.checkversions [buildout]
 #for $product in $additional_eggs:
 #if product.startswith('#'):
 $product
@@ -67,6 +71,11 @@ products =
     \${productdistros:location}
 
 zcml +=
+
+#if $with_ploneproduct_cynin:
+    ubify.viewlets-overrides
+    ubify.cyninv2theme-overrides
+#end if 
 #for $product in $plone_zcml:
 #if product.startswith('#'):
 ${product}
@@ -74,6 +83,7 @@ ${product}
 ${zcmlcomment}    ${product}
 #end if
 #end for
+zope-conf-additional=
 
 [kgs]
 file=\${buildout:directory}/etc/${project}-kgs.cfg
@@ -81,6 +91,17 @@ file=\${buildout:directory}/etc/${project}-kgs.cfg
 [zopepy]
 # Scripts generated filtering
 scripts =
+#z3c.checkversions
+    checkversions
+#jarn.mkrelease
+    mkrelease
+#zest.releaser
+    project_diff
+    project_eggs
+    project_md5
+    project_release
+    package_svn_prepare
+    release_eggs
     zopepy
 #zope2
     repozo
@@ -147,10 +168,7 @@ command =
      rsync -av --partial --progress               \${users:staging}@\${hosts:staging}:\${locations:staging}/backups/                \${buildout:directory}/var/backups/;
      rsync -av --partial --progress               \${users:staging}@\${hosts:staging}:\${locations:staging}/snapshotbackups/        \${buildout:directory}/var/snapshotbackups/;
 ${blobcomment}     rsync -av --partial --progress \${users:staging}@\${hosts:staging}:\${locations:staging}/blobstorage/            \${buildout:directory}/var/blobstorage/;
-${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_storage_global/     \${buildout:directory}/var/fss_storage_global/;
-${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_backup_global/      \${buildout:directory}/var/fss_backup_global/;
-${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_storage_${project}/ \${locations:fss-storage}/;
-${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_backup_${project}/  \${locations:fss-backup}/;
+${fsscomment}     rsync -av --partial --progress  \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_${project}/  \${locations:fss}/;
 
 [cg.devmode]
 recipe=minitage.recipe.scripts
@@ -170,4 +188,5 @@ initialization=
     sys.argv[1:] = ['-m', '\${devmode:mail}', '-p', '--password', '\${zope:password}', '-l', '\${plone:site}', '-u', '\${zope:user}']
 eggs=\${instance:eggs}
     collective.generic.devmode 
+
 # vim:set ft=cfg:

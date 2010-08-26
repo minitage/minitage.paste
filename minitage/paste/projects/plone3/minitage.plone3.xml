@@ -25,21 +25,21 @@
   <option order="0000" name="reverseproxy_port"                  description="port of the reverse proxy" default="80"/>
   <option order="0000" name="reverseproxy_scheme"                description="HHTP(s) scheme of the reverse proxy (http/https)" default="http"/>
   <option order="0000" name="with_binding_bsoup"                 description="BeautifulSoup,see http://pypi.python.org/pypi/BeautifulSoup/ y/n"/>
-  <option order="0000" name="with_binding_json"                  description="Json python various bindings (demjson, simplejson) y/n"/> 
+  <option order="0000" name="with_binding_json"                  description="Json python various bindings (demjson, simplejson) y/n"/>
   <option order="0000" name="with_binding_ldap"                  description="LDAP bindings y/n"/>
   <option order="0000" name="with_binding_pdf"                   description="PDF Python various bindings including pypdf Y/n"/>
   <option order="0000" name="with_binding_pil"                   description="Python imaging (dangerous to disable) y/n" default="y"/>
   <option order="0000" name="with_binding_sugar"                 description="Python SugarCrm bindings y/n" default="n"/>
   <option order="0000" name="with_binding_xlwt"                  description="xlwt,see http://pypi.python.org/pypi/xlwt/ y/n"/>
   <option order="0000" name="with_database_mysql"                description="Mysql python bindings y/n"/>
-  <option order="0000" name="with_database_oracle"               description="Oracle python bindings y/n"/> 
+  <option order="0000" name="with_database_oracle"               description="Oracle python bindings y/n"/>
   <option order="0000" name="with_database_postgresql"           description="Postgresql python bindings y/n"/>
-  <option order="0000" name="with_database_sa"                   description="SQLAlchemy, see http://www.sqlalchemy.org y/n"/> 
+  <option order="0000" name="with_database_sa"                   description="SQLAlchemy, see http://www.sqlalchemy.org y/n"/>
   <option order="0000" name="with_deliverance_support"           description="deliverance, see http://pypi.python.org/pypi/Deliverance y/n" default="n"/>
   <option order="0000" name="with_experimental"                  description="Plone experimental improvments y/n" default="n"/>
   <option order="0000" name="with_indexing_solr"                 description="Solr y/n"/>
   <option order="0000" name="with_tool_i18ndude"                 description="i18n http://pypi.python.org/pypi/i18ndude y/n" default="y"/>
-  <option order="0000" name="with_tool_ipython"                  description="ipython http://ipython.scipy.org/ y/n" default="y"/>
+  <option order="0000" name="with_tool_ipython"                  description="ipython, see http://ipython.scipy.org/ y/n" default="y"/>
   <option order="0000" name="with_tool_zopeskel"                 description="ZopeSkel http://pypi.python.org/pypi/ZopeSkel y/n" default="y"/>
   <option order="0000" name="with_wsgi_cas"                      description="WSGI CAS (SSO) capabilities, see http://pypi.python.org/pypi/repoze.who.plugins.cas y/n"/>
   <option order="0000" name="with_wsgi_support"                  description="WSGI capabilities y/n"/>
@@ -54,7 +54,7 @@
   <option order="1000" name="with_ploneproduct_agridfield"         description="archetypes.gridfield, see http://pypi.python.org/pypi/archetypes.gridfield y/n"/>
   <option order="1000" name="with_ploneproduct_autocomplete"       description="Autocomplete Widget, see http://pypi.python.org/pypi/plone.formwidget.autocomplete y/n"/>
   <option order="1000" name="with_ploneproduct_collage"            description="Collage, see http://pypi.python.org/pypi/Products.Collage/ y/n"/>
-  <option order="1000" name="with_ploneproduct_contentwellportlet" description="Content well porlets, see http://pypi.python.org/pypi/Products.ContentWellPortlets y/n" default="n"/> 
+  <option order="1000" name="with_ploneproduct_contentwellportlet" description="Content well porlets, see http://pypi.python.org/pypi/Products.ContentWellPortlets y/n" default="n"/>
   <option order="1000" name="with_ploneproduct_masterselect"       description="MasterSelect Widget, see http://pypi.python.org/pypi/Products.MasterSelectWidget y/n"/>
   <option order="1119" name="with_ploneproduct_plonejqtools"       description="Jquery Tools, see http://pypi.python.org/pypi/plone.app.jquerytools y/n" default="n"/>
   <option order="1000" name="with_ploneproduct_tal_portlet"        description="Tal Portlet, see http://pypi.python.org/pypi/collective.portlet.tal y/n"/>
@@ -74,20 +74,21 @@
   <!-- Views helper products -->
   <option order="1014" name="with_ploneproduct_fivegrok"           description="five.grok integration, see http://pypi.python.org/pypi/five.grok y/n" default="n"/>
   <option order="1016" name="with_ploneproduct_patransmo"          description="transmogrifier, see http://pypi.python.org/pypi/plone.app.transmogrifier y/n" default="n"/>
-  <option order="1013" name="with_ploneproduct_pz3cform"           description="Plone z3c.form, see http://pypi.python.org/pypi/plone.z3cform y/n" default="n"/> 
+  <option order="1013" name="with_ploneproduct_pz3cform"           description="Plone z3c.form, see http://pypi.python.org/pypi/plone.z3cform y/n" default="n"/>
   <!-- Communication -->
+  <option order="1000" name="with_ploneproduct_cynin"              description="Cyn.in, see http://www.cynapse.com/cynin y/n"/>
   <option order="1000" name="with_ploneproduct_atworkgroup"        description="ATWorkgroup, see http://plone.org/products/mxm-workgroup/ y/n"/>
   <option order="1000" name="with_ploneproduct_facultystaff"       description="FalcultyStaff, see http://plone.org/products/faculty-staff-directory y/n"/>
   <option order="1000" name="with_ploneproduct_flowplayer"         description="FlowPlayer, see http://plone.org/products/collective-flowplayer/ y/n"/>
   <option order="1000" name="with_ploneproduct_lingua"             description="LinguaPlone, see http://plone.org/products/linguaplone y/n"/>
   <option order="1007" name="with_ploneproduct_p4a_cal"            description="p4a Calendar, see http://pypi.python.org/pypi/p4a.calendar y/n"/>
-  <option order="1008" name="with_ploneproduct_p4a_vid"            description="p4a Video, see http://www.plone4artists.org/products/plone4artistsvideo y/n"/> 
+  <option order="1008" name="with_ploneproduct_p4a_vid"            description="p4a Video, see http://www.plone4artists.org/products/plone4artistsvideo y/n"/>
   <option order="1000" name="with_ploneproduct_plonearticle"       description="Plone Article, see http://plone.org/products/plonearticle/ y/n"/>
-  <option order="1000" name="with_ploneproduct_plonesurvey"        description="PloneSurvey, see http://plone.org/products/plone-survey/releases/1.3.0 y/n"/> 
+  <option order="1000" name="with_ploneproduct_plonesurvey"        description="PloneSurvey, see http://plone.org/products/plone-survey/releases/1.3.0 y/n"/>
   <option order="1000" name="with_ploneproduct_quills"             description="Quills, see http://pypi.python.org/pypi/Products.Quills/ y/n"/>
-  <option order="1000" name="with_ploneproduct_sgdcg"              description="Singing / Dancing NewsLetter, see http://plone.org/products/dancing S/D is known to lead to multiple buildout installation errors.Be sure to activate it and debug the errors. y/n"/> 
+  <option order="1000" name="with_ploneproduct_sgdcg"              description="Singing / Dancing NewsLetter, see http://plone.org/products/dancing S/D is known to lead to multiple buildout installation errors.Be sure to activate it and debug the errors. y/n"/>
   <option order="1000" name="with_ploneproduct_truegallery"        description="PloneTrueGallery, see http://plone.org/products/plone-true-gallery/ y/n"/>
-  <option order="1002" name="with_ploneproduct_ploneboardnotify"   description="Ploneboard Notify, see http://pypi.python.org/pypi/Products.PloneboardNotify y/n"/> 
+  <option order="1002" name="with_ploneproduct_ploneboardnotify"   description="Ploneboard Notify, see http://pypi.python.org/pypi/Products.PloneboardNotify y/n"/>
   <option order="1003" name="with_ploneproduct_ploneboard"         description="Plone Board, see http://plone.org/products/ploneboard/ y/n"/>
   <option order="1005" name="with_ploneproduct_membrane"           description="membrane, see http://pypi.python.org/pypi/membrane y/n"/>
   <option order="1006" name="with_ploneproduct_remember"           description="remember, see http://pypi.python.org/pypi/Products.remember y/n"/>
@@ -97,12 +98,12 @@
   <option order="1000" name="with_ploneproduct_easyshop"           description="Easy Shop, see http://www.geteasyshop.com y/n"/>
   <option order="1000" name="with_ploneproduct_iterate"            description="Plone Iterate, see http://pypi.python.org/pypi/plone.app.iterate y/n" default="n"/>
   <option order="1000" name="with_ploneproduct_maps"               description="Maps, see http://plone.org/products/maps/ y/n"/>
-  <option order="1000" name="with_ploneproduct_smartprintng"       description="SmartPrintNG, see http://pypi.python.org/pypi/Products.SmartPrintNG y/n"/> 
+  <option order="1000" name="with_ploneproduct_smartprintng"       description="SmartPrintNG, see http://pypi.python.org/pypi/Products.SmartPrintNG y/n"/>
   <option order="1000" name="with_ploneproduct_tinymce"            description="Tinymce, see http://plone.org/products/tinymce y/n" default="y"/>
   <!-- makina -->
   <option order="10000" name="with_binding_mapscript"                   description="mapserver python bindings, see http://pypi.python.org/pypi/mapscript y/n"                                             default="n"/>
   <option order="10018" name="with_minitage_devpackages"                description="include a bundle of minitage development tools y/n"                                                                   default="n"/>
-  <option order="10020" name="with_minitage_otherpackages"              description="include a bundle of minitage extra development tools y/n"                                                             default="n"/> 
+  <option order="10020" name="with_minitage_otherpackages"              description="include a bundle of minitage extra development tools y/n"                                                             default="n"/>
   <option order="10030" name="with_tool_cgeneric"                       description="include a bundle of collective.generic development tools y/n"                                                         default="n"/>
   <option order="00000" name="with_ploneproduct_cbdancing"              description="collective.blueprint.dancing, see http://pypi.python.org/pypi/collective.blueprint.dancing y/n"                  default="n"/>
   <option order="01009" name="with_ploneproduct_cdewplayer"             description="dewplayer, see http://pypi.python.org/pypi/collective.dewplayer y/n"                                             default="n"/>
@@ -157,7 +158,7 @@
   <eggs>
     <egg name="zopyx.convert"                 options="with_ploneproduct_smartprintng" scripts="xslfo-convert"  />
     <egg name="BeautifulSoup"                 options="with_binding_bsoup,with_ploneproduct_smartprintng"   />
-    <egg name="lxml"                          options="with_ploneproduct_smartprintng"   />
+    <egg name="lxml"                          options="with_ploneproduct_smartprintng,with_ploneproduct_cynin"   />
     <egg name="elementtree"                   options="with_ploneproduct_smartprintng"   />
     <egg name="buildout.minitagificator"      options="with_minitage_devpackages"  />
     <egg name="ClueReleaseManager.paste"      options="with_minitage_otherpackages"  />
@@ -194,7 +195,8 @@
     <egg name="psycopg2"                      options="with_database_postgresql"/>
     <egg name="pypgoptimizator"               options="with_minitage_otherpackages"  scripts="pypgoptimizator" />
     <egg name="pysugarNG"                     options="with_binding_sugar"/>
-    <egg name="python-ldap"                   options="with_binding_ldap,with_ploneproduct_ldap"/>
+    <egg name="python-ldap"                   options="with_binding_ldap,with_ploneproduct_ldap,with_ploneproduct_cynin"/>
+    <egg name="bda.ldap"                      options="with_binding_ldap,with_ploneproduct_ldap,with_ploneproduct_cynin"/>
     <egg name="quills.remoteblogging"         options="with_ploneproduct_quills"/>
     <egg name="repoze.who.plugins.cas"        options="with_wsgi_cas"/>
     <egg name="repoze.zope2"                  options="with_wsgi_support"                 />
@@ -211,7 +213,7 @@
     <!-- pure zope/plone eggs -->
     <egg name="Products.ATWorkgroup"           options="with_ploneproduct_atworkgroup"/>
     <egg name="aws.pdfbook"                    options="with_ploneproduct_awspdfbook" zcml="configure" />
-    <egg name="archetypes.schemaextender"      options="with_ploneproduct_schemaextender,with_ploneproduct_facultystaff" zcml="configure" />
+    <egg name="archetypes.schemaextender"      options="with_ploneproduct_schemaextender,with_ploneproduct_facultystaff,with_ploneproduct_cynin" zcml="configure" />
     <egg name="Products.PloneboardNotify"      options="with_ploneproduct_ploneboardnotify" zcml="configure" />
     <egg name="archetypes.schematuning"        options="with_ploneproduct_schematuning" />
     <egg name="collective.contentlicensing"    options="with_ploneproduct_contentlicensing" zpackage="y" zcml="configure"/>
@@ -253,7 +255,7 @@
     <egg name="p4a.video"                      options="with_ploneproduct_p4a_vid"                       zcml="configure"/>
     <egg name="p4a.z2utils"                    options="with_ploneproduct_p4a_vid"          />
     <egg name="plone.app.blob"                 options="with_ploneproduct_ploneappblob"  zcml="configure" zpackage="y" order="109" zcmlorder="109"/>
-    <egg name="plone.app.iterate"              options="with_ploneproduct_iterate"          zpackage="y" zcml="configure"/>
+    <egg name="plone.app.iterate"              options="with_ploneproduct_iterate,with_ploneproduct_cynin"          zpackage="y" zcml="configure"/>
     <egg name="plone.app.jquerytools"          options="with_ploneproduct_plonejqtools"       zcml="configure"/>
     <egg name="plone.app.transmogrifier"       options="with_ploneproduct_patransmo"        zcml="configure"    />
     <egg name="plone.app.z3cform"              options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"  zcml="configure" order="110" zcmlorder="110"/>
@@ -265,7 +267,7 @@
     <egg name="Products.ATSchemaEditorNG"      options="with_ploneproduct_atschemaeditor" zpackage="y" zcml="configure" />
     <egg name="Products.ATVocabularyManager"   options="with_ploneproduct_atvmanager" zpackage="y" zcml="configure" />
     <egg name="Products.CacheSetup"            options="with_ploneproduct_cachesetup"       zproduct="y" zcml="configure"/>
-    <egg name="Products.CMFPlacefulWorkflow"   options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard"            zproduct="y" zcml="configure" scripts="foo,bar"/>
+    <egg name="Products.CMFPlacefulWorkflow"   options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard,with_ploneproduct_cynin"            zproduct="y" zcml="configure" />
     <egg name="Products.Collage"               options="with_ploneproduct_collage"          zproduct="y" zcml="configure"/>
     <egg name="Products.ContentWellPortlets"   options="with_ploneproduct_contentwellportlet" zproduct="y" zcml="configure"/>
     <egg name="Products.csvreplicata"          options="with_ploneproduct_csvreplica"       zproduct="y"/>
@@ -280,8 +282,8 @@
     <egg name="Products.PloneArticle"          options="with_ploneproduct_plonearticle"     zproduct="y" zcml="configure"/>
     <egg name="Products.Ploneboard"            options="with_ploneproduct_ploneboard"       zproduct="y" zcml="configure"/>
     <egg name="Products.PloneFormGen"          options="with_ploneproduct_ploneformgen"     zproduct="y" zcml="configure"/>
-    <egg name="Products.PloneLDAP"             options="with_ploneproduct_ldap"             zproduct="y" zcml="configure"/>
-    <egg name="plone.app.ldap"                 options="with_ploneproduct_ldap"             zproduct="y" zcml="configure"/>
+    <egg name="Products.PloneLDAP"             options="with_ploneproduct_ldap,with_ploneproduct_cynin"             zproduct="y" zcml="configure"/>
+    <egg name="plone.app.ldap"                 options="with_ploneproduct_ldap,with_ploneproduct_cynin"             zproduct="y" zcml="configure"/>
     <egg name="Products.PloneSurvey"           options="with_ploneproduct_plonesurvey"      zproduct="y" zcml="configure"/>
     <egg name="Products.Quills"                options="with_ploneproduct_quills"           zpackage="y" zcml="configure"/>
     <egg name="Products.SimpleAttachment"      options="with_ploneproduct_ploneboard"       zproduct="y" zcml="configure"/>
@@ -290,6 +292,20 @@
     <egg name="transmogrify.sqlalchemy"        options="with_ploneproduct_patransmo"        zcml="configure" />
     <egg name="webcouturier.dropdownmenu"      options="with_ploneproduct_wc_dd_menu"       zpackage="y" zcml="configure"/>
     <egg name="z3c.relationfield"              options="with_ploneproduct_z3crelationfield" zcml="configure" />
+    <!-- cynin -->
+    <egg name="Products.fatsyndication"         options="with_ploneproduct_cynin"    zcml="configure"  />
+    <egg name="ubify.policy"         options="with_ploneproduct_cynin"    zcml="configure"  />
+    <egg name="ubify.coretypes"      options="with_ploneproduct_cynin"    zcml="configure"  />
+    <egg name="ubify.spaces"         options="with_ploneproduct_cynin"    zcml="configure"  />
+    <egg name="ubify.viewlets"       options="with_ploneproduct_cynin"    zcml="configure,overrides" />
+    <egg name="ubify.cyninv2theme"   options="with_ploneproduct_cynin"    zcml="configure,overrides" />
+    <egg name="ubify.smartview"      options="with_ploneproduct_cynin"    zcml="configure"  />
+    <egg name="ubify.recyclebin"     options="with_ploneproduct_cynin"    zcml="configure"  />
+    <egg name="ubify.xmlrpc"         options="with_ploneproduct_cynin"    zcml="configure"  />
+    <egg name="ubify.ffxmpp"         options="with_ploneproduct_cynin"    zcml="configure"  />
+    <egg name="Pygments"             options="with_ploneproduct_cynin" />
+    <egg name="jsonlib"              options="with_ploneproduct_cynin" />
+
     <!-- makina-->
     <egg name="collective.blueprint.dancing"         options="with_ploneproduct_cbdancing"                           zcml="configure"/>
     <egg name="collective.dewplayer"                 options="with_ploneproduct_cdewplayer"             zpackage="y" zcml="configure"/>
@@ -336,16 +352,14 @@
     <product name="ATBackRef"                      options="with_ploneproduct_atbackref"        />
     <product name="ATExtensions"                   options="with_ploneproduct_atextensions"     />
     <product name="ATVocabularyManager"            options="with_ploneproduct_atvmanager"     />
-    <product name="CacheSetup"                     options="with_ploneproduct_cachesetup"       />
-    <product name="CMFPlacefulWorkflow"            options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard" />
+    <product name="CMFPlacefulWorkflow"            options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard,with_ploneproduct_cynin" />
     <product name="CMFPlomino"                     options="with_ploneproduct_plomino"          />
-    <product name="CMFSquidTool"                   options="with_ploneproduct_cachesetup"       />
     <product name="Collage"                        options="with_ploneproduct_collage"          />
     <product name="collective.js.jquery"           options="with_ploneproduct_cjqui"           />
     <product name="ContentWellPortlets"            options="with_ploneproduct_contentwellportlet"/>
     <product name="csvreplicata"                   options="with_ploneproduct_csvreplica"       />
     <product name="DataGridField"                  options="with_ploneproduct_agridfield"       />
-    <product name="fatsyndication"                 options="with_ploneproduct_quills"           />
+    <product name="fatsyndication"                 options="with_ploneproduct_quills,with_ploneproduct_cynin"           />
     <product name="LinguaPlone"                    options="with_ploneproduct_lingua"           />
     <product name="Maps"                           options="with_ploneproduct_maps"             />
     <product name="MasterSelectWidget"             options="with_ploneproduct_masterselect"/>
@@ -369,6 +383,9 @@
     <product name="Products.SmartPrintNG"          options="with_ploneproduct_smartprintng"/>
     <product name="PloneboardNotify"               options="with_ploneproduct_ploneboardnotify"/>
 
+    <product name="CMFSquidTool"          hidden="false"  options="with_ploneproduct_cachesetup"       />
+    <product name="CacheSetup"            hidden="false"  options="with_ploneproduct_cachesetup" order="9999"      />
+    <product name="ubify.policy"          hidden="false"  options="with_ploneproduct_cynin" order="7999"/>
     <product name="ATWorkgroup"           hidden="false"  options="with_ploneproduct_atworkgroup"/>
     <product name="p4a.plonevideoembed"   hidden="false"  options="with_ploneproduct_p4a_vid"/>
     <product name="p4a.plonevideo"        hidden="false"  options="with_ploneproduct_p4a_vid"/>
@@ -416,18 +433,17 @@
     <product name="membrane"              options="with_ploneproduct_membrane"        order="600" />
     <product name="p4a.ploneevent"                 options="with_ploneproduct_p4a_cal"  />
     <product name="plone.app.blob"                 options="with_ploneproduct_ploneappblob" order="700" />
-    <product name="plone.app.iterate"              options="with_ploneproduct_iterate"      profile="plone.app.iterate"/>
+    <product name="plone.app.iterate"              options="with_ploneproduct_iterate,with_ploneproduct_cynin"      profile="plone.app.iterate"/>
     <product name="plone.app.z3cform"              options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"  />
     <product name="plone.formwidget.autocomplete"  options="with_ploneproduct_autocomplete"/>
     <product name="Products.AddRemoveWidget"       options="with_ploneproduct_addremovewidget"/>
     <product name="Products.ATBackRef"             options="with_ploneproduct_atbackref"      />
     <product name="Products.ATVocabularyManager"   options="with_ploneproduct_atvmanager"/>
-    <product name="Products.CacheSetup"            options="with_ploneproduct_cachesetup"/>
-    <product name="Products.CMFPlacefulWorkflow"   options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard" profile="CMFPlacefulWorkflow" comment="before ploneboard at least" order="100"/>
+    <product name="Products.CMFPlacefulWorkflow"   options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard,with_ploneproduct_cynin" profile="CMFPlacefulWorkflow" comment="before ploneboard at least" order="100"/>
     <product name="Products.Collage"               options="with_ploneproduct_collage"          />
     <product name="Products.ContentWellPortlets"   options="with_ploneproduct_contentwellportlet"/>
     <product name="Products.csvreplicata"          options="with_ploneproduct_csvreplica"       />
-    <product name="Products.fatsyndication"        options="with_ploneproduct_quills" order="100"/>
+    <product name="Products.fatsyndication"        options="with_ploneproduct_quills,with_ploneproduct_cynin" order="100"/>
     <product name="plone.app.ldap"                 options="with_ploneproduct_ldap" profile="ldap" order="100"/>
     <product name="Products.LinguaPlone"           options="with_ploneproduct_lingua"         profile="LinguaPlone"  />
     <product name="Products.MasterSelectWidget"    options="with_ploneproduct_masterselect" />
@@ -473,9 +489,13 @@
       name: description to add as comment into the resulting buildout
     -->
   <versions>
+    <version p="zc.buildout"             v="1.5"       name="zc.buildout core stuff"/>
+    <version p="distribute"              v="0.6.14"    name="zc.buildout core stuff"/>
+    <version p="zc.recipe.egg"           v="1.3.2"     name="zc.buildout core stuff"/>
     <!--
       zope2.12 compatible -versions have been set for plone3 in etc/project/versions.cfg
     -->
+    <version p="jsonlib"                 v="1.3.10"    name="For cynin"/>
     <version p="ipython"                 v="0.10"    name="IPython py2.4 compatible version"/>
     <version p="cssutils"                v="0.9.5.1" name="break S D - http://groups.google.com/group/singing-dancing/browse_thread/thread/568de0b8226184f6"/>
     <version p='Cheetah'                 v='2.2.1'   name='Markdown crazy stuff'/>
@@ -484,7 +504,7 @@
     <version p='Products.validation'     v='1.6.4'   name='Needed for fixing https://dev.plone.org/plone/ticket/10088'/>
     <version p='plone.app.portlets'      v='1.2.1'   name='Fix http://dev.plone.org/plone/ticket/9437'/>
     <version p="plone.app.z3cform"       v="0.4.9"   name="plone.z3cform >= 0.6.0 break Singing and Dancing"/>
-    <version p="plone.z3cform"           v="0.5.10" name="plone.z3cform >= 0.6.0 break Singing and Dancing"/>
+    <version p="plone.z3cform"           v="0.5.10"  name="plone.z3cform >= 0.6.0 break Singing and Dancing"/>
     <version p="plone.directives.form"   v="1.0b6"   name="plone.z3cform >= 0.6.0 break Singing and Dancing"/>
     <version p='z3c.form'                v='1.9.0'   name="plone.z3cform >= 0.6.0 break Singing and Dancing"/>
   </versions>
@@ -499,57 +519,60 @@
       options: comma separated list of options to enable the pinning
     -->
   <checkedversions>
-    <version p='hachoir-parser'                 v='1.3.1'   options="with_ploneproduct_p4a_vid"/>
-    <version p='hachoir-metadata'               v='1.3.2'   options="with_ploneproduct_p4a_vid"/>
+    <version p='hachoir-parser'                 v='1.3.4'   options="with_ploneproduct_p4a_vid"/>
+    <version p='hachoir-metadata'               v='1.3.3'   options="with_ploneproduct_p4a_vid"/>
     <version p='hachoir-core'                   v='1.3.3'   options="with_ploneproduct_p4a_vid"/>
-    <version p='python_dateutil'                v='1.4.1'   options="with_ploneproduct_p4a_cal"/>
-    <version p='dateable.chronos'               v='0.7'     options="with_ploneproduct_p4a_cal"/>
+    <version p='python_dateutil'                v='1.5'     options="with_ploneproduct_p4a_cal"/>
+    <version p='dateable.chronos'               v='0.7.1'   options="with_ploneproduct_p4a_cal"/>
     <version p='dateable.kalends'               v='0.5'     options="with_ploneproduct_p4a_cal"/>
 
+    <version p='archetypes.schemaextender'      v='2.0.3'         options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />
+    <version p='bda.ldap'                       v='1.5.2'         options='with_ploneproduct_cynin' />
+    <version p='bda.cache'                      v='1.1.3'         options='with_ploneproduct_cynin' />
     <version p='aws.pdfbook'                    v='1.0.0a1'       options='with_ploneproduct_awspdfbook' />
     <version p='Products.SmartPrintNG'          v='1.2.13'        options='with_ploneproduct_smartprintng' />
     <version p='collective.js.jqueryui'         v='1.7.2.7'       options='with_ploneproduct_cjqui' />
-    <version p='Products.TinyMCE'               v='1.1rc10'       options='with_ploneproduct_tinymce,with_ploneproduct_plominotinymce' />
-    <version p='collective.plonetruegallery'    v='0.8.2b2'       options="with_ploneproduct_truegallery"/>
-    <version p='iw.fss'                         v='2.8.0rc1'      options="with_ploneproduct_fss"/>
+    <version p='Products.TinyMCE'               v='1.1.2'         options='with_ploneproduct_tinymce,with_ploneproduct_plominotinymce' />
+    <version p='collective.plonetruegallery'    v='1.0rc2'        options="with_ploneproduct_truegallery"/>
+    <version p='iw.fss'                         v='2.8.0rc3'      options="with_ploneproduct_fss"/>
     <version p='iw.recipe.fss'                  v='0.2.1'         options="with_ploneproduct_fss"/>
     <version p='p4a.audio'                      v='1.1rc1'        options="with_ploneproduct_p4a_vid"/>
-    <version p='p4a.calendar'                   v='2.0a3'         options="with_ploneproduct_p4a_cal"/>
-    <version p='p4a.common'                     v='1.0.5'         options="with_ploneproduct_p4a_vid"/>
+    <version p='p4a.calendar'                   v='2.0a4'         options="with_ploneproduct_p4a_cal"/>
+    <version p='p4a.common'                     v='1.0.7'         options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.fileimage'                  v='1.0.2'         options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.ploneaudio'                 v='1.1rc1'        options="with_ploneproduct_p4a_vid"/>
-    <version p='p4a.plonecalendar'              v='2.0a5'         options="with_ploneproduct_p4a_cal"/>
+    <version p='p4a.plonecalendar'              v='2.0a7'         options="with_ploneproduct_p4a_cal"/>
     <version p='p4a.ploneevent'                 v='0.7.3'         options="with_ploneproduct_p4a_cal"/>
     <version p='Products.PloneboardNotify'      v='0.4.1'         options="with_ploneproduct_ploneboardnotify"/>
-    <version p='p4a.plonevideoembed'            v='1.1'           options="with_ploneproduct_p4a_vid"/>
-    <version p='p4a.plonevideo'                 v='1.1.1'         options="with_ploneproduct_p4a_vid"/>
-    <version p='p4a.subtyper'                   v='1.1.1'         options="with_ploneproduct_p4a_vid"/>
+    <version p='p4a.plonevideoembed'            v='1.2'           options="with_ploneproduct_p4a_vid"/>
+    <version p='p4a.plonevideo'                 v='1.3'           options="with_ploneproduct_p4a_vid"/>
+    <version p='p4a.subtyper'                   v='1.1.3'         options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.videoembed'                 v='1.1'           options="with_ploneproduct_p4a_vid"/>
-    <version p='p4a.video'                      v='1.1.1'         options="with_ploneproduct_p4a_vid"/>
+    <version p='p4a.video'                      v='1.3'           options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.z2utils'                    v='1.0.2'         options="with_ploneproduct_p4a_vid"/>
-    <version p="plone.app.blob"                 v="1.0b16"        options="with_ploneproduct_ploneappblob"/>
-    <version p="plone.app.jquerytools"          v="1.0b17"        options="with_ploneproduct_plonejqtools"/>
+    <version p="plone.app.blob"                 v="1.1"           options="with_ploneproduct_ploneappblob"/>
+    <version p="plone.app.jquerytools"          v="1.1.2"         options="with_ploneproduct_plonejqtools"/>
     <version p='plone.formwidget.autocomplete'  v='1.0'           options='with_ploneproduct_autocomplete'/>
-    <version p='Products.AddRemoveWidget'       v='1.4.2'         options='with_ploneproduct_addremovewidget'/>
+    <version p='Products.AddRemoveWidget'       v='1.4.4'         options='with_ploneproduct_addremovewidget'/>
     <version p='Products.ATSchemaEditorNG'      v='0.6'           options='with_ploneproduct_atschemaeditor'/>
-    <version p='collective.singing'             v='0.6.13'        options='with_ploneproduct_sgdcg'/>
-    <version p='collective.dancing'             v='0.8.15'        options='with_ploneproduct_sgdcg'/>
-    <version p='Products.ATVocabularyManager'   v='1.5.0'         options='with_ploneproduct_atvmanager'/>
-    <version p='Products.ContentWellPortlets'   v='2.0.1'         options="with_ploneproduct_contentwellportlet"/>
-    <version p='Products.FacultyStaffDirectory' v='2.1.3'         options="with_ploneproduct_facultystaff"/>
-    <version p='plone.app.ldap'                 v='1.2.1 '        options='with_ploneproduct_ldap' />
-    <version p='Products.PloneLDAP'             v='1.1'           options="with_ploneproduct_ldap"/>
-    <version p='Products.LDAPMultiPlugins'      v='1.7'           options="with_ploneproduct_ldap"/>
-    <version p='Products.LDAPUserFolder'        v='2.12'          options="with_ploneproduct_ldap"/>
-    <version p='Products.LinguaPlone'           v='3.0a3'         options="with_ploneproduct_lingua"/>
-    <version p='Products.Maps'                  v='2.0.2'         options="with_ploneproduct_maps"/>
+    <version p='collective.singing'             v='0.6.15'        options='with_ploneproduct_sgdcg'/>
+    <version p='collective.dancing'             v='0.9'           options='with_ploneproduct_sgdcg'/>
+    <version p='Products.ATVocabularyManager'   v='1.6.0a1'       options='with_ploneproduct_atvmanager'/>
+    <version p='Products.ContentWellPortlets'   v='2.1'           options="with_ploneproduct_contentwellportlet"/>
+    <version p='Products.FacultyStaffDirectory' v='2.1.4'         options="with_ploneproduct_facultystaff"/>
+    <version p='plone.app.ldap'                 v='1.2.2'         options='with_ploneproduct_ldap' />
+    <version p='Products.PloneLDAP'             v='1.1'           options="with_ploneproduct_lDAp"/>
+    <version p='Products.LDAPMultiPlugins'      v='1.12'          options="with_ploneproduct_ldap"/>
+    <version p='Products.LDAPUserFolder'        v='2.18'          options="with_ploneproduct_ldap"/>
+    <version p='Products.LinguaPlone'           v='3.1'           options="with_ploneproduct_lingua"/>
+    <version p='Products.Maps'                  v='2.0.3'         options="with_ploneproduct_maps"/>
     <version p='Products.MasterSelectWidget'    v='0.4.4'         options='with_ploneproduct_masterselect'/>
     <version p='Products.membrane'              v='1.1b5'         options='with_ploneproduct_remember,with_ploneproduct_membrane'/>
     <version p='Products.PloneArticle'          v='4.1.9'         options="with_ploneproduct_plonearticle"/>
-    <version p='Products.PloneFormGen'          v='1.5.5'         options='with_ploneproduct_ploneformgen'/>
-    <version p='Products.PloneLanguageTool'     v='3.0.2'         options="with_ploneproduct_lingua"/>
+    <version p='Products.PloneFormGen'          v='1.6.0b4'       options='with_ploneproduct_ploneformgen'/>
+    <version p='Products.PloneLanguageTool'     v='3.0.8'         options="with_ploneproduct_lingua"/>
     <version p='Products.remember'              v='1.1b3'         options='with_ploneproduct_remember'/>
-    <version p='Products.SimpleAttachment'      v='3.1'           options="with_ploneproduct_ploneboard"/>
+    <version p='Products.SimpleAttachment'      v='3.6'           options="with_ploneproduct_ploneboard"/>
     <version p='z3c.relationfield'              v='0.6.1'         options='with_ploneproduct_z3crelationfield'/>
     <version p='collective.portlettabber'       v='0.1.0'         options='with_ploneproduct_cportlettabber'/>
     <!-- FIVE.GROK -->
@@ -581,7 +604,7 @@
   <sources>
     <source name="Products.ATWorkgroup"             type="svn"  url="https://svn.plone.org/svn/collective/ATWorkgroup/branches/eggification/Products.ATWorkgroup" options="with_ploneproduct_atworkgroup" default="y"/>
     <source name="aws.pdfbook"                      type="svn"  url="https://svn.plone.org/svn/collective/aws.pdfbook/trunk"                                      options="with_ploneproduct_awspdfbook"/>
-    <source name="archetypes.schemaextender"        type="svn"  url="https://svn.plone.org/svn/archetypes/archetypes.schemaextender/trunk"                        options="with_ploneproduct_schemaextender,with_ploneproduct_facultystaff"/>
+    <source name="archetypes.schemaextender"        type="svn"  url="https://svn.plone.org/svn/archetypes/archetypes.schemaextender/trunk"                        options="with_ploneproduct_schemaextender,with_ploneproduct_facultystaff,with_ploneproduct_cynin"/>
     <source name="archetypes.tuning"                type="svn"  url="https://svn.plone.org/svn/archetypes/archetypes.schematuning/trunk"                          options="with_ploneproduct_schematuning"/>
     <source name="collective.contentlicensing"      type="svn"  url="https://svn.plone.org/svn/collective/collective.contentlicensing/trunk"                      options="with_ploneproduct_contentlicensing" />
     <source name="collective.dancing"               type="svn"  url="https://svn.plone.org/svn/collective/collective.dancing/trunk"                               options="with_ploneproduct_sgdcg"/>
@@ -691,6 +714,30 @@
     <source name="Products.Quaestrio"                   type="svn" url="https://svn.plone.org/svn/collective/Quaestrio/trunk"                                     options="with_ploneproduct_quaestrio"/>
     <source name="repoze.who.plugins.cas"               type="git" url="http://github.com/kiorky/repoze.who.plugins.cas.git"                                      options="with_wsgi_cas"/>
     <source name="pypdf"                                type="git" url="http://github.com/mfenniak/pyPdf.git"                                                     options="with_binding_pdf"/>
+
+
+    <!-- cynin -->
+    <source name="ubify.coretypes"     type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.coretypes"      autocheckout="y"   options="with_ploneproduct_cynin"/>
+    <source name="ubify.cyninv2theme"  type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.cyninv2theme"   autocheckout="y"   options="with_ploneproduct_cynin"/>
+    <source name="ubify.ffxmpp"        type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.ffxmpp"         autocheckout="y"   options="with_ploneproduct_cynin"/>
+    <source name="ubify.freemindflash" type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.freemindflash"  autocheckout="y" asegg="false"   options="with_ploneproduct_cynin"/>
+    <source name="ubify.policy"        type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.policy"         autocheckout="y"   options="with_ploneproduct_cynin"/>
+    <source name="ubify.recyclebin"    type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.recyclebin"     autocheckout="y"   options="with_ploneproduct_cynin"/>
+    <source name="ubify.smartview"     type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.smartview"      autocheckout="y"   options="with_ploneproduct_cynin"/>
+    <source name="ubify.spaces"        type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.spaces"         autocheckout="y"   options="with_ploneproduct_cynin"/>
+    <source name="ubify.viewlets"      type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.viewlets"       autocheckout="y"   options="with_ploneproduct_cynin"/>
+    <source name="ubify.xmlrpc"        type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.xmlrpc"         autocheckout="y"   options="with_ploneproduct_cynin"/>
+    <source name="ATRatings"             type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/ATRatings"             autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
+    <source name="Calendaring"           type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/Calendaring"           autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
+    <source name="CMFNotification"       type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/CMFNotification"       autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
+    <source name="enablesettrace"        type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/enablesettrace"        autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
+    <source name="OpenXml"               type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/OpenXml"               autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
+    <source name="Plone4ArtistsCalendar" type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/Plone4ArtistsCalendar" autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
+    <source name="PloneSlimbox"          type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/PloneSlimbox"          autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
+    <source name="Scrawl"                type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/Scrawl"                autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
+    <source name="WebServerAuth"         type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/WebServerAuth"         autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
+    <source name="ZipFileTransport"      type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/ZipFileTransport"      autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
+
     <!-- makina -->
   </sources>
     <!--

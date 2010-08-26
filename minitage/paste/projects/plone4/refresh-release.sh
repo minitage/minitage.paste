@@ -29,10 +29,10 @@
 
 
 
-plone=${1:-4.0a5}
+plone=${1:-4.0rc1}
 
 ver=$(python -c "print '$plone'[:3]")
-zope2=${2:-2.12.3}
+zope2=${2:-2.12.10}
 
 echo  $plone/ $ver / $zope2
 wget http://dist.plone.org/release/$plone/versions.cfg -O versions.cfg

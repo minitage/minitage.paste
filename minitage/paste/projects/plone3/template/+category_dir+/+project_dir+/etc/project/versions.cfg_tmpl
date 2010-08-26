@@ -6,6 +6,11 @@
 zc.buildout =
 zc.recipe.egg -= 1.1.0
 distribute -= 0.6.8
+distribute -= 0.6.10
+distribute -= 0.6.11
+distribute -= 0.6.12
+distribute  = 0.6.13
+
 #if ($with_ploneproduct_z3crelationfield or $with_ploneproduct_ploneappblob) and ($major < 4)
 #$with_ploneproduct_z3crelationfield
 #with_ploneproduct_ploneappblob
