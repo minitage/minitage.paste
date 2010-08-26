@@ -519,6 +519,8 @@
       options: comma separated list of options to enable the pinning
     -->
   <checkedversions>
+    <version p='plomino.tinymce'                v='0.6.4'   options="with_ploneproduct_plominotinymce"/>
+    <version p='Plomino'                        v='1.7.2'   options="with_ploneproduct_plominotinymce,with_ploneproduct_plomino"/>
     <version p='hachoir-parser'                 v='1.3.4'   options="with_ploneproduct_p4a_vid"/>
     <version p='hachoir-metadata'               v='1.3.3'   options="with_ploneproduct_p4a_vid"/>
     <version p='hachoir-core'                   v='1.3.3'   options="with_ploneproduct_p4a_vid"/>

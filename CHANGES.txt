@@ -8,6 +8,7 @@ Up
     - blobstorage improvments
     - store now blobstorage and fss in resp. var/blobstorage/ & var/fss
     - support cynin
+    - fix plomino versions
 
 -> 1.3.176
 -----------
