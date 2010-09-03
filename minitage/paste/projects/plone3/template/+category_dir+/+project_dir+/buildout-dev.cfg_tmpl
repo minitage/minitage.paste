@@ -74,20 +74,21 @@ eggs+= plone.reload
     collective.dist
     collective.releaser
     docutils
+    experimental.catalogqueryplan
     gprof2dot
-    Products.signalstack
     Products.Clouseau
     Products.DocFinderTab
-    experimental.catalogqueryplan
     Products.Gloworm
-# Uncomment/Activate only if you want
-#    Products.PDBDebugMode
-    profilehooks
     Products.MemoryProfiler
-    Products.PTProfiler
+    Products.signalstack
     Products.ZopeProfiler
+    profilehooks
     Sphinx
-    ZopeSkel
+    ZopeSkel 
+# Uncomment/Activate only if you want
+#    Products.PTProfiler
+#    Products.PDBDebugMode
+
 #if $linux:
 # plone auto reloading facility relying on inotify.
 # Desactivated by default because it can lead to bugs when you
