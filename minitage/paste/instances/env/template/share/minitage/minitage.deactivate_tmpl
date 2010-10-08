@@ -30,7 +30,6 @@ if test -n \$MINITAGE_ENV;then
     unset OLD_MINITAGE_CXXFLAGS
     unset OLD_MINITAGE_CFLAGS
     unset OLD_MINITAGE_LDFLAGS
-
     unset INS
     unset MT
     unset PROJECT
