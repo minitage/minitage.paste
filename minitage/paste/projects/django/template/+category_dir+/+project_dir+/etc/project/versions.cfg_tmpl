@@ -1,0 +1,23 @@
+
+
+ 
+# BASE VERSIONS PINNING
+[buildout]
+versions = versions 
+
+[versions]
+# bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
+Django=$django_version
+
+# $project=1.0
+# plone.reload > 1 is not compatible with plone3 (depends on Zope2, eggigied)
+#plone.reload=0.11
+#for version in $plone_versions:
+#if $version[0].startswith('#'):
+$version[0]
+#else
+$version[0] = $version[1]
+#end if
+#end for
+
+\# vim:set et ts=4 sts=4 ft=cfg:

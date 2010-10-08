@@ -1,0 +1,71 @@
+#if $with_haproxy
+#set $hapcomment=''
+#else:
+#set $hapcomment='#'
+#end if 
+
+
+[settings]
+debug=false
+find-links =
+    http://\${mirrors:zope}/ppix/
+    http://gijsbert.org/downloads/cmemcache/
+    http://\${mirrors:zope}/distribution/
+    http://gijsbert.org/downloads/cmemcache/
+    http://initd.org/pub/software/psycopg/PSYCOPG-2-0/
+    http://cairographics.org/releases/
+    http://dist.plone.org/thirdparty/
+    http://pypi.python.org/simple/ZODB4
+
+[reverse_proxy]
+scheme=$reverseproxy_scheme
+host=$reverseproxy_host
+port=$reverseproxy_port 
+
+[hosts]
+instance= $address
+instance1=$address
+instance2=$address
+instance3=$address
+instance4=$address
+#may not be used
+supervisor=$supervisor_host
+balancer=$haproxy_host
+#if not $with_haproxy
+front=\${hosts:instance1}
+#end if
+${hapcomment}front=\${hosts:balancer}  
+
+[ports]
+instance=$http_port
+instance1=$http_port1
+instance2=$http_port2
+instance3=$http_port3
+instance4=$http_port4
+#may not be used
+supervisor=$supervisor_port
+balancer=$haproxy_port
+#if not $with_haproxy
+front=\${ports:instance1}
+#end if
+${hapcomment}front=\${ports:balancer} 
+
+[users]
+admin=${admin_user}
+django=
+[passwords]
+admin=${admin_password}
+django=
+
+[locations]
+deliverance-themes=\${buildout:directory}/deliverancex
+
+[crons]
+# at 3:00am NO WHITESPACE!!!
+buildbot-${project}=$buildbot_cron
+ 
+
+[mirrors]
+zope = download.zope.org
+
+\# vim:set et ts=4 sts=4 ft=cfg:

@@ -1,0 +1,96 @@
+$hr
+# Project specific settings
+$hr
+
+#set $slashdn = $project.replace('.', '/')
+[buildout]
+dsm=settings_\${buildout:mode}
+find-links=\${settings:find-links}
+# extra directories to add to the python path
+extra-paths=
+# better have mr.developer mananing your eggs, see sources.cfg
+develop=
+eggs= 
+
+[sources]
+# see http://pypi.python.org/pypi/mr.developer for documentation
+# better to edit ./sources.cfg
+
+[scripts]
+recipe=minitage.recipe:scripts
+# attacking zopepy:eggs make instance be built after zopepy
+# in any case thx to the buildout automatic parts sort.
+extra-paths+=\${buildout:extra-paths} 
+eggs += \${buildout:eggs}
+    z3c.checkversion
+#for $product in $additional_eggs
+#if product.startswith('#')
+$product
+#else
+    ${product}
+#end if
+#end for 
+# Scripts generated filtering
+scripts =
+#z3c.checkversions
+    checkversions
+#zope2
+    paster#slurp
+#for $product in $plone_scripts:
+#if product.startswith('#'):
+${product}
+#else:
+    ${product}
+#end if
+#end for
+interpreter = djangopy
+dependent-scripts=true
+paster-initialization=
+    import os, sys
+    try:
+    \timport ${project}.\${buildout:dsm}
+    except:
+    \tprint "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    \tprint "   "
+    \tprint "    Your django settings module does not exist !!!"
+    \tprint "    eg:"
+    \tprint ""
+    \tprint "     cp  \${buildout:directory}/src/${project}/$slashdn/settings.py \${buildout:directory}/etc/django-settings/settings-BOX-\${buildout:mode}.py"
+    \tprint "     \$EDITOR \${buildout:directory}/etc/django-settings/settings-BOX-\${buildout:mode}.py"
+    \tprint "     ln -s \${buildout:directory}/etc/settings-BOX-\${buildout:mode}.py \${buildout:directory}/src/${project}/src/$slashdn/\${buildout:dsm}.py"
+    \tprint "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    \tsys.exit(256)
+
+[test]
+recipe = zc.recipe.testrunner
+eggs = $project [test]
+script = selftest
+
+[omelette]
+order=\${scripts:recipe}
+recipe = collective.recipe.omelette
+eggs = \${buildout:eggs}
+packages =\${scripts:extra-paths}
+
+# zope.testing testrunner support
+[testenv]
+
+# This testrunner is a zc.recipe.testrunner like
+# See http://pypi.python.org/pypi/zc.recipe.testrunner/
+# It can do xml reports addon if you supply -x as a command line argument
+# It is useful for generating reports for hudson or other contineous integration
+[${sane_name}.test]
+recipe = collective.xmltestreport
+eggs = \${scripts:eggs}
+extra-paths = \${scripts:extra-paths}
+defaults = ['--exit-with-status', '--auto-color', '--auto-progress']
+environment = testenv
+
+[instance]
+recipe = collective.recipe.template
+input =  \${buildout:directory}/etc/templates/wsgi/paster.ini.in
+output = \${buildout:directory}/etc/wsgi/instance.ini
+host=\${hosts:instance}
+port=\${ports:instance}
+
+# vim:set ft=cfg:

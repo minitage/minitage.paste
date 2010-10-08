@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<!--
+  GOAL OF THIS CONFIGURATION IS TO CUSTOMIZE THE minitage.plone3 paster template options to fit to your needs
+  You can even override by copy/edit it on your ~/.minitage.plone3.cfg.
+  Goal is to stop to spread new templates for special use, and to configure them.
+  A subsidiary goal is to remove so useless logic in templates.
+  You can, i think, customzize the whole template via this configuration.
+  Please note that minitage.plone3 is coupled with collectige.generic.skel.* templates.
+  They will use it's variables/API to construct themselves.
+-->
+<root>
+  <!--
+    PASTER OPTIONS to be added on the fly to minitage.paste.plone3 product
+    <option name="foo" description="SOMETEXT>
+  -->
+  <template>
+  <options>
+  <option order="0000" name="apache_vhost_number"                description="Apache vhost number" default="100"/>
+  <option order="0000" name="deliverance_project"                            description="default deliverance ruleset name" default="deliverance"/>
+  <option order="0000" name="reverseproxy_aliases"               description="domain name aliases (comma separated) which be used in the reverse proxy" default="bis.localhost.com.bis,ter.localhost.com"/>
+  <option order="0000" name="reverseproxy_host"                  description="domain name which be used in the reverse proxy" default="localhost.com"/>
+  <option order="0000" name="reverseproxy_port"                  description="port of the reverse proxy" default="80"/>
+  <option order="0000" name="reverseproxy_scheme"                description="HHTP(s) scheme of the reverse proxy (http/https)" default="http"/>
+  <option order="0000" name="with_binding_bsoup"                 description="BeautifulSoup,see http://pypi.python.org/pypi/BeautifulSoup/ y/n"/>
+  <option order="0000" name="with_binding_json"                  description="Json python various bindings (demjson, simplejson) y/n"/>
+  <option order="0000" name="with_binding_lxml"                  description="Lxml support, see http://codespeak.net/lxml/ y/n" default="y"/>
+  <option order="0000" name="with_binding_ldap"                  description="LDAP bindings y/n"/>
+  <option order="0000" name="with_binding_pdf"                   description="PDF Python various bindings including pypdf Y/n"/>
+  <option order="0000" name="with_binding_pil"                   description="Python imaging (dangerous to disable) y/n" default="y"/>
+  <option order="0000" name="with_binding_xlwt"                  description="xlwt,see http://pypi.python.org/pypi/xlwt/ y/n"/>
+  <option order="0000" name="with_database_mysql"                description="Mysql python bindings y/n"/>
+  <option order="0000" name="with_database_sqlite"               description="sqlite python bindings y/n"/> 
+  <option order="0000" name="with_database_oracle"               description="Oracle python bindings y/n"/>
+  <option order="0000" name="with_database_postgresql"           description="Postgresql python bindings y/n" default="y"/>
+  <option order="0000" name="with_database_sa"                   description="SQLAlchemy, see http://www.sqlalchemy.org y/n"/>
+  <option order="0000" name="with_deliverance_support"           description="deliverance, see http://pypi.python.org/pypi/Deliverance y/n" default="n"/>
+  <option order="0000" name="with_tool_i18ndude"                 description="i18n http://pypi.python.org/pypi/i18ndude y/n" default="y"/>
+  <option order="0000" name="with_tool_ipython"                  description="ipython, see http://ipython.scipy.org/ y/n" default="y"/>
+  <option order="0000" name="with_tool_bpython"                  description="bpython, see http://bpython-interpreter.org/ y/n" default="y"/>
+  <option order="0000" name="with_tool_nose"            description="nose, see http://pypi.python.org/pypi/nose y/n" default="y"/>
+  <option order="0000" name="with_tool_coverage"            description="nose, see http://pypi.python.org/pypi/coverage y/n" default="y"/>
+  <option order="0000" name="with_tool_reportlab"                description="Reportlab, see http://www.reportlab.com/ y/n" default="n"/>
+  <option order="0000" name="with_wsgi_cas"                      description="WSGI CAS (SSO) capabilities, see http://pypi.python.org/pypi/repoze.who.plugins.cas y/n"/>
+  <option order="0000" name="with_gis_mapnik"                description="mapnik bindings, see http://mapnik.org/ y/n"/>
+  <option order="0000" name="with_gis_gdal"                  description="gdal bindings, see http://www.gdal.org/y/n"/>
+  <option order="0000" name="with_binding_cairo"                 description="cairo bindings, see http://cairographics.org/ y/n"/>
+  <option order="0000" name="with_binding_memcache"                 description="memcache bindings, see http://memcached.org/y/n"/>
+  <option order="0000" name="with_gis_pgrouting"                 description="pgrouting support, see http://pgrouting.postlbs.org y/n"/>
+  <option order="0000" name="with_gis_mapscript"                 description="mapscript/mapserver support, see http://mapserver.org/y/n"/>
+  <!-- INFRA Products -->
+  <!-- UI Products -->
+  <!--Content-types related products"-->
+  <!-- Views helper products -->
+  <!-- Communication -->
+  <!-- Misc Extensions products-->
+  <!-- makina -->
+  <option order="10000" name="with_binding_mapscript"                   description="mapserver python bindings, see http://pypi.python.org/pypi/mapscript y/n"                                             default="n"/>
+  <option order="10030" name="with_tool_cgeneric"                       description="include a bundle of collective.generic development tools y/n"                                                         default="n"/>
+  <!--END makina -->
+
+</options>
+  <!--
+    LINK THERE YOUR EGGS TO BE Installed on option triggering.
+
+    Some notes:
+
+    If you choose to tell that your egg is a/are some 'zpackage', this will cause them to be registered in the minitage.projects.plone3.z2packages.
+
+    As an incidence in the collective.generic.skel.policy template, they will be recorded
+    in the policy tests as someting to be installed with "ztc.installPackage(eggname)" or
+    "ztc.installProduct(eggname)".
+
+    <eggs>
+      <egg name="" options="" zpackage="" zproduct="" />
+    </eggs>
+
+    name: name of the product to install
+    options: comma sepated list of options that trigger the installation of this item
+    zcml: zcml to add to the buildout ([instance]), by default -configure
+    zcmlorder : zcml load order from 0 to XXXXXX, default 50000
+    zpackage/zproduct: install resp. modules as a Zope2 Package or Product during tests
+      For each of those values:
+      y -> install it with the name as product name
+      comma sepaated values != 'y' -> install the list of products
+  -->
+  <eggs>
+    <egg name="nose"                          options="with_tool_nose"                  />
+    <egg name="coverage"                      options="with_tool_coverage"                  />
+    <egg name="cmemcache"                     options="with_binding_memcache"                  />
+    <egg name="sqlalchemy"                    options="with_database_sa"                  />
+    <egg name="MySQL_python"                  options="with_database_mysql"               />
+    <egg name="cx_Oracle"                     options="with_database_oracle"/>
+    <egg name="psycopg2"                      options="with_database_postgresql"/> 
+    <egg name="egenix-mx-base"                options="with_database_postgresql"/>
+    <egg name="BeautifulSoup"                 options="with_binding_bsoup"   />
+    <egg name="lxml"                          options="with_binding_lxml"   />
+    <egg name="elementtree"                   options="with_binding_lxml"   />
+    <egg name="demjson"                       options="with_binding_json"/>
+    <egg name="flickrapi"                     options=""/>
+    <egg name="gdata"                         options=""/>
+    <egg name="ipython"                       options="with_tool_ipython"                 scripts="ipython" />
+    <egg name="bpython"                       options="with_tool_bpython"                 scripts="bpython" />
+    <egg name="mapscript"                     options="with_binding_mapscript"/>
+    <egg name="PIL"                           options="with_binding_pil" />
+    <egg name="pypgoptimizator"               options="with_minitage_otherpackages"  scripts="pypgoptimizator" />
+    <egg name="python-ldap"                   options="with_binding_ldap"/>
+    <egg name="repoze.who.plugins.cas"        options="with_wsgi_cas"/>
+    <egg name="simplejson"                    options="with_binding_json"/>
+    <egg name="xlwt"                          options="with_binding_xlwt"                />
+    <egg name="pypdf"                         options="with_binding_pdf"                />
+    <egg name="ogcserver"                     options="with_gis_mapnik"                />
+  </eggs>
+  <!--
+    Enter here mandatory version pinnings
+    Valid items are:
+
+    <version p="" v="" options=""/>
+
+      p: egg name
+      v: egg version
+      name: description to add as comment into the resulting buildout
+    -->
+  <versions>
+    <version p="zc.buildout"             v="1.5.1"       name="zc.buildout core stuff"/>
+    <version p="distribute"              v="0.6.14"    name="zc.buildout core stuff"/>
+    <version p="zc.recipe.egg"           v="1.3.2"     name="zc.buildout core stuff"/>
+    <version p="ipython"                 v="0.10"    name="IPython py2.4 compatible version"/>
+  </versions>
+  <!--
+    Enter here know good set versions stuff
+    Valid items are:
+
+    <version p="" v="" options=""/>
+
+      p: egg name
+      v: egg version
+      options: comma separated list of options to enable the pinning
+    -->
+  <checkedversions>
+    <version p="reportab"  v="2.5"     options="with_tool_reportlab"  />
+    <version p="pycairo"   v="1.8.8"   options="with_binding_cairo"  />
+    <version p="mapscript" v="5.4.2.1" options="with_gis_mapnik" />
+    <version p="GDal"      v="1.7.0"   options="with_gis_gdal"/>
+  </checkedversions>
+  <!--
+    Old style plone products to checkout using the [productsdistros] part
+  -->
+  <!--
+    Sources for mr.developer
+    links to the SCM of a product, autocheckout will be enabled when option in in options.
+
+  -->
+  <sources>
+    <!-- makina -->
+    <source name="dj.paste" type="svn"  url="http://git.minitage.org/git/others/dj.paste" options="" /> 
+    <source name="ogcserver" type="hg" url="http://bitbucket.org/kiorky/ogcserver" options="with_gis_mapnik" /> 
+  </sources>
+    <!--
+    Some very ecliptic products doesnt fit with previous declaration, we will describe how to add the options to the underlying policy there.
+    (the packages/products that we want into the tests to be added.
+    <product name="" zpackage="" zcml="" zcmlorder="" zcml=""/>
+      name is mandatory only for zcml slugs.
+  -->
+  </template>
+  <purge/>
+</root>
+

@@ -1,0 +1,89 @@
+\##############################################################################
+\# Django  BUILDOUT
+\##############################################################################
+
+#if $with_haproxy
+#set $hapcomment=''
+#else:
+#set $hapcomment='#'
+#end if
+#if $with_deliverance_support
+#set $delicomment=''
+#else
+#set $delicomment='#'
+#end if
+#if $with_supervisor_instance1
+#set $si1=''
+#else:
+#set $si1='#'
+#end if
+#if $with_supervisor_instance2
+#set $si2=''
+#else:
+#set $si2='#'
+#end if
+#if $with_supervisor_instance3
+#set $si3=''
+#else:
+#set $si3='#'
+#end if
+#if $with_supervisor_instance4
+#set $si4=''
+#else:
+#set $si4='#'
+#end if
+
+
+[buildout]
+extensions = buildout.minitagificator mr.developer buildout.dumppickedversions
+extends=
+# set here your project specific settings
+    project/${project}.cfg
+# set here your projet version pins
+    project/sources.cfg
+    project/versions.cfg
+    project/${project}-kgs.cfg
+    project/patches.cfg
+    sys/settings.cfg
+# supervisor
+    sys/high-availability.cfg
+# deliverance support
+${delicomment}    project/deliverance.cfg
+    apache/apache.cfg
+    hudson/${project}/hudson.cfg 
+versions = versions
+parts =
+    scripts
+    omelette
+    instance
+    test
+    supervisor
+    supervisor-initd
+# hudson integration
+    ${sane_name}_hudson_env
+    ${sane_name}_hudson_job
+    ${sane_name}_hudson_deploy
+    ${sane_name}_hudson_chmod
+# deliverance    
+    deliverance_rules
+# apache    
+    apache_vhost
+${delicomment}    apache_deliverance_vhost
+# security
+    chown 
+    chmod 
+ 
+[chmod]
+recipe = plone.recipe.command
+update-command = \${chmod:command}
+command+=
+    chmod 600 .installed.cfg
+    chmod 744 \${buildout:directory}/bin/* 
+
+[chown]
+recipe = plone.recipe.command
+update-command = \${chown:command}
+command +=
+#    find \${buildout:directory} -type d -name var -exec chown -R \${users:django} {} \;
+ 
+# vim:set et ts=4 sts=4 ft=cfg:
