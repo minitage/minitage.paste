@@ -6,10 +6,13 @@ Up
 --------
 
     - blobstorage improvments
+    - upgrade plone4 versions (zope 212/plone4 KGS)
     - store now blobstorage and fss in resp. var/blobstorage/ & var/fss
     - support cynin
     - fix plomino versions
     - up bootstrap
+    - Rework the django template
+    - add PKGCONFIGPATH handle to instances.env
 
 -> 1.3.176
 -----------
