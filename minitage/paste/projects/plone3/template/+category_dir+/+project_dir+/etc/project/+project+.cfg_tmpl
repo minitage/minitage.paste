@@ -28,8 +28,8 @@ $hr
 #set $zcmlcomment='#'
 #else
 #set $zcmlcomment=''
-#end if 
-                                
+#end if
+
 [buildout]
 sources-dir=\${buildout:directory}/src.mrdeveloper
 
@@ -75,7 +75,7 @@ zcml +=
 #if $with_ploneproduct_cynin:
     ubify.viewlets-overrides
     ubify.cyninv2theme-overrides
-#end if 
+#end if
 #for $product in $plone_zcml:
 #if product.startswith('#'):
 ${product}
@@ -187,6 +187,6 @@ initialization=
     import sys
     sys.argv[1:] = ['-m', '\${devmode:mail}', '-p', '--password', '\${zope:password}', '-l', '\${plone:site}', '-u', '\${zope:user}']
 eggs=\${instance:eggs}
-    collective.generic.devmode 
+    collective.generic.devmode
 
 # vim:set ft=cfg:
