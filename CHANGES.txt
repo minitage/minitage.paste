@@ -13,6 +13,7 @@ Up
     - up bootstrap
     - Rework the django template
     - add PKGCONFIGPATH handle to instances.env
+    - add LDFLAGS, CFLAGS, CPPFLAGs, CXXFLAGS handle to instances.env
 
 -> 1.3.176
 -----------
