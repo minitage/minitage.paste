@@ -27,16 +27,20 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-
-
-plone=${1:-4.0rc1}
-
-ver=$(python -c "print '$plone'[:3]")
-zope2=${2:-2.12.10}
-
-echo  $plone/ $ver / $zope2
+w=$(dirname $0)
+cd $w
+versions=$(egrep "packaged.*version ="  __init__.py|awk '{print $3}'|sed -re "s/'//g")
+plone=""
+ver=""
+zope2=""
+set_versions() {
+    plone="$1"
+    ver="$(echo $plone | cut -nb1-3)"
+    zope2="$2"
+}
+set_versions $versions
+echo  $plone / $ver / $zope2
 wget http://dist.plone.org/release/$plone/versions.cfg -O versions.cfg
 wget http://dist.plone.org/release/$plone/sources.cfg -O -|egrep -v "(\[buildout\]|sources = sources)">sources.cfg
 wget http://download.zope.org/Zope2/index/$zope2/versions.cfg -O  zope2.versions.cfg
-
 # vim:set et sts=4 ts=4 tw=0:
