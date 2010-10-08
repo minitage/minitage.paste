@@ -29,6 +29,7 @@ __docformat__ = 'restructuredtext en'
 
 import getpass
 import sys
+import re
 import os
 
 from minitage.core import core
@@ -98,7 +99,16 @@ class Template(common.Template):
                     eggs.append(manual_egg)
 
         # set templates variables
+        vars['pyver'] = ''
         vars['eggs'] = eggs
+        pyname_re = re.compile('python-(\d\.\d)')
+        if len(eggs)>0:
+            for dep in deps:
+                m = pyname_re.match(dep.name)
+                if m:
+                    vars['pyver'] = m.groups()[0]
+                    break
+ 
         vars['dependencies'] = deps
 
 
