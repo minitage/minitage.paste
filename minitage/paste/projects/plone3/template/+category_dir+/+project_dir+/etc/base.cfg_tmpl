@@ -36,7 +36,7 @@ $hr
 
 [buildout]
 timeout=3
-extensions = buildout.minitagificator mr.developer
+extensions = buildout.minitagificator mr.developer jarn.setuptoolsfixer
 extends-cache = \${buildout:directory}/etc/cache
 # this allow you to run buildout on offline mode and to use only the downloaded plonev3.versions.cfg
 extends -= $versions_url
