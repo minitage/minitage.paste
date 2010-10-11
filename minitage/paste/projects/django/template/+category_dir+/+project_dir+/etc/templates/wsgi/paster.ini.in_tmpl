@@ -51,9 +51,6 @@ use=egg:Paste#printdebug
 [filter:exc]
 use=egg:WebError#evalerror
 
-[filter:close]
-paste.filter_factory = cchb.cchbmiddleware:closeconnection_factory
-
 [app:projectapp]
 use=egg:dj.paste
 django_settings_module=\${buildout:dsm}

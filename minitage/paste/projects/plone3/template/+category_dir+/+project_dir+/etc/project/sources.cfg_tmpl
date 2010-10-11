@@ -16,8 +16,6 @@ auto-checkout +=
 #end for
 
 [sources]
-
-
 #set $psources_keys = $plone_sources.keys()
 # $psources_keys.sort()
 #for $item in $psources_keys:

@@ -65,7 +65,7 @@ parts =
     ${sane_name}_hudson_deploy
     ${sane_name}_hudson_chmod
 # deliverance    
-    deliverance_rules
+${delicomment}    deliverance_rules
 # apache    
     apache_vhost
 ${delicomment}    apache_deliverance_vhost
@@ -80,10 +80,16 @@ command+=
     chmod 600 .installed.cfg
     chmod 744 \${buildout:directory}/bin/* 
 
+
 [chown]
 recipe = plone.recipe.command
 update-command = \${chown:command}
 command +=
 #    find \${buildout:directory} -type d -name var -exec chown -R \${users:django} {} \;
+
+[scripts]
+eggs=
+scripts=
+extra-paths= 
  
 # vim:set et ts=4 sts=4 ft=cfg:

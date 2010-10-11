@@ -7,7 +7,7 @@ $hr
 dsm=settings_\${buildout:mode}
 find-links=\${settings:find-links}
 # extra directories to add to the python path
-extra-paths=
+extra-paths+=
 # better have mr.developer mananing your eggs, see sources.cfg
 develop=
 eggs= 
@@ -21,8 +21,8 @@ recipe=minitage.recipe:scripts
 # attacking zopepy:eggs make instance be built after zopepy
 # in any case thx to the buildout automatic parts sort.
 extra-paths+=\${buildout:extra-paths} 
-eggs += \${buildout:eggs}
-    z3c.checkversion
+eggs+= \${buildout:eggs}
+    z3c.checkversions
 #for $product in $additional_eggs
 #if product.startswith('#')
 $product
@@ -31,7 +31,7 @@ $product
 #end if
 #end for 
 # Scripts generated filtering
-scripts =
+scripts+=
 #z3c.checkversions
     checkversions
 #zope2

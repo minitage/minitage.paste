@@ -43,7 +43,7 @@
   <option order="0000" name="with_wsgi_cas"                      description="WSGI CAS (SSO) capabilities, see http://pypi.python.org/pypi/repoze.who.plugins.cas y/n"/>
   <option order="0000" name="with_gis_mapnik"                description="mapnik bindings, see http://mapnik.org/ y/n"/>
   <option order="0000" name="with_gis_gdal"                  description="gdal bindings, see http://www.gdal.org/y/n"/>
-  <option order="0000" name="with_binding_cairo"                 description="cairo bindings, see http://cairographics.org/ y/n"/>
+  <option order="800" name="with_binding_cairo"                 description="cairo bindings, see http://cairographics.org/ y/n"/>
   <option order="0000" name="with_binding_memcache"                 description="memcache bindings, see http://memcached.org/y/n"/>
   <option order="0000" name="with_gis_pgrouting"                 description="pgrouting support, see http://pgrouting.postlbs.org y/n"/>
   <option order="0000" name="with_gis_mapscript"                 description="mapscript/mapserver support, see http://mapserver.org/y/n"/>
@@ -56,6 +56,8 @@
   <!-- makina -->
   <option order="10000" name="with_binding_mapscript"                   description="mapserver python bindings, see http://pypi.python.org/pypi/mapscript y/n"                                             default="n"/>
   <option order="10030" name="with_tool_cgeneric"                       description="include a bundle of collective.generic development tools y/n"                                                         default="n"/>
+  <option order="10030" name="with_django_bv_client"                       description="BisonVert server y/n"  default="n"/>
+  <option order="10030" name="with_django_bv_server"                       description="Bisonvert client y/n"  default="n"/>
   <!--END makina -->
 
 </options>
@@ -84,20 +86,18 @@
       comma sepaated values != 'y' -> install the list of products
   -->
   <eggs>
-    <egg name="nose"                          options="with_tool_nose"                  />
-    <egg name="coverage"                      options="with_tool_coverage"                  />
-    <egg name="cmemcache"                     options="with_binding_memcache"                  />
-    <egg name="sqlalchemy"                    options="with_database_sa"                  />
-    <egg name="MySQL_python"                  options="with_database_mysql"               />
+    <egg name="nose"                          options="with_tool_nose"        />
+    <egg name="coverage"                      options="with_tool_coverage"    />
+    <egg name="cmemcache"                     options="with_binding_memcache" />
+    <egg name="sqlalchemy"                    options="with_database_sa"    />
+    <egg name="MySQL_python"                  options="with_database_mysql" />
     <egg name="cx_Oracle"                     options="with_database_oracle"/>
     <egg name="psycopg2"                      options="with_database_postgresql"/> 
     <egg name="egenix-mx-base"                options="with_database_postgresql"/>
-    <egg name="BeautifulSoup"                 options="with_binding_bsoup"   />
+    <egg name="BeautifulSoup"                 options="with_binding_bsoup"  />
     <egg name="lxml"                          options="with_binding_lxml"   />
     <egg name="elementtree"                   options="with_binding_lxml"   />
     <egg name="demjson"                       options="with_binding_json"/>
-    <egg name="flickrapi"                     options=""/>
-    <egg name="gdata"                         options=""/>
     <egg name="ipython"                       options="with_tool_ipython"                 scripts="ipython" />
     <egg name="bpython"                       options="with_tool_bpython"                 scripts="bpython" />
     <egg name="mapscript"                     options="with_binding_mapscript"/>
@@ -106,9 +106,13 @@
     <egg name="python-ldap"                   options="with_binding_ldap"/>
     <egg name="repoze.who.plugins.cas"        options="with_wsgi_cas"/>
     <egg name="simplejson"                    options="with_binding_json"/>
-    <egg name="xlwt"                          options="with_binding_xlwt"                />
-    <egg name="pypdf"                         options="with_binding_pdf"                />
-    <egg name="ogcserver"                     options="with_gis_mapnik"                />
+    <egg name="xlwt"                          options="with_binding_xlwt"    />
+    <egg name="pypdf"                         options="with_binding_pdf"     />
+    <egg name="ogcserver"                     options="with_gis_mapnik"      />
+    <egg name="bv.client"                     options="with_django_bv_server"/>
+    <egg name="bv.server"                     options="with_django_bv_client"/>
+    <egg name="bv.libclient"                  options="with_django_bv_client"/>
+    <egg name="pycairo"                       options="with_binding_cairo" />
   </eggs>
   <!--
     Enter here mandatory version pinnings
@@ -121,10 +125,10 @@
       name: description to add as comment into the resulting buildout
     -->
   <versions>
-    <version p="zc.buildout"             v="1.5.1"       name="zc.buildout core stuff"/>
-    <version p="distribute"              v="0.6.14"    name="zc.buildout core stuff"/>
-    <version p="zc.recipe.egg"           v="1.3.2"     name="zc.buildout core stuff"/>
-    <version p="ipython"                 v="0.10"    name="IPython py2.4 compatible version"/>
+    <version p="zc.buildout"             v="1.5.1"  name="zc.buildout core stuff"/>
+    <version p="distribute"              v="0.6.14" name="zc.buildout core stuff"/>
+    <version p="zc.recipe.egg"           v="1.3.2"  name="zc.buildout core stuff"/>
+    <version p="ipython"                 v="0.10"   name="IPython py2.4 compatible version"/>
   </versions>
   <!--
     Enter here know good set versions stuff
@@ -153,7 +157,10 @@
   <sources>
     <!-- makina -->
     <source name="dj.paste" type="svn"  url="http://git.minitage.org/git/others/dj.paste" options="" /> 
-    <source name="ogcserver" type="hg" url="http://bitbucket.org/kiorky/ogcserver" options="with_gis_mapnik" /> 
+    <source name="ogcserver" type="hg" url="http://bitbucket.org/kiorky/ogcserver" options="with_gis_mapnik" autocheckout="y"/> 
+    <source name="bv.server" type="hg" url="http://bitbucket.org/kiorky/bv.server" options="with_django_bv_server"  autocheckout="y"/> 
+    <source name="bv.client" type="hg" url="http://bitbucket.org/kiorky/bv.client" options="with_django_bv_client"  autocheckout="y"/> 
+    <source name="bv.libclient" type="hg" url="http://bitbucket.org/kiorky/bv.libclient" options="with_django_bv_client" autocheckout="y"/> 
   </sources>
     <!--
     Some very ecliptic products doesnt fit with previous declaration, we will describe how to add the options to the underlying policy there.

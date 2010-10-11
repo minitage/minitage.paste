@@ -36,7 +36,7 @@ import grp
 import re
 import os
 
-import pkg_resources 
+import pkg_resources
 
 from minitage.paste.projects import common
 from minitage.paste.common import var as pvar
@@ -77,11 +77,11 @@ for name in sources_k:
         )
     )
 
-base_django_eggs = ['Django', 
-                    'PasteDeploy', 'Paste', 
-                    'dj.paste', 'WebOb', 'WebError', 'repoze.vhm'
-                    'CherrpyPy', 'gunicorn',
-                   ] 
+base_django_eggs = ['Django',
+                    'PasteDeploy', 'Paste',
+                    'dj.paste', 'WebOb', 'WebError', 'repoze.vhm',
+                    'CherryPy', 'gunicorn',
+                   ]
 class Template(common.Template):
 
     summary = 'Template for creating a '\
@@ -93,7 +93,7 @@ class Template(common.Template):
     # buildout <-> minitage config vars mapping
     sections_mappings = {
         'django_np': plone_np_mappings,
-        'django_vsp': plone_vsp_mappings, 
+        'django_vsp': plone_vsp_mappings,
         'additional_eggs': eggs_mappings,
         'plone_scripts': scripts_mappings,
     }
@@ -104,7 +104,7 @@ class Template(common.Template):
     checked_versions_mappings = checked_versions_mappings
     plone_np_mappings         = plone_np_mappings
     plone_vsp_mappings        = plone_vsp_mappings
-    plone_sources             = plone_sources 
+    plone_sources             = plone_sources
 
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
@@ -115,7 +115,7 @@ class Template(common.Template):
         cwd = os.getcwd()
         if not os.path.exists(self.output_dir):
             self.makedirs(self.output_dir)
- 
+
         if vars['inside_minitage']:
             deps = [
                 'zlib-1.*',
@@ -123,15 +123,15 @@ class Template(common.Template):
                 'libxml2-2.*',
                 'libiconv.*',
                 'libxslt-1.*',
-                'fontconfig-2.\d*',  
-            ] 
+                'fontconfig-2.\d*',
+            ]
             if vars['with_database_mysql']:
                 deps.extend(['mysql-\d.\d*'],)
             if vars['with_database_postgresql']:
                deps.extend(['postgresql-\d.\d'],)
-            if (vars['with_database_sqlite'] 
+            if (vars['with_database_sqlite']
                 or (
-                    not vars['with_database_postgresql'] 
+                    not vars['with_database_postgresql']
                     and not vars['with_database_mysql'])
                ):
               deps.extend(['sqlite-\d.\d',])
@@ -153,7 +153,7 @@ class Template(common.Template):
             if vars["with_gis_pgrouting"]:
                 deps.extend(['pgrouting-1.\d*',])
             if vars["with_gis_mapnik"]:
-                deps.extend(['mapnik-\d.\d*',])
+                deps.extend(['py-mapnik-\d.\d*', 'mapnik-\d.\d*',])
             if vars["with_binding_cairo"]:
                 deps.extend(['cairo-1.\d*',])
             if vars["with_binding_pil"]:
@@ -208,11 +208,12 @@ class Template(common.Template):
         # Django core eggs
         vars['additional_eggs'].append('#Django')
         vars['additional_eggs'].extend(base_django_eggs)
-        
-        # datanases
+
+        # databases
         for db in [var.replace('with_database_', '')
                     for var in vars
-                    if 'with_database_' in var]:
+                    if 'with_database_' in var
+                        and vars[var]]:
             if not db in ['sqlite',]:
                 vars['additional_eggs'].extend(
                     [a
@@ -220,7 +221,7 @@ class Template(common.Template):
                      if not a in vars['additional_eggs']
                     ]
                 )
-        
+
         # do we need some pinned version
         vars['plone_versions'] = []
         for var in self.versions_mappings:
@@ -263,7 +264,7 @@ class Template(common.Template):
         if not vars['reverseproxy_aliases']:
             vars['reverseproxy_aliases'] = ''
         vars['sreverseproxy_aliases'] = vars['reverseproxy_aliases'].split(',')
- 
+
     def read_vars(self, command=None):
         vars = common.Template.read_vars(self, command)
         if command:
@@ -277,10 +278,10 @@ class Template(common.Template):
             if var.name in ['reverseproxy_host',] and command:
                 sane_name = '%s.localhost' % common.SPECIALCHARS.sub('', command.args[0])
                 vars[i].default = sane_name
-        return vars 
+        return vars
 
 Template.vars = common.Template.vars \
-        + [ pvar('django_version', 'Django version', default = '1.2.3',), 
+        + [ pvar('django_version', 'Django version', default = '1.2.3',),
            pvar('address', 'Address to listen on', default = 'localhost',),
            pvar('license', 'License', default = 'BSD',),
            pvar('http_port', 'Port to listen to', default = '8081',),

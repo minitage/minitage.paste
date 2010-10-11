@@ -7,6 +7,10 @@ $hr
 sources=sources
 sources-dir=\${buildout:directory}/src.mrdeveloper
 auto-checkout +=
+# $autocheckout.sort()
+#for $item in $autocheckout:
+    $item
+#end for 
 
 [sources]
 #set $psources_keys = $plone_sources.keys()
@@ -15,5 +19,4 @@ auto-checkout +=
 #set source=$plone_sources[item]
 $source['name'] = $source['type'] $source['url'] $source['path'] $source['asegg']
 #end for
-
 # vim:set ft=cfg:
