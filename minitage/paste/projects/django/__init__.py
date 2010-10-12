@@ -149,7 +149,7 @@ class Template(common.Template):
             if vars["with_binding_lxml"]:
                 deps.extend(['libxml2-\d.\d*', 'libxslt-1.\d*'])
             if vars["with_gis_gdal"]:
-                deps.extend(['gdal-\d.\d*', 'pixman-0.\d*',])
+                deps.extend(['gdal-\d.\d*', 'pixman-0\d*',])
             if vars["with_gis_pgrouting"]:
                 deps.extend(['pgrouting-1.\d*',])
             if vars["with_gis_mapnik"]:
