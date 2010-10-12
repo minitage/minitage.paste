@@ -247,7 +247,7 @@ class Template(common.Template):
                 cs
             )
             vars['includesdirs'] = '\n    %s'%  os.path.join(
-                vars['mt'], cs, 'parts', 'part', 'include', 'sasl'
+                vars['mt'], 'dependencies', cs, 'parts', 'part', 'include', 'sasl'
             )
 
         # haproxy

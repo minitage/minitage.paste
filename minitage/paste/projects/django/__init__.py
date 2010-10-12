@@ -140,7 +140,7 @@ class Template(common.Template):
                 cs = search_latest('cyrus-sasl-\d\.\d*', vars['minilays'])
                 deps.extend(['openldap-\d\.\d*', cs])
                 vars['includesdirs'] = '\n    %s'%  os.path.join(
-                    vars['mt'], cs, 'parts', 'part', 'include', 'sasl'
+                    vars['mt'], 'dependencies', cs, 'parts', 'part', 'include', 'sasl'
                 )
 
             # haproxy
