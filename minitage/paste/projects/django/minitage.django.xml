@@ -38,7 +38,7 @@
   <option order="0000" name="with_tool_ipython"                  description="ipython, see http://ipython.scipy.org/ y/n" default="y"/>
   <option order="0000" name="with_tool_bpython"                  description="bpython, see http://bpython-interpreter.org/ y/n" default="y"/>
   <option order="0000" name="with_tool_nose"            description="nose, see http://pypi.python.org/pypi/nose y/n" default="y"/>
-  <option order="0000" name="with_tool_coverage"            description="nose, see http://pypi.python.org/pypi/coverage y/n" default="y"/>
+  <option order="0000" name="with_tool_coverage"            description="coverage, see http://pypi.python.org/pypi/coverage y/n" default="y"/>
   <option order="0000" name="with_tool_reportlab"                description="Reportlab, see http://www.reportlab.com/ y/n" default="n"/>
   <option order="0000" name="with_wsgi_cas"                      description="WSGI CAS (SSO) capabilities, see http://pypi.python.org/pypi/repoze.who.plugins.cas y/n"/>
   <option order="0000" name="with_gis_mapnik"                description="mapnik bindings, see http://mapnik.org/ y/n"/>
@@ -87,6 +87,7 @@
   -->
   <eggs>
     <egg name="nose"                          options="with_tool_nose"        />
+    <egg name="mapnik2"                          options="with_gis_mapnik"        />
     <egg name="coverage"                      options="with_tool_coverage"    />
     <egg name="cmemcache"                     options="with_binding_memcache" />
     <egg name="sqlalchemy"                    options="with_database_sa"    />
@@ -158,6 +159,7 @@
     <!-- makina -->
     <source name="dj.paste" type="svn"  url="http://git.minitage.org/git/others/dj.paste" options="" /> 
     <source name="ogcserver" type="hg" url="http://bitbucket.org/kiorky/ogcserver" options="with_gis_mapnik" autocheckout="y"/> 
+    <source name="mapnik2" type="hg" url="http://bitbucket.org/kiorky/mapnik-egg" options="with_gis_mapnik" autocheckout="y"/> 
     <source name="bv.server" type="hg" url="http://bitbucket.org/kiorky/bv.server" options="with_django_bv_server"  autocheckout="y"/> 
     <source name="bv.client" type="hg" url="http://bitbucket.org/kiorky/bv.client" options="with_django_bv_client"  autocheckout="y"/> 
     <source name="bv.libclient" type="hg" url="http://bitbucket.org/kiorky/bv.libclient" options="with_django_bv_client" autocheckout="y"/> 

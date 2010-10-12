@@ -10,8 +10,8 @@ site-packages=$xml2
 [libxslt]
 site-packages=$xslt 
 #if $with_gis_mapnik
-[mapnik]
-site-packages=$mapnik  
+#[mapnik]
+#site-packages=$mapnik  
 #end if
  
 [python${pyver}]
@@ -31,7 +31,7 @@ extra-paths+=
     \${libxml2:site-packages}
     \${libxslt:site-packages} 
 #if $with_gis_mapnik
-    \${mapnik:site-packages}
+#    \${mapnik:site-packages}
 #end if 
 #if $with_binding_mapscript or $with_gis_mapnik
 minitage-globalenv=true
