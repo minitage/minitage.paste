@@ -50,7 +50,7 @@ extends=
 # deliverance support
 ${delicomment}    project/deliverance.cfg
     apache/apache.cfg
-    hudson/${project}/hudson.cfg 
+    hudson/${project}/hudson.cfg
 versions = versions
 parts =
     scripts
@@ -64,21 +64,21 @@ parts =
     ${sane_name}_hudson_job
     ${sane_name}_hudson_deploy
     ${sane_name}_hudson_chmod
-# deliverance    
+# deliverance
 ${delicomment}    deliverance_rules
-# apache    
+# apache
     apache_vhost
 ${delicomment}    apache_deliverance_vhost
 # security
-    chown 
-    chmod 
- 
+    chown
+    chmod
+
 [chmod]
 recipe = plone.recipe.command
 update-command = \${chmod:command}
 command+=
     chmod 600 .installed.cfg
-    chmod 744 \${buildout:directory}/bin/* 
+    chmod 744 \${buildout:directory}/bin/*
 
 
 [chown]
@@ -90,6 +90,6 @@ command +=
 [scripts]
 eggs=
 scripts=
-extra-paths= 
- 
+extra-paths=
+
 # vim:set et ts=4 sts=4 ft=cfg:

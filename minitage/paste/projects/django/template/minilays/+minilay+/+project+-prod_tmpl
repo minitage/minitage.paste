@@ -5,4 +5,4 @@ install_method=buildout
 src_uri=$uri
 src_type=$scm_type
 category=django
-buildout_config="minitage.buildout-prod.cfg"
+buildout_config=minitage.buildout-prod.cfg

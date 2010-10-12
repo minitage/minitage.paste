@@ -155,6 +155,7 @@ class Template(common.Template):
             if vars["with_gis_mapnik"]:
                 #deps.extend(['py-mapnik-\d.\d*', 'mapnik-\d.\d*',])
                 deps.extend(['mapnik-\d.\d*',])
+                deps.extend(['boost-python-.*',])
             if vars["with_binding_cairo"]:
                 deps.extend(['cairo-1.\d*',])
             if vars["with_binding_pil"]:

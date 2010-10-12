@@ -9,7 +9,7 @@
 #
 #      bin/paster serve  --reload etc/wsgi/instance.ini
 #
-############################################################################## 
+##############################################################################
 
 [buildout]
 mode=dev
@@ -31,6 +31,6 @@ scripts+=
     project_md5
     project_release
     package_svn_prepare
-    release_eggs 
+    release_eggs
 
 \# vim:set et ts=4 sts=4 ft=cfg:

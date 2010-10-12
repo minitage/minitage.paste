@@ -19,28 +19,28 @@
 #set $si4=''
 #else:
 #set $si4='#'
-#end if 
+#end if
 [instance1]
 <= instance
-output = \${buildout:directory}/etc/wsgi/instance1.ini 
+output = \${buildout:directory}/etc/wsgi/instance1.ini
 host=\${hosts:instance1}
 port=\${ports:instance1}
 
 [instance2]
 <= instance
-output = \${buildout:directory}/etc/wsgi/instance2.ini 
+output = \${buildout:directory}/etc/wsgi/instance2.ini
 host=\${hosts:instance2}
 port=\${ports:instance2}
 
 [instance3]
 <= instance
-output = \${buildout:directory}/etc/wsgi/instance3.ini 
+output = \${buildout:directory}/etc/wsgi/instance3.ini
 host=\${hosts:instance3}
 port=\${ports:instance3}
 
 [instance4]
 <= instance
-output = \${buildout:directory}/etc/wsgi/instance4.ini 
+output = \${buildout:directory}/etc/wsgi/instance4.ini
 host=\${hosts:instance4}
 port=\${ports:instance4}
 

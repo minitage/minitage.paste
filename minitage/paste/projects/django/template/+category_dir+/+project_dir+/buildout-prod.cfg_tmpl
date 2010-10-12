@@ -14,7 +14,9 @@
 
 #set $slashdn = $project.replace('.', '/')
 [buildout]
-extends= etc/base.cfg
+extends=
+    etc/base.cfg
+    etc/project/cluster.cfg
 mode=prod
 parts+=instance1
     instance2

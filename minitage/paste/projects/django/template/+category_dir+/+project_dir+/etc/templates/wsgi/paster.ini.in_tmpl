@@ -29,7 +29,7 @@ ${delicomment}use = egg:Paste#static
 ${delicomment}document_root=\${locations:deliverance-themes}
 
 [pipeline:pmain]
-pipeline= translogger projectapp
+pipeline= fvhm exc translogger projectapp
 
 [pipeline:pmedia]
 pipeline= translogger exc mediaapp
@@ -39,6 +39,9 @@ pipeline= translogger exc adminmediaapp
 
 [app:watch_threads]
 use=egg:Paste#watch_threads
+
+[filter:fvhm]
+use = egg:repoze.vhm#vhm_xheaders
 
 [filter:translogger]
 use=egg:Paste#translogger
