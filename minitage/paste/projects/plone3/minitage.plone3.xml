@@ -127,8 +127,9 @@
   <option order="00000" name="with_ploneproduct_nmdlinkasvideo"         description="nmd.plonelinkasvideoembed, see http://pypi.python.org/pypi/nmd.plonelinkasvideoembed y/n"                        default="n"/>
   <option order="01008" name="with_ploneproduct_plomino"                description="Plomino, see http://plone.org/products/plomino y/n"                                                                   default="n"/>
   <option order="01007" name="with_ploneproduct_plominotinymce"         description="Plomino.tinymce, see http://pypi.python.org/pypi/plomino.tinymce/ y/n"                                        default="n"/>
-  <option order="00000" name="with_ploneproduct_quaestrio"              description="Quaestrio, see http://pypi.python.org/pypi/Products.Quaestrio y/n"                                               default="n"/>
   <!--END makina -->
+  <option order="00000" name="with_ploneproduct_quaestrio"              description="Quaestrio, see http://pypi.python.org/pypi/Products.Quaestrio y/n"                                               default="n"/>
+  <option order="00000" name="with_ploneproduct_cgeo"      description="collective.geo (svn trunk), see http://plone.org/products/collective.geo y/n"                                               default="n"/>
 
 </options>
   <!--
@@ -331,7 +332,18 @@
     <egg name="archetypes.gridfield"                 options="with_ploneproduct_agridfield" zcml="configure"/>
     <egg name="Products.ATExtensions"                options="with_ploneproduct_atextensions"                        zcml="configure"/>
     <egg name="Products.Quaestrio"                   options="with_ploneproduct_quaestrio" zpackage="y" zcml="configure" />
-    <egg name="collective.portlettabber"                   options="with_ploneproduct_cportlettabber" zpackage="y" zcml="configure" />
+    <egg name="collective.portlettabber"             options="with_ploneproduct_cportlettabber" zpackage="y" zcml="configure" />
+
+
+    <!-- collective.geo -->
+    <egg name="collective.geo.contentlocations"  options="with_ploneproduct_cgeo"  zcml="configure"/>
+    <egg name="collective.geo.geographer"        options="with_ploneproduct_cgeo"  zcml="configure"/>
+    <egg name="collective.geo.geopoint"          options="with_ploneproduct_cgeo"  zcml="configure"/>
+    <egg name="collective.geo.kml"               options="with_ploneproduct_cgeo"  zcml="configure"/>
+    <egg name="collective.geo.settings"          options="with_ploneproduct_cgeo"  zcml="configure"/>
+    <egg name="collective.geo.openlayers"        options="with_ploneproduct_cgeo"  zcml="configure"/>
+    <egg name="collective.geo.mapwidget"         options="with_ploneproduct_cgeo"  zcml="configure"/>
+
     <!-- zope products -->
   </eggs>
   <!--
@@ -477,6 +489,13 @@
     <product name="plomino.tinymce"                      options="with_ploneproduct_plominotinymce" />
     <product name="Products.ATExtensions"                options="with_ploneproduct_atextensions"  order="200"   />
     <product name="Products.Quaestrio"                   options="with_ploneproduct_quaestrio"/>
+     <!-- collective.geo -->
+    <product name="collective.geo.contentlocations"  options="with_ploneproduct_cgeo"  order="300"/>
+    <product name="collective.geo.geographer"        options="with_ploneproduct_cgeo"  order="294"/>
+    <product name="collective.geo.kml"               options="with_ploneproduct_cgeo"  order="300"/>
+    <product name="collective.geo.settings"          options="with_ploneproduct_cgeo"  order="295"/>
+    <product name="collective.geo.openlayers"        options="with_ploneproduct_cgeo"  order="300"/>
+    <product name="collective.geo.mapwidget"         options="with_ploneproduct_cgeo"  order="300"/> 
   </gs>
   <!--
     Enter here mandatory version pinnings
@@ -489,7 +508,7 @@
       name: description to add as comment into the resulting buildout
     -->
   <versions>
-    <version p="zc.buildout"             v="1.5"       name="zc.buildout core stuff"/>
+    <version p="zc.buildout"             v="1.5.2"       name="zc.buildout core stuff"/>
     <version p="distribute"              v="0.6.14"    name="zc.buildout core stuff"/>
     <version p="zc.recipe.egg"           v="1.3.2"     name="zc.buildout core stuff"/>
     <!--
@@ -718,6 +737,14 @@
     <source name="pypdf"                                type="git" url="http://github.com/mfenniak/pyPdf.git"                                                     options="with_binding_pdf"/>
 
 
+    <!-- collective.geo-->
+    <source name="collective.geo.geoggrapher" type="svn" url="http://svn.plone.org/svn/collective/collective.geo.geographer/trunk" options="with_ploneproduct_cgeo"/>
+    <source name="collective.geo.contentlocations" type="svn" url="http://svn.plone.org/svn/collective/collective.geo.contentlocations/trunk" options="with_ploneproduct_cgeo"/>
+    <source name="collective.geo.geopoint"         type="svn" url="http://svn.plone.org/svn/collective/collective.geo.geopoint/trunk" options="with_ploneproduct_cgeo"/>
+    <source name="collective.geo.kml"              type="svn" url="http://svn.plone.org/svn/collective/collective.geo.kml/trunk" options="with_ploneproduct_cgeo"/>
+    <source name="collective.geo.settings"         type="svn" url="http://svn.plone.org/svn/collective/collective.geo.settings/trunk" options="with_ploneproduct_cgeo"/>
+    <source name="collective.geo.openlayers"       type="svn" url="http://svn.plone.org/svn/collective/collective.geo.openlayers/trunk" options="with_ploneproduct_cgeo"/>
+    <source name="collective.geo.mapwidget"        type="svn" url="http://svn.plone.org/svn/collective/collective.geo.mapwidget/trunk" options="with_ploneproduct_cgeo"/>
     <!-- cynin -->
     <source name="ubify.coretypes"     type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.coretypes"      autocheckout="y"   options="with_ploneproduct_cynin"/>
     <source name="ubify.cyninv2theme"  type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.cyninv2theme"   autocheckout="y"   options="with_ploneproduct_cynin"/>

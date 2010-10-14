@@ -238,6 +238,10 @@ class Template(common.Template):
         # databases
         if vars['with_binding_mapscript'] and vars['inside_minitage']:
             vars['opt_deps'] += ' %s' % search_latest('mapserver-\d\.\d*', vars['minilays'])
+        # collective.geo
+        if vars['with_ploneproduct_cgeo'] and vars['inside_minitage']:
+            for i in ('geos-\d\.\d*','gdal-\d\.\d*'):
+                vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays']) 
 
         # openldap
         if vars['with_binding_ldap'] and vars['inside_minitage']:

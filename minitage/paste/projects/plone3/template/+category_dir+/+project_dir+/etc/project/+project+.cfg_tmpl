@@ -31,6 +31,7 @@ $hr
 #end if
 
 [buildout]
+develop = \${buildout:directory}/src.mrdeveloper/zopelib 
 sources-dir=\${buildout:directory}/src.mrdeveloper
 
 # extra directories oto add to the python path
@@ -53,6 +54,7 @@ auto-checkout +=
 # in any case thx to the buildout automatic parts sort.
 extra-paths+=\${buildout:extra-paths}
 eggs += \${buildout:eggs}
+    zopelib
     Plone
 # release helpers
     zest.releaser

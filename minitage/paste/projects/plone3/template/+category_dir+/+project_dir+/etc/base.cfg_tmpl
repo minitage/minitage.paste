@@ -117,8 +117,8 @@ ${delicomment}    deliverance.test
     chown
 
 find-links = \${groups:find-links}
-eggs += zopelib
-develop += \${buildout:directory}/src.mrdeveloper/zopelib
+eggs +=
+develop += 
 versions = versions
 # see http://pypi.python.org/pypi/mr.developer for documentation
 # auto tracked developement products, see project/sources.cfg
