@@ -43,6 +43,7 @@ ${product}
     ${product}
 #end if
 #end for
+    django-admin.py
 interpreter = djangopy
 dependent-scripts=true
 paster-initialization=

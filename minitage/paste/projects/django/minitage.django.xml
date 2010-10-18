@@ -87,7 +87,7 @@
   -->
   <eggs>
     <egg name="nose"                          options="with_tool_nose"        />
-    <egg name="mapnik2"                          options="with_gis_mapnik"        />
+    <egg name="mapnik2"                       options="with_gis_mapnik"        />
     <egg name="coverage"                      options="with_tool_coverage"    />
     <egg name="cmemcache"                     options="with_binding_memcache" />
     <egg name="sqlalchemy"                    options="with_database_sa"    />
