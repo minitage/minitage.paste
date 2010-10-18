@@ -164,6 +164,7 @@
     <source name="bv.server" type="hg" url="http://bitbucket.org/kiorky/bv.server" options="with_django_bv_server"  autocheckout="y"/> 
     <source name="bv.client" type="hg" url="http://bitbucket.org/kiorky/bv.client" options="with_django_bv_client"  autocheckout="y"/> 
     <source name="bv.libclient" type="hg" url="http://bitbucket.org/kiorky/bv.libclient" options="with_django_bv_client,with_django_bv_libclient" autocheckout="y"/> 
+    <source name="django-oauthclient" type="hg" url="http://bitbucket.org/bisonvert/django-oauthclient/" options="with_django_bv_client,with_django_bv_libclient" autocheckout="y"/> 
   </sources>
     <!--
     Some very ecliptic products doesnt fit with previous declaration, we will describe how to add the options to the underlying policy there.
