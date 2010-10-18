@@ -343,6 +343,8 @@
     <egg name="collective.geo.settings"          options="with_ploneproduct_cgeo"  zcml="configure"/>
     <egg name="collective.geo.openlayers"        options="with_ploneproduct_cgeo"  zcml="configure"/>
     <egg name="collective.geo.mapwidget"         options="with_ploneproduct_cgeo"  zcml="configure"/>
+    <egg name="collective.geo.mapcontent"         options="with_ploneproduct_cgeo"  zcml="configure"/>
+    <egg name="collective.z3cform.colorpicker"   options="with_ploneproduct_cgeo"  />
 
     <!-- zope products -->
   </eggs>
@@ -496,6 +498,7 @@
     <product name="collective.geo.settings"          options="with_ploneproduct_cgeo"  order="295"/>
     <product name="collective.geo.openlayers"        options="with_ploneproduct_cgeo"  order="300"/>
     <product name="collective.geo.mapwidget"         options="with_ploneproduct_cgeo"  order="300"/> 
+    <product name="collective.geo.mapcontent"        options="with_ploneproduct_cgeo"  order="300"/> 
   </gs>
   <!--
     Enter here mandatory version pinnings
@@ -739,12 +742,14 @@
 
     <!-- collective.geo-->
     <source name="collective.geo.geoggrapher" type="svn" url="http://svn.plone.org/svn/collective/collective.geo.geographer/trunk" options="with_ploneproduct_cgeo"/>
+    <source name="collective.z3cform.colorpicker" type="svn" url="http://svn.plone.org/svn/collective/collective.z3cform.colorpicker/trunk" options="with_ploneproduct_cgeo,with_ploneproduct_colorpickerform" autocheckout="y"/>
     <source name="collective.geo.contentlocations" type="svn" url="http://svn.plone.org/svn/collective/collective.geo.contentlocations/trunk" options="with_ploneproduct_cgeo"/>
     <source name="collective.geo.geopoint"         type="svn" url="http://svn.plone.org/svn/collective/collective.geo.geopoint/trunk" options="with_ploneproduct_cgeo"/>
     <source name="collective.geo.kml"              type="svn" url="http://svn.plone.org/svn/collective/collective.geo.kml/trunk" options="with_ploneproduct_cgeo"/>
     <source name="collective.geo.settings"         type="svn" url="http://svn.plone.org/svn/collective/collective.geo.settings/trunk" options="with_ploneproduct_cgeo"/>
     <source name="collective.geo.openlayers"       type="svn" url="http://svn.plone.org/svn/collective/collective.geo.openlayers/trunk" options="with_ploneproduct_cgeo"/>
     <source name="collective.geo.mapwidget"        type="svn" url="http://svn.plone.org/svn/collective/collective.geo.mapwidget/trunk" options="with_ploneproduct_cgeo"/>
+    <source name="collective.geo.mapcontent"        type="svn" url="http://svn.plone.org/svn/collective/collective.geo.mapcontent/trunk" options="with_ploneproduct_cgeo"/>
     <!-- cynin -->
     <source name="ubify.coretypes"     type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.coretypes"      autocheckout="y"   options="with_ploneproduct_cynin"/>
     <source name="ubify.cyninv2theme"  type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.cyninv2theme"   autocheckout="y"   options="with_ploneproduct_cynin"/>
