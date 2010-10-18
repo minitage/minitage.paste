@@ -58,6 +58,7 @@
   <option order="10030" name="with_tool_cgeneric"                       description="include a bundle of collective.generic development tools y/n"                                                         default="n"/>
   <option order="10030" name="with_django_bv_server"                       description="BisonVert server y/n"  default="n"/>
   <option order="10030" name="with_django_bv_client"                       description="Bisonvert client y/n"  default="n"/>
+  <option order="10030" name="with_django_bv_libclient"                       description="Bisonvert libclient y/n"  default="n"/>
   <!--END makina -->
 
 </options>
@@ -112,7 +113,7 @@
     <egg name="ogcserver"                     options="with_gis_mapnik"      />
     <egg name="bv.client"                     options="with_django_bv_server"/>
     <egg name="bv.server"                     options="with_django_bv_client"/>
-    <egg name="bv.libclient"                  options="with_django_bv_client"/>
+    <egg name="bv.libclient"                  options="with_django_bv_client,with_django_bv_libclient"/>
     <egg name="pycairo"                       options="with_binding_cairo" />
   </eggs>
   <!--
@@ -162,7 +163,7 @@
     <source name="mapnik2" type="hg" url="http://bitbucket.org/kiorky/mapnik-egg" options="with_gis_mapnik" autocheckout="y"/> 
     <source name="bv.server" type="hg" url="http://bitbucket.org/kiorky/bv.server" options="with_django_bv_server"  autocheckout="y"/> 
     <source name="bv.client" type="hg" url="http://bitbucket.org/kiorky/bv.client" options="with_django_bv_client"  autocheckout="y"/> 
-    <source name="bv.libclient" type="hg" url="http://bitbucket.org/kiorky/bv.libclient" options="with_django_bv_client" autocheckout="y"/> 
+    <source name="bv.libclient" type="hg" url="http://bitbucket.org/kiorky/bv.libclient" options="with_django_bv_client,with_django_bv_libclient" autocheckout="y"/> 
   </sources>
     <!--
     Some very ecliptic products doesnt fit with previous declaration, we will describe how to add the options to the underlying policy there.
