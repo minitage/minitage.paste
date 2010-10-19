@@ -3,5 +3,6 @@ REPOSITORY="\${fssdaily:backuppath}"
 INSTANCEPATH="\${buildout:directory}"
 mkdir -p "\$REPOSITORY"
 cd "\$INSTANCEPATH/var"
-tar czvf "\$REPOSITORY/fss.tgz"  fss_*_$project fss_*_global fss
+DATE="\$(date "+%F")"
+tar czvf "\$REPOSITORY/fss-\$DATE.tgz"  fss_*_$project fss_*_global fss
 

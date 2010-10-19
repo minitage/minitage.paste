@@ -49,7 +49,11 @@ parts+=#slurp
 #    repozodaily
 #    repozoweekly
 #end if
+${fsscomment}    fssdaily
+${fsscomment}    fssrotate
 ${fsscomment}    fssdailycron
+${blobcomment}    blobdaily
+${blobcomment}    blobrotate
 ${blobcomment}    blobdailycron
 ${fsscomment}    fss1
 ${fsscomment}    fss2

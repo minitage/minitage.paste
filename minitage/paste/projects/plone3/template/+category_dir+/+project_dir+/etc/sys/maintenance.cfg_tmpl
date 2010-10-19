@@ -32,7 +32,7 @@
 #set $cynincomment=''
 #else
 #set $cynincomment='#'
-#end if  
+#end if
 
 # make an incremental backup per day
 [repozodaily]
@@ -79,12 +79,6 @@ input =\${buildout:directory}/etc/templates/fss_daily.sh.in
 output =\${buildout:directory}/cron_scripts/fss_daily.sh
 backuppath=\${locations:fss-backups}
 
-# backup FSS every day
-[fssdailycron]
-recipe = z3c.recipe.usercrontab
-times = 15 1 * * *
-command =  \${buildout:directory}/cron_scripts/fss_daily.sh
-
 # please edit the .in file to fit your needs if you change the blob storage layout.
 [blobdaily]
 recipe = collective.recipe.template
@@ -92,11 +86,32 @@ input =\${buildout:directory}/etc/templates/blob_daily.sh.in
 output =\${buildout:directory}/cron_scripts/blob_daily.sh
 backuppath=\${locations:blob-backups}
 
+# keep jkust the last backups
+[fssrotate]
+recipe = collective.recipe.template
+input =\${buildout:directory}/etc/templates/keeplastbackups.sh.in
+output =\${buildout:directory}/cron_scripts/fsskeeplastbackups.sh
+backuppath=\${fssdaily:backuppath}
+to_keep=\${crons:nb_backups_to_keep}
+
+[blobrotate]
+recipe = collective.recipe.template
+input =\${buildout:directory}/etc/templates/keeplastbackups.sh.in
+output =\${buildout:directory}/cron_scripts/blobkeeplastbackups.sh
+backuppath=\${blobdaily:backuppath}
+to_keep=\${crons:nb_backups_to_keep}
+
+# backup FSS every day
+[fssdailycron]
+recipe = z3c.recipe.usercrontab
+times = 15 1 * * *
+command =  \${buildout:directory}/cron_scripts/fss_daily.sh && \${buildout:directory}/cron_scripts/fsskeeplastbackups.sh
+
 # backup BLOB every day
 [blobdailycron]
 recipe = z3c.recipe.usercrontab
 times = 15 1 * * *
-command =  \${buildout:directory}/cron_scripts/blob_daily.sh
+command = \${buildout:directory}/cron_scripts/blob_daily.sh && \${buildout:directory}/cron_scripts/blobkeeplastbackups.sh
 
 [backupdirs]
 ${fsscomment}order=\${fssdaily:recipe}
@@ -107,7 +122,7 @@ command =
 ${blobcomment}    mkdir -pv \${blobdaily:backuppath};\
 ${fsscomment}     mkdir -pv \${fssdaily:backuppath};\
     mkdir -pv \${buildout:directory}/var/backups;\
-    mkdir -pv \${buildout:directory}/var/snapshotbackups 
+    mkdir -pv \${buildout:directory}/var/snapshotbackups
 
 [upload-datafs]
 recipe = plone.recipe.command
