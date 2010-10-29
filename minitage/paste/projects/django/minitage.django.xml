@@ -59,6 +59,7 @@
   <option order="10030" name="with_django_bv_server"                       description="BisonVert server y/n"  default="n"/>
   <option order="10030" name="with_django_bv_client"                       description="Bisonvert client y/n"  default="n"/>
   <option order="10030" name="with_django_bv_libclient"                       description="Bisonvert libclient y/n"  default="n"/>
+  <option order="10030" name="with_django_piston"                       description="Django Piston, see http://bitbucket.org/jespern/django-piston/wiki/ y/n"  default="n"/>
   <!--END makina -->
 
 </options>
@@ -111,8 +112,9 @@
     <egg name="xlwt"                          options="with_binding_xlwt"    />
     <egg name="pypdf"                         options="with_binding_pdf"     />
     <egg name="ogcserver"                     options="with_gis_mapnik"      />
-    <egg name="bv.client"                     options="with_django_bv_server"/>
-    <egg name="bv.server"                     options="with_django_bv_client"/>
+    <egg name="bv.server"                     options="with_django_bv_server"/>
+    <egg name="django-piston"                 options="with_django_bv_server,with_django_piston"/>
+    <egg name="bv.client"                     options="with_django_bv_client"/>
     <egg name="bv.libclient"                  options="with_django_bv_client,with_django_bv_libclient"/>
     <egg name="pycairo"                       options="with_binding_cairo" />
   </eggs>
@@ -145,7 +147,7 @@
   <checkedversions>
     <version p="reportab"  v="2.5"     options="with_tool_reportlab"  />
     <version p="pycairo"   v="1.8.8"   options="with_binding_cairo"  />
-    <version p="mapscript" v="5.4.2.1" options="with_gis_mapnik" />
+    <version p="mapscript" v="5.6.3.0" options="with_gis_mapnik" />
     <version p="GDal"      v="1.7.0"   options="with_gis_gdal"/>
   </checkedversions>
   <!--
@@ -161,10 +163,11 @@
     <source name="dj.paste" type="svn"  url="http://git.minitage.org/git/others/dj.paste" options="" /> 
     <source name="ogcserver" type="hg" url="http://bitbucket.org/kiorky/ogcserver" options="with_gis_mapnik" autocheckout="y"/> 
     <source name="mapnik2" type="hg" url="http://bitbucket.org/kiorky/mapnik-egg" options="with_gis_mapnik" autocheckout="y"/> 
-    <source name="bv.server" type="hg" url="http://bitbucket.org/kiorky/bv.server" options="with_django_bv_server"  autocheckout="y"/> 
-    <source name="bv.client" type="hg" url="http://bitbucket.org/kiorky/bv.client" options="with_django_bv_client"  autocheckout="y"/> 
-    <source name="bv.libclient" type="hg" url="http://bitbucket.org/kiorky/bv.libclient" options="with_django_bv_client,with_django_bv_libclient" autocheckout="y"/> 
-    <source name="django-oauthclient" type="hg" url="http://bitbucket.org/bisonvert/django-oauthclient/" options="with_django_bv_client,with_django_bv_libclient" autocheckout="y"/> 
+    <source name="django-piston" type="hg" url="http://bitbucket.org/jespern/django-piston" options="with_django_bv_server,with_django_piston" autocheckout="y"/> 
+    <source name="bv.server" type="git" url="http://github.com/djcoin/bv.server.git" options="with_django_bv_server"  autocheckout="y"/> 
+    <source name="bv.client" type="git" url="http://github.com/djcoin/bv.client.git" options="with_django_bv_client"  autocheckout="y"/> 
+    <source name="bv.libclient" type="git" url="http://github.com/djcoin/bv.libclient.git" options="with_django_bv_client,with_django_bv_libclient" autocheckout="y"/> 
+    <source name="django-oauthclient" type="git" url="http://github.com/djcoin/django-oauthclient.git" options="with_django_bv_client,with_django_bv_libclient" autocheckout="y"/> 
   </sources>
     <!--
     Some very ecliptic products doesnt fit with previous declaration, we will describe how to add the options to the underlying policy there.
