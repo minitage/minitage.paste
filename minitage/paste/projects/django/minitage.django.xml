@@ -29,7 +29,7 @@
   <option order="0000" name="with_binding_pil"                   description="Python imaging (dangerous to disable) y/n" default="y"/>
   <option order="0000" name="with_binding_xlwt"                  description="xlwt,see http://pypi.python.org/pypi/xlwt/ y/n"/>
   <option order="0000" name="with_database_mysql"                description="Mysql python bindings y/n"/>
-  <option order="0000" name="with_database_sqlite"               description="sqlite python bindings y/n"/> 
+  <option order="0000" name="with_database_sqlite"               description="sqlite python bindings y/n"/>
   <option order="0000" name="with_database_oracle"               description="Oracle python bindings y/n"/>
   <option order="0000" name="with_database_postgresql"           description="Postgresql python bindings y/n" default="y"/>
   <option order="0000" name="with_database_sa"                   description="SQLAlchemy, see http://www.sqlalchemy.org y/n"/>
@@ -38,15 +38,15 @@
   <option order="0000" name="with_tool_ipython"                  description="ipython, see http://ipython.scipy.org/ y/n" default="y"/>
   <option order="0000" name="with_tool_bpython"                  description="bpython, see http://bpython-interpreter.org/ y/n" default="y"/>
   <option order="0000" name="with_tool_nose"            description="nose, see http://pypi.python.org/pypi/nose y/n" default="y"/>
-  <option order="0000" name="with_tool_coverage"            description="coverage, see http://pypi.python.org/pypi/coverage y/n" default="y"/>
-  <option order="0000" name="with_tool_reportlab"                description="Reportlab, see http://www.reportlab.com/ y/n" default="n"/>
-  <option order="0000" name="with_wsgi_cas"                      description="WSGI CAS (SSO) capabilities, see http://pypi.python.org/pypi/repoze.who.plugins.cas y/n"/>
-  <option order="0000" name="with_gis_mapnik"                description="mapnik bindings, see http://mapnik.org/ y/n"/>
-  <option order="0000" name="with_gis_gdal"                  description="gdal bindings, see http://www.gdal.org/y/n"/>
-  <option order="800" name="with_binding_cairo"                 description="cairo bindings, see http://cairographics.org/ y/n"/>
-  <option order="0000" name="with_binding_memcache"                 description="memcache bindings, see http://memcached.org/y/n"/>
-  <option order="0000" name="with_gis_pgrouting"                 description="pgrouting support, see http://pgrouting.postlbs.org y/n"/>
-  <option order="0000" name="with_gis_mapscript"                 description="mapscript/mapserver support, see http://mapserver.org/y/n"/>
+  <option order="0000" name="with_tool_coverage"        description="coverage, see http://pypi.python.org/pypi/coverage y/n" default="y"/>
+  <option order="0000" name="with_tool_reportlab"       description="Reportlab, see http://www.reportlab.com/ y/n" default="n"/>
+  <option order="0000" name="with_wsgi_cas"             description="WSGI CAS (SSO) capabilities, see http://pypi.python.org/pypi/repoze.who.plugins.cas y/n"/>
+  <option order="0000" name="with_gis_mapnik"           description="mapnik bindings, see http://mapnik.org/ y/n"/>
+  <option order="0000" name="with_gis_gdal"             description="gdal bindings, see http://www.gdal.org/y/n"/>
+  <option order="800" name="with_binding_cairo"         description="cairo bindings, see http://cairographics.org/ y/n"/>
+  <option order="0000" name="with_binding_memcache"     description="memcache bindings, see http://memcached.org/y/n"/>
+  <option order="0000" name="with_gis_pgrouting"        description="pgrouting support, see http://pgrouting.postlbs.org y/n"/>
+  <option order="0000" name="with_gis_mapscript"        description="mapscript/mapserver support, see http://mapserver.org/ y/n"/>
   <!-- INFRA Products -->
   <!-- UI Products -->
   <!--Content-types related products"-->
@@ -54,12 +54,23 @@
   <!-- Communication -->
   <!-- Misc Extensions products-->
   <!-- makina -->
-  <option order="10000" name="with_binding_mapscript"                   description="mapserver python bindings, see http://pypi.python.org/pypi/mapscript y/n"                                             default="n"/>
-  <option order="10030" name="with_tool_cgeneric"                       description="include a bundle of collective.generic development tools y/n"                                                         default="n"/>
-  <option order="10030" name="with_django_bv_server"                       description="BisonVert server y/n"  default="n"/>
-  <option order="10030" name="with_django_bv_client"                       description="Bisonvert client y/n"  default="n"/>
-  <option order="10030" name="with_django_bv_libclient"                       description="Bisonvert libclient y/n"  default="n"/>
-  <option order="10030" name="with_django_piston"                       description="Django Piston, see http://bitbucket.org/jespern/django-piston/wiki/ y/n"  default="n"/>
+  <option order="10000" name="with_binding_mapscript"          description="mapserver python bindings, see http://pypi.python.org/pypi/mapscript y/n" default="n"/>
+  <option order="10030" name="with_django_bv_server"           description="BisonVert server y/n"  default="n"/>
+  <option order="10030" name="with_django_bv_client"           description="Bisonvert client y/n"  default="n"/>
+  <option order="10030" name="with_django_bv_libclient"        description="Bisonvert libclient y/n"  default="n"/>
+  <option order="10030" name="with_django_piston"              description="Django Piston, see http://bitbucket.org/jespern/django-piston/wiki/ y/n"  default="n"/>
+
+  <option order="10030" name="with_django_olwidget"            description="olwidget y/n"  default="n"/>
+  <option order="10030" name="with_django_formrenderingtools"  description="formrenderingtools y/n"  default="n"/>
+  <option order="10030" name="with_django_templateaddons"      description="django-templateaddons y/n"  default="n"/>
+  <option order="10030" name="with_egg_pylint"      description="pylint y/n"  default="n"/>
+  <option order="10030" name="with_egg_sphinx"      description="sphinx y/n"  default="n"/>
+  <option order="10030" name="with_gis_tilecache"   description="TileCache y/n"  default="n"/>
+  <option order="00000" name="with_gis_geopy"       description="geopy support, see  y/n"/>
+  <option order="00000" name="with_egg_pyopenssl"   description="pyOpenSSL support, see  y/n"/>
+  <option order="00000" name="with_egg_greenlet"    description="greenlet support  y/n"/>
+  <option order="00000" name="with_egg_pisa"    description="pisa support  y/n"/>
+  <option order="00000" name="with_egg_html5lib"    description="html5lib support  y/n"/>
   <!--END makina -->
 
 </options>
@@ -88,14 +99,18 @@
       comma sepaated values != 'y' -> install the list of products
   -->
   <eggs>
-    <egg name="nose"                          options="with_tool_nose"        />
+    <egg name="greenlet"                      options="with_egg_greenlet"        />
+    <egg name="reportlab"                      options="with_tool_reportlab"        />
+    <egg name="nose"                          options="with_tool_nose"   scripts="nosetests,nose"     />
+    <egg name="TileCache"                     options="with_gis_tilecache"  scripts="tilecache.cgi,tilecache_clean.py,tilecache.fcgi,tilecache_http_server.py,tilecache_install_config.py,tilecache_seed.py,tilecache_seed.py" />
+    <egg name="pyOpenSSL"                     options="with_egg_pyopenssl"        />
     <egg name="mapnik2"                       options="with_gis_mapnik"        />
     <egg name="coverage"                      options="with_tool_coverage"    />
     <egg name="cmemcache"                     options="with_binding_memcache" />
     <egg name="sqlalchemy"                    options="with_database_sa"    />
     <egg name="MySQL_python"                  options="with_database_mysql" />
     <egg name="cx_Oracle"                     options="with_database_oracle"/>
-    <egg name="psycopg2"                      options="with_database_postgresql"/> 
+    <egg name="psycopg2"                      options="with_database_postgresql"/>
     <egg name="egenix-mx-base"                options="with_database_postgresql"/>
     <egg name="BeautifulSoup"                 options="with_binding_bsoup"  />
     <egg name="lxml"                          options="with_binding_lxml"   />
@@ -117,6 +132,18 @@
     <egg name="bv.client"                     options="with_django_bv_client"/>
     <egg name="bv.libclient"                  options="with_django_bv_client,with_django_bv_libclient"/>
     <egg name="pycairo"                       options="with_binding_cairo" />
+    <egg name="django-olwidget"               options="with_django_olwidget" />
+    <egg name="django-formrenderingtools"     options="with_django_formrenderingtools" />
+    <egg name="geopy"                         options="with_gis_geopy" />
+    <egg name="django-templateaddons"         options="with_django_templateaddons" />
+    <egg name="pylint"                        options="with_egg_pylint"  scripts="pylint,pylint-gui" />
+    <egg name="docutils"                      options="with_egg_sphinx"  scripts="rst2html.py,rst2latex.py,rst2xml.py,xhtml2pdf" />
+    <egg name="Sphinx"                        options="with_egg_sphinx"  scripts="sphinx-autogen,sphinx-build,sphinx-quickstart" />
+    <egg name="jinja2"                        options="with_egg_sphinx" />
+    <egg name="Pygments"                      options="with_egg_sphinx"/>
+    <egg name="GDal"                      options="with_gis_gdal"/>
+    <egg name="pisa"                      options="with_egg_pisa"/>
+    <egg name="html5lib"                      options="with_egg_html5lib"/>
   </eggs>
   <!--
     Enter here mandatory version pinnings
@@ -145,9 +172,18 @@
       options: comma separated list of options to enable the pinning
     -->
   <checkedversions>
+    <version p="geopy"  v="0.94"     options="with_gis_geopy"  />
+    <version p="html5lib"  v="0.90"     options="with_egg_html5lib"  />
+    <version p="jinja2"  v="2.5.5"     options="with_egg_sphinx"  />
+    <version p="docutils"  v="0.7"     options="with_egg_sphinx"  />
+    <version p="pylint"  v="0.21.3"     options="with_egg_pylint"  />
+    <version p="Sphinx"  v="1.0.4"     options="with_egg_sphinx"  />
+    <version p="greenlet"  v="0.3.1"     options="with_egg_greenlet"  />
+    <version p="pyOpenSSL"  v="0.11"     options="with_egg_pisa"  />
+    <version p="reportab"  v="3.0.33"     options="with_egg_pisa"  />
     <version p="reportab"  v="2.5"     options="with_tool_reportlab"  />
     <version p="pycairo"   v="1.8.8"   options="with_binding_cairo"  />
-    <version p="mapscript" v="5.6.3.0" options="with_gis_mapnik" />
+    <version p="mapscript" v="5.6.3.0" options="with_gis_mapscript" />
     <version p="GDal"      v="1.7.0"   options="with_gis_gdal"/>
   </checkedversions>
   <!--
@@ -160,14 +196,16 @@
   -->
   <sources>
     <!-- makina -->
-    <source name="dj.paste" type="svn"  url="http://git.minitage.org/git/others/dj.paste" options="" /> 
-    <source name="ogcserver" type="hg" url="http://bitbucket.org/kiorky/ogcserver" options="with_gis_mapnik" autocheckout="y"/> 
-    <source name="mapnik2" type="hg" url="http://bitbucket.org/kiorky/mapnik-egg" options="with_gis_mapnik" autocheckout="y"/> 
-    <source name="django-piston" type="hg" url="http://bitbucket.org/jespern/django-piston" options="with_django_bv_server,with_django_piston" autocheckout="y"/> 
-    <source name="bv.server" type="git" url="http://github.com/djcoin/bv.server.git" options="with_django_bv_server"  autocheckout="y"/> 
-    <source name="bv.client" type="git" url="http://github.com/djcoin/bv.client.git" options="with_django_bv_client"  autocheckout="y"/> 
-    <source name="bv.libclient" type="git" url="http://github.com/djcoin/bv.libclient.git" options="with_django_bv_client,with_django_bv_libclient" autocheckout="y"/> 
-    <source name="django-oauthclient" type="git" url="http://github.com/djcoin/django-oauthclient.git" options="with_django_bv_client,with_django_bv_libclient" autocheckout="y"/> 
+    <source name="dj.paste" type="svn"  url="http://git.minitage.org/git/others/dj.paste" options="" />
+    <source name="ogcserver" type="hg" url="http://bitbucket.org/kiorky/ogcserver" options="with_gis_mapnik" autocheckout="y"/>
+    <source name="mapnik2" type="hg" url="http://bitbucket.org/kiorky/mapnik-egg" options="with_gis_mapnik" autocheckout="y"/>
+    <source name="django-piston" type="hg" url="http://bitbucket.org/jespern/django-piston" options="with_django_bv_server,with_django_piston" autocheckout="y"/>
+    <source name="bv.server" type="git" url="http://github.com/djcoin/bv.server.git" options="with_django_bv_server"  autocheckout="y"/>
+    <source name="bv.client" type="git" url="http://github.com/djcoin/bv.client.git" options="with_django_bv_client"  autocheckout="y"/>
+    <source name="bv.libclient" type="git" url="http://github.com/djcoin/bv.libclient.git" options="with_django_bv_client,with_django_bv_libclient" autocheckout="y"/>
+    <source name="django-oauthclient" type="git" url="http://github.com/djcoin/django-oauthclient.git" options="with_django_bv_client,with_django_bv_libclient" autocheckout="y"/>
+    <source name="olwidget" type="git" url="http://github.com/yourcelf/olwidget.git branch=v0.3" options="with_django_olwidget" autocheckout="y"/>
+    <source name="formrenderingtools" type="hg" url="http://bitbucket.org/benoitbryon/django-formrenderingtools" options="with_django_formrenderingtools" autocheckout="y"/>
   </sources>
     <!--
     Some very ecliptic products doesnt fit with previous declaration, we will describe how to add the options to the underlying policy there.
