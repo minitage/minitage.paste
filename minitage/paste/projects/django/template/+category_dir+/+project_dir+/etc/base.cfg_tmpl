@@ -70,6 +70,7 @@ ${delicomment}    deliverance_rules
     apache_vhost
 ${delicomment}    apache_deliverance_vhost
 # security
+    logrotate.conf
     chown
     chmod
 

@@ -2,7 +2,7 @@
 #set $hapcomment=''
 #else:
 #set $hapcomment='#'
-#end if 
+#end if
 
 
 [settings]
@@ -20,7 +20,7 @@ find-links =
 [reverse_proxy]
 scheme=$reverseproxy_scheme
 host=$reverseproxy_host
-port=$reverseproxy_port 
+port=$reverseproxy_port
 
 [hosts]
 instance= $address
@@ -34,7 +34,7 @@ balancer=$haproxy_host
 #if not $with_haproxy
 front=\${hosts:instance1}
 #end if
-${hapcomment}front=\${hosts:balancer}  
+${hapcomment}front=\${hosts:balancer}
 
 [ports]
 instance=$http_port
@@ -48,7 +48,7 @@ balancer=$haproxy_port
 #if not $with_haproxy
 front=\${ports:instance1}
 #end if
-${hapcomment}front=\${ports:balancer} 
+${hapcomment}front=\${ports:balancer}
 
 [users]
 admin=${admin_user}
@@ -63,7 +63,22 @@ deliverance-themes=\${buildout:directory}/deliverancex
 [crons]
 # at 3:00am NO WHITESPACE!!!
 buildbot-${project}=$buildbot_cron
- 
+pgsql = 15 1 * * *
+
+[backup_pgsql]
+# shall we do a full backup (set this to y)
+full=y
+host=$db_host
+port=$db_port
+user=$db_user
+# space separated list of databases to save on this cluster
+databases=$db_name
+# how much do we rotate ?
+to_keep=8
+# where to stock dumps
+dumps_path=\${buildout:directory}/var/pgsql_dumps
+pgdump_args=-Fc
+pgdumpall_args=
 
 [mirrors]
 zope = download.zope.org
