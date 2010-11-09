@@ -40,7 +40,9 @@ set_versions() {
 }
 set_versions $versions
 echo  $plone / $ver / $zope2
-wget http://dist.plone.org/release/$plone/versions.cfg -O versions.cfg
-wget http://dist.plone.org/release/$plone/sources.cfg -O -|egrep -v "(\[buildout\]|sources = sources)">sources.cfg
+pwd
+rm sources.cfg zope2.versions.cfg versions.cfg
+wget http://dist.plone.org/release/$plone/versions.cfg -O-|sed -re "s:Zope2/index/([^/]*)/versions.cfg:Zope2/index/$zope2/versions.cfg:g">versions.cfg
+wget http://dist.plone.org/release/$ver/sources.cfg -O -|egrep -v "(\[buildout\]|sources = sources|always-checkout.*)">sources.cfg
 wget http://download.zope.org/Zope2/index/$zope2/versions.cfg -O  zope2.versions.cfg
 # vim:set et sts=4 ts=4 tw=0:
