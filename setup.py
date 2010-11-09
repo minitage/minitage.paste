@@ -77,9 +77,6 @@ setup(
             'minitage.instances.varnish = minitage.paste.instances.varnish:Template',
             'minitage.instances.varnish2 = minitage.paste.instances.varnish2:Template',
             'minitage.instances.paste-initd = minitage.paste.instances.pasteinitd:Template',
-            'minitage.pylons = minitage.paste.projects.pylons:Template',
-            'minitage.zope2 = minitage.paste.projects.zope2:Template',
-            'minitage.zope3 = minitage.paste.projects.zope3:Template',
         ]
     },
 )
