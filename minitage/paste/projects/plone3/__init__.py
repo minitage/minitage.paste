@@ -413,64 +413,64 @@ class Template(common.Template):
         bc = ConfigParser()
         bc.read(cfg)
         # release KGS
-        try:
-            open(vdst, 'w').write(
-                urllib2.urlopen(vars['versions_url']).read()
-            )
-        except Exception, e:
-            shutil.copy2(
-                pkg_resources.resource_filename(
-                    'minitage.paste',
-                    'projects/plone%s/versions.cfg' % vars['major']
-                ),
-                vdst
-            )
-            self.lastlogs.append(
-                "Versions have not been fixed, be ware. Are"
-                " you connected to the internet (%s).\n" % e
-            )
-            self.lastlogs.append(
-                "%s" % (
-                    'As a default, we will take an already'
-                    ' downloaded versions.cfg matching plone'
-                    ' %s.\n' %
-                    self.packaged_version
-                )
-            )
+        #try:
+        #    open(vdst, 'w').write(
+        #        urllib2.urlopen(vars['versions_url']).read()
+        #    )
+        #except Exception, e:
+        shutil.copy2(
+            pkg_resources.resource_filename(
+                'minitage.paste',
+                'projects/plone%s/versions.cfg' % vars['major']
+            ),
+            vdst
+        )
+            #self.lastlogs.append(
+            #    "Versions have not been fixed, be ware. Are"
+            #    " you connected to the internet (%s).\n" % e
+            #)
+            #self.lastlogs.append(
+            #    "%s" % (
+            #        'As a default, we will take an already'
+            #        ' downloaded versions.cfg matching plone'
+            #        ' %s.\n' %
+            #        self.packaged_version
+            #    )
+            #)
         # zope2 KGS
         if vars['major'] > 3:
-            try:
-                open(zdst, 'w').write(
-                    urllib2.urlopen(vars['zope2_url']).read()
-                )
-                raise
-            except Exception, e:
-                shutil.copy2(
-                    pkg_resources.resource_filename(
-                        'minitage.paste',
-                        'projects/plone%s/zope2.versions.cfg' % vars['major']
-                    ),
-                    zdst
-                )
-
-        # release mr.developer config
-        try:
-            open(sdst, 'w').write(
-                urllib2.urlopen(vars['sources_url']).read()
-            )
-        except Exception, e:
+            #try:
+            #    open(zdst, 'w').write(
+            #        urllib2.urlopen(vars['zope2_url']).read()
+            #    )
+            #    raise
+            #except Exception, e:
             shutil.copy2(
                 pkg_resources.resource_filename(
                     'minitage.paste',
-                    'projects/plone%s/sources.cfg' % vars['major']
+                    'projects/plone%s/zope2.versions.cfg' % vars['major']
                 ),
-                sdst
+                zdst
             )
-            if vars['major'] > 3:
-                self.lastlogs.append(
-                    "Sources have not been fixed, be ware. Are"
-                    " you connected to the internet (%s).\n" % e
-                )
+
+        # release mr.developer config
+        #try:
+        #    open(sdst, 'w').write(
+        #        urllib2.urlopen(vars['sources_url']).read()
+        #    )
+        #except Exception, e:
+        shutil.copy2(
+            pkg_resources.resource_filename(
+                'minitage.paste',
+                'projects/plone%s/sources.cfg' % vars['major']
+            ),
+            sdst
+        )
+        #    if vars['major'] > 3:
+        #        self.lastlogs.append(
+        #            "Sources have not been fixed, be ware. Are"
+        #            " you connected to the internet (%s).\n" % e
+        #        )
 
 
 
