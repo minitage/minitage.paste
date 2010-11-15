@@ -23,6 +23,7 @@ parts+=instance1
     instance2
     instance3
     instance4
+    logrotate.conf
 # activate to backup daily pgsql
 #    backup_pgsql
 #    backup_pgsql_daily
