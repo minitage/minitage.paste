@@ -185,6 +185,7 @@
     <version p="pycairo"   v="1.8.8"   options="with_binding_cairo"  />
     <version p="mapscript" v="5.6.3.0" options="with_gis_mapscript" />
     <version p="GDal"      v="1.7.0"   options="with_gis_gdal"/>
+    <version p="GDAL"      v="1.7.0"   options="with_gis_gdal"/>
   </checkedversions>
   <!--
     Old style plone products to checkout using the [productsdistros] part
