@@ -36,6 +36,8 @@
 
 [buildout]
 extensions = buildout.minitagificator mr.developer buildout.dumppickedversions jarn.setuptoolsfixer
+dump-picked-versions-file =\${buildout:directory}/etc/project/${project}-kgs.cfg
+
 extends=
 # set here your project specific settings
     project/${project}.cfg
