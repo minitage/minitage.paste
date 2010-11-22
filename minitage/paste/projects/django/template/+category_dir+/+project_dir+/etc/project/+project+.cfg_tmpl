@@ -46,21 +46,7 @@ ${product}
     django-admin.py
 interpreter = djangopy
 dependent-scripts=true
-paster-initialization=
-    import os, sys
-    try:
-    \timport ${project}.\${buildout:dsm}
-    except ImportError:
-    \tprint "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-    \tprint "   "
-    \tprint "    Your django settings module does not exist !!!"
-    \tprint "    eg:"
-    \tprint ""
-    \tprint "     cp  \${buildout:directory}/src/${project}/src/$slashdn/settings.py \${buildout:directory}/etc/django-settings/settings-BOX-\${buildout:mode}.py"
-    \tprint "     \$EDITOR \${buildout:directory}/etc/django-settings/settings-BOX-\${buildout:mode}.py"
-    \tprint "     ln -s \${buildout:directory}/etc/django-settings/settings-BOX-\${buildout:mode}.py \${buildout:directory}/src/${project}/src/$slashdn/\${buildout:dsm}.py"
-    \tprint "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-    \tsys.exit(256)
+#paster-initialization=
 
 [test]
 recipe = zc.recipe.testrunner
