@@ -36,7 +36,9 @@ $hr
 
 [buildout]
 timeout=3
-extensions = buildout.minitagificator mr.developer jarn.setuptoolsfixer
+extensions = buildout.minitagificator mr.developer jarn.setuptoolsfixer buildout.dumppickedversions
+dump-picked-versions-file =\${buildout:directory}/etc/project/${project}-kgs.cfg 
+overwrite-picked-versions-file=true
 extends-cache = \${buildout:directory}/etc/cache
 # this allow you to run buildout on offline mode and to use only the downloaded plonev3.versions.cfg
 extends -= $versions_url
@@ -250,7 +252,12 @@ nested-packages = \${groups:nested-packages}
 recipe = collective.recipe.omelette
 eggs = \${instance:eggs}
 products = \${instance:products}
-packages = \${zope2:location}/lib/python ./
+packages = #slurp
+#if $major < 4 
+\${zope2:location}/lib/python #slurp 
+#end if
+    ./
+
 
 # Command below is important
 # if not, fss tests or tests using fss in their configuration will fail

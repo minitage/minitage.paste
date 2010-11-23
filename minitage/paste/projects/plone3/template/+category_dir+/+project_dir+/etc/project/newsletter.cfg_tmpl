@@ -44,6 +44,8 @@ zope-conf-additional +=
     <clock-server>
     # the traversal path (from the Zope root) to an executable Zope method (Python Script, external method, product method, etc). The method must take no arguments.
     method /\${plone:site}/@@dancing.utils/tick_and_dispatch
+    # within reverse proxy
+    # method /VirtualHostBase/\${reverse_proxy:scheme}/\${reverse_proxy:host}:\${reverse_proxy:port}/\${plone:site}/VirtualHostRoot/@@dancing.utils/tick_and_dispatch
     #the number of seconds between each clock "tick" (and thus each call to the above "method"). The lowest number providable here is typically 30 (this is the asyncore mainloop "timeout" value).
     period 300
     user \${zope:user}

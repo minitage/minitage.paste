@@ -71,7 +71,6 @@
       <egg name="easyshop.stocks"                options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
       <egg name="easyshop.taxes"                 options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
       <egg name="zc.authorizedotnet"             options="with_ploneproduct_easyshop"     />
-      <egg name="Products.ATBackRef"             options="with_ploneproduct_atbackref"        zproduct="y" zcml="configure"/>
       <egg name="Products.CacheSetup"            options="with_ploneproduct_cachesetup"       zproduct="y" zcml="configure"/>
       <egg name="Products.PloneArticle"          options="with_ploneproduct_plonearticle"     zproduct="y" zcml="configure"/>
       <egg name="iw.fss"                         options="with_ploneproduct_fss"          zcml="configure,meta"      zcmlorder="150"/>
@@ -96,7 +95,6 @@
       <source name="Products.CMFPlacefulWorkflow"/>
       <source name="Products.LinguaPlone"        />
       <source name="archetypes.tuning"           />
-      <source name="Products.ATBackRef"/>
       <source name="Products.Ploneboard"/>
       <source name="Products.CacheSetup" />
       <source name="Products.PloneArticle" />
@@ -131,7 +129,6 @@
     </miscproducts>
     <qi>
       <product name="easyshop.core"                  options="with_ploneproduct_easyshop"         />
-      <product name="ATBackRef"                      options="with_ploneproduct_atbackref"        />
       <product name="iw.fss"                         options="with_ploneproduct_fss"              />
       <product name="CMFSquidTool"                   options="with_ploneproduct_cachesetup"       />
       <product name="CacheSetup"                     options="with_ploneproduct_cachesetup"       />
@@ -144,7 +141,6 @@
     <options>
       <option order="1400" name="with_ploneproduct_plonearticle"     description="Plone Article, see http://plone.org/products/plonearticle/ y/n"/>
       <option order="900"  name="with_ploneproduct_easyshop"    description="Easy Shop, see http://www.geteasyshop.com y/n"/>
-      <option order="500"  name="with_ploneproduct_atbackref"   description="ATBAckRef, see http://pypi.python.org/pypi/Products.ATBackRef y/n"/>
       <option order="600"  name="with_ploneproduct_cachesetup"  description="Cachefu caching Support, see http://plone.org/products/cachefu/ y/n" default="y"/>
       <option order="550"  name="with_ploneproduct_fss"              description="File System Storage support, see http://plone.org/products/filesystemstorage y/n" default="y"/>
 

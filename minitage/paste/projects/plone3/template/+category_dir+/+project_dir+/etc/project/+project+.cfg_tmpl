@@ -138,7 +138,9 @@ CONFIG_FILE=\${instance:location}/etc/zope.conf
 recipe = collective.xmltestreport
 eggs = \${instance:eggs}
 extra-paths = \${instance:extra-paths}
+#if $major < 4
     \${zope2:location}/lib/python
+#end if
 defaults = ['--exit-with-status', '--auto-color', '--auto-progress']
 environment = testenv
 extra-paths = \${zopepy:extra-paths}
