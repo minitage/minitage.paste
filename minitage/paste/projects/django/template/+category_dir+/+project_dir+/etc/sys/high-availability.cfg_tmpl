@@ -45,28 +45,12 @@ password = \${passwords:admin}
 serverurl = http://\${hosts:supervisor}:\${ports:supervisor}
 haproxy-path=\${buildout:directory}/bin/haproxy
 programs =
-${si1}    60 instance \${buildout:directory}/bin/paster [serve --log-file=\${buildout:directory}/log/instance.log \${buildout:directory}/etc/wsgi/instance.ini] \${buildout:directory} true \${users:django}
+${si1}    60 instance \${buildout:directory}/bin/paster [serve --log-file=\${buildout:directory}/var/log/instance.log \${buildout:directory}/etc/wsgi/instance.ini] \${buildout:directory} true \${users:django}
 
 [supervisor-initd]
 recipe = collective.recipe.template
 input =  \${buildout:directory}/etc/templates/supervisor.initd
 output =  \${buildout:directory}/etc/init.d/supervisor.initd
-
-[chmod]
-command+=
-    chmod -v 750 \${buildout:directory}/etc/init.d/*
-    chmode -Rf 600 \${buildout:directory}/etc
-    chmode -Rf 700 \${buildout:directory}/var
-    chmode -Rf 700 \${buildout:directory}/log
-    chmode  700 \${buildout:directory}
-  
-
-[chown]
-command+=
-    chown -Rf 600 \${buildout:directory}/etc
-    chown -Rf 700 \${buildout:directory}/var
-    chown -Rf 700 \${buildout:directory}/log
-    chown 700 \${buildout:directory}
 
 [balancer.config]
 recipe = collective.recipe.template
