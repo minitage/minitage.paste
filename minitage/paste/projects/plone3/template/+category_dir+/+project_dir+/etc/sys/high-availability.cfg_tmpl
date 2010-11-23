@@ -76,12 +76,21 @@ haproxy-path=\${buildout:directory}/bin/haproxy
 programs =
 ${zeocomment}    10 zeo \${zeoserver:location}/bin/runzeo \${zeoserver:location} true \${users:zope}
 ${solrcomment}    20 solr (startsecs=10) java [-Djava.security.egd=file:/dev/urandom -jar start.jar] \${buildout:parts-directory}/solrinstance true \${users:zope}
+#if $major > 3:
+${si1}    21 instance1 \${buildout:directory}/bin/instance1 [console]                                         true \${users:zope}
+${si2}    22 instance2 \${buildout:directory}/bin/instance2 [console]                                         true \${users:zope}
+${si3}    23 instance3 \${buildout:directory}/bin/instance3 [console]                                         true \${users:zope}
+${si4}    24 instance4 \${buildout:directory}/bin/instance4 [console]                                         true \${users:zope}
+${sgdgcomment}    40 instance-newsletter \${buildout:directory}/bin/instance-newsletter  [console]                                        true \${users:zope}
+${cynincomment}    40 instance-cynin \${buildout:directory}/bin/instance-cynin [console]                                     true \${users:zope} 
+#else
 ${si1}    21 instance1 \${buildout:directory}/parts/instance1/bin/runzope                                          true \${users:zope}
 ${si2}    22 instance2 \${buildout:directory}/parts/instance2/bin/runzope                                          true \${users:zope}
 ${si3}    23 instance3 \${buildout:directory}/parts/instance3/bin/runzope                                          true \${users:zope}
 ${si4}    24 instance4 \${buildout:directory}/parts/instance4/bin/runzope                                          true \${users:zope}
 ${sgdgcomment}    40 instance-newsletter \${buildout:directory}/parts/instance-newsletter/bin/runzope                                          true \${users:zope}
 ${cynincomment}    40 instance-cynin \${buildout:directory}/parts/instance-cynin/bin/runzope                                          true \${users:zope}
+#end if
 ${hapcomment}     50 balancer  \${supervisor:haproxy-path} [-f \${buildout:directory}/etc/loadbalancing/balancer.conf -db]       true \${users:zope}
 ${delicomment}    60 deliverance \${buildout:directory}/bin/deliverance-paster [serve --log-file=\${buildout:directory}/var/log/deliverance.log \${buildout:directory}/etc/deliverance/deliverance-prod.ini] \${buildout:directory} true \${users:zope}
 
