@@ -201,11 +201,11 @@
     <source name="ogcserver" type="hg" url="http://bitbucket.org/kiorky/ogcserver" options="with_gis_mapnik" autocheckout="y"/>
     <source name="mapnik2" type="hg" url="http://bitbucket.org/kiorky/mapnik-egg" options="with_gis_mapnik" autocheckout="y"/>
     <source name="django-piston" type="hg" url="http://bitbucket.org/jespern/django-piston" options="with_django_bv_server,with_django_piston" autocheckout="y"/>
-    <source name="bv.server" type="git" url="http://github.com/djcoin/bv.server.git" options="with_django_bv_server"  autocheckout="y"/>
-    <source name="bv.client" type="git" url="http://github.com/djcoin/bv.client.git" options="with_django_bv_client"  autocheckout="y"/>
-    <source name="bv.libclient" type="git" url="http://github.com/djcoin/bv.libclient.git" options="with_django_bv_client,with_django_bv_libclient" autocheckout="y"/>
-    <source name="django-oauthclient" type="git" url="http://github.com/djcoin/django-oauthclient.git" options="with_django_bv_client,with_django_bv_libclient" autocheckout="y"/>
-    <source name="olwidget" type="git" url="http://github.com/yourcelf/olwidget.git branch=v0.3" options="with_django_olwidget" autocheckout="y"/>
+    <source name="bv.server" type="git" url="https://github.com/bisonvert/bv.server.git" options="with_django_bv_server"  autocheckout="y"/>
+    <source name="bv.client" type="git" url="https://github.com/bisonvert/bv.client.git" options="with_django_bv_client"  autocheckout="y"/>
+    <source name="bv.libclient" type="git" url="https://github.com/bisonvert/bv.libclient.git" options="with_django_bv_client,with_django_bv_libclient" autocheckout="y"/>
+    <source name="django-oauthclient" type="git" url="https://github.com/bisonvert/django-oauthclient.git" options="with_django_bv_client,with_django_bv_libclient" autocheckout="y"/>
+    <source name="olwidget" type="git" url="https://github.com/yourcelf/olwidget.git branch=v0.3" options="with_django_olwidget" autocheckout="y"/>
     <source name="formrenderingtools" type="hg" url="http://bitbucket.org/benoitbryon/django-formrenderingtools" options="with_django_formrenderingtools" autocheckout="y"/>
   </sources>
     <!--
