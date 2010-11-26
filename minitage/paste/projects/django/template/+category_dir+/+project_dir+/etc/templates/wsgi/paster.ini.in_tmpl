@@ -85,7 +85,7 @@ handlers = console,fconsole
 # Send all messages to the 'wsgi' logger to the accesslog and errorlog handlers
 [logger_wsgi]
 level = NOTSET
-handlers = accesslog,errorlog
+handlers = accesslog,errorlog,console,fconsole
 qualname = wsgi
 propagate = 0
 
@@ -93,7 +93,7 @@ propagate = 0
 # with DEBUG level.
 [logger_routes]
 level = NOTSET
-handlers = console
+handlers = console,fconsole
 qualname = routes.middleware
 propagate = 0
 
