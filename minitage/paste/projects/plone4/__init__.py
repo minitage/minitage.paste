@@ -81,8 +81,8 @@ for name in sources_k:
     )
 
 class Template(plone3.Template):
-    packaged_version = '4.0.1'
-    packaged_zope2_version = '2.12.11'
+    packaged_version = '4.0.2'
+    packaged_zope2_version = '2.12.13'
     summary                    = 'Template for creating a plone4 project'
     _template_dir =pkg_resources.resource_filename('minitage.paste', 'projects/plone3/template')
     python                     = 'python-2.6'
