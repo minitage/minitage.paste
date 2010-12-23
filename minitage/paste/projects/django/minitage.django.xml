@@ -200,7 +200,7 @@
     <source name="dj.paste" type="svn"  url="http://git.minitage.org/git/others/dj.paste" options="" />
     <source name="ogcserver" type="hg" url="http://bitbucket.org/kiorky/ogcserver" options="with_gis_mapnik" autocheckout="y"/>
     <source name="mapnik2" type="hg" url="http://bitbucket.org/kiorky/mapnik-egg" options="with_gis_mapnik" autocheckout="y"/>
-    <source name="django-piston" type="hg" url="http://bitbucket.org/jespern/django-piston" options="with_django_bv_server,with_django_piston" autocheckout="y"/>
+    <source name="django-piston" type="git" url="https://github.com/djcoin/django-piston.git" options="with_django_bv_server,with_django_piston" autocheckout="y"/>
     <source name="bv.server" type="git" url="https://github.com/bisonvert/bv.server.git" options="with_django_bv_server"  autocheckout="y"/>
     <source name="bv.client" type="git" url="https://github.com/bisonvert/bv.client.git" options="with_django_bv_client"  autocheckout="y"/>
     <source name="bv.libclient" type="git" url="https://github.com/bisonvert/bv.libclient.git" options="with_django_bv_client,with_django_bv_libclient" autocheckout="y"/>
