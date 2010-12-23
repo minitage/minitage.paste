@@ -13,7 +13,7 @@
       <egg name="bpython"                       options="with_tool_bpython"                 scripts="bpython" default="y" />
     </eggs>
     <checkedversions>
-      <version p='Products.LinguaPlone' v='4.0a1'      options="with_ploneproduct_lingua"/>
+      <version p='Products.LinguaPlone' v='4.0b1'      options="with_ploneproduct_lingua"/>
       <!-- z3c.form -->
       <version p='plone.z3cform'        v='0.7.0'      options="with_ploneproduct_pz3cform,with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok" />
       <version p='rwproperty'           v='1.0'        options="with_ploneproduct_pz3cform,with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok" />
@@ -24,7 +24,7 @@
       <!-- pinned by plone4 KGS
         <version p='five.localsitemanager'          v='1.1'     options='with_ploneproduct_fivegrok' />
         -->
-      <version p='five.grok'                      v='1.1.1'    options='with_ploneproduct_fivegrok' />
+      <version p='five.grok'                      v='1.1.2'    options='with_ploneproduct_fivegrok' />
       <version p='grokcore.annotation'            v='1.2'      options='with_ploneproduct_fivegrok' />
       <version p='grokcore.component'             v='1.8'      options='with_ploneproduct_fivegrok' />
       <version p='grokcore.formlib'               v='1.5'      options='with_ploneproduct_fivegrok' />
@@ -34,6 +34,7 @@
       <version p='grokcore.viewlet'               v='1.4.1'    options='with_ploneproduct_fivegrok' />
       <version p='martian'                        v='0.11.2'   options='with_ploneproduct_fivegrok' />
       <version p='five.localsitemanager'          v='2.0.3'    options='with_ploneproduct_fivegrok' />
+      <version p='Products.Poi'                   v='2.0.1'   options="with_ploneproduct_poi"/>
     </checkedversions>
     <options>
       <option order="0000" name="with_tool_bpython"                  description="bpython, see http://www.bpython-interpreter.org/ y/n" default="y"/>
@@ -113,6 +114,7 @@
       <version p='zope.i18n'             options='with_ploneproduct_fivegrok' />
       <version p='zope.interface'        options='with_ploneproduct_fivegrok' />
       <version p='zope.securitypolicy'   options='with_ploneproduct_fivegrok' />
+      <version p='Products.Poi'          options="with_ploneproduct_poi"/>
       <version p='five.localsitemanager' options='with_ploneproduct_fivegrok' />
       <version p='Products.PloneArticle' options="with_ploneproduct_plonearticle"/>
       <version p='zope.testing'          options='with_ploneproduct_fivegrok' />

@@ -53,7 +53,7 @@ class Template(common.Template):
             prefix = sys.exec_prefix
             cfg = os.path.join(prefix, 'etc', 'minimerge.cfg')
             # load the minimerge
-            m = core.Minimerge({'config': cfg})
+            m = core.Minimerge({'config': cfg, 'skip_self_upgrade': True})
             # find the project minibuild
             try:
                 mb = m.find_minibuild(vars['project'])

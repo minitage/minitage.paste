@@ -107,6 +107,7 @@
   <option order="10030" name="with_tool_cgeneric"                       description="include a bundle of collective.generic development tools y/n"                                                         default="n"/>
   <option order="00000" name="with_ploneproduct_cbdancing"              description="collective.blueprint.dancing, see http://pypi.python.org/pypi/collective.blueprint.dancing y/n"                  default="n"/>
   <option order="01009" name="with_ploneproduct_cdewplayer"             description="dewplayer, see http://pypi.python.org/pypi/collective.dewplayer y/n"                                             default="n"/>
+  <option order="01009" name="with_ploneproduct_poi"             description="Poi, see http://plone.org/products/poi y/n"                                             default="n"/>
   <option order="01010" name="with_ploneproduct_cdewslider"             description="dewslider, see http://pypi.python.org/pypi/collective.dewslider y/n"                                             default="n"/>
   <option order="00000" name="with_ploneproduct_cfunkbot"               description="funkbot, see http://pypi.python.org/pypi/collective.funkbot y/n"                                                 default="n"/>
   <option order="00000" name="with_ploneproduct_cgallery"               description="collective.gallery, see http://pypi.python.org/pypi/collective.gallery y/n"                                                 default="n"/>
@@ -130,6 +131,7 @@
   <!--END makina -->
   <option order="00000" name="with_ploneproduct_quaestrio"              description="Quaestrio, see http://pypi.python.org/pypi/Products.Quaestrio y/n"                                               default="n"/>
   <option order="00000" name="with_ploneproduct_cgeo"      description="collective.geo (svn trunk), see http://plone.org/products/collective.geo y/n"                                               default="n"/>
+  <option order="00000" name="with_ploneproduct_clouseau"      description="Clouseau, see http://plone.org/products/clouseau y/n"                                               default="n"/>
 
 </options>
   <!--
@@ -272,6 +274,7 @@
     <egg name="Products.Collage"               options="with_ploneproduct_collage"          zproduct="y" zcml="configure"/>
     <egg name="Products.ContentWellPortlets"   options="with_ploneproduct_contentwellportlet" zproduct="y" zcml="configure"/>
     <egg name="Products.csvreplicata"          options="with_ploneproduct_csvreplica"       zproduct="y"/>
+    <egg name="Products.Poi"                  options="with_ploneproduct_poi"               zproduct="y" zcml="configure"/>
     <egg name="Products.FacultyStaffDirectory" options="with_ploneproduct_facultystaff"     zproduct="FacultyStaffDirectory,ATReferenceBrowserWidget,Relations,Archetypes,MimetypesRegistry,PortalTransforms,membrane" zcml="configure"/>
     <egg name="Products.LDAPMultiPlugins"      options="with_ploneproduct_ldap"             zproduct="y"/>
     <egg name="Products.LDAPUserFolder"        options="with_ploneproduct_ldap"             zproduct="y"/>
@@ -293,6 +296,7 @@
     <egg name="transmogrify.sqlalchemy"        options="with_ploneproduct_patransmo"        zcml="configure" />
     <egg name="webcouturier.dropdownmenu"      options="with_ploneproduct_wc_dd_menu"       zpackage="y" zcml="configure"/>
     <egg name="z3c.relationfield"              options="with_ploneproduct_z3crelationfield" zcml="configure" />
+    <egg name="Products.Clouseau"              options="with_ploneproduct_clouseau" zcml="configure" zpackage="y"/>
     <!-- cynin -->
     <egg name="Products.fatsyndication"         options="with_ploneproduct_cynin"    zcml="configure"  />
     <egg name="ubify.policy"         options="with_ploneproduct_cynin"    zcml="configure"  />
@@ -396,6 +400,10 @@
     <product name="TinyMCE"                        options="with_ploneproduct_tinymce,with_ploneproduct_plominotinymce"/>
     <product name="Products.SmartPrintNG"          options="with_ploneproduct_smartprintng"/>
     <product name="PloneboardNotify"               options="with_ploneproduct_ploneboardnotify"/>
+    <product name="Poi"                       options="with_ploneproduct_poi"/>
+    <product name="Products.Poi"               options="with_ploneproduct_poi"/>
+    <product name="Products.Clouseau"         options="with_ploneproduct_clouseau"/>
+    <product name="Clouseau"                  options="with_ploneproduct_clouseau"/>
 
     <product name="CMFSquidTool"          hidden="false"  options="with_ploneproduct_cachesetup"       />
     <product name="CacheSetup"            hidden="false"  options="with_ploneproduct_cachesetup" order="9999"      />
@@ -471,6 +479,8 @@
     <product name="quills.app"                     options="with_ploneproduct_quills"     order="100"      />
     <product name="remember"                       options="with_ploneproduct_remember"         />
     <product name="webcouturier.dropdownmenu"      options="with_ploneproduct_wc_dd_menu"       />
+    <product name="Products.Poi"        options="with_ploneproduct_poi"  order="300"/> 
+    <product name="Products.Clouseau"        options="with_ploneproduct_clouseau"  order="300"/> 
     <!-- SPECIAL CASE HANDLED DIRECTLY IN collective.generic.skel
     <product name="plone.app.jquerytools"          options="with_ploneproduct_plonejqtools" order="80"/>
     <product name="collective.js.jqueryui"               options="with_ploneproduct_cjqui" />
@@ -541,6 +551,8 @@
       options: comma separated list of options to enable the pinning
     -->
   <checkedversions>
+    <version p='Products.Clouseau'              v='0.9'     options="with_ploneproduct_clouseau"/>
+    <version p='Products.Poi'                   v='2.0b1'   options="with_ploneproduct_poi"/>
     <version p='plomino.tinymce'                v='0.6.4'   options="with_ploneproduct_plominotinymce"/>
     <version p='Plomino'                        v='1.7.2'   options="with_ploneproduct_plominotinymce,with_ploneproduct_plomino"/>
     <version p='hachoir-parser'                 v='1.3.4'   options="with_ploneproduct_p4a_vid"/>
@@ -556,9 +568,9 @@
     <version p='aws.pdfbook'                    v='1.0.0a1'       options='with_ploneproduct_awspdfbook' />
     <version p='Products.SmartPrintNG'          v='1.2.13'        options='with_ploneproduct_smartprintng' />
     <version p='collective.js.jqueryui'         v='1.7.2.7'       options='with_ploneproduct_cjqui' />
-    <version p='Products.TinyMCE'               v='1.1.2'         options='with_ploneproduct_tinymce,with_ploneproduct_plominotinymce' />
-    <version p='collective.plonetruegallery'    v='1.0rc2'        options="with_ploneproduct_truegallery"/>
-    <version p='iw.fss'                         v='2.8.0rc3'      options="with_ploneproduct_fss"/>
+    <version p='Products.TinyMCE'               v='1.1.5'         options='with_ploneproduct_tinymce,with_ploneproduct_plominotinymce' />
+    <version p='collective.plonetruegallery'    v='1.0'        options="with_ploneproduct_truegallery"/>
+    <version p='iw.fss'                         v='2.8.0rc5'      options="with_ploneproduct_fss"/>
     <version p='iw.recipe.fss'                  v='0.2.1'         options="with_ploneproduct_fss"/>
     <version p='p4a.audio'                      v='1.1rc1'        options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.calendar'                   v='2.0a4'         options="with_ploneproduct_p4a_cal"/>
@@ -574,17 +586,17 @@
     <version p='p4a.videoembed'                 v='1.1'           options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.video'                      v='1.3'           options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.z2utils'                    v='1.0.2'         options="with_ploneproduct_p4a_vid"/>
-    <version p="plone.app.blob"                 v="1.1"           options="with_ploneproduct_ploneappblob"/>
+    <version p="plone.app.blob"                 v="1.3"           options="with_ploneproduct_ploneappblob"/>
     <version p="plone.app.jquerytools"          v="1.1.2"         options="with_ploneproduct_plonejqtools"/>
     <version p='plone.formwidget.autocomplete'  v='1.0'           options='with_ploneproduct_autocomplete'/>
     <version p='Products.AddRemoveWidget'       v='1.4.4'         options='with_ploneproduct_addremovewidget'/>
     <version p='Products.ATSchemaEditorNG'      v='0.6'           options='with_ploneproduct_atschemaeditor'/>
-    <version p='collective.singing'             v='0.6.15'        options='with_ploneproduct_sgdcg'/>
-    <version p='collective.dancing'             v='0.9'           options='with_ploneproduct_sgdcg'/>
+    <version p='collective.singing'             v='0.7.0'        options='with_ploneproduct_sgdcg'/>
+    <version p='collective.dancing'             v='0.9.2'           options='with_ploneproduct_sgdcg'/>
     <version p='Products.ATVocabularyManager'   v='1.6.0a1'       options='with_ploneproduct_atvmanager'/>
     <version p='Products.ContentWellPortlets'   v='2.1'           options="with_ploneproduct_contentwellportlet"/>
     <version p='Products.FacultyStaffDirectory' v='2.1.4'         options="with_ploneproduct_facultystaff"/>
-    <version p='plone.app.ldap'                 v='1.2.2'         options='with_ploneproduct_ldap' />
+    <version p='plone.app.ldap'                 v='1.2.3'         options='with_ploneproduct_ldap' />
     <version p='Products.PloneLDAP'             v='1.1'           options="with_ploneproduct_lDAp"/>
     <version p='Products.LDAPMultiPlugins'      v='1.12'          options="with_ploneproduct_ldap"/>
     <version p='Products.LDAPUserFolder'        v='2.18'          options="with_ploneproduct_ldap"/>
@@ -592,8 +604,8 @@
     <version p='Products.Maps'                  v='2.0.3'         options="with_ploneproduct_maps"/>
     <version p='Products.MasterSelectWidget'    v='0.4.4'         options='with_ploneproduct_masterselect'/>
     <version p='Products.membrane'              v='1.1b5'         options='with_ploneproduct_remember,with_ploneproduct_membrane'/>
-    <version p='Products.PloneArticle'          v='4.1.9'         options="with_ploneproduct_plonearticle"/>
-    <version p='Products.PloneFormGen'          v='1.6.0b4'       options='with_ploneproduct_ploneformgen'/>
+    <version p='Products.PloneArticle'          v='4.1.10'         options="with_ploneproduct_plonearticle"/>
+    <version p='Products.PloneFormGen'          v='1.6.0'       options='with_ploneproduct_ploneformgen'/>
     <version p='Products.PloneLanguageTool'     v='3.0.8'         options="with_ploneproduct_lingua"/>
     <version p='Products.remember'              v='1.1b3'         options='with_ploneproduct_remember'/>
     <version p='Products.SimpleAttachment'      v='3.6'           options="with_ploneproduct_ploneboard"/>
@@ -728,7 +740,7 @@
     <source name="minitage.recipe.wsgi"                 type="git" url="ssh://git.minitage.org/git/minitage/eggs/minitage.recipe.wsgi"                            options="with_wsgi_cas"  />
     <source name="nmd.plonelinkasvideoembed"            type="svn" url="https://svn.plone.org/svn/collective/nmd.plonelinkasvideoembed/trunk"                     options="with_ploneproduct_nmdlinkasvideo"/>
     <source name="Products.CMFPlomino"                  type="svn" url="https://plomino.svn.sourceforge.net/svnroot/plomino/trunk/Plomino"                        options="with_ploneproduct_plomino"/>
-    <source name="plomino.tynymce"                      type="svn" url="https://plomino.svn.sourceforge.net/svnroot/plomino/branches/leprodupure/plomino.tinymce" options="with_ploneproduct_plominotinymce" />
+    <source name="plomino.tinymce"                      type="svn" url="https://plomino.svn.sourceforge.net/svnroot/plomino/branches/leprodupure/plomino.tinymce" options="with_ploneproduct_plominotinymce" />
     <source name="pypgoptimizator"                      type="git" url="ssh://git.minitage.org/git/others/pypgoptimizator"                                        options="with_minitage_otherpackages"  />
     <source name="collective.harlequin"                 type="svn" url="https://svn.plone.org/svn/collective/collective.harlequin/trunk"                          options="with_ploneproduct_harlequin"/>
     <source name="pysugarng"                            type="hg"  url="https://bitbucket.org/kiorky/pysugar"                                                     options="with_binding_sugar"/>
@@ -738,7 +750,8 @@
     <source name="Products.Quaestrio"                   type="svn" url="https://svn.plone.org/svn/collective/Quaestrio/trunk"                                     options="with_ploneproduct_quaestrio"/>
     <source name="repoze.who.plugins.cas"               type="git" url="http://github.com/kiorky/repoze.who.plugins.cas.git"                                      options="with_wsgi_cas"/>
     <source name="pypdf"                                type="git" url="http://github.com/mfenniak/pyPdf.git"                                                     options="with_binding_pdf"/>
-
+    <source name="Products.Poi"          type="svn" url="https://svn.plone.org/svn/collective/Products.Poi/trunk"    options="with_ploneproduct_poi" />
+    <source name="Products.Clouseau"          type="svn" url="https://svn.plone.org/svn/collective/Products.Clouseau/trunk"    options="with_ploneproduct_clouseau" />
 
     <!-- collective.geo-->
     <source name="collective.geo.geoggrapher" type="svn" url="http://svn.plone.org/svn/collective/collective.geo.geographer/trunk" options="with_ploneproduct_cgeo"/>
