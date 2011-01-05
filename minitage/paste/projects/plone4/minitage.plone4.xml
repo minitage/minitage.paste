@@ -34,7 +34,11 @@
       <version p='grokcore.viewlet'               v='1.4.1'    options='with_ploneproduct_fivegrok' />
       <version p='martian'                        v='0.11.2'   options='with_ploneproduct_fivegrok' />
       <version p='five.localsitemanager'          v='2.0.3'    options='with_ploneproduct_fivegrok' />
+
       <version p='Products.Poi'                   v='2.0.1'   options="with_ploneproduct_poi"/>
+
+      <version p="cssutils"                       v="0.9.8a1"     options="with_ploneproduct_sgdcg"/>
+      <version p="StoneageHTML"                   v="0.2.1"   options="with_ploneproduct_sgdcg"/>
     </checkedversions>
     <options>
       <option order="0000" name="with_tool_bpython"                  description="bpython, see http://www.bpython-interpreter.org/ y/n" default="y"/>
@@ -120,6 +124,8 @@
       <version p='zope.testing'          options='with_ploneproduct_fivegrok' />
     </checkedversions>
     <versions>
+      <version p="cssutils" />
+      <version p="StoneageHTML"/> 
       <version name="RelStorage"/>
       <version name="Markdown crazy stuff"/>
       <version name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>

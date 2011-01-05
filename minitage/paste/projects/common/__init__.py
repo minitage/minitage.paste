@@ -197,11 +197,11 @@ class Template(common.Template):
                              'py-libxml2.*': 'xml2',
                              'python-\d.\d': 'latest_python'}
             vars['minilays'] = minilays = os.path.join(vars['mt'], 'minilays')
-            xml2, xslt, mapnik = [search_latest(a, minilays)
+            xml2, xslt = [search_latest(a, minilays)
                                   for a in (
                                       'py-libxml2-.', 
                                       'py-libxslt-.*', 
-                                      'py-mapnik-.*'
+                                      #'py-mapnik-.*'
                                   )]
             for regex in dsearch_latest.keys():
                 minibuild = search_latest(regex, minilays)
@@ -264,10 +264,10 @@ class Template(common.Template):
             vars['xml2'] = os.path.join('${minitage:location}',
                                         'eggs', xml2,
                                     'parts', 'site-packages-%s' % pyver)
-            vars['mapnik'] = os.path.join('${minitage:location}',
-                                    'eggs', mapnik,
-                                    'parts', 'site-packages-%s' % pyver,
-                                         'lib', 'python%s' % pyver, 'site-packages') 
+            #vars['mapnik'] = os.path.join('${minitage:location}',
+            #                        'eggs', mapnik,
+            #                        'parts', 'site-packages-%s' % pyver,
+            #                             'lib', 'python%s' % pyver, 'site-packages') 
             vars['xslt'] = os.path.join('${minitage:location}',
                                     'eggs', xslt,
                                     'parts', 'site-packages-%s' % pyver)
@@ -275,7 +275,7 @@ class Template(common.Template):
         else:
             vars['xml2'] = os.path.join(executable_prefix, 'lib', 'python%s' % executable_version, 'site-packages')
             vars['xslt'] = os.path.join(executable_prefix, 'lib', 'python%s' % executable_version, 'site-packages')
-            vars['mapnik'] = os.path.join(executable_prefix, 'lib', 'python%s' % executable_version, 'site-packages')
+            #vars['mapnik'] = os.path.join(executable_prefix, 'lib', 'python%s' % executable_version, 'site-packages')
             vars['opt_deps'] = ''
 
         # minitage needs python.

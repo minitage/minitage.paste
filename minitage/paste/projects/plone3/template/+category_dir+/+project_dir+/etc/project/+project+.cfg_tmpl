@@ -85,7 +85,7 @@ ${product}
 ${zcmlcomment}    ${product}
 #end if
 #end for
-zope-conf-additional=
+#zope-conf-additional=
 
 [kgs]
 file=\${buildout:directory}/etc/${project}-kgs.cfg

@@ -530,6 +530,7 @@
     <version p="jsonlib"                 v="1.3.10"    name="For cynin"/>
     <version p="ipython"                 v="0.10"    name="IPython py2.4 compatible version"/>
     <version p="cssutils"                v="0.9.5.1" name="break S D - http://groups.google.com/group/singing-dancing/browse_thread/thread/568de0b8226184f6"/>
+    <version p="StoneageHTML"             v="0.1.5"   name="break S D"/>
     <version p='Cheetah'                 v='2.2.1'   name='Markdown crazy stuff'/>
     <version p='Products.Archetypes'     v='1.5.16'  name='Needed for fixing https://dev.plone.org/plone/ticket/10088'/>
     <version p='Products.DataGridField'  v='1.6'     name='Needed for work on plone before 4'/>
@@ -591,8 +592,8 @@
     <version p='plone.formwidget.autocomplete'  v='1.0'           options='with_ploneproduct_autocomplete'/>
     <version p='Products.AddRemoveWidget'       v='1.4.4'         options='with_ploneproduct_addremovewidget'/>
     <version p='Products.ATSchemaEditorNG'      v='0.6'           options='with_ploneproduct_atschemaeditor'/>
-    <version p='collective.singing'             v='0.7.0'        options='with_ploneproduct_sgdcg'/>
-    <version p='collective.dancing'             v='0.9.2'           options='with_ploneproduct_sgdcg'/>
+    <version p='collective.singing'             v='0.7.1'        options='with_ploneproduct_sgdcg'/>
+    <version p='collective.dancing'             v='0.9.5'           options='with_ploneproduct_sgdcg'/>
     <version p='Products.ATVocabularyManager'   v='1.6.0a1'       options='with_ploneproduct_atvmanager'/>
     <version p='Products.ContentWellPortlets'   v='2.1'           options="with_ploneproduct_contentwellportlet"/>
     <version p='Products.FacultyStaffDirectory' v='2.1.4'         options="with_ploneproduct_facultystaff"/>
