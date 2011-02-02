@@ -5,44 +5,114 @@
 -->
 <root>
   <template>
-    <versions>
-      <version p="zope.schema"            v="3.6.1"   name="we will need this version to avoid problems with eg: z3c.form"/>
-      <version p='five.intid'             v='0.5.0'  name='various zope3 packages needed by various products in a zope2 installation'/>
-    </versions>
-    <eggs>
-      <egg name="bpython"                       options="with_tool_bpython"                 scripts="bpython" default="y" />
-    </eggs>
-    <checkedversions>
-      <version p='Products.LinguaPlone' v='4.0b1'      options="with_ploneproduct_lingua"/>
-      <!-- z3c.form -->
-      <version p='plone.z3cform'        v='0.7.0'      options="with_ploneproduct_pz3cform,with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok" />
-      <version p='rwproperty'           v='1.0'        options="with_ploneproduct_pz3cform,with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok" />
-      <version p='z3c.form'             v='2.4.1'      options="with_ploneproduct_pz3cform,with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok" />
-      <version p='z3c.formwidget.query' v='0.5'        options="with_ploneproduct_pz3cform,with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok" />
-
-      <!-- FIVE.GROK -->
-      <!-- pinned by plone4 KGS
-        <version p='five.localsitemanager'          v='1.1'     options='with_ploneproduct_fivegrok' />
-        -->
-      <version p='five.grok'                      v='1.1.2'    options='with_ploneproduct_fivegrok' />
-      <version p='grokcore.annotation'            v='1.2'      options='with_ploneproduct_fivegrok' />
-      <version p='grokcore.component'             v='1.8'      options='with_ploneproduct_fivegrok' />
-      <version p='grokcore.formlib'               v='1.5'      options='with_ploneproduct_fivegrok' />
-      <version p='grokcore.security'              v='1.4'      options='with_ploneproduct_fivegrok' />
-      <version p='grokcore.site'                  v='1.2'      options='with_ploneproduct_fivegrok' />
-      <version p='grokcore.view'                  v='1.12.2'   options='with_ploneproduct_fivegrok' />
-      <version p='grokcore.viewlet'               v='1.4.1'    options='with_ploneproduct_fivegrok' />
-      <version p='martian'                        v='0.11.2'   options='with_ploneproduct_fivegrok' />
-      <version p='five.localsitemanager'          v='2.0.3'    options='with_ploneproduct_fivegrok' />
-
-      <version p='Products.Poi'                   v='2.0.1'   options="with_ploneproduct_poi"/>
-
-      <version p="cssutils"                       v="0.9.8a1"     options="with_ploneproduct_sgdcg"/>
-      <version p="StoneageHTML"                   v="0.2.1"   options="with_ploneproduct_sgdcg"/>
-    </checkedversions>
     <options>
-      <option order="0000" name="with_tool_bpython"                  description="bpython, see http://www.bpython-interpreter.org/ y/n" default="y"/>
+      <option order="0000" name="with_tool_bpython"            description="bpython, see http://www.bpython-interpreter.org/ y/n" default="y"/>
+      <option order="0000" name="with_ploneproduct_dexterity"  description="Dexterity, see http://plone.org/products/dexterity y/n" default="n"/>
+      <option order="0000" name="with_ploneproduct_paasync"  description="Plone.app.async, see http://pypi.python.org/pypi/plone.app.async/ y/n" default="n"/>
+      <option order="0000" name="with_ploneproduct_subskins"  description="subskins, see http://pypi.python.org/pypi/medialog.subskins y/n" default="n"/>
     </options>
+    <versions>
+      <!-- z3c.form -->
+      <version p='five.intid'              v='0.5.2'   name="various pinning for z3 packages" />
+      <version p="plone.app.z3cform"       v="0.5.3"   name="various pinning for z3 packages"/>
+      <version p="plone.directives.form"   v="1.0b7"   name="various pinning for z3 packages"/>
+      <version p='plone.z3cform'           v='0.7.1'   name="various pinning for z3 packages" />
+      <version p='rwproperty'              v='1.0'     name="various pinning for z3 packages" />
+      <version p='z3c.form'                v='2.4.2'   name="various pinning for z3 packages"/>
+      <version p='z3c.formwidget.query'    v='0.5'     name="various pinning for z3 packages" />
+      <version p="zope.schema"             v="3.6.1"   name="various pinning for z3 packages"/>
+    </versions>
+    <checkedversions>
+      <version p='medialog.subskins'              v='4.1b1' options="with_ploneproduct_subskins"/>
+      <version p='Products.LinguaPlone'              v='4.0b1' options="with_ploneproduct_lingua"/>
+      <!-- plone.app.async -->
+      <version p='plone.app.async'  v='1.0'    options="with_ploneproduct_paasync"/>
+      <version p='zope.app.keyreference'  v='3.6.1'    options="with_ploneproduct_paasync"/>
+      <version p="zc.async"         v="1.5.3"  options="with_ploneproduct_paasync"/>
+      <version p="zc.twist"         v="1.3.1"  options="with_ploneproduct_paasync"/>
+      <version p="zc.queue"         v="1.1"    options="with_ploneproduct_paasync"/>
+      <version p="zc.dict"          v="1.3b1"  options="with_ploneproduct_paasync"/>
+      <version p="zc.blist"         v="1.0b2"  options="with_ploneproduct_paasync"/>
+      <version p="zope.bforest"     v="1.2"    options="with_ploneproduct_paasync"/>
+      <version p="uuid"             v="1.30"   options="with_ploneproduct_paasync"/>
+      <version p="Twisted"          v="10.2.0" options="with_ploneproduct_paasync"/>
+      <version p="rwproperty"       v="1.0"    options="with_ploneproduct_paasync"/>
+      <version p="zc.monitor"       v="0.2.0"  options="with_ploneproduct_paasync"/>
+      <version p="zc.ngi"           v="1.1.6"  options="with_ploneproduct_paasync"/>
+      <version p="zc.z3monitor"     v="0.7.0"  options="with_ploneproduct_paasync"/>
+      <!-- dexterity -->
+      <version p="collective.z3cform.datetimewidget" v="1.0.4" options="with_ploneproduct_dexterity" />
+      <version p="mocker"                            v="1.0"   options="with_ploneproduct_dexterity" />
+      <version p="plone.alterego"                    v="1.0b1" options="with_ploneproduct_dexterity" />
+      <version p="plone.dexterity"                   v="1.0b6" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.dexterity"               v="1.0b2" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.intid"                   v="1.0b3" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.relationfield"           v="1.0b5" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.textfield"               v="1.0b6" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.versioningbehavior"      v="1.0b1" options="with_ploneproduct_dexterity" />
+      <version p="plone.autoform"                    v="1.0b5" options="with_ploneproduct_dexterity" />
+      <version p="plone.behavior"                    v="1.0b6" options="with_ploneproduct_dexterity" />
+      <version p="plone.directives.dexterity"        v="1.0b1" options="with_ploneproduct_dexterity" />
+      <version p="plone.folder"                      v="1.0.1" options="with_ploneproduct_dexterity" />
+      <version p="plone.formwidget.autocomplete"     v="1.1"   options="with_ploneproduct_dexterity" />
+      <version p="plone.formwidget.contenttree"      v="1.0b2" options="with_ploneproduct_dexterity" />
+      <version p="plone.formwidget.namedfile"        v="1.0b8" options="with_ploneproduct_dexterity" />
+      <version p="plone.mocktestcase"                v="1.0b3" options="with_ploneproduct_dexterity" />
+      <version p="plone.namedfile"                   v="1.0b5" options="with_ploneproduct_dexterity" />
+      <version p="plone.rfc822"                      v="1.0b1" options="with_ploneproduct_dexterity" />
+      <version p="plone.scale"                       v="1.2.2" options="with_ploneproduct_dexterity" />
+      <version p="plone.schemaeditor"                v="1.0b2" options="with_ploneproduct_dexterity" />
+      <version p="plone.supermodel"                  v="1.0b6" options="with_ploneproduct_dexterity" />
+      <version p="plone.synchronize"                 v="1.0b1" options="with_ploneproduct_dexterity" />
+      <version p="python-dateutil"                   v="1.5"   options="with_ploneproduct_dexterity" />
+      <version p="uuid"                              v="1.30"  options="with_ploneproduct_dexterity" />
+      <version p="z3c.batching"                      v="1.1.0" options="with_ploneproduct_dexterity" />
+      <version p="z3c.blobfile"                      v="0.1.4" options="with_ploneproduct_dexterity" />
+      <version p="z3c.objpath"                       v="1.0"   options="with_ploneproduct_dexterity" />
+      <version p="z3c.relationfield"                 v="0.6.1" options="with_ploneproduct_dexterity" />
+      <version p="zc.relation"                       v="1.0"   options="with_ploneproduct_dexterity" />
+      <version p="zc.sourcefactory"                  v="0.6.0" options="with_ploneproduct_dexterity" />
+      <version p="zope.filerepresentation"           v="3.6.0" options="with_ploneproduct_dexterity" />
+      <version p="zope.schema"                       v="3.7.1" options="with_ploneproduct_dexterity" />
+      <!-- /dexterity -->
+      <version p='z3c.relationfield'       v='0.6.1'    options='with_ploneproduct_dexterity,with_ploneproduct_z3crelationfield'/>
+      <!-- FIVE.GROK -->
+      <version p='five.grok'               v='1.2.0'    options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p='grokcore.annotation'     v='1.2'      options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p='grokcore.component'      v='1.9'      options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p='grokcore.formlib'        v='1.5'      options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p='grokcore.security'       v='1.4'      options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p='grokcore.site'           v='1.2'      options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p='grokcore.view'           v='1.13.5'   options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p='grokcore.viewlet'        v='1.4.1'    options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p='martian'                 v='0.11.2'   options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p='five.localsitemanager'   v='2.0.3'    options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p='zope.browserresource'    v='3.9.0'   options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p='zope.ptresource'         v='3.9.0'    options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p='zope.login'              v='1.0.0'    options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+
+      <version p='ordereddict'             v='1.1'      options="with_tool_i18ndude"/>
+      <version p='Products.Poi'            v='2.0.1'    options="with_ploneproduct_poi"/>
+      <version p="cssutils"                v="0.9.8a1"  options="with_ploneproduct_sgdcg"/>
+      <version p="StoneageHTML"            v="0.2.1"    options="with_ploneproduct_sgdcg"/>
+    </checkedversions>
+    <eggs>
+      <egg name="bpython"              options="with_tool_bpython"           scripts="bpython" default="y" />
+      <egg name="z3c.blobfile"         options="with_ploneproduct_dexterity"/>
+      <egg name="plone.app.dexterity"  options="with_ploneproduct_dexterity" zcml="configure,meta"/>
+      <egg name="medialog.subskins"  options="with_ploneproduct_subskins" zcml="configure" zpackage="y"/>
+      <egg name="zc.z3monitor"       options="with_ploneproduct_paasync"/>
+      <egg name="plone.app.async"       options="with_ploneproduct_paasync"/>
+      <egg name="zope.app.keyreference"  options="with_ploneproduct_paasync"/>
+    </eggs>
+    <qi>
+      <product name="plone.app.dexterity"          options="with_ploneproduct_dexterity"   order="900" />
+      <product name="medialog.subskins"            options="with_ploneproduct_subskins"   order="900" />
+    </qi>
+    <gs>
+      <product name="plone.app.dexterity"          options="with_ploneproduct_dexterity"   order="900" />
+      <product name="medialog.subskins"            options="with_ploneproduct_subskins"   order="900" />
+    </gs>
     <sources>
       <source name="plone.app.blob" type="svn" url="http://svn.plone.org/svn/plone/plone.app.blob/trunk" options="with_ploneproduct_ploneappblob"/>
       <source name="Products.Ploneboard"   autocheckout="y"    type="svn" url="https://svn.plone.org/svn/collective/Products.Ploneboard/trunk" options="with_ploneproduct_ploneboard"/>
@@ -53,10 +123,46 @@
       <source name="Products.csvreplicata" autocheckout="y" type="svn" url="https://svn.plone.org/svn/collective/Products.csvreplicata/trunk/Products.csvreplicata" options="with_ploneproduct_csvreplica"/>
       <source name="collective.contentlicensing"  autocheckout="y"  type="svn" url="https://svn.plone.org/svn/collective/collective.contentlicensing/trunk" options="with_ploneproduct_contentlicensing"/>
       <source name="Products.SimpleAttachment" autocheckout="y"  type="svn" url="https://svn.plone.org/svn/collective/Products.SimpleAttachment/trunk" options="with_ploneproduct_ploneboard"/>
+      <!-- dexterity  -->
+      <source name="plone.alterego"                     autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.alterego/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.supermodel"                   autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.supermodel/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.behavior"                     autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.behavior/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.namedfile"                    autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.namedfile/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.rfc822"                       autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.rfc822/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="z3c.formwidget.query"               autocheckout="n" type="svn" url="http://svn.zope.org/repos/main/z3c.formwidget.query/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.formwidget.autocomplete"      autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.formwidget.autocomplete/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.formwidget.contenttree"       autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.formwidget.contenttree/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.formwidget.namedfile"         autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.formwidget.namedfile/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.autoform"                     autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.autoform/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.z3cform"                      autocheckout="n" type="svn" url="http://svn.zope.org/repos/main/plone.z3cform/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.app.z3cform"                  autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.app.z3cform/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.app.relationfield"            autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.app.relationfield/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="z3c.relationfield"                  autocheckout="n" type="svn" url="http://svn.zope.org/repos/main/z3c.relationfield/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.app.textfield"                autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.app.textfield/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.dexterity"                    autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.dexterity/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="five.grok"                          autocheckout="n" type="svn" url="http://svn.zope.org/repos/main/five.grok/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.directives.dexterity"         autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.directives.dexterity/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.directives.form"              autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.directives.form/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.schemaeditor"                 autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.schemaeditor/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.app.dexterity"                autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.app.dexterity/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.versioningbehavior"           autocheckout="n" type="svn" url="http://svn.plone.org/svn/plone/plone.versioningbehavior/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.stagingbehavior"              autocheckout="n" type="svn" url="http://svn.plone.org/svn/plone/plone.stagingbehavior/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.multilingual"                 autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.multilingual/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.multilingualbehavior"         autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.multilingualbehavior/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="example.dexterity"                  autocheckout="n" type="svn" url="https://svn.plone.org/svn/collective/example.dexterity/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="example.conference"                 autocheckout="n" type="svn" url="https://svn.plone.org/svn/collective/example.conference/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="collective.wtf"                     autocheckout="n" type="svn" url="https://svn.plone.org/svn/collective/collective.wtf/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="five.intid"                         autocheckout="n" type="svn" url="https://svn.plone.org/svn/collective/five.intid/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.app.intid"                    autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.app.intid/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="collective.z3cform.datetimewidget"  autocheckout="n" type="svn" url="https://svn.plone.org/svn/collective/collective.z3cform.datetimewidget/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.app.async"  autocheckout="n" type="svn" url="http://svn.plone.org/svn/plone/plone.app.async/branches/defer" options="with_ploneproduct_paasync"/>
+      <source name="medialog.subskins"  autocheckout="n" type="svn" url="https://svn.plone.org/svn/collective/medialog.subskins/trunk/" options="with_ploneproduct_subskins"/>
+      <!-- /dexterity  -->
     </sources>
   </template>
   <purge>
     <eggs>
+      <egg name="lxml"                            options="with_ploneproduct_smartprintng,with_ploneproduct_cynin"   />
       <egg name="easyshop.carts"                 options="with_ploneproduct_easyshop"                      zcml="configure"/>
       <egg name="easyshop.catalog"               options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
       <egg name="easyshop.checkout"              options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
@@ -122,10 +228,23 @@
       <version p='five.localsitemanager' options='with_ploneproduct_fivegrok' />
       <version p='Products.PloneArticle' options="with_ploneproduct_plonearticle"/>
       <version p='zope.testing'          options='with_ploneproduct_fivegrok' />
+      <version p='z3c.relationfield'     options='with_ploneproduct_z3crelationfield,with_ploneproduct_dexterity'/>
+      <!-- FIVE.GROK -->
+      <version p='five.grok'             options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+      <version p='grokcore.annotation'   options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+      <version p='grokcore.component'    options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+      <version p='grokcore.formlib'      options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+      <version p='grokcore.security'     options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+      <version p='grokcore.site'         options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+      <version p='grokcore.view'         options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+      <version p='grokcore.viewlet'      options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+      <version p='five.localsitemanager' options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+      <version p='martian'               options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
     </checkedversions>
     <versions>
-      <version p="cssutils" />
-      <version p="StoneageHTML"/> 
+      <version name="plone.z3cform >= 0.6.0 break Singing and Dancing"/>
+      <version name="break S D - http://groups.google.com/group/singing-dancing/browse_thread/thread/568de0b8226184f6"/>
+      <version name="break S D"/>
       <version name="RelStorage"/>
       <version name="Markdown crazy stuff"/>
       <version name="newer zope.component needs this version for zope2.10 which is the zope compatible with plone 3.X."/>
@@ -136,15 +255,15 @@
     <miscproducts>
     </miscproducts>
     <qi>
-      <product name="easyshop.core"                  options="with_ploneproduct_easyshop"         />
-      <product name="iw.fss"                         options="with_ploneproduct_fss"              />
-      <product name="CMFSquidTool"                   options="with_ploneproduct_cachesetup"       />
-      <product name="CacheSetup"                     options="with_ploneproduct_cachesetup"       />
-      <product name="PloneArticle"                   options="with_ploneproduct_plonearticle"     />
-      <product name="p4a.plonecalendar"              options="with_ploneproduct_p4a_cal"          />
-      <product name="p4a.ploneevent"                 options="with_ploneproduct_p4a_cal"          />
-      <product name="p4a.plonevideoembed"            options="with_ploneproduct_p4a_vid"          />
-      <product name="p4a.plonevideo"                 options="with_ploneproduct_p4a_vid"          />
+      <product name="easyshop.core"                options="with_ploneproduct_easyshop"         />
+      <product name="iw.fss"                       options="with_ploneproduct_fss"              />
+      <product name="CMFSquidTool"                 options="with_ploneproduct_cachesetup"       />
+      <product name="CacheSetup"                   options="with_ploneproduct_cachesetup"       />
+      <product name="PloneArticle"                 options="with_ploneproduct_plonearticle"     />
+      <product name="p4a.plonecalendar"            options="with_ploneproduct_p4a_cal"          />
+      <product name="p4a.ploneevent"               options="with_ploneproduct_p4a_cal"          />
+      <product name="p4a.plonevideoembed"          options="with_ploneproduct_p4a_vid"          />
+      <product name="p4a.plonevideo"               options="with_ploneproduct_p4a_vid"          />
     </qi>
     <options>
       <option order="1400" name="with_ploneproduct_plonearticle"     description="Plone Article, see http://plone.org/products/plonearticle/ y/n"/>

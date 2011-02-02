@@ -48,7 +48,7 @@ echo "#PLONE4 $plone KGS">versions.cfg
 wget http://dist.plone.org/release/$plone/versions.cfg -O-|sed -re "/extends/ d">>versions.cfg
 
 echo "#PLONE $plone SOURCES">sources.cfg
-wget http://dist.plone.org/release/$ver/sources.cfg -O -|egrep -v "(\[buildout\]|sources = sources|always-checkout.*)">>sources.cfg
+wget http://svn.plone.org/svn/plone/buildouts/plone-coredev/branches/$ver/sources.cfg  -O -|sed -re "s/\[buildout\]/[buildout-notused]/g">sources.cfg
 
 echo "#ZOP2 2  $zope2 KGS">zope2.versions.cfg
 wget http://download.zope.org/Zope2/index/$zope2/versions.cfg -O ->> zope2.versions.cfg

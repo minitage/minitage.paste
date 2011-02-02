@@ -14,6 +14,9 @@ Up
     - Rework the django template
     - add PKGCONFIGPATH handle to instances.env
     - add LDFLAGS, CFLAGS, CPPFLAGs, CXXFLAGS handle to instances.env
+    - add dexterity support
+    - add plone.app.async support
+    - add several plone addons
 
 -> 1.3.176
 -----------

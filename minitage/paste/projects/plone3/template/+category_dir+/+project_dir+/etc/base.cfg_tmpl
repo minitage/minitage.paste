@@ -32,12 +32,16 @@ $hr
 #else
 #set $cynincomment='#'
 #end if
-
+#if $with_ploneproduct_paasync
+#set $asynccomment=''
+#else
+#set $asynccomment='#'
+#end if
 
 [buildout]
 timeout=3
 extensions = buildout.minitagificator mr.developer jarn.setuptoolsfixer buildout.dumppickedversions
-dump-picked-versions-file =\${buildout:directory}/etc/project/${project}-kgs.cfg 
+dump-picked-versions-file =\${buildout:directory}/etc/project/${project}-kgs.cfg
 overwrite-picked-versions-file=true
 extends-cache = \${buildout:directory}/etc/cache
 # this allow you to run buildout on offline mode and to use only the downloaded plonev3.versions.cfg
@@ -89,6 +93,7 @@ parts =
 #end if
     productdistros
     instance
+${asynccomment}    instance-worker
     zopepy
     backup
 ${cynincomment}    instance-cynin
@@ -120,7 +125,7 @@ ${delicomment}    deliverance.test
 
 find-links = \${groups:find-links}
 eggs +=
-develop += 
+develop +=
 versions = versions
 # see http://pypi.python.org/pypi/mr.developer for documentation
 # auto tracked developement products, see project/sources.cfg
@@ -216,9 +221,6 @@ verbose-security=\${zope:verbose-security}
 debug-mode=\${zope:debug-mode}
 event-log-level=\${zope:event-log-level}
 z2-log-level=\${zope:z2-log-level}
-environment-vars =
-    zope_i18n_compile_mo_files = true
-
 
 # KGS generation
 [kgs]
@@ -253,8 +255,8 @@ recipe = collective.recipe.omelette
 eggs = \${instance:eggs}
 products = \${instance:products}
 packages = #slurp
-#if $major < 4 
-\${zope2:location}/lib/python #slurp 
+#if $major < 4
+\${zope2:location}/lib/python #slurp
 #end if
     ./
 

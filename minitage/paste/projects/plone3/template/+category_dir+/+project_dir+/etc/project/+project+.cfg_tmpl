@@ -17,21 +17,24 @@ $hr
 #else
 #set $solrcomment='#'
 #end if
-
 #if $with_ploneproduct_ploneappblob
 #set $blobcomment=''
 #else
 #set $blobcomment='#'
 #end if
-
 #if $with_no_zcml
 #set $zcmlcomment='#'
 #else
 #set $zcmlcomment=''
 #end if
+#if $with_ploneproduct_paasync
+#set $asynccomment=''
+#else
+#set $asynccomment='#'
+#end if
 
 [buildout]
-develop = \${buildout:directory}/src.mrdeveloper/zopelib 
+develop = \${buildout:directory}/src.mrdeveloper/zopelib
 sources-dir=\${buildout:directory}/src.mrdeveloper
 
 # extra directories oto add to the python path
@@ -50,6 +53,10 @@ auto-checkout +=
 
 
 [instance]
+
+zodb-cache-size = 50000
+zeo-client-cache-size = 5MB
+
 # attacking zopepy:eggs make instance be built after zopepy
 # in any case thx to the buildout automatic parts sort.
 extra-paths+=\${buildout:extra-paths}
@@ -86,6 +93,58 @@ ${zcmlcomment}    ${product}
 #end if
 #end for
 #zope-conf-additional=
+
+# plone.app.async instance if any
+${asynccomment}zcml-additional =
+${asynccomment}    <include package="plone.app.async" file="single_db_instance.zcml" />
+environment-vars =
+    zope_i18n_compile_mo_files = true
+${asynccomment}    ZC_ASYNC_UUID \${buildout:directory}/var/instance-uuid.txt
+${asynccomment}zope-conf-additional +=
+${asynccomment}    <zodb_db async>
+${asynccomment}        cache-size \${instance:zodb-cache-size}
+${asynccomment}        <zeoclient>
+${asynccomment}            server \${zeoserver:zeo-address}
+${asynccomment}            storage 2
+${asynccomment}            name asyncstorage
+${asynccomment}            blob-dir \${zeoserver:blob-storage}
+${asynccomment}            shared-blob-dir on
+${asynccomment}            var \${buildout:parts-directory}/instance/var
+${asynccomment}            cache-size \${instance:zeo-client-cache-size}
+${asynccomment}        </zeoclient>
+${asynccomment}        mount-point /zasync
+${asynccomment}    </zodb_db>
+${asynccomment}    <product-config zc.z3monitor>
+${asynccomment}        port 8081
+${asynccomment}    </product-config>
+
+# plone.app.async instance if any
+${asynccomment}[instance-worker]
+${asynccomment}<= instance
+${asynccomment}http-address = \${hosts:instance-worker}:\${ports:instance-worker}
+${asynccomment}zcml-additional =
+${asynccomment}    <include package="plone.app.async" file="single_db_worker.zcml"/>
+environment-vars =
+${asynccomment}    zope_i18n_compile_mo_files = true
+${asynccomment}    ZC_ASYNC_UUID \${buildout:directory}/var/worker-uuid.txt
+${asynccomment}zope-conf-additional =
+${asynccomment}    <zodb_db async>
+${asynccomment}        cache-size \${instance-worker:zodb-cache-size}
+${asynccomment}        <zeoclient>
+${asynccomment}            server \${zeoserver:zeo-address}
+${asynccomment}            storage 2
+${asynccomment}            name asyncstorage
+${asynccomment}            blob-dir \${zeoserver:blob-storage}
+${asynccomment}            shared-blob-dir on
+${asynccomment}            var \${buildout:parts-directory}/worker/var
+${asynccomment}            cache-size \${instance-worker:zeo-client-cache-size}
+${asynccomment}        </zeoclient>
+${asynccomment}        mount-point /zasync
+${asynccomment}    </zodb_db>
+${asynccomment}zserver-threads = 2
+${asynccomment}zeo-address = \${zeoserver:zeo-address}
+${asynccomment}blob-storage = \${zeoserver:blob-storage}
+
 
 [kgs]
 file=\${buildout:directory}/etc/${project}-kgs.cfg

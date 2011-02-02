@@ -1,8 +1,5 @@
 # ZEO backend support and configuration
 
-
-
-
 #if $zeo_port.strip():
 #set $zeo_sep = ''
 #else
@@ -14,7 +11,11 @@
 #else
 #set zeoa= '${hosts:zeo}:${ports:zeo}'
 #end if
-
+#if $with_ploneproduct_paasync
+#set $asynccomment=''
+#else
+#set $asynccomment='#'
+#end if
 
 [instance]
 zeo-client-cache-size = \${cache:zeo-client-cache-size}
@@ -43,14 +44,21 @@ recipe = plone.recipe.zeoserver
 #end if
 zeo-address = $zeoa
 socket-name =\${buildout:directory}/var/zeo.zdsock
-#if $major < 4:
 zeo-conf-additional =
+${asynccomment}    <filestorage 2>
+${asynccomment}        path \${buildout:directory}/var/filestorage/Async.fs
+${asynccomment}    </filestorage>
+#if $major < 4:
     %import tempstorage
     <temporarystorage temp>
         name temporary storage for sessioning
     </temporarystorage>
 #end if
 eggs +=
-  ZODB3
+#if $with_ploneproduct_paasync
+    \${instance:eggs}
+#end if 
+    ZODB3 
+
 
 # vim:set ft=cfg:
