@@ -273,7 +273,7 @@
     <egg name="Products.CMFPlacefulWorkflow"   options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard,with_ploneproduct_cynin"            zproduct="y" zcml="configure" />
     <egg name="Products.Collage"               options="with_ploneproduct_collage"          zproduct="y" zcml="configure"/>
     <egg name="Products.ContentWellPortlets"   options="with_ploneproduct_contentwellportlet" zproduct="y" zcml="configure"/>
-    <egg name="Products.csvreplicata"          options="with_ploneproduct_csvreplica"       zproduct="y"/>
+    <egg name="Products.csvreplicata"          options="with_ploneproduct_csvreplica"       zproduct="y" zcml="configure"/>
     <egg name="Products.Poi"                  options="with_ploneproduct_poi"               zproduct="y" zcml="configure"/>
     <egg name="Products.FacultyStaffDirectory" options="with_ploneproduct_facultystaff"     zproduct="FacultyStaffDirectory,ATReferenceBrowserWidget,Relations,Archetypes,MimetypesRegistry,PortalTransforms,membrane" zcml="configure"/>
     <egg name="Products.LDAPMultiPlugins"      options="with_ploneproduct_ldap"             zproduct="y"/>
