@@ -400,6 +400,17 @@ class Template(common.Template):
         if not vars['reverseproxy_aliases']:
             vars['reverseproxy_aliases'] = ''
         vars['sreverseproxy_aliases'] = vars['reverseproxy_aliases'].split(',')
+        suffix = vars['major']
+        if vars['major'] > 3:
+            suffix = self.name.replace('minitage.plone', '') 
+        ztk_path = pkg_resources.resource_filename(
+            'minitage.paste',
+            'projects/plone%s/ztk.versions.cfg' % suffix
+        )
+        vars['have_ztk'] = False
+        if os.path.exists(ztk_path):
+            vars['have_ztk'] = True
+            vars['ztk_path'] = ztk_path
 
     def post(self, command, output_dir, vars):
         common.Template.post(self, command, output_dir, vars)
@@ -449,14 +460,8 @@ class Template(common.Template):
             #    )
             #)
         # zope2 KGS
-        ztk_path = pkg_resources.resource_filename(
-            'minitage.paste',
-            'projects/plone%s/ztk.versions.cfg' % suffix
-        ),
-        vars['have_ztk'] = False
-        if os.path.exists(ztk_path):
-            vars['have_ztk'] = True
-            shutil.copy2(ztk_path, ztkdst)
+        if vars['have_ztk'] == True:
+            shutil.copy2(vars['ztk_path'], ztkdst)
 
         if vars['major'] > 3:
             #try:
@@ -482,7 +487,7 @@ class Template(common.Template):
         shutil.copy2(
             pkg_resources.resource_filename(
                 'minitage.paste',
-                'projects/plone%s/sources.cfg' % vars['major']
+                'projects/plone%s/sources.cfg' % suffix
             ),
             sdst
         )

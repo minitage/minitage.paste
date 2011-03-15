@@ -38,7 +38,7 @@ plone41() {
     echo  Refreshing :: $plone / $ver / $zope2
     echo
     echo "#PLONE4 $plone KGS">versions.cfg
-    wget http://dist.plone.org/release/$plone/versions.cfg -O-|sed -re "/extends/ d">>versions.cfg
+    wget http://dist.plone.org/release/$plone/versions.cfg -O-|sed -re "s/extends =/notused-extends =/g">>versions.cfg
     echo "#PLONE $plone SOURCES">sources.cfg
     wget http://svn.plone.org/svn/plone/buildouts/plone-coredev/branches/$ver/sources.cfg  -O -|sed -re "s/\[buildout\]/[buildout-notused]/g">sources.cfg
     echo "#ZOP2 2  $zope2 KGS">zope2.versions.cfg
@@ -50,9 +50,5 @@ plone41() {
 a #ZTK: $ztkver
 }" -i ztk.versions.cfg
 }
-
 plone41
-
-
-
 # vim:set et sts=4 ts=4 tw=0:
