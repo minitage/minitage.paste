@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 cd \$(dirname \$0)/..
 PROJECT="$project"
-IMPORT_URL="https://subversion.makina-corpus.net/scrumpy/\$PROJECT"
+IMPORT_URL="$uri"
 cd \$(dirname \$0)/..
 [[ ! -d t ]] && mkdir t
 rm -rf t/*
 tar xzvf \$(ls -1t ~/cgwb/\$PROJECT*z) -C t
 files="
+.gitignore
 bootstrap.py
 buildout-dev.cfg
 buildout-prod.cfg
@@ -18,9 +19,9 @@ minilays/
 scripts/
 "
 for f in \$files;do
-    rsync -azv t/\$f \$f
+    rsync -aKzv t/\$f \$f
 done
-policy="tests/base.py 
+policy="tests/base.py
 configure.zcml
 profiles/default/metadata.xml"
 policy_folder="src.mrdeveloper/\$PROJECT.policy"
@@ -28,13 +29,25 @@ if [[ ! -e \$policy_folder ]];then
     policy_folder="src/\$PROJECT.policy"
 fi
 for i in \$policy;do
-    rsync -azv t/src/\$PROJECT.policy/src/\$PROJECT/policy/\$i src.mrdeveloper/\$PROJECT.policy/src/\$PROJECT/policy/\$i
+    rsync -azKv t/src/\$PROJECT.policy/src/\$PROJECT/policy/\$i src.mrdeveloper/\$PROJECT.policy/src/\$PROJECT/policy/\$i
 done
+#if $scm_type == 'git':
+EGGS_IMPORT_URL="\${IMPORT_URL//\/\$PROJECT\.buildout}"
+#else
+EGGS_IMPORT_URL="\$IMPORT_URL/eggs"
+#end if
 sed -re "/\[sources\]/{
-        a \$PROJECT.policy = svn \$IMPORT_URL/eggs/\$PROJECT.policy/trunk
-        a \$PROJECT.skin = svn \$IMPORT_URL/eggs/\$PROJECT.skin/trunk
-        a \$PROJECT.tma = svn \$IMPORT_URL/eggs/\$PROJECT.tma/trunk
-        a \$PROJECT.testing = svn \$IMPORT_URL/eggs/\$PROJECT.testing/trunk
+#if $scm_type == 'git':
+        a \$PROJECT.policy =  git \$EGGS_IMPORT_URL/\$PROJECT.policy.git
+        a \$PROJECT.skin =    git \$EGGS_IMPORT_URL/\$PROJECT.skin.git
+        a \$PROJECT.tma =     git \$EGGS_IMPORT_URL/\$PROJECT.tma.git
+        a \$PROJECT.testing = git \$EGGS_IMPORT_URL/\$PROJECT.testing.git
+#else
+        a \$PROJECT.policy =  svn \$EGGS_IMPORT_URL/\$PROJECT.policy/trunk
+        a \$PROJECT.skin =    svn \$EGGS_IMPORT_URL/\$PROJECT.skin/trunk
+        a \$PROJECT.tma =     svn \$EGGS_IMPORT_URL/\$PROJECT.tma/trunk
+        a \$PROJECT.testing = svn \$EGGS_IMPORT_URL/\$PROJECT.testing/trunk
+#end if
 }" -i  etc/project/sources.cfg
 sed -re "s:(src/)?\$PROJECT\.((skin)|(tma)|(policy)|(testing))::g" -i etc/project/\$PROJECT.cfg
 sed -re "/auto-checkout \+=/{
@@ -76,4 +89,5 @@ a\     *crummy.com*
 a\     *minitage.org*
 a\     *.selenic.com*
 }" -i etc/sys/settings.cfg
+sed  -re "s/dependencies=/dependencies=git-1.7 subversion-1.6 /g" -i minilays/*/*
 # vim:set et sts=4 ts=4 tw=80:

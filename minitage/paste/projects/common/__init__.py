@@ -341,9 +341,13 @@ def purge_nodes(document=None,
                 names = oattrs.get(key, '').split(',')
                 for name in names:
                     if name:
-                        if not peroption:
-                            if name in mapping:
-                                del mapping[name]
+                        if name in mapping:
+                            if sectionName == 'versions' and ('p' in oattrs):
+                                infos = (oattrs['p'], oattrs['v'])
+                                if infos in mapping:
+                                    mapping.pop(infos)
+                            else:
+                               del mapping[name]
                         else:
                             opts = oattrs.get('options', '').split(',')
                             for opt in opts:
@@ -429,7 +433,7 @@ def parse_xmlconfig(xml,
     # discover  additionnal configuration options
     if purge:
         purge_nodes(xml, 'options', 'option', addons_vars)
-        purge_nodes(xml, 'versions', 'version', versions_mappings)
+        purge_nodes(xml, 'versions', 'version', versions_mappings, peroption = True)
         purge_nodes(xml, 'checkedversions', 'version', checked_versions_mappings, 'p', peroption=True)
         purge_nodes(xml, 'sources', 'source', plone_sources)
         purge_nodes(xml, 'qi', 'product', qi_mappings, peroption=True)
@@ -507,8 +511,8 @@ def parse_xmlconfig(xml,
                         if 'v' in oattrs:
                             if overrides or (not oattrs['p'] in
                                              checked_versions_mappings[option]):
-                                if not oattrs['p'] in added:
-                                    added.append(oattrs['p'])
+                                if not (option, oattrs['p']) in added:
+                                    added.append((option, oattrs['p']))
                                     checked_versions_mappings[option][oattrs['p']] = oattrs['v']
 
 

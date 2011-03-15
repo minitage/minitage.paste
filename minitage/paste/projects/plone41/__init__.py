@@ -36,11 +36,11 @@ import pkg_resources
 
 from minitage.paste.common import var as pvar
 from minitage.paste.projects import common
-from minitage.paste.projects import plone3
+from minitage.paste.projects import plone4, plone3
 
-default_config = pkg_resources.resource_filename('minitage.paste', 'projects/plone4/minitage.plone4.xml')
-user_config = os.path.join( os.path.expanduser('~'), '.minitage.plone4.xml')
-xmlvars = common.read_vars(default_config, user_config, plone3.xmlvars)
+default_config = pkg_resources.resource_filename('minitage.paste', 'projects/plone41/minitage.plone41.xml')
+user_config = os.path.join( os.path.expanduser('~'), '.minitage.plone41.xml')
+xmlvars = common.read_vars(default_config, user_config, plone4.xmlvars)
 # plone quickinstaller option/names mappings
 qi_mappings = xmlvars.get('qi_mappings', {})
 qi_hidden_mappings = xmlvars.get('qi_hidden_mappings', {})
@@ -80,11 +80,11 @@ for name in sources_k:
         )
     )
 
-class Template(plone3.Template):
-    packaged_version = '4.0.4'
-    packaged_zope2_version = '2.12.16'
-    summary                    = 'Template for creating a plone4 project'
-    _template_dir =pkg_resources.resource_filename('minitage.paste', 'projects/plone3/template')
+class Template(plone4.Template):
+    packaged_version = '4.1b1'
+    packaged_zope2_version = '2.13.5' 
+    summary                    = 'Template for creating a plone41 project'
+    _template_dir = pkg_resources.resource_filename('minitage.paste', 'projects/plone3/template')
     python                     = 'python-2.6'
     #default_template_package   = 'ZopeSkel'
     #default_template_epn       = 'paste.paster_create_template'
@@ -133,12 +133,12 @@ class Template(plone3.Template):
     plone_sources             = plone_sources
 
     def read_vars(self, command=None):
-        vars = plone3.Template.read_vars(self, command)
+        vars = plone4.Template.read_vars(self, command)
         return vars
 
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
-        plone3.Template.pre(self, command, output_dir, vars)
+        plone4.Template.pre(self, command, output_dir, vars)
 
     def post_default_template_hook(self, command, output_dir, vars, ep):
         pass
@@ -150,5 +150,4 @@ Template.vars = common.Template.vars +\
         plone3.plone_vars + \
         Template.addons_vars +\
         dev_vars
-
 # vim:set et sts=4 ts=4 tw=0:

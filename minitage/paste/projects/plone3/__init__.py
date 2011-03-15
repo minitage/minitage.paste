@@ -241,7 +241,7 @@ class Template(common.Template):
         # collective.geo
         if vars['with_ploneproduct_cgeo'] and vars['inside_minitage']:
             for i in ('geos-\d\.\d*','gdal-\d\.\d*'):
-                vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays']) 
+                vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays'])
 
         # openldap
         if vars['with_binding_ldap'] and vars['inside_minitage']:
@@ -259,7 +259,7 @@ class Template(common.Template):
             vars['opt_deps'] += ' %s' % search_latest('haproxy-\d\.\d*', vars['minilays'])
         # htmldoc
         if vars['with_ploneproduct_awspdfbook'] and vars['inside_minitage']:
-            vars['opt_deps'] += ' %s' % search_latest('htmldoc-\d\.\d*', vars['minilays']) 
+            vars['opt_deps'] += ' %s' % search_latest('htmldoc-\d\.\d*', vars['minilays'])
 
         # relstorage
         if 'relstorage' in vars['mode']:
@@ -280,18 +280,22 @@ class Template(common.Template):
 
         # do we need some pinned version
         vars['plone_versions'] = []
+        pin_added = []
         for var in self.versions_mappings:
             vars['plone_versions'].append(('# %s' % var, '',))
             for pin in self.versions_mappings[var]:
-                vars['plone_versions'].append(pin)
+                if not pin in pin_added:
+                    pin_added.append(pin)
+                    vars['plone_versions'].append(pin)
 
         if vars["with_checked_versions"]:
             for var in self.checked_versions_mappings:
                 if vars.get(var, False):
                     vars['plone_versions'].append(('# %s' % var, '',))
                     for pin in self.checked_versions_mappings[var]:
-                        vars['plone_versions'].append((pin, self.checked_versions_mappings[var][pin]))
-
+                        if not pin in pin_added:
+                            pin_added.append(pin)
+                            vars['plone_versions'].append((pin, self.checked_versions_mappings[var][pin]))
         if not vars['mode'] in ['zodb', 'relstorage', 'zeo']:
             raise Exception('Invalid mode (not in zeo, zodb, relstorage')
         if not os.path.exists(self.output_dir):
@@ -409,8 +413,11 @@ class Template(common.Template):
                            'etc', 'plone', 'plone%s.versions.cfg' % vars['major'])
         sdst = os.path.join(vars['path'],
                            'etc', 'plone', 'plone%s.sources.cfg' % vars['major'])
+        ztkdst = os.path.join(vars['path'], 'etc', 'plone', 'ztk.versions.cfg')
         zdst = os.path.join(vars['path'],
                             'etc', 'plone', 'zope2.versions.cfg')
+        os.rename(os.path.join(vars['path'], 'gitignore'),
+                  os.path.join(vars['path'], '.gitignore'))
         bc = ConfigParser()
         bc.read(cfg)
         # release KGS
@@ -419,10 +426,13 @@ class Template(common.Template):
         #        urllib2.urlopen(vars['versions_url']).read()
         #    )
         #except Exception, e:
+        suffix = vars['major']
+        if vars['major'] > 3:
+            suffix = self.name.replace('minitage.plone', '')
         shutil.copy2(
             pkg_resources.resource_filename(
                 'minitage.paste',
-                'projects/plone%s/versions.cfg' % vars['major']
+                'projects/plone%s/versions.cfg' % suffix
             ),
             vdst
         )
@@ -439,6 +449,15 @@ class Template(common.Template):
             #    )
             #)
         # zope2 KGS
+        ztk_path = pkg_resources.resource_filename(
+            'minitage.paste',
+            'projects/plone%s/ztk.versions.cfg' % suffix
+        ),
+        vars['have_ztk'] = False
+        if os.path.exists(ztk_path):
+            vars['have_ztk'] = True
+            shutil.copy2(ztk_path, ztkdst)
+
         if vars['major'] > 3:
             #try:
             #    open(zdst, 'w').write(
@@ -449,7 +468,7 @@ class Template(common.Template):
             shutil.copy2(
                 pkg_resources.resource_filename(
                     'minitage.paste',
-                    'projects/plone%s/zope2.versions.cfg' % vars['major']
+                    'projects/plone%s/zope2.versions.cfg' % suffix
                 ),
                 zdst
             )

@@ -49,6 +49,9 @@ extends -= $versions_url
            http://download.zope.org/Zope2/index/2.12.3/versions.cfg
 extends =
 #if $major > 3:
+#if $have_ztk:
+    plone/ztk.versions.cfg
+#end if
     plone/zope2.versions.cfg
 #end if
     plone/plone${major}.versions.cfg
