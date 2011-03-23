@@ -157,6 +157,7 @@ class Template(common.Template):
 
     def pre(self, command, output_dir, vars):
         common.Template.pre(self, command, output_dir, vars)
+        vars['sharp'] = '#'
         vars['linux'] = 'linux' in sys.platform
         if not 'opt_deps' in vars:
             vars['opt_deps'] = ''
