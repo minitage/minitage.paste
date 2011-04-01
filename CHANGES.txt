@@ -2,8 +2,8 @@
 CHANGES
 ==============
 
-Up
---------
+1.3.1854 (unreleased)
+--------------------------
 
     - blobstorage improvments
     - upgrade plone4 versions (zope 212/plone4 KGS)
@@ -19,6 +19,7 @@ Up
     - add several plone addons
     - fix archetypes.schemaextender versions on p4/p41
     - fix supervisor init script generation
+    - add rpath to minitage.instances.env
 
 -> 1.3.176
 -----------
