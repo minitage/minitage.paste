@@ -29,6 +29,9 @@
   <option order="0000" name="with_binding_ldap"                  description="LDAP bindings y/n"/>
   <option order="0000" name="with_binding_pdf"                   description="PDF Python various bindings including pypdf Y/n"/>
   <option order="0000" name="with_binding_pil"                   description="Python imaging (dangerous to disable) y/n" default="y"/>
+  <option order="0000" name="with_binding_lxml"                  description="lxml y/n" default="n"/>
+  <option order="0000" name="with_binding_pyqt"                  description="Python Qt y/n" default="n"/>
+  <option order="0000" name="with_binding_tesseract"             description="Tesseract OCR support, y/n" default="n"/>
   <option order="0000" name="with_binding_sugar"                 description="Python SugarCrm bindings y/n" default="n"/>
   <option order="0000" name="with_binding_xlwt"                  description="xlwt,see http://pypi.python.org/pypi/xlwt/ y/n"/>
   <option order="0000" name="with_database_mysql"                description="Mysql python bindings y/n"/>
@@ -159,7 +162,7 @@
   <eggs>
     <egg name="zopyx.convert"                 options="with_ploneproduct_smartprintng" scripts="xslfo-convert"  />
     <egg name="BeautifulSoup"                 options="with_binding_bsoup,with_ploneproduct_smartprintng"   />
-    <egg name="lxml"                          options="with_ploneproduct_smartprintng,with_ploneproduct_cynin"   />
+    <egg name="lxml"                          options="with_ploneproduct_smartprintng,with_ploneproduct_cynin,with_binding_lxml"   />
     <egg name="elementtree"                   options="with_ploneproduct_smartprintng"   />
     <egg name="buildout.minitagificator"      options="with_minitage_devpackages"  />
     <egg name="ClueReleaseManager.paste"      options="with_minitage_otherpackages"  />
@@ -516,7 +519,7 @@
     <version p='plone.app.portlets'      v='1.2.1'   name='Fix http://dev.plone.org/plone/ticket/9437'/>
     <version p="plone.app.z3cform"       v="0.4.9"   name="plone.z3cform >= 0.6.0 break Singing and Dancing"/>
     <version p="plone.z3cform"           v="0.5.10"  name="plone.z3cform >= 0.6.0 break Singing and Dancing"/>
-    <version p="plone.directives.form"   v="1.0b6"   name="plone.z3cform >= 0.6.0 break Singing and Dancing"/>
+    <version p="plone.directives.form"   v="1.0b5"   name="plone.z3cform >= 0.6.0 break Singing and Dancing"/>
     <version p='z3c.form'                v='1.9.0'   name="plone.z3cform >= 0.6.0 break Singing and Dancing"/>
   </versions>
 <!--
@@ -585,6 +588,7 @@
     <version p='Products.SmartPrintNG'          v='1.2.13'  options='with_ploneproduct_smartprintng' />
     <version p='Products.TinyMCE'               v='1.2.3'   options='with_ploneproduct_tinymce,with_ploneproduct_plominotinymce' />
     <version p='python_dateutil'                v='1.5'     options="with_ploneproduct_p4a_cal"/>
+    <version p='python-dateutil'                v='1.5'     options="with_ploneproduct_p4a_cal"/>
     <version p='z3c.relationfield'              v='0.6.1'   options='with_ploneproduct_z3crelationfield,with_ploneproduct_dexterity'/>
 
     <version p='collective.singing'             v='0.7.1'   options='with_ploneproduct_sgdcg'/>

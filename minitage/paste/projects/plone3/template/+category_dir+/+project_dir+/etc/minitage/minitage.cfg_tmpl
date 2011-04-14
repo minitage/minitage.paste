@@ -8,6 +8,8 @@ location=\${buildout:directory}/../..
 site-packages=$xml2
 [libxslt]
 site-packages=$xslt
+[pyqt]
+site-packages=$pyqt
 
 [python${pyver}]
 #if $inside_minitage:
@@ -29,6 +31,9 @@ eggs-directory=\${minitage:location}/eggs/cache
 extra-paths+=
     \${libxml2:site-packages}
     \${libxslt:site-packages}
+#if $with_binding_pyqt
+    \${pyqt:site-packages}
+#end if
 
 [versions]
 # bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
@@ -50,7 +55,7 @@ includes-dirs = $includesdirs
 executable=\${python${pyver}:executable}
 #else
 #executable=\${python${pyver}:executable}
-#end if 
+#end if
 #if $with_binding_ldap:
 includes-dirs = $includesdirs
 #end if

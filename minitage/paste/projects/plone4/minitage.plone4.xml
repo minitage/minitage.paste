@@ -22,6 +22,7 @@
       <version p="plone.uuid"              v="1.0b2"   name="various pinning for z3 packages and p4 environments"/>
       <version p='plone.z3cform'           v='0.7.1'   name="various pinning for z3 packages and p4 environments"/>
       <version p="python-dateutil"         v="1.5"     name="various pinning for z3 packages and p4 environments"/>
+      <version p="python_dateutil"         v="1.5"     name="various pinning for z3 packages and p4 environments"/>
       <version p='rwproperty'              v='1.0'     name="various pinning for z3 packages and p4 environments"/>
       <version p='z3c.form'                v='2.4.2'   name="various pinning for z3 packages and p4 environments"/>
       <version p='z3c.formwidget.query'    v='0.5'     name="various pinning for z3 packages and p4 environments"/>

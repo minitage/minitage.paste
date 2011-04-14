@@ -170,6 +170,8 @@ class Template(common.Template):
 
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
+        if not 'with_ploneproduct_paasync' in vars:
+            vars['with_ploneproduct_paasync'] = False
         if not 'with_ploneproduct_fss' in vars:
             vars['with_ploneproduct_fss'] = False
         if vars['with_ploneproduct_ploneappblob']:
@@ -239,9 +241,29 @@ class Template(common.Template):
         if vars['with_binding_mapscript'] and vars['inside_minitage']:
             vars['opt_deps'] += ' %s' % search_latest('mapserver-\d\.\d*', vars['minilays'])
         # collective.geo
-        if vars['with_ploneproduct_cgeo'] and vars['inside_minitage']:
-            for i in ('geos-\d\.\d*','gdal-\d\.\d*'):
-                vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays'])
+        if 'with_ploneproduct_cgeo' in vars:
+            if vars['with_ploneproduct_cgeo'] and vars['inside_minitage']:
+                for i in ('geos-\d\.\d*','gdal-\d\.\d*'):
+                    vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays'])
+        # tesseact
+        if vars['with_binding_tesseract'] and vars['inside_minitage']:
+            for i in ('tesseract-\d','leptonica-\d'):
+                vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays']) 
+        # pyqt
+        vars['pyqt'] = ''
+        if vars['with_binding_pyqt'] and vars['inside_minitage']:
+            vars['opt_deps'] += ' %s' % search_latest('swiglib-\d\.\d+', vars['minilays'])  
+            for i in ('pyqt-\d\.\d+','sip-\d\.\d+'):
+                vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays'])  
+                vars['pyqt'] += '\n   %s' %  (
+                    '${buildout:directory}/../../'
+                    'eggs/%s/parts'
+                    '/site-packages-%s/site-packages-%s' % (
+                        search_latest(i, vars['minilays']), 
+                        vars['pyver'],
+                        vars['pyver'],
+                    )
+                )
 
         # openldap
         if vars['with_binding_ldap'] and vars['inside_minitage']:
