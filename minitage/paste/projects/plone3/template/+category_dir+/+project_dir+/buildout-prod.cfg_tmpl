@@ -74,5 +74,6 @@ ${fsscomment}    fss4
 #else
 #    supervisor
 #end if
+    chown
 
 \# vim:set ft=cfg:

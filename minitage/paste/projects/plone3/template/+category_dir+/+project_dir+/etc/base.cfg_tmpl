@@ -124,7 +124,6 @@ ${delicomment}    deliverance.test
     ${sane_name}_hudson_job
     ${sane_name}_hudson_deploy
     ${sane_name}_hudson_chmod
-    chown
 
 find-links = \${groups:find-links}
 eggs +=
