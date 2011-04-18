@@ -5,13 +5,11 @@ CHANGES
 1.3.1857 (unreleased)
 ---------------------
 
-- Nothing changed yet.
+- in plone template
 
+        - better ignore files 
+        - rewrite chown files
 
-1.3.1856 (2011-04-01)
----------------------
-
-- Nothing changed yet.
 
 
 1.3.1855 (2011-04-01)
