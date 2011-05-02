@@ -33,11 +33,17 @@
 
 # We want the production buildout + the debug bits.
 [buildout]
-extends=etc/base.cfg etc/backends/${devmode}.cfg
+extends=etc/base.cfg 
+    etc/backends/${devmode}.cfg 
+    etc/project/cluster.cfg
 parts+= omelette
-        ipzope
-        devmode
-        cg.devmode
+    instance1
+    instance2
+    instance3
+    instance4
+    ipzope
+    devmode
+    cg.devmode
 ${i18ncomment}    i18ndude
     zopeskel
 

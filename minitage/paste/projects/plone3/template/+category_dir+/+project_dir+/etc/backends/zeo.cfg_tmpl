@@ -58,6 +58,7 @@ eggs +=
 #if $with_ploneproduct_paasync
     \${instance:eggs}
 #end if 
+    ZopeUndo
     ZODB3 
 
 

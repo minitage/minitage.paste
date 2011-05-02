@@ -9,6 +9,8 @@ CHANGES
 
         - better ignore files 
         - rewrite chown files
+        - Add more than one instance in dev mode
+        - Add zope undo to zeoserver
 
 
 

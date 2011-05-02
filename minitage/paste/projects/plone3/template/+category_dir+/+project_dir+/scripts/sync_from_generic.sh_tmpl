@@ -87,6 +87,7 @@ a\     *bitbucket.org*
 a\     *repoze.org*
 a\     *crummy.com*
 a\     *minitage.org*
+a\     *bpython-interpreter.org*
 a\     *www.riverbankcomputing.com*
 a\     *.selenic.com*
 }" -i etc/sys/settings.cfg

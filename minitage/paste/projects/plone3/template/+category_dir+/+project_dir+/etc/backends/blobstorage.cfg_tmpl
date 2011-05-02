@@ -4,6 +4,7 @@
 [zeoserver]
 blob-storage = \${locations:blob-storage}
 eggs += plone.app.blob
+    ZopeUndo
 
 [instance]
 blob-storage = \${zeoserver:blob-storage}
