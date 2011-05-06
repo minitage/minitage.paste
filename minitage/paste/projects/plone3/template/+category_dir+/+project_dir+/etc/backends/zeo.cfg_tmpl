@@ -57,9 +57,9 @@ ${asynccomment}    </filestorage>
 eggs +=
 #if $with_ploneproduct_paasync
     \${instance:eggs}
-#end if 
+#end if
     ZopeUndo
-    ZODB3 
+    ZODB3
 
 
 # vim:set ft=cfg:
