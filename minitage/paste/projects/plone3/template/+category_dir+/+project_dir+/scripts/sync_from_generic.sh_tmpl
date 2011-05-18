@@ -38,10 +38,10 @@ EGGS_IMPORT_URL="\$IMPORT_URL/eggs"
 #end if
 sed -re "/\[sources\]/{
 #if $scm_type == 'git':
-        a \$PROJECT.policy =  git \$EGGS_IMPORT_URL/\$PROJECT.policy.git
-        a \$PROJECT.skin =    git \$EGGS_IMPORT_URL/\$PROJECT.skin.git
-        a \$PROJECT.tma =     git \$EGGS_IMPORT_URL/\$PROJECT.tma.git
-        a \$PROJECT.testing = git \$EGGS_IMPORT_URL/\$PROJECT.testing.git
+        a \$PROJECT.policy =  git \$EGGS_IMPORT_URL/\$PROJECT.policy
+        a \$PROJECT.skin =    git \$EGGS_IMPORT_URL/\$PROJECT.skin
+        a \$PROJECT.tma =     git \$EGGS_IMPORT_URL/\$PROJECT.tma
+        a \$PROJECT.testing = git \$EGGS_IMPORT_URL/\$PROJECT.testing
 #else
         a \$PROJECT.policy =  svn \$EGGS_IMPORT_URL/\$PROJECT.policy/trunk
         a \$PROJECT.skin =    svn \$EGGS_IMPORT_URL/\$PROJECT.skin/trunk

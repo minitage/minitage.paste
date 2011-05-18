@@ -64,7 +64,7 @@ backend zope
   cookie serverid
   option httpchk GET /
 
-  server  zope0101 \${hosts:instance1}:\${ports:instance1} cookie z0101 check maxconn 1 maxqueue 2
-  server  zope0102 \${hosts:instance2}:\${ports:instance2} cookie z0102 check maxconn 1 maxqueue 2
-  server  zope0103 \${hosts:instance3}:\${ports:instance3} cookie z0103 check maxconn 1 maxqueue 2
-  server  zope0104 \${hosts:instance4}:\${ports:instance4} cookie z0104 check maxconn 1 maxqueue 2
+  server  zope0101 \${hosts:instance1}:\${ports:instance1} cookie z0101 check maxconn 1 maxqueue 20
+  server  zope0102 \${hosts:instance2}:\${ports:instance2} cookie z0102 check maxconn 1 maxqueue 20
+  server  zope0103 \${hosts:instance3}:\${ports:instance3} cookie z0103 check maxconn 1 maxqueue 20
+  server  zope0104 \${hosts:instance4}:\${ports:instance4} cookie z0104 check maxconn 1 maxqueue 20
