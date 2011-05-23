@@ -168,6 +168,14 @@ class Template(common.Template):
         url = 'http://download.zope.org/Zope2/index/%s/versions.cfg' % v
         return url
 
+    def get_ztk_url(self, cvars=None):
+        if not cvars: cvars = {}
+        url, v = None, None
+        if getattr(self, 'packaged_ztk_version', False):
+            v = cvars.get('ztk_version', getattr(self, 'packaged_ztk_version'))
+        url = 'http://download.zope.org/zopetoolkit/index/%s/ztk-versions.cfg' % v
+        return url
+
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
         if not 'with_ploneproduct_paasync' in vars:
@@ -181,6 +189,9 @@ class Template(common.Template):
         vars['versions_url'] = self.get_versions_url(vars)
         vars['sources_url'] = self.get_sources_url(vars)
         vars['zope2_url'] = self.get_zope2_url(vars)
+        vars['ztk_url'] = self.get_ztk_url(vars)
+        if not vars['ztk_url']:
+            vars['ztk_url'] = False
         vars['sane_name'] = common.SPECIALCHARS.sub('', vars['project'])
         vars['category'] = 'zope'
         vars['includesdirs'] = ''
@@ -248,18 +259,18 @@ class Template(common.Template):
         # tesseact
         if vars['with_binding_tesseract'] and vars['inside_minitage']:
             for i in ('tesseract-\d','leptonica-\d'):
-                vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays']) 
+                vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays'])
         # pyqt
         vars['pyqt'] = ''
         if vars['with_binding_pyqt'] and vars['inside_minitage']:
-            vars['opt_deps'] += ' %s' % search_latest('swiglib-\d\.\d+', vars['minilays'])  
+            vars['opt_deps'] += ' %s' % search_latest('swiglib-\d\.\d+', vars['minilays'])
             for i in ('pyqt-\d\.\d+','sip-\d\.\d+'):
-                vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays'])  
+                vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays'])
                 vars['pyqt'] += '\n   %s' %  (
                     '${buildout:directory}/../../'
                     'eggs/%s/parts'
                     '/site-packages-%s/site-packages-%s' % (
-                        search_latest(i, vars['minilays']), 
+                        search_latest(i, vars['minilays']),
                         vars['pyver'],
                         vars['pyver'],
                     )
@@ -424,7 +435,7 @@ class Template(common.Template):
         vars['sreverseproxy_aliases'] = vars['reverseproxy_aliases'].split(',')
         suffix = vars['major']
         if vars['major'] > 3:
-            suffix = self.name.replace('minitage.plone', '') 
+            suffix = self.name.replace('minitage.plone', '')
         ztk_path = pkg_resources.resource_filename(
             'minitage.paste',
             'projects/plone%s/ztk.versions.cfg' % suffix

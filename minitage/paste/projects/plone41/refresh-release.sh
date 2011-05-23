@@ -33,9 +33,10 @@ PY="$w/../../../../../../bin/zopepy"
 plone41() {
     plone=$($PY -c "from minitage.paste.projects.plone41 import Template as Template;print Template.packaged_version")
     zope2=$($PY -c "from minitage.paste.projects.plone41 import Template;print Template.packaged_zope2_version")
-    ver="$(echo $plone | cut -nb1-3)" 
+    ztk=$($PY -c "from minitage.paste.projects.plone41 import Template;print Template.packaged_ztk_version")
+    ver="$(echo $plone | cut -nb1-3)"
     echo
-    echo  Refreshing :: $plone / $ver / $zope2
+    echo  Refreshing :: $plone / $ver / $zope2 / $ztk
     echo
     echo "#PLONE4 $plone KGS">versions.cfg
     wget http://dist.plone.org/release/$plone/versions.cfg -O-|sed -re "s/extends =/notused-extends =/g">>versions.cfg
@@ -43,9 +44,7 @@ plone41() {
     wget http://svn.plone.org/svn/plone/buildouts/plone-coredev/branches/$ver/sources.cfg  -O -|sed -re "s/\[buildout\]/[buildout-notused]/g">sources.cfg
     echo "#ZOP2 2  $zope2 KGS">zope2.versions.cfg
     wget http://download.zope.org/Zope2/index/$zope2/versions.cfg -O ->> zope2.versions.cfg
-    ztk=$(cat zope2.versions.cfg|grep extends|sed -re "s/extends = //g")
-    ztkver=$(echo $ztk|sed -re "s/\/ztk-versions.cfg//g"|sed -re "s|http://download.zope.org/zopetoolkit/index/||g")  
-    wget $ztk -O "ztk.versions.cfg"
+    wget http://download.zope.org/zopetoolkit/index/$ztk/ztk-versions.cfg -O "ztk.versions.cfg"
     sed -re "/\[versions\]/ {
 a #ZTK: $ztkver
 }" -i ztk.versions.cfg

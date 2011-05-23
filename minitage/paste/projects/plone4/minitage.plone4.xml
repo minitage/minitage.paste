@@ -31,7 +31,8 @@
       <version p="StoneageHTML"            v="0.2.1"   name="singing and dancing"/>
     </versions>
     <checkedversions>
-    <version p='archetypes.schemaextender' v='2.0.3'   options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />
+      <version p='archetypes.schemaextender' v='2.0.3'   options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />
+      <version p='Products.DataGridField'    v='1.8b1' options="with_ploneproduct_poi"/>
       <version p='medialog.subskins'    v='4.1b1' options="with_ploneproduct_subskins"/>
       <version p='geopy'                v='0.94'  options="with_ploneproduct_cgeo"/>
       <version p='Shapely'              v='1.2.5' options="with_ploneproduct_cgeo"/>
@@ -45,7 +46,6 @@
       <version p="zc.dict"          v="1.3b1"  options="with_ploneproduct_paasync"/>
       <version p="zc.blist"         v="1.0b2"  options="with_ploneproduct_paasync"/>
       <version p="zope.bforest"     v="1.2"    options="with_ploneproduct_paasync"/>
-      <version p="uuid"             v="1.30"   options="with_ploneproduct_paasync"/>
       <version p="Twisted"          v="10.2.0" options="with_ploneproduct_paasync"/>
       <version p="zc.monitor"       v="0.2.0"  options="with_ploneproduct_paasync"/>
       <version p="zc.ngi"           v="1.1.6"  options="with_ploneproduct_paasync"/>
@@ -53,28 +53,28 @@
       <!-- dexterity -->
       <version p="collective.z3cform.datetimewidget" v="1.0.4" options="with_ploneproduct_dexterity" />
       <version p="mocker"                            v="1.0"   options="with_ploneproduct_dexterity" />
-      <version p="plone.alterego"                    v="1.0b1" options="with_ploneproduct_dexterity" />
-      <version p="plone.dexterity"                   v="1.0b7" options="with_ploneproduct_dexterity" />
-      <version p="plone.app.dexterity"               v="1.0b3" options="with_ploneproduct_dexterity" />
+      <version p="plone.alterego"                    v="1.0" options="with_ploneproduct_dexterity" />
+      <version p="plone.dexterity"                   v="1.0" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.dexterity"               v="1.0" options="with_ploneproduct_dexterity" />
       <version p="plone.app.intid"                   v="1.0b3" options="with_ploneproduct_dexterity" />
-      <version p="plone.app.relationfield"           v="1.0b6" options="with_ploneproduct_dexterity" />
-      <version p="plone.app.textfield"               v="1.0b7" options="with_ploneproduct_dexterity" />
-      <version p="plone.app.versioningbehavior"      v="1.0b2" options="with_ploneproduct_dexterity" />
-      <version p="plone.autoform"                    v="1.0b6" options="with_ploneproduct_dexterity,with_ploneproduct_cgeo,with_ploneproduct_pz3cform" />
-      <version p="plone.behavior"                    v="1.0b6" options="with_ploneproduct_dexterity" />
-      <version p="plone.directives.dexterity"        v="1.0b1" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.relationfield"           v="1.0" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.textfield"               v="1.0" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.versioningbehavior"      v="1.0b3" options="with_ploneproduct_dexterity" />
+      <version p="plone.autoform"                    v="1.0" options="with_ploneproduct_dexterity,with_ploneproduct_cgeo,with_ploneproduct_pz3cform" />
+      <version p="plone.behavior"                    v="1.0.1" options="with_ploneproduct_dexterity" />
+      <version p="plone.directives.dexterity"        v="1.0" options="with_ploneproduct_dexterity" />
       <version p="plone.folder"                      v="1.0.1" options="with_ploneproduct_dexterity" />
-      <version p="plone.formwidget.autocomplete"     v="1.1.1" options="with_ploneproduct_dexterity" />
-      <version p="plone.formwidget.contenttree"      v="1.0b3" options="with_ploneproduct_dexterity" />
-      <version p="plone.formwidget.namedfile"        v="1.0b9" options="with_ploneproduct_dexterity" />
+      <version p="plone.formwidget.autocomplete"     v="1.2.1" options="with_ploneproduct_dexterity" />
+      <version p="plone.formwidget.contenttree"      v="1.0.1" options="with_ploneproduct_dexterity" />
+      <version p="plone.formwidget.namedfile"        v="1.0" options="with_ploneproduct_dexterity" />
       <version p="plone.mocktestcase"                v="1.0b3" options="with_ploneproduct_dexterity" />
-      <version p="plone.namedfile"                   v="1.0b6" options="with_ploneproduct_dexterity" />
-      <version p="plone.rfc822"                      v="1.0b2" options="with_ploneproduct_dexterity,with_ploneproduct_cgeo" />
+      <version p="plone.namedfile"                   v="1.0.3" options="with_ploneproduct_dexterity" />
+      <version p="plone.rfc822"                      v="1.0" options="with_ploneproduct_dexterity,with_ploneproduct_cgeo" />
       <version p="plone.scale"                       v="1.2.2" options="with_ploneproduct_dexterity" />
-      <version p="plone.schemaeditor"                v="1.0b2" options="with_ploneproduct_dexterity" />
-      <version p="plone.supermodel"                  v="1.0b7" options="with_ploneproduct_dexterity,with_ploneproduct_cgeo" />
-      <version p="plone.synchronize"                 v="1.0b1" options="with_ploneproduct_dexterity" />
-      <version p="uuid"                              v="1.30"  options="with_ploneproduct_dexterity" />
+      <version p="plone.schemaeditor"                v="1.0.1" options="with_ploneproduct_dexterity" />
+      <version p="plone.supermodel"                  v="1.0.3" options="with_ploneproduct_dexterity,with_ploneproduct_cgeo" />
+      <version p="plone.synchronize"                 v="1.0.1" options="with_ploneproduct_dexterity" />
+      <version p="uuid"                              v="1.30"  options="with_ploneproduct_dexterity,with_ploneproduct_paasync" />
       <version p="z3c.batching"                      v="1.1.0" options="with_ploneproduct_dexterity,with_ploneproduct_pz3cform" />
       <version p="z3c.blobfile"                      v="0.1.5" options="with_ploneproduct_dexterity" />
       <version p="z3c.objpath"                       v="1.0"   options="with_ploneproduct_dexterity" />
@@ -101,7 +101,7 @@
 
       <version p='ordereddict'             v='1.1'      options="with_tool_i18ndude"/>
       <version p='Products.Poi'            v='2.0.1'    options="with_ploneproduct_poi"/>
-      <version p='collective.js.jqueryui'  v='1.8.9.2' options='with_ploneproduct_cjqui' />
+      <version p='collective.js.jqueryui'  v='1.8.12.2' options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
     </checkedversions>
     <eggs>
       <egg name="bpython"              options="with_tool_bpython"           scripts="bpython" default="y" />
@@ -141,6 +141,7 @@
     </gs>
     <sources>
       <!-- collective.geo-->
+      <source name="collective.js.jqueryui"               type="svn" url="https://svn.plone.org/svn/collective/collective.js.jqueryui/trunk"                 options="with_ploneproduct_cjqui"/>
       <source name="collective.geo.geoggrapher" type="svn" url="http://svn.plone.org/svn/collective/collective.geo.geographer/trunk" options="with_ploneproduct_cgeo"  autocheckout="y"/>
       <source name="collective.z3cform.colorpicker" type="svn" url="http://svn.plone.org/svn/collective/collective.z3cform.colorpicker/trunk" options="with_ploneproduct_cgeo,with_ploneproduct_colorpickerform" autocheckout="y"/>
       <source name="collective.geo.contentlocations" type="svn" url="http://svn.plone.org/svn/collective/collective.geo.contentlocations/trunk" options="with_ploneproduct_cgeo"/>
@@ -234,6 +235,7 @@
       <egg name="p4a.z2utils"                    options="with_ploneproduct_p4a_vid"          />
     </eggs>
     <sources>
+      <source name="collective.js.jqueryui" />
       <source name="Products.SimpleAttachment" />
       <source name="Products.csvreplicata"/>
       <source name="collective.contentlicensing" />
@@ -257,7 +259,7 @@
       <source name="Products.Collage" />
     </sources>
     <checkedversions>
-      <version p='collective.js.jqueryui'    options='with_ploneproduct_cjqui' />
+      <version p='collective.js.jqueryui'    options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
       <version p='archetypes.schemaextender' options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />
       <version p='zope.app.publisher'    options='with_ploneproduct_fivegrok' />
       <version p='zope.app.zcmlfiles'    options='with_ploneproduct_fivegrok' />
@@ -282,6 +284,7 @@
       <version p='martian'               options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
     </checkedversions>
     <versions>
+      <version name="Needed for work on plone before 4"/>
       <version name="plone.z3cform >= 0.6.0 break Singing and Dancing"/>
       <version name="break S D - http://groups.google.com/group/singing-dancing/browse_thread/thread/568de0b8226184f6"/>
       <version name="break S D"/>

@@ -12,6 +12,14 @@ CHANGES
         - Add more than one instance in dev mode
         - Add zope undo to zeoserver
         - Add more queues in balancer template
+        - upgrade dexterity to 1.0
+        - upgrade plone41 to 4.1rc1
+        - upgrade plone40 to 4.0.6
+        - add Products:
+
+            - qi.portlet.tagclouds
+            - collective.googleanalytics
+            - solgema.fullcalendar
 
 
 
@@ -55,7 +63,6 @@ CHANGES
     - devmode support
     - apache & deliverance integration for plone3
     - lot of new plone products
-    - pilwotk 116 -> pil 117
     - pilwotk 116 -> pil 117
 
 

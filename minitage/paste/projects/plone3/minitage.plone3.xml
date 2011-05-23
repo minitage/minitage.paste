@@ -134,6 +134,9 @@
   <!--END makina -->
   <option order="00000" name="with_ploneproduct_quaestrio"              description="Quaestrio, see http://pypi.python.org/pypi/Products.Quaestrio y/n"                                               default="n"/>
   <option order="00000" name="with_ploneproduct_clouseau"      description="Clouseau, see http://plone.org/products/clouseau y/n"                                               default="n"/>
+  <option order="00000" name="with_ploneproduct_cga"      description="collective.googleanalytics, see http://pypi.python.org/pypi/collective.googleanalytics y/n"                                               default="n"/>
+  <option order="00000" name="with_ploneproduct_qiptagcloud"   description="qi.portlet.TagClouds, see http://pypi.python.org/pypi/qi.portlet.TagClouds y/n"/>
+  <option order="00000" name="with_ploneproduct_sfcalendar"   description="SolgemaFullCalendar, see http://pypi.python.org/pypi/Solgema.fullcalendar y/n"/>
 </options>
   <!--
     LINK THERE YOUR EGGS TO BE Installed on option triggering.
@@ -161,6 +164,8 @@
   -->
   <eggs>
     <egg name="zopyx.convert"                 options="with_ploneproduct_smartprintng" scripts="xslfo-convert"  />
+    <egg name="Solgema.fullcalendar"          options="with_ploneproduct_sfcalendar" zpackage="y" zcml="configure" />
+    <egg name="qi.portlet.TagClouds"          options="with_ploneproduct_qiptagcloud" zpackage="y" zcml="configure" />
     <egg name="BeautifulSoup"                 options="with_binding_bsoup,with_ploneproduct_smartprintng"   />
     <egg name="lxml"                          options="with_ploneproduct_smartprintng,with_ploneproduct_cynin,with_binding_lxml"   />
     <egg name="elementtree"                   options="with_ploneproduct_smartprintng"   />
@@ -254,6 +259,7 @@
     <egg name="p4a.plonecalendar"              options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
     <egg name="p4a.ploneevent"                 options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
     <egg name="p4a.plonevideoembed"            options="with_ploneproduct_p4a_vid"          zpackage="y" zcml="configure"/>
+    <egg name="collective.googleanalytics"     options="with_ploneproduct_cga"              zpackage="y" zcml="configure"/>
     <egg name="p4a.plonevideo"                 options="with_ploneproduct_p4a_vid"          zpackage="y" zcml="configure"/>
     <egg name="p4a.videoembed"                 options="with_ploneproduct_p4a_vid"          zpackage="y" zcml="configure"/>
     <egg name="p4a.video"                      options="with_ploneproduct_p4a_vid"                       zcml="configure"/>
@@ -362,7 +368,7 @@
     <product name="CMFPlacefulWorkflow"            options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard,with_ploneproduct_cynin" />
     <product name="CMFPlomino"                     options="with_ploneproduct_plomino"          />
     <product name="Collage"                        options="with_ploneproduct_collage"          />
-    <product name="collective.js.jquery"           options="with_ploneproduct_cjqui"           />
+    <product name="collective.js.jquery"           options="with_ploneproduct_cjqui,with_ploneproduct_sfcalendar"           />
     <product name="ContentWellPortlets"            options="with_ploneproduct_contentwellportlet"/>
     <product name="csvreplicata"                   options="with_ploneproduct_csvreplica"       />
     <product name="DataGridField"                  options="with_ploneproduct_agridfield"       />
@@ -409,7 +415,9 @@
   -->
   <gs>
      <!-- Their Extension/Install;py create the tool and other things not handled via GS ...  -->
+    <product name="Solgema.fullcalendar"          options="with_ploneproduct_sfcalendar"   order="900" profile="default" />
     <product name="Products.SmartPrintNG"          options="with_ploneproduct_smartprintng"   order="900" profile="default" />
+    <product name="qi.portlet.TagClouds"          options="with_ploneproduct_qiptagcloud"   order="900" profile="default" />
     <product name="aws.pdfbook"                    options="with_ploneproduct_awspdfbook"   />
     <product name="Products.FacultyStaffDirectory" options="with_ploneproduct_facultystaff"   order="1000" profile="default" />
     <product name="Products.FacultyStaffDirectory" options="with_ploneproduct_facultystaff"   order="1001" profile="plone3-actions-fix" />
@@ -452,6 +460,7 @@
     <product name="Products.ATVocabularyManager"   options="with_ploneproduct_atvmanager"/>
     <product name="Products.CMFPlacefulWorkflow"   options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard,with_ploneproduct_cynin" profile="CMFPlacefulWorkflow" comment="before ploneboard at least" order="100"/>
     <product name="Products.Collage"               options="with_ploneproduct_collage"          />
+    <product name="collective.googleanalytics"     options="with_ploneproduct_cga"          />
     <product name="Products.ContentWellPortlets"   options="with_ploneproduct_contentwellportlet"/>
     <product name="Products.csvreplicata"          options="with_ploneproduct_csvreplica"       />
     <product name="Products.fatsyndication"        options="with_ploneproduct_quills,with_ploneproduct_cynin" order="100"/>
@@ -533,13 +542,23 @@
       options: comma separated list of options to enable the pinning
     -->
   <checkedversions>
+    <version p="Solgema.fullcalendar"       v="1.8"     options="with_ploneproduct_sfcalendar"/>
+    <version p="Solgema.ContextualContentMenu"       v="0.1"     options="with_ploneproduct_sfcalendar"/>
+    <version p='collective.z3cform.norobots'    v='1.2.1'    options="with_ploneproduct_cz3cformnorobots"/>
+    <version p='qi.portlet.TagClouds'    v='1.32'    options="with_ploneproduct_qiptagcloud"/>
+    <version p='collective.gallery'      v='1.0b5'   options="with_ploneproduct_cgallery"/>
+    <version p='collective.js.galleriffic' v='1.0'   options="with_ploneproduct_cgallery"/>
+    <version p='flickrapi'               v='1.4.2'   options="with_ploneproduct_cgallery"/>
+    <version p='gdata'                   v='2.0.14'   options="with_ploneproduct_cgallery"/>
+    <version p='collective.watcherlist'  v='0.2'   options="with_ploneproduct_poi"/>
     <version p='plone.outputfilters'      v='1.0b1'   options="with_ploneproduct_tinymce"/>
+    <version p='collective.googleanalytics'     v='1.1'   options="with_ploneproduct_cga"/>
     <version p='archetypes.schemaextender'      v='2.0.3'   options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />
     <version p='aws.pdfbook'                    v='1.0.0b1' options='with_ploneproduct_awspdfbook' />
     <version p='bda.cache'                      v='1.1.3'   options='with_ploneproduct_cynin' />
     <version p='bda.ldap'                       v='1.5.2'   options='with_ploneproduct_cynin' />
     <version p='collective.contentlicensing'    v='2.2.0-final'   options='with_ploneproduct_contentlicensing' />
-    <version p='collective.js.jqueryui'         v='1.7.2.7' options='with_ploneproduct_cjqui' />
+    <version p='collective.js.jqueryui'         v='1.7.2.7' options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
     <version p='collective.plonetruegallery'    v='1.0.3'     options="with_ploneproduct_truegallery"/>
     <version p='collective.portlettabber'       v='0.2.0'   options='with_ploneproduct_cportlettabber'/>
     <version p='dateable.chronos'               v='0.7.1'   options="with_ploneproduct_p4a_cal"/>
@@ -567,7 +586,7 @@
     <version p="plone.app.blob"                 v="1.4"     options="with_ploneproduct_ploneappblob"/>
     <version p="plone.app.jquerytools"          v="1.2b4"   options="with_ploneproduct_plonejqtools"/>
     <version p='plone.formwidget.autocomplete'  v='1.1.1'     options='with_ploneproduct_autocomplete'/>
-    <version p='Products.AddRemoveWidget'       v='1.4.4'   options='with_ploneproduct_addremovewidget'/>
+    <version p='Products.AddRemoveWidget'       v='1.4.4'   options='with_ploneproduct_addremovewidget,with_ploneproduct_poi'/>
     <version p='Products.ATSchemaEditorNG'      v='0.8'     options='with_ploneproduct_atschemaeditor'/>
     <version p='Products.ATVocabularyManager'   v='1.6'     options='with_ploneproduct_atvmanager'/>
     <version p='Products.Clouseau'              v='0.9'     options="with_ploneproduct_clouseau"/>
@@ -626,6 +645,8 @@
 
   -->
   <sources>
+    <source name="Solgema.fullcalendar"             type="svn"  url="http://svn.plone.org/svn/collective/Solgema.fullcalendar/trunk" options="with_ploneproduct_sfcalendar"/>
+    <source name="qi.portlet.TagClouds"             type="svn"  url="http://svn.plone.org/svn/collective/qi.portlet.TagClouds/trunk" options="with_ploneproduct_qiptagcloud"/>
     <source name="Products.ATWorkgroup"             type="svn"  url="https://svn.plone.org/svn/collective/ATWorkgroup/branches/eggification/Products.ATWorkgroup" options="with_ploneproduct_atworkgroup" default="y"/>
     <source name="aws.pdfbook"                      type="svn"  url="https://svn.plone.org/svn/collective/aws.pdfbook/trunk"                                      options="with_ploneproduct_awspdfbook"/>
     <source name="archetypes.schemaextender"        type="svn"  url="https://svn.plone.org/svn/archetypes/archetypes.schemaextender/trunk"                        options="with_ploneproduct_schemaextender,with_ploneproduct_facultystaff,with_ploneproduct_cynin"/>
@@ -731,6 +752,7 @@
     <source name="plomino.tinymce"                      type="svn" url="https://plomino.svn.sourceforge.net/svnroot/plomino/branches/leprodupure/plomino.tinymce" options="with_ploneproduct_plominotinymce" />
     <source name="pypgoptimizator"                      type="git" url="ssh://git.minitage.org/git/others/pypgoptimizator"                                        options="with_minitage_otherpackages"  />
     <source name="collective.harlequin"                 type="svn" url="https://svn.plone.org/svn/collective/collective.harlequin/trunk"                          options="with_ploneproduct_harlequin"/>
+    <source name="collective.googleanalytics"        type="svn" url="http://svn.plone.org/svn/collective/collective.googleanalytics/trunk"                          options="with_ploneproduct_cga"/>
     <source name="pysugarng"                            type="hg"  url="https://bitbucket.org/kiorky/pysugar"                                                     options="with_binding_sugar"/>
     <source name="collective.generic.skel"              type="svn" url="https://svn.plone.org/svn/collective/collective.generic.skel/trunk"                       options="with_tool_cgeneric"/>
     <source name="collective.generic.webbuilder"        type="svn" url="https://svn.plone.org/svn/collective/collective.generic.webbuilder/trunk"                 options="with_tool_cgeneric"/>
