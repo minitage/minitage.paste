@@ -51,6 +51,7 @@ extends =
 #if $major > 3:
 #if $have_ztk:
     plone/ztk.versions.cfg
+    plone/zopeapp.versions.cfg
 #end if
     plone/zope2.versions.cfg
 #end if

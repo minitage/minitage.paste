@@ -45,6 +45,7 @@ plone41() {
     echo "#ZOP2 2  $zope2 KGS">zope2.versions.cfg
     wget http://download.zope.org/Zope2/index/$zope2/versions.cfg -O ->> zope2.versions.cfg
     wget http://download.zope.org/zopetoolkit/index/$ztk/ztk-versions.cfg -O "ztk.versions.cfg"
+    wget http://download.zope.org/zopetoolkit/index/$ztk/zopeapp-versions.cfg -O "zopeapp.versions.cfg"
     sed -re "/\[versions\]/ {
 a #ZTK: $ztkver
 }" -i ztk.versions.cfg
