@@ -436,6 +436,10 @@ class Template(common.Template):
         suffix = vars['major']
         if vars['major'] > 3:
             suffix = self.name.replace('minitage.plone', '')
+        zaztk_path = pkg_resources.resource_filename(
+            'minitage.paste',
+            'projects/plone%s/zopeapp.versions.cfg' % suffix
+        ) 
         ztk_path = pkg_resources.resource_filename(
             'minitage.paste',
             'projects/plone%s/ztk.versions.cfg' % suffix
@@ -444,6 +448,7 @@ class Template(common.Template):
         if os.path.exists(ztk_path):
             vars['have_ztk'] = True
             vars['ztk_path'] = ztk_path
+            vars['zaztk_path'] = zaztk_path
 
     def post(self, command, output_dir, vars):
         common.Template.post(self, command, output_dir, vars)
@@ -458,6 +463,7 @@ class Template(common.Template):
         sdst = os.path.join(vars['path'],
                            'etc', 'plone', 'plone%s.sources.cfg' % vars['major'])
         ztkdst = os.path.join(vars['path'], 'etc', 'plone', 'ztk.versions.cfg')
+        zaztkdst = os.path.join(vars['path'], 'etc', 'plone', 'zopeapp.versions.cfg')
         zdst = os.path.join(vars['path'],
                             'etc', 'plone', 'zope2.versions.cfg')
         os.rename(os.path.join(vars['path'], 'gitignore'),
@@ -495,6 +501,7 @@ class Template(common.Template):
         # zope2 KGS
         if vars['have_ztk'] == True:
             shutil.copy2(vars['ztk_path'], ztkdst)
+            shutil.copy2(vars['zaztk_path'], zaztkdst)
 
         if vars['major'] > 3:
             #try:
