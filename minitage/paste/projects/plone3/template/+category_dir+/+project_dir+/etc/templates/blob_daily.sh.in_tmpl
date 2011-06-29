@@ -2,7 +2,7 @@
 REPOSITORY="\${blobdaily:backuppath}"
 INSTANCEPATH="\${buildout:directory}"
 mkdir -p \$REPOSITORY
-cd "\$INSTANCEPATH/var"
+cd "\$INSTANCEPATH/var/blobstorage"
 DATE="\$(date "+%F")"
-tar czvf "\$REPOSITORY/blob-\$DATE.tgz" blob
+tar czvf "\$REPOSITORY/blob-\$DATE.tgz" blobstorage
 
