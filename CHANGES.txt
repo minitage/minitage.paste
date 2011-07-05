@@ -20,8 +20,14 @@ CHANGES
             - qi.portlet.tagclouds
             - collective.googleanalytics
             - solgema.fullcalendar
-
-
+            - collective.portlet.relateditems
+            - plone.contentratings
+            - quintagroup.plonecaptchas
+            - quintagroup cumulus portlet
+            - collective.quickupload
+            - collective.contentrules.mailtolocalrole
+            - EasyNewsletter
+            - ReDirectionTool
 
 1.3.1855 (2011-04-01)
 ---------------------

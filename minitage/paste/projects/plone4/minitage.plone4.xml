@@ -11,6 +11,14 @@
       <option order="0000" name="with_ploneproduct_paasync"  description="Plone.app.async, see http://pypi.python.org/pypi/plone.app.async/ y/n" default="n"/>
       <option order="0000" name="with_ploneproduct_subskins"  description="subskins, see http://pypi.python.org/pypi/medialog.subskins y/n" default="n"/>
       <option order="00000" name="with_ploneproduct_cgeo"      description="collective.geo (svn trunk), see http://plone.org/products/collective.geo y/n"                                               default="n"/>
+      <option order="00000" name="with_ploneproduct_crelateditems" description="collective.portlet.relateditems, see http://pypi.python.org/pypi/collective.portlet.relateditems y/n" default="n"/>
+      <option order="00000" name="with_ploneproduct_pratings"      description="plone.contentratings, see http://plone.org/products/plone-contentratings y/n" default="n"/>
+      <option order="00000" name="with_ploneproduct_qcaptchas"     description="quintagroup.plonecaptchas, see  y/n" default="n"/>
+      <option order="01007" name="with_ploneproduct_qcumulus"      description="quintagroup cumulus portlet, see http://quintagroup.com/services/plone-development/products/quintagroup.portlet.cumulus y/n" default="n"/>
+      <option order="01007" name="with_ploneproduct_qupload"       description="collective.quickupload, see http://pypi.python.org/pypi/collective.quickupload  y/n" default="n"/>
+      <option order="01007" name="with_ploneproduct_cmailtolrole"  description="collective.contentrules.mailtolocalrole, see http://pypi.python.org/pypi/collective.contentrules.mailtolocalrole  y/n" default="n"/>
+      <option order="01007" name="with_ploneproduct_enewsletter"   description="EasyNewsletter, see http://plone.org/products/easynewsletter y/n" default="n"/>
+      <option order="01007" name="with_ploneproduct_rtool"         description="ReDirectionTool, see http://plone.org/products/easynewsletter y/n" default="n"/>
     </options>
     <versions>
       <!-- z3c.form -->
@@ -31,9 +39,20 @@
       <version p="StoneageHTML"            v="0.2.1"   name="singing and dancing"/>
     </versions>
     <checkedversions>
-      <version p='archetypes.schemaextender' v='2.0.3'   options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />
-      <version p='Products.DataGridField'    v='1.8b1' options="with_ploneproduct_poi"/>
-      <version p='medialog.subskins'    v='4.1b1' options="with_ploneproduct_subskins"/>
+      <version p='archetypes.schemaextender'               v='2.0.3' options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />
+      <version p='Products.DataGridField'                  v='1.8b1' options="with_ploneproduct_poi"/>
+      <version p='medialog.subskins'                       v='4.1b1' options="with_ploneproduct_subskins"/>
+      <version p="Products.EasyNewsletter"                 v="2.5.10a2"  options="with_ploneproduct_enewsletter"/>
+      <version p="Products.RedirectionTool"                v="1.3"   options="with_ploneproduct_rtool"/>
+      <version p="collective.quickupload"                  v="1.1.1" options="with_ploneproduct_qupload"/>
+      <version p="quintagroup.portlet.cumulus"             v="1.1.0" options="with_ploneproduct_qcumulus"/>
+      <version p="collective.contentrules.mailtolocalrole" v="1.1"   options="with_ploneproduct_cmailtolrole"/>
+      <version p='quintagroup.plonecaptchas'               v='4.0'   options="with_ploneproduct_qcaptchas"/>
+      <version p='quintagroup.captcha.core'                v='0.2.4' options="with_ploneproduct_qcaptchas"/>
+      <version p='quintagroup.formlib.captcha'               v='1.3'   options="with_ploneproduct_qcaptchas"/>
+      <version p='plone.contentratings'                    v='1.0-rc3' options="with_ploneproduct_pratings"/>
+      <version p='contentratings'                          v='1.0-rc3' options="with_ploneproduct_pratings"/>
+      <version p='collective.portlet.relateditems'    v='0.3.4'      options="with_ploneproduct_crelateditems"/>
       <version p='geopy'                v='0.94'  options="with_ploneproduct_cgeo"/>
       <version p='Shapely'              v='1.2.5' options="with_ploneproduct_cgeo"/>
       <version p='Products.LinguaPlone' v='4.0.2' options="with_ploneproduct_lingua"/>
@@ -113,6 +132,14 @@
       <egg name="zope.app.keyreference"  options="with_ploneproduct_paasync"/>
 
       <!-- collective.geo -->
+      <egg name="Products.RedirectionTool"       options="with_ploneproduct_rtool" zpackage="y" zcml="configure"       />
+      <egg name="Products.EasyNewsletter"        options="with_ploneproduct_enewsletter" zpackage="y" zcml="configure"       />
+      <egg name="collective.contentrules.mailtolocalrole"        options="with_ploneproduct_cmailtolrole" zpackage="y" zcml="configure"       />
+      <egg name="quintagroup.plonecaptchas"        options="with_ploneproduct_qcaptchas" zpackage="y" zcml="configure"       />
+      <egg name="collective.quickupload"           options="with_ploneproduct_qupload"   zpackage="y" zcml="configure"/>
+      <egg name="quintagroup.portlet.cumulus"      options="with_ploneproduct_qcumulus"  zpackage="y" zcml="configure"       /> 
+      <egg name="plone.contentratings"             options="with_ploneproduct_pratings"   zpackage="y"  zcml="configure"/>
+      <egg name="collective.portlet.relateditems"  options="with_ploneproduct_crelateditems"          zcml="configure"/>
       <egg name="collective.geo.contentlocations"  options="with_ploneproduct_cgeo"  zcml="configure"/>
       <egg name="collective.geo.geographer"        options="with_ploneproduct_cgeo"  zcml="configure"/>
       <egg name="collective.geo.geopoint"          options="with_ploneproduct_cgeo"  zcml="configure"/>
@@ -128,6 +155,13 @@
       <product name="medialog.subskins"            options="with_ploneproduct_subskins"   order="900" />
     </qi>
     <gs>
+      <product name="Products.RedirectionTool"        options="with_ploneproduct_rtool"     order="900" />
+      <product name="Products.EasyNewsletter"         options="with_ploneproduct_enewsletter"     order="900" />
+      <product name="collective.quickupload"          options="with_ploneproduct_qupload"         order="900" />
+      <product name="quintagroup.plone.captchas"      options="with_ploneproduct_qcaptchas"       order="900" />
+      <product name="quintagroup.portlet.cumulus"     options="with_ploneproduct_qcumulus"        order="900" />
+      <product name="plone.contentratings"            options="with_ploneproduct_pratings"        order="900" />
+      <product name="collective.portlet.relateditems" options="with_ploneproduct_crelateditems"   order="900" />
       <product name="plone.app.dexterity"          options="with_ploneproduct_dexterity"   order="900" />
       <product name="medialog.subskins"            options="with_ploneproduct_subskins"   order="900" />
       <!-- collective.geo -->
@@ -141,7 +175,14 @@
     </gs>
     <sources>
       <!-- collective.geo-->
-      <source name="collective.js.jqueryui"               type="svn" url="https://svn.plone.org/svn/collective/collective.js.jqueryui/trunk"                 options="with_ploneproduct_cjqui"/>
+      <source name="Products.EasyNewsletter"      type="svn" url="http://svn.plone.org/svn/collective/Products.EasyNewsletter/trunk"  options="with_ploneproduct_enewsletter"/>
+      <source name="collective.contentrules.mailtolocalrole"      type="svn" url="http://svn.plone.org/svn/collective/collective.contentrules.mailtolocalrole/trunk"  options="with_ploneproduct_cmailtolrole"/>
+      <source name="collective.quickupload"      type="svn" url="http://svn.plone.org/svn/collective/collective.quickupload/trunk"  options="with_ploneproduct_qupload"/>
+      <source name="quintagroup.plone.captchas"      type="svn" url="http://svn.quintagroup.com/products/quintagroup.plonecaptchas/branches/plone4"  options="with_ploneproduct_qcaptchas"/>
+      <source name="quintagroup.portlet.cumulus"     type="svn" url="http://svn.quintagroup.com/products/quintagroup.portlet.cumulus/trunk"          options="with_ploneproduct_qcumulus"/>
+      <source name="plone.contentratings"            type="svn" url="http://svn.plone.org/svn/collective/plone.contentratings/trunk"                 options="with_ploneproduct_pratings"/>
+      <source name="collective.portlet.relateditems" type="svn" url="http://svn.plone.org/svn/collective/collective.portlet.relateditems/trunk"      options="with_ploneproduct_crelateditems"/>
+      <source name="collective.js.jqueryui"          type="svn" url="https://svn.plone.org/svn/collective/collective.js.jqueryui/trunk"              options="with_ploneproduct_cjqui"/>
       <source name="collective.geo.geoggrapher" type="svn" url="http://svn.plone.org/svn/collective/collective.geo.geographer/trunk" options="with_ploneproduct_cgeo"  autocheckout="y"/>
       <source name="collective.z3cform.colorpicker" type="svn" url="http://svn.plone.org/svn/collective/collective.z3cform.colorpicker/trunk" options="with_ploneproduct_cgeo,with_ploneproduct_colorpickerform" autocheckout="y"/>
       <source name="collective.geo.contentlocations" type="svn" url="http://svn.plone.org/svn/collective/collective.geo.contentlocations/trunk" options="with_ploneproduct_cgeo"/>
