@@ -19,6 +19,7 @@
       <option order="01007" name="with_ploneproduct_cmailtolrole"  description="collective.contentrules.mailtolocalrole, see http://pypi.python.org/pypi/collective.contentrules.mailtolocalrole  y/n" default="n"/>
       <option order="01007" name="with_ploneproduct_enewsletter"   description="EasyNewsletter, see http://plone.org/products/easynewsletter y/n" default="n"/>
       <option order="01007" name="with_ploneproduct_rtool"         description="ReDirectionTool, see http://plone.org/products/easynewsletter y/n" default="n"/>
+      <option order="01007" name="with_ploneproduct_clcumulus"     description="LocalCumus, see http://pypi.python.org/pypi/collective.portlet.localcumulus y/n" default="n"/>
     </options>
     <versions>
       <!-- z3c.form -->
@@ -41,6 +42,7 @@
     <checkedversions>
       <version p='archetypes.schemaextender'               v='2.0.3' options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />
       <version p='Products.DataGridField'                  v='1.8b1' options="with_ploneproduct_poi"/>
+      <version p='collective.portlet.localcumulus'         v='1.8' options="with_ploneproduct_clcumulus"/>
       <version p='medialog.subskins'                       v='4.1b1' options="with_ploneproduct_subskins"/>
       <version p="Products.EasyNewsletter"                 v="2.5.10a2"  options="with_ploneproduct_enewsletter"/>
       <version p="Products.RedirectionTool"                v="1.3"   options="with_ploneproduct_rtool"/>
@@ -133,6 +135,7 @@
 
       <!-- collective.geo -->
       <egg name="Products.RedirectionTool"       options="with_ploneproduct_rtool" zpackage="y" zcml="configure"       />
+      <egg name="collective.portlet.localcumulus" options="with_ploneproduct_clcumulus" zpackage="y" zcml="configure"       />
       <egg name="Products.EasyNewsletter"        options="with_ploneproduct_enewsletter" zpackage="y" zcml="configure"       />
       <egg name="collective.contentrules.mailtolocalrole"        options="with_ploneproduct_cmailtolrole" zpackage="y" zcml="configure"       />
       <egg name="quintagroup.plonecaptchas"        options="with_ploneproduct_qcaptchas" zpackage="y" zcml="configure"       />
@@ -155,6 +158,7 @@
       <product name="medialog.subskins"            options="with_ploneproduct_subskins"   order="900" />
     </qi>
     <gs>
+      <product name="collective.portlet.localcumulus"  options="with_ploneproduct_clcumulus"     order="900" />
       <product name="Products.RedirectionTool"        options="with_ploneproduct_rtool"     order="900" />
       <product name="Products.EasyNewsletter"         options="with_ploneproduct_enewsletter"     order="900" />
       <product name="collective.quickupload"          options="with_ploneproduct_qupload"         order="900" />
@@ -175,6 +179,7 @@
     </gs>
     <sources>
       <!-- collective.geo-->
+      <source name="collective.portlet.localcumulus"      type="svn" url="http://svn.plone.org/svn/collective/collective.portlet.localcumulus/trunk/"  options="with_ploneproduct_clcumulus"/>
       <source name="Products.EasyNewsletter"      type="svn" url="http://svn.plone.org/svn/collective/Products.EasyNewsletter/trunk"  options="with_ploneproduct_enewsletter"/>
       <source name="collective.contentrules.mailtolocalrole"      type="svn" url="http://svn.plone.org/svn/collective/collective.contentrules.mailtolocalrole/trunk"  options="with_ploneproduct_cmailtolrole"/>
       <source name="collective.quickupload"      type="svn" url="http://svn.plone.org/svn/collective/collective.quickupload/trunk"  options="with_ploneproduct_qupload"/>
@@ -264,7 +269,6 @@
       <egg name="zc.authorizedotnet"             options="with_ploneproduct_easyshop"     />
       <egg name="Products.CacheSetup"            options="with_ploneproduct_cachesetup"       zproduct="y" zcml="configure"/>
       <egg name="Products.PloneArticle"          options="with_ploneproduct_plonearticle"     zproduct="y" zcml="configure"/>
-      <egg name="iw.fss"                         options="with_ploneproduct_fss"          zcml="configure,meta"      zcmlorder="150"/>
       <egg name="p4a.plonecalendar"              options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
       <egg name="p4a.ploneevent"                 options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
       <egg name="p4a.common"                     options="with_ploneproduct_p4a_vid"          />
@@ -281,7 +285,6 @@
       <source name="Products.csvreplicata"/>
       <source name="collective.contentlicensing" />
       <source name="archetypes.schemaextender"   />
-      <source name="iw.fss"   />
       <source name="plone.app.iterate"           />
       <source name="Products.TinyMCE"            />
       <source name="Products.CMFPlacefulWorkflow"/>
@@ -353,7 +356,6 @@
       <option order="1400" name="with_ploneproduct_plonearticle"     description="Plone Article, see http://plone.org/products/plonearticle/ y/n"/>
       <option order="900"  name="with_ploneproduct_easyshop"    description="Easy Shop, see http://www.geteasyshop.com y/n"/>
       <option order="600"  name="with_ploneproduct_cachesetup"  description="Cachefu caching Support, see http://plone.org/products/cachefu/ y/n" default="y"/>
-      <option order="550"  name="with_ploneproduct_fss"              description="File System Storage support, see http://plone.org/products/filesystemstorage y/n" default="y"/>
       <option order="1150" name="with_ploneproduct_p4a_cal"          description="p4a Calendar, see http://pypi.python.org/pypi/p4a.calendar y/n"/>
       <option order="1200" name="with_ploneproduct_p4a_vid"          description="p4a Video, see http://www.plone4artists.org/products/plone4artistsvideo y/n"/>
     </options>
