@@ -45,7 +45,7 @@ echo  Refreshing :: $plone / $ver / $zope2
 echo
 
 echo "#PLONE4 $plone KGS">versions.cfg
-ext="-pending"
+#ext="-pending"
 
 wget http://dist.plone.org/release/${plone}${ext}/versions.cfg -O-|sed -re "/extends/ d">>versions.cfg
 
