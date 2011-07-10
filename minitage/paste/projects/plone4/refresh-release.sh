@@ -45,7 +45,9 @@ echo  Refreshing :: $plone / $ver / $zope2
 echo
 
 echo "#PLONE4 $plone KGS">versions.cfg
-wget http://dist.plone.org/release/$plone/versions.cfg -O-|sed -re "/extends/ d">>versions.cfg
+ext="-pending"
+
+wget http://dist.plone.org/release/${plone}${ext}/versions.cfg -O-|sed -re "/extends/ d">>versions.cfg
 
 echo "#PLONE $plone SOURCES">sources.cfg
 wget http://svn.plone.org/svn/plone/buildouts/plone-coredev/branches/$ver/sources.cfg  -O -|sed -re "s/\[buildout\]/[buildout-notused]/g">sources.cfg

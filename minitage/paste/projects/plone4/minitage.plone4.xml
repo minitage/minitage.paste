@@ -185,6 +185,7 @@
       <source name="collective.quickupload"      type="svn" url="http://svn.plone.org/svn/collective/collective.quickupload/trunk"  options="with_ploneproduct_qupload"/>
       <source name="quintagroup.plone.captchas"      type="svn" url="http://svn.quintagroup.com/products/quintagroup.plonecaptchas/branches/plone4"  options="with_ploneproduct_qcaptchas"/>
       <source name="quintagroup.portlet.cumulus"     type="svn" url="http://svn.quintagroup.com/products/quintagroup.portlet.cumulus/trunk"          options="with_ploneproduct_qcumulus"/>
+      <source name="contentratings"            type="svn" url="http://svn.plone.org/svn/collective/contentratings/trunk"                 options="with_ploneproduct_pratings"/>
       <source name="plone.contentratings"            type="svn" url="http://svn.plone.org/svn/collective/plone.contentratings/trunk"                 options="with_ploneproduct_pratings"/>
       <source name="collective.portlet.relateditems" type="svn" url="http://svn.plone.org/svn/collective/collective.portlet.relateditems/trunk"      options="with_ploneproduct_crelateditems"/>
       <source name="collective.js.jqueryui"          type="svn" url="https://svn.plone.org/svn/collective/collective.js.jqueryui/trunk"              options="with_ploneproduct_cjqui"/>
