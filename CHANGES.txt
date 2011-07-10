@@ -14,7 +14,7 @@ CHANGES
         - Add more queues in balancer template
         - upgrade dexterity to 1.0
         - upgrade plone41 to 4.1rc1
-        - upgrade plone40 to 4.0.8
+        - upgrade plone40 to 4.0.7
         - add Products:
 
             - collective.contentrules.mailtolocalrole
