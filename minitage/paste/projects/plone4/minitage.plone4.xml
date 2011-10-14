@@ -57,7 +57,8 @@
       <version p='collective.portlet.relateditems'    v='0.3.4'      options="with_ploneproduct_crelateditems"/>
       <version p='geopy'                v='0.94'  options="with_ploneproduct_cgeo"/>
       <version p='Shapely'              v='1.2.5' options="with_ploneproduct_cgeo"/>
-      <version p='Products.LinguaPlone' v='4.0.2' options="with_ploneproduct_lingua"/>
+      <version p='Products.LinguaPlone' v='4.0.3' options="with_ploneproduct_lingua"/>
+      <version p='Products.PloneLanguageTool' v='3.2.2' options="with_ploneproduct_lingua"/>
       <!-- plone.app.async -->
       <version p='plone.app.async'  v='1.0'    options="with_ploneproduct_paasync"/>
       <version p='zope.app.keyreference'  v='3.6.1'    options="with_ploneproduct_paasync"/>
@@ -316,6 +317,8 @@
       <version p='Products.PloneArticle' options="with_ploneproduct_plonearticle"/>
       <version p='zope.testing'          options='with_ploneproduct_fivegrok' />
       <version p='z3c.relationfield'     options='with_ploneproduct_z3crelationfield,with_ploneproduct_dexterity'/>
+      <version p='Products.LinguaPlone'  options="with_ploneproduct_lingua"/>
+      <version p='Products.PloneLanguageTool' options="with_ploneproduct_lingua"/> 
       <!-- FIVE.GROK -->
       <version p='five.grok'             options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
       <version p='grokcore.annotation'   options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />

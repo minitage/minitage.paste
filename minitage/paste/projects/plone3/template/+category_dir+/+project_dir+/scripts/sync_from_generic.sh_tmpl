@@ -88,6 +88,10 @@ a\     *repoze.org*
 a\     *crummy.com*
 a\     *minitage.org*
 a\     *bpython-interpreter.org*
+a\     *stompstompstomp.com*
+a\     *ftp.tummy.com*
+a\     *pybrary.net*
+a\     *www.tummy.com*
 a\     *www.riverbankcomputing.com*
 a\     *.selenic.com*
 }" -i etc/sys/settings.cfg

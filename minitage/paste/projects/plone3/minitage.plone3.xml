@@ -581,8 +581,8 @@
     <version p='p4a.videoembed'                 v='1.1'     options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.video'                      v='1.3'     options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.z2utils'                    v='1.0.2'   options="with_ploneproduct_p4a_vid"/>
-    <version p='plomino.tinymce'                v='0.6.6'   options="with_ploneproduct_plominotinymce"/>
-    <version p='Plomino'                        v='1.9.3'   options="with_ploneproduct_plominotinymce,with_ploneproduct_plomino"/>
+    <version p='plomino.tinymce'                v='0.6.7'   options="with_ploneproduct_plominotinymce"/>
+    <version p='Plomino'                        v='1.10.1'   options="with_ploneproduct_plominotinymce,with_ploneproduct_plomino"/>
     <version p="plone.app.blob"                 v="1.5"     options="with_ploneproduct_ploneappblob"/>
     <version p="plone.app.jquerytools"          v="1.2b4"   options="with_ploneproduct_plonejqtools"/>
     <version p='plone.formwidget.autocomplete'  v='1.1.1'     options='with_ploneproduct_autocomplete'/>
