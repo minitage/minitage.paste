@@ -1,13 +1,9 @@
 #!/usr/bin/env bash
-FPATH="$1"
+FPATH="${backuppath}"
 NB_TO_KEEP="${to_keep}"
-files="$(find $FPATH -type f)"
+files=$(find $FPATH -type f)
 to_keep=$( ls -t1 $files |head -n$NB_TO_KEEP)
 to_delete=""
-if [[ -z "$FPATH" ]];then
-    echo "No path to filter!"
-    exit -1
-fi
 for f in $files;do
     keep=""
     for g in $to_keep;do
