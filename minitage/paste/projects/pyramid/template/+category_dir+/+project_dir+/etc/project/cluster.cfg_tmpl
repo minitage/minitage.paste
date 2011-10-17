@@ -1,0 +1,54 @@
+#Add multiple zope instance here
+
+#if $with_supervisor_instance1
+#set $si1=''
+#else:
+#set $si1='#'
+#end if
+#if $with_supervisor_instance2
+#set $si2=''
+#else:
+#set $si2='#'
+#end if
+#if $with_supervisor_instance3
+#set $si3=''
+#else:
+#set $si3='#'
+#end if
+#if $with_supervisor_instance4
+#set $si4=''
+#else:
+#set $si4='#'
+#end if
+[instance1]
+<= instance
+output = \${buildout:directory}/etc/wsgi/instance1.ini
+host=\${hosts:instance1}
+port=\${ports:instance1}
+
+[instance2]
+<= instance
+output = \${buildout:directory}/etc/wsgi/instance2.ini
+host=\${hosts:instance2}
+port=\${ports:instance2}
+
+[instance3]
+<= instance
+output = \${buildout:directory}/etc/wsgi/instance3.ini
+host=\${hosts:instance3}
+port=\${ports:instance3}
+
+[instance4]
+<= instance
+output = \${buildout:directory}/etc/wsgi/instance4.ini
+host=\${hosts:instance4}
+port=\${ports:instance4}
+
+[supervisor]
+programs  =
+${si1}    70  instance1 \${buildout:directory}/bin/paster [serve --log-file=\${buildout:directory}/var/log/instance1.log \${buildout:directory}/etc/wsgi/instance1.ini] \${buildout:directory} true \${users:pyramid}
+${si2}    80  instance2 \${buildout:directory}/bin/paster [serve --log-file=\${buildout:directory}/var/log/instance2.log \${buildout:directory}/etc/wsgi/instance2.ini] \${buildout:directory} true \${users:pyramid}
+${si3}    90  instance3 \${buildout:directory}/bin/paster [serve --log-file=\${buildout:directory}/var/log/instance3.log \${buildout:directory}/etc/wsgi/instance3.ini] \${buildout:directory} true \${users:pyramid}
+${si4}    100 instance4 \${buildout:directory}/bin/paster [serve --log-file=\${buildout:directory}/var/log/instance4.log \${buildout:directory}/etc/wsgi/instance4.ini] \${buildout:directory} true \${users:pyramid}
+
+\# vim:set et ts=4 sts=4 ft=cfg:

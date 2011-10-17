@@ -1,0 +1,93 @@
+$hr
+# Project specific settings
+$hr
+
+#set $slashdn = $project.replace('.', '/')
+[buildout]
+find-links=\${settings:find-links}
+# extra directories to add to the python path
+extra-paths+=
+# better have mr.developer mananing your eggs, see sources.cfg
+develop=
+eggs=
+
+[sources]
+# see http://pypi.python.org/pypi/mr.developer for documentation
+# better to edit ./sources.cfg
+
+[scripts]
+recipe=minitage.recipe.scripts
+# attacking zopepy:eggs make instance be built after zopepy
+# in any case thx to the buildout automatic parts sort.
+extra-paths+=\${buildout:extra-paths}
+eggs += \${buildout:eggs}
+    z3c.checkversions
+#for $product in $additional_eggs
+#if product.startswith('#')
+$product
+#else
+    ${product}
+#end if
+#end for
+# Scripts generated filtering
+scripts+=
+#z3c.checkversions
+    checkversions
+#zope2
+    paster#slurp
+#for $product in $plone_scripts:
+#if product.startswith('#'):
+${product}
+#else:
+    ${product}
+#end if
+#end for
+interpreter = pyramidpy
+dependent-scripts=true
+#paster-initialization=
+
+[test]
+recipe = zc.recipe.testrunner
+eggs = \${instance:egg} [test]
+script = selftest
+
+[omelette]
+order=\${scripts:recipe}
+recipe = collective.recipe.omelette
+eggs = \${buildout:eggs}
+packages =\${scripts:extra-paths}
+
+# zope.testing testrunner support
+[testenv]
+
+# This testrunner is a zc.recipe.testrunner like
+# See http://pypi.python.org/pypi/zc.recipe.testrunner/
+# It can do xml reports addon if you supply -x as a command line argument
+# It is useful for generating reports for hudson or other contineous integration
+[${sane_name}.test]
+recipe = collective.xmltestreport
+eggs = \${scripts:eggs}
+extra-paths = \${scripts:extra-paths}
+defaults = ['--exit-with-status', '--auto-color', '--auto-progress']
+environment = testenv
+
+[instance]
+recipe = collective.recipe.template
+# set here your project application wsgi application
+egg=\${settings:application}
+ep=\${instance:egg}
+input =  \${buildout:directory}/etc/templates/wsgi/paster.ini.in
+output = \${buildout:directory}/etc/wsgi/instance.ini
+host=\${hosts:instance}
+port=\${ports:instance}
+intercept_exc_debug=debug
+debugtoolbar.eval_exc=true
+debug=true
+# points to egg/jinja2 directory
+jinja2_templates=\${instance:egg}:jinja2
+commit_veto = pyramid_tm.default_commit_veto
+# scheme type can be zeo | file
+# see https://docs.pylonsproject.org/projects/pyramid_zodbconn/dev/
+zodb = zeo://\${hosts:zeo}:\${ports:zeo}
+
+# vim:set ft=cfg:

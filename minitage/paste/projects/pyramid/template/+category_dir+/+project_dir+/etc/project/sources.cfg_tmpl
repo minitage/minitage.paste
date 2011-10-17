@@ -1,0 +1,22 @@
+$hr
+# Externals mr.developer products & software not packages as python eggs.
+# see http://pypi.python.org/pypi/mr.developer for documentation
+$hr
+
+[buildout]
+sources=sources
+sources-dir=\${buildout:directory}/src.mrdeveloper
+auto-checkout +=
+# $autocheckout.sort()
+#for $item in $autocheckout:
+    $item
+#end for 
+
+[sources]
+#set $psources_keys = $plone_sources.keys()
+# $psources_keys.sort()
+#for $item in $psources_keys:
+#set source=$plone_sources[item]
+$source['name'] = $source['type'] $source['url'] $source['path'] $source['asegg']
+#end for
+# vim:set ft=cfg:

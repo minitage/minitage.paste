@@ -1,0 +1,172 @@
+# WSGI CONFIGURATION FILE
+
+[DEFAULT]
+debug=\${instance:debug}
+
+[composite:main]
+use=egg:Paste#urlmap
+/media/=pmedia
+/=pmain
+/threads/=watch_threads
+
+[pipeline:pmain]
+pipeline= fvhm exc translogger projectapp
+
+[pipeline:pmedia]
+pipeline= fvhm translogger exc staticapp
+
+[app:watch_threads]
+use=egg:Paste#watch_threads
+
+[filter:fvhm]
+use = egg:repoze.vhm#vhm_xheaders
+
+[filter:translogger]
+use=egg:Paste#translogger
+setup_console_handler = False
+logger_name = wsgi
+
+[filter:debug]
+use=egg:Paste#printdebug
+
+[filter:exc]
+use=egg:WebError#evalerror
+
+[app:projectapp]
+use=egg:\${instance:ep}
+zcmls=
+# indicate here full path to zcmls or
+# relative path inside your egg
+
+
+pyramid.includes=
+#for $product in $framework_apps
+#if product.startswith('#')
+$product
+#else
+    ${product}
+#end if
+#end for
+
+# various addons pre configurations
+pyramid.debug_templates=\${instance:debug} 
+pyramid.reload_assets=\${instance:debug} 
+pyramid.debug_routematch=\${instance:debug} 
+pyramid.reload_resources=\${instance:debug} 
+
+#if $with_pyramid_debugtoolbar
+#debug toolbar
+debugtoolbar.intercept_exc=\${instance:intercept_exc_debug}
+debugtoolbar.eval_exc=\${instance:debug}
+debugtoolbar.enabled=\${instance:debug}
+#end if
+
+#if $with_pyramid_tm
+# pyramid_tm
+tm.commit_veto = \${instance:commit_veto}
+#end if
+
+#if $with_pyramid_jinja2
+# jinja2
+jinja2.directories = \${instance:jinja2_templates}
+#end if
+
+#if $with_pyramid_zodbconn
+# zodbconn
+zodbconn.uri = \${instance:zodb}
+#end if
+
+#if $with_pyramid_mailer
+# mailer
+# mail.host   localhost   SMTP host
+# mail.port   25  SMTP port
+# mail.username   None    SMTP username
+# mail.password   None    SMTP password
+# mail.tls    False   Use TLS
+# mail.ssl    False   Use SSL
+# mail.keyfile    None    SSL key file
+# mail.certfile   None    SSL certificate file
+# mail.queue_path     None    Location of maildir
+# mail.default_sender     None    Default from address
+# mail.debug  False   SMTP debug level
+#end if
+
+
+[app:staticapp]
+use = egg:Paste#pkg_resources
+egg=\${instance:egg}
+resource_name=static/
+
+[loggers]
+keys = root,wsgi,routes
+
+[handlers]
+keys = fconsole,console,accesslog,errorlog
+
+[formatters]
+keys = generic,accesslog
+
+# Send warnings that are not caught by other loggers to the console
+[logger_root]
+level = NOTSET
+handlers = console,fconsole
+
+# Send all messages to the 'wsgi' logger to the accesslog and errorlog handlers
+[logger_wsgi]
+level = NOTSET
+handlers = accesslog,errorlog,console,fconsole
+qualname = wsgi
+propagate = 0
+
+# Routes (the URL dispatcher) sends debug information to the 'routes.middleware' logger
+# with DEBUG level.
+[logger_routes]
+level = NOTSET
+handlers = console,fconsole
+qualname = routes.middleware
+propagate = 0
+
+# Handler for printing messages to the console
+[handler_console]
+class = StreamHandler
+args = (sys.stderr,)
+level = INFO
+formatter = generic
+
+# Handler for writing access.log style log lines to an "access.log" file
+[handler_fconsole]
+class = FileHandler
+args = ('\${buildout:directory}/var/log/console.log','a')
+level = INFO
+formatter = generic
+
+
+# Handler for writing access.log style log lines to an "access.log" file
+[handler_accesslog]
+class = FileHandler
+args = ('\${buildout:directory}/var/log/access.log','a')
+level = INFO
+formatter = accesslog
+
+# Handler for writing error messages to an "error.log" file
+[handler_errorlog]
+class = FileHandler
+args = ('\${buildout:directory}/var/log/error.log','a')
+level = WARNING
+formatter = generic
+
+# A generic formatter that prints the time, the logger's name, the level and the message
+[formatter_generic]
+format = %(asctime)s %(name)s[%(levelname)s] %(message)s
+
+# A trivial formatter that just passes-through the log message.
+# Translogger already creates Apache-style log messages. No need to change that.
+[formatter_accesslog]
+format = %(message)s
+
+[server:main]
+use=egg:Paste#http
+host=\${host}
+port=\${port}
+
+\# vim:set et ts=4 sts=4 ft=cfg:

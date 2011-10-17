@@ -1,0 +1,95 @@
+\##############################################################################
+\# pyramid  BUILDOUT
+\##############################################################################
+
+#if $with_haproxy
+#set $hapcomment=''
+#else:
+#set $hapcomment='#'
+#end if
+#if $with_supervisor_instance1
+#set $si1=''
+#else:
+#set $si1='#'
+#end if
+#if $with_supervisor_instance2
+#set $si2=''
+#else:
+#set $si2='#'
+#end if
+#if $with_supervisor_instance3
+#set $si3=''
+#else:
+#set $si3='#'
+#end if
+#if $with_supervisor_instance4
+#set $si4=''
+#else:
+#set $si4='#'
+#end if
+
+
+[buildout]
+extensions = buildout.minitagificator mr.developer buildout.dumppickedversions jarn.setuptoolsfixer
+dump-picked-versions-file =\${buildout:directory}/etc/project/${project}-kgs.cfg
+
+extends=
+# set here your project specific settings
+    project/${project}.cfg
+# set here your projet version pins
+    project/sources.cfg
+    project/versions.cfg
+    project/${project}-kgs.cfg
+    project/patches.cfg
+    sys/settings.cfg
+# supervisor
+    sys/high-availability.cfg
+    apache/apache.cfg
+    hudson/${project}/hudson.cfg
+versions = versions
+parts =
+    scripts
+    omelette
+    instance
+    test
+    supervisor
+    supervisor-initd
+# hudson integration
+    ${sane_name}_hudson_env
+    ${sane_name}_hudson_job
+    ${sane_name}_hudson_deploy
+    ${sane_name}_hudson_chmod
+# apache
+    apache_vhost
+# security
+    chmod
+
+[chmod]
+recipe = plone.recipe.command
+update-command = \${chmod:command}
+command=
+    chmod 600 .installed.cfg
+    chmod 744 \${buildout:directory}/bin/*
+    chmod -v 750 \${buildout:directory}/etc/init.d/*
+    chmod -Rf 700 \${buildout:directory}/etc
+    chmod -Rf 700 \${buildout:directory}/var
+    chmod  700 \${buildout:directory}
+  
+
+
+[chown]
+recipe = plone.recipe.command
+update-command = \${chown:command}
+command=
+    chown -Rf  \${users:pyramid}  \${buildout:directory}/etc
+    chown -Rf  \${users:pyramid}  \${buildout:directory}/var
+    chown      \${users:pyramid}  \${buildout:directory}
+
+#    find \${buildout:directory} -type d -name var -exec chown -R \${users:pyramid} {} \;
+
+[scripts]
+eggs=
+scripts=
+extra-paths=
+
+# vim:set et ts=4 sts=4 ft=cfg:

@@ -64,6 +64,7 @@ setup(
         'paste.paster_create_template' : [
             'minitage.dependency = minitage.paste.projects.dependency:Template',
             'minitage.django = minitage.paste.projects.django:Template',
+            'minitage.pyramid = minitage.paste.projects.pyramid:Template',
             'minitage.egg = minitage.paste.projects.egg:Template',
             'minitage.plone25 = minitage.paste.projects.plone25:Template',
             'minitage.plone3 = minitage.paste.projects.plone3:Template',

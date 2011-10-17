@@ -155,16 +155,20 @@ Take a look to the distributed xml files to have details and examples.::
 
     >>> xmlvars1 = read_vars(c1)
     >>> pprint(xmlvars1['plone_sources'])
-    {u'archetypes.tuning': {'autocheckout': '',
+    {u'archetypes.tuning': {'asegg': '',
+                            'autocheckout': '',
                             'default': '',
                             'name': u'archetypes.tuning',
                             'options': [u'with_ploneproduct_schematuning'],
+                            'path': '',
                             'type': u'svn',
                             'url': u'http://svn.plone.org/svn/archetypes/'},
-     u'collective.contentlicensing': {'autocheckout': '',
+     u'collective.contentlicensing': {'asegg': '',
+                                      'autocheckout': '',
                                       'default': '',
                                       'name': u'collective.contentlicensing',
                                       'options': [u'with_ploneproduct_contentlicensing'],
+                                      'path': '',
                                       'type': u'svn',
                                       'url': u'https://svn.plone.org/svn/collective/'}}
 
@@ -192,7 +196,7 @@ Take a look to the distributed xml files to have details and examples.::
 
     >>> xmlvars1 = read_vars(c1)
     >>> pprint(xmlvars1['qi_mappings'])
-    {u'with_ploneproduct_p4a_vid': [u'p4a.plonevideoembed']}
+    {u'with_ploneproduct_p4a_vid': [{'name': u'p4a.plonevideoembed', 'order': 1}]}
     >>> pprint(xmlvars1['qi_hidden_mappings'])
     {u'with_ploneproduct_atbackref': [u'ATBackRef'],
      u'with_ploneproduct_cpwkf': [u'CMFPlacefulWorkflow'],
@@ -203,7 +207,7 @@ Purge, adding,  and overriding mecanism is in place::
 
     >>> xmlvars2 = read_vars(c2, base_vars=copy.deepcopy(xmlvars1))
     >>> pprint(xmlvars2['qi_mappings'])
-    {u'with_ploneproduct_p4a_vid': [u'p4a.plonevideoembed']}
+    {u'with_ploneproduct_p4a_vid': [{'name': u'p4a.plonevideoembed', 'order': 1}]}
 
 OldStyle zope2  products
 -----------------------------

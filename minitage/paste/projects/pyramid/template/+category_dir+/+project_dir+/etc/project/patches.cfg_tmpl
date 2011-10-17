@@ -1,0 +1,7 @@
+[scripts]
+
+# testrunner problem with stdout munging -call to writeline fail)
+#hachoir-core-1.3.2-patches=\${buildout:directory}/patches/hachoir.i18n.stdout.patch
+#hachoir-core-patch-options=-Np1
+
+# vim:set ft=cfg:

@@ -408,6 +408,7 @@ def parse_xmlconfig(xml,
         'plone_np_mappings' :            {},
         'plone_vsp_mappings' :           {},
         'plone_sources' :                {},
+        'framework_apps' :               {},
     }
     overrides = False
     if base_vars:
@@ -431,6 +432,7 @@ def parse_xmlconfig(xml,
     plone_np_mappings         = result.get('plone_np_mappings')
     plone_vsp_mappings        = result.get('plone_vsp_mappings')
     plone_sources             = result.get('plone_sources')
+    framework_apps            = result.get('framework_apps')
     # discover  additionnal configuration options
     if purge:
         purge_nodes(xml, 'options', 'option', addons_vars)
@@ -600,6 +602,11 @@ def parse_xmlconfig(xml,
                             eggs_mappings[option] = []
                         if (not oattrs['name'] in eggs_mappings[option]):
                             eggs_mappings[option].append(oattrs['name'])
+                        if 'app' in oattrs:
+                            if (not option in framework_apps):
+                                framework_apps[option] = []
+                            for item in oattrs['app'].split(','):
+                                framework_apps[option].append(item) 
                         if 'scripts' in oattrs:
                             if (not option in scripts_mappings):
                                 scripts_mappings[option] = []

@@ -1,0 +1,54 @@
+#if $inside_minitage:
+[minitage]
+location=\${buildout:directory}/../..
+#end if
+
+# site-packages
+# the path to find the libxml2 python bindings, maybe your global site-packages?
+[libxml2]
+site-packages=$xml2
+[libxslt]
+site-packages=$xslt
+[pyqt]
+site-packages=$pyqt
+
+
+[python${pyver}]
+executable=\${buildout:directory}/../../dependencies/python-${pyver}/parts/part/bin/python
+python=python${pyver}
+name=python${pyver}
+
+[buildout]
+#if $inside_minitage:
+python=python${pyver}
+#else
+#python=python${pyver}
+#end if
+find-links+= http://distfiles.minitage.org/public/externals/minitage/
+eggs-directory=\${minitage:location}/eggs/cache
+extra-paths+=
+    \${libxml2:site-packages}
+    \${libxslt:site-packages}
+#if $with_binding_pyqt
+    \${pyqt:site-packages}
+#end if 
+#if $with_binding_mapscript or $with_gis_mapnik
+minitage-globalenv=true
+#end if
+
+[versions]
+# bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
+# the one packaged in minitage !
+PIL  = 1.1.7
+
+[scripts]
+#if $inside_minitage
+executable=\${python${pyver}:executable}
+#else
+#executable=\${python${pyver}:executable}
+#end if
+#if $with_binding_ldap
+includes-dirs = $includesdirs
+#end if
+
+# vim:set ft=cfg:

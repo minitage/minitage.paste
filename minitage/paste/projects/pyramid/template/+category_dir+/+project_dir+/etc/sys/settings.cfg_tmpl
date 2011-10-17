@@ -1,0 +1,88 @@
+#if $with_haproxy
+#set $hapcomment=''
+#else:
+#set $hapcomment='#'
+#end if
+
+
+[settings]
+application  = ${project}.core
+debug=false
+find-links =
+    http://\${mirrors:zope}/ppix/
+    http://gijsbert.org/downloads/cmemcache/
+    http://\${mirrors:zope}/distribution/
+    http://gijsbert.org/downloads/cmemcache/
+    http://initd.org/pub/software/psycopg/PSYCOPG-2-0/
+    http://cairographics.org/releases/
+    http://dist.plone.org/thirdparty/
+    http://pypi.python.org/simple/ZODB4
+
+[reverse_proxy]
+scheme=$reverseproxy_scheme
+host=$reverseproxy_host
+port=$reverseproxy_port
+
+[hosts]
+instance= $address
+instance1=$address
+instance2=$address
+instance3=$address
+instance4=$address
+#may not be used
+supervisor=$supervisor_host
+balancer=$haproxy_host
+#if not $with_haproxy
+front=\${hosts:instance1}
+#end if
+${hapcomment}front=\${hosts:balancer}
+zeo=
+
+[ports]
+instance=$http_port
+instance1=$http_port1
+instance2=$http_port2
+instance3=$http_port3
+instance4=$http_port4
+#may not be used
+supervisor=$supervisor_port
+balancer=$haproxy_port
+#if not $with_haproxy
+front=\${ports:instance1}
+#end if
+${hapcomment}front=\${ports:balancer}
+zeo=
+
+[users]
+admin=${admin_user}
+pyramid=
+[passwords]
+admin=${admin_password}
+pyramid=
+
+[locations]
+
+[crons]
+# at 3:00am NO WHITESPACE!!!
+buildbot-${project}=$buildbot_cron
+pgsql = 15 1 * * *
+
+[backup_pgsql]
+# shall we do a full backup (set this to y)
+full=y
+host=$db_host
+port=$db_port
+user=$db_user
+# space separated list of databases to save on this cluster
+databases=$db_name
+# how much do we rotate ?
+to_keep=8
+# where to stock dumps
+dumps_path=\${buildout:directory}/var/pgsql_dumps
+pgdump_args=-Fc
+pgdumpall_args=
+
+[mirrors]
+zope = download.zope.org
+
+\# vim:set et ts=4 sts=4 ft=cfg:

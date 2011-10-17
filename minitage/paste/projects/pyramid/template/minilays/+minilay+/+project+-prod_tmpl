@@ -1,0 +1,8 @@
+[minibuild]
+# get subversion into the path
+dependencies=$python_minibuild libmemcache-1.4 $opt_deps
+install_method=buildout
+src_uri=$uri
+src_type=$scm_type
+category=pyramid
+buildout_config=minitage.buildout-prod.cfg

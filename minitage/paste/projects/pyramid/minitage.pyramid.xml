@@ -1,0 +1,296 @@
+<?xml version="1.0"?>
+<!--
+  GOAL OF THIS CONFIGURATION IS TO CUSTOMIZE THE minitage.plone3 paster template options to fit to your needs
+  You can even override by copy/edit it on your ~/.minitage.plone3.cfg.
+  Goal is to stop to spread new templates for special use, and to configure them.
+  A subsidiary goal is to remove so useless logic in templates.
+  You can, i think, customzize the whole template via this configuration.
+  Please note that minitage.plone3 is coupled with collectige.generic.skel.* templates.
+  They will use it's variables/API to construct themselves.
+-->
+<root>
+  <!--
+    PASTER OPTIONS to be added on the fly to minitage.paste.plone3 product
+    <option name="foo" description="SOMETEXT>
+  -->
+  <template>
+  <options>
+  <option order="0000" name="apache_vhost_number"                description="Apache vhost number" default="100"/>
+  <option order="0000" name="reverseproxy_aliases"               description="domain name aliases (comma separated) which be used in the reverse proxy" default="bis.localhost.com.bis,ter.localhost.com"/>
+  <option order="0000" name="reverseproxy_host"                  description="domain name which be used in the reverse proxy" default="localhost.com"/>
+  <option order="0000" name="reverseproxy_port"                  description="port of the reverse proxy" default="80"/>
+  <option order="0000" name="reverseproxy_scheme"                description="HHTP(s) scheme of the reverse proxy (http/https)" default="http"/>
+  <option order="0000" name="with_binding_bsoup"                 description="BeautifulSoup,see http://pypi.python.org/pypi/BeautifulSoup/ y/n"/>
+  <option order="0000" name="with_binding_json"                  description="Json python various bindings (demjson, simplejson) y/n"/>
+  <option order="0000" name="with_binding_lxml"                  description="Lxml support, see http://codespeak.net/lxml/ y/n" default="y"/>
+  <option order="0000" name="with_binding_ldap"                  description="LDAP bindings y/n"/>
+  <option order="0000" name="with_binding_pdf"                   description="PDF Python various bindings including pypdf Y/n"/>
+  <option order="0000" name="with_binding_pil"                   description="Python imaging (dangerous to disable) y/n" default="y"/>
+  <option order="0000" name="with_binding_xlwt"                  description="xlwt,see http://pypi.python.org/pypi/xlwt/ y/n"/>
+  <option order="0000" name="with_database_mysql"                description="Mysql python bindings y/n"/>
+  <option order="0000" name="with_database_sqlite"               description="sqlite python bindings y/n"/>
+  <option order="0000" name="with_database_oracle"               description="Oracle python bindings y/n"/>
+  <option order="0000" name="with_database_postgresql"           description="Postgresql python bindings y/n" default="y"/>
+  <option order="0000" name="with_database_sa"                   description="SQLAlchemy, see http://www.sqlalchemy.org y/n" default="y"/>
+  <option order="0000" name="with_tool_i18ndude"                 description="i18n http://pypi.python.org/pypi/i18ndude y/n" default="y"/>
+  <option order="0000" name="with_binding_pyqt"                  description="Python Qt y/n" default="n"/>
+  <option order="0000" name="with_tool_ipython"                  description="ipython, see http://ipython.scipy.org/ y/n" default="y"/>
+  <option order="0000" name="with_tool_bpython"                  description="bpython, see http://bpython-interpreter.org/ y/n" default="y"/>
+  <option order="0000" name="with_tool_nose"            description="nose, see http://pypi.python.org/pypi/nose y/n" default="y"/>
+  <option order="0000" name="with_tool_coverage"        description="coverage, see http://pypi.python.org/pypi/coverage y/n" default="y"/>
+  <option order="0000" name="with_tool_reportlab"       description="Reportlab, see http://www.reportlab.com/ y/n" default="n"/>
+  <option order="0000" name="with_wsgi_cas"             description="WSGI CAS (SSO) capabilities, see http://pypi.python.org/pypi/repoze.who.plugins.cas y/n"/>
+  <option order="0000" name="with_gis_mapnik"           description="mapnik bindings, see http://mapnik.org/ y/n"/>
+  <option order="0000" name="with_gis_gdal"             description="gdal bindings, see http://www.gdal.org/y/n"/>
+  <option order="800" name="with_binding_cairo"         description="cairo bindings, see http://cairographics.org/ y/n"/>
+  <option order="0000" name="with_binding_memcache"     description="memcache bindings, see http://memcached.org/y/n"/>
+  <option order="0000" name="with_gis_pgrouting"        description="pgrouting support, see http://pgrouting.postlbs.org y/n"/>
+  <option order="0000" name="with_gis_mapscript"        description="mapscript/mapserver support, see http://mapserver.org/ y/n"/>
+  <!-- INFRA Products -->
+  <!-- UI Products -->
+  <!--Content-types related products"-->
+  <!-- Views helper products -->
+  <!-- Communication -->
+  <!-- Misc Extensions products-->
+  <!-- makina -->
+  <option order="10000" name="with_binding_mapscript"          description="mapserver python bindings, see http://pypi.python.org/pypi/mapscript y/n" default="n"/>
+  <option order="10030" name="with_egg_pylint"      description="pylint y/n"  default="n"                        />
+  <option order="10030" name="with_egg_sphinx"      description="sphinx y/n"  default="n"                        />
+  <option order="10030" name="with_gis_tilecache"   description="TileCache y/n"  default="n"                     />
+  <option order="00000" name="with_gis_geopy"       description="geopy support, see  y/n"                        />
+  <option order="00000" name="with_egg_pyopenssl"   description="pyOpenSSL support, see  y/n"                    />
+  <option order="00000" name="with_egg_greenlet"    description="greenlet support  y/n"                          />
+  <option order="00000" name="with_egg_pisa"    description="pisa support  y/n"                                  />
+  <option order="00000" name="with_egg_html5lib"    description="html5lib support  y/n"                          />
+  <option order="00000" name="with_pyramid_zcml"                description="pyramid zcml y/n"                default="y"/>
+  <option order="00000" name="with_pyramid-openid"              description="pyramid-openid y/n"              />
+  <option order="00000" name="with_pyramid_assetviews"          description="pyramid_assetviews y/n"          />
+  <option order="00000" name="with_pyramid_beaker"              description="pyramid_beaker y/n"              default="y"/>
+  <option order="00000" name="with_pyramid_chameleon_genshi"    description="pyramid_chameleon_genshi y/n"    />
+  <option order="00000" name="with_pyramid_debugtoolbar"        description="pyramid_debugtoolbar y/n"        />
+  <option order="00000" name="with_pyramid_exclog"              description="pyramid_exclog y/n"              />
+  <option order="00000" name="with_pyramid_extdirect"           description="pyramid_extdirect y/n"           />
+  <option order="00000" name="with_pyramid_formalchemy"         description="pyramid_formalchemy y/n"         />
+  <option order="00000" name="with_pyramid_formish"             description="pyramid_formish y/n"             />
+  <option order="00000" name="with_pyramid_handlers"            description="pyramid_handlers y/n"            />
+  <option order="00000" name="with_pyramid_jinja2"              description="pyramid_jinja2 y/n"              />
+  <option order="00000" name="with_pyramid_mongodb"             description="pyramid_mongodb y/n"             />
+  <option order="00000" name="with_pyramid_pyctpp2"             description="pyramid_pyctpp2 y/n"             />
+  <option order="00000" name="with_pyramid_rpc"                 description="pyramid_rpc y/n"                 />
+  <option order="00000" name="with_pyramid_simpleform"          description="pyramid_simpleform y/n"          />
+  <option order="00000" name="with_pyramid_socketio"            description="pyramid_socketio y/n"            />
+  <option order="00000" name="with_pyramid_tm"                  description="pyramid_tm y/n"                  />
+  <option order="00000" name="with_pyramid_traversalwrapper"    description="pyramid_traversalwrapper y/n"    />
+  <option order="00000" name="with_pyramid_viewgroup"           description="pyramid_viewgroup y/n"           />
+  <option order="00000" name="with_pyramid_who"                 description="pyramid_who y/n"                 />
+  <option order="00000" name="with_pyramid_xmlrpc"              description="pyramid_xmlrpc y/n"              />
+  <option order="00000" name="with_pyramid_zcml"                description="pyramid_zcml y/n"                />
+  <option order="00000" name="with_pyramid_zodbconn"            description="pyramid_zodbconn y/n"            />
+  <option order="00000" name="with_pyramid_mongoengine"         description="pyramid_mongoengine y/n"         />
+  <option order="00000" name="with_pyramid_mailer"              description="pyramid_mailer y/n"              />
+  <option order="00000" name="with_pyramid_scaffolds_decoupled" description="pyramid_scaffolds_decoupled y/n" />
+  <option order="00000" name="with_pyramid-flatpages"           description="pyramid-flatpages y/n"           />
+  <!--END makina -->
+
+</options>
+  <!--
+    LINK THERE YOUR EGGS TO BE Installed on option triggering.
+
+    Some notes:
+
+    If you choose to tell that your egg is a/are some 'zpackage', this will cause them to be registered in the minitage.projects.plone3.z2packages.
+
+    As an incidence in the collective.generic.skel.policy template, they will be recorded
+    in the policy tests as someting to be installed with "ztc.installPackage(eggname)" or
+    "ztc.installProduct(eggname)".
+
+    <eggs>
+      <egg name="" options="" zpackage="" zproduct="" />
+    </eggs>
+
+    name: name of the product to install
+    options: comma sepated list of options that trigger the installation of this item
+    zcml: zcml to add to the buildout ([instance]), by default -configure
+    zcmlorder : zcml load order from 0 to XXXXXX, default 50000
+    zpackage/zproduct: install resp. modules as a Zope2 Package or Product during tests
+      For each of those values:
+      y -> install it with the name as product name
+      comma sepaated values != 'y' -> install the list of products
+  -->
+  <eggs>
+    <egg name="pyramid_chameleon_genshi"    app="pyramid_chameleon_genshi"    options="with_pyramid_chameleon_genshi"  />
+    <egg name="pyramid_debugtoolbar"        app="pyramid_debugtoolbar"        options="with_pyramid_debugtoolbar"      />
+    <egg name="pyramid_exclog"              app="pyramid_exclog"              options="with_pyramid_exclog"            />
+    <egg name="pyramid_extdirect"           app="pyramid_extdirect"           options="with_pyramid_extdirect"         />
+    <egg name="pyramid_formalchemy"         app="pyramid_formalchemy"         options="with_pyramid_formalchemy"       />
+    <egg name="pyramid_formish"             app="pyramid_formish"             options="with_pyramid_formish"           />
+    <egg name="pyramid_handlers"            app="pyramid_handlers"            options="with_pyramid_handlers"          />
+    <egg name="pyramid_jinja2"              app="pyramid_jinja2"              options="with_pyramid_jinja2"            />
+    <egg name="pyramid_pyctpp2"             app="pyramid_pyctpp2"             options="with_pyramid_pyctpp2"           />
+    <egg name="pyramid_tm"                  app="pyramid_tm"                  options="with_pyramid_tm"                />
+    <egg name="pyramid_zcml"                app="pyramid_zcml"                options="with_pyramid_zcml"              />
+    <egg name="pyramid_zodbconn"            app="pyramid_zodbconn"            options="with_pyramid_zodbconn"          />
+    <egg name="pyramid_mailer"              app="pyramid_mailer"              options="with_pyramid_mailer"            />
+
+    <egg name="pyramid_scaffolds_decoupled" options="with_pyramid_scaffolds_decouple" />
+    <egg name="pyramid_mongodb"     options="with_pyramid_mongodb"     />
+    <egg name="pyramid_mongoengine" options="with_pyramid_mongoengine" />
+    <egg name="pyramid_xmlrpc"      options="with_pyramid_xmlrpc"      />
+    <egg name="pyramid_simpleform"  options="with_pyramid_simpleform"  />
+    <egg name="pyramid_traversalwrapper"    options="with_pyramid_traversalwrapper"/>
+    <egg name="pyramid_rpc"         options="with_pyramid_rpc"      />
+    <egg name="pyramid_socketio"    options="with_pyramid_socketio" />
+    <egg name="pyramid_who"         options="with_pyramid_who"      />
+
+
+
+    <egg name="greenlet"                      options="with_egg_greenlet"        />
+    <egg name="reportlab"                     options="with_tool_reportlab"      />
+    <egg name="nose"                          options="with_tool_nose"   scripts="nosetests,nose"     />
+    <egg name="TileCache"                     options="with_gis_tilecache"  scripts="tilecache.cgi,tilecache_clean.py,tilecache.fcgi,tilecache_http_server.py,tilecache_install_config.py,tilecache_seed.py,tilecache_seed.py" />
+    <egg name="pyOpenSSL"                     options="with_egg_pyopenssl"        />
+    <egg name="mapnik2"                       options="with_gis_mapnik"        />
+    <egg name="coverage"                      options="with_tool_coverage"    />
+    <egg name="cmemcache"                     options="with_binding_memcache" />
+    <egg name="sqlalchemy"                    options="with_database_sa"    />
+    <egg name="MySQL_python"                  options="with_database_mysql" />
+    <egg name="cx_Oracle"                     options="with_database_oracle"/>
+    <egg name="psycopg2"                      options="with_database_postgresql"/>
+    <egg name="egenix-mx-base"                options="with_database_postgresql"/>
+    <egg name="BeautifulSoup"                 options="with_binding_bsoup"  />
+    <egg name="lxml"                          options="with_binding_lxml"   />
+    <egg name="elementtree"                   options="with_binding_lxml"   />
+    <egg name="demjson"                       options="with_binding_json"/>
+    <egg name="ipython"                       options="with_tool_ipython"                 scripts="ipython" />
+    <egg name="bpython"                       options="with_tool_bpython"                 scripts="bpython" />
+    <egg name="mapscript"                     options="with_binding_mapscript"/>
+    <egg name="PIL"                           options="with_binding_pil" />
+    <egg name="pypgoptimizator"               options="with_minitage_otherpackages"  scripts="pypgoptimizator" />
+    <egg name="python-ldap"                   options="with_binding_ldap"/>
+    <egg name="repoze.who.plugins.cas"        options="with_wsgi_cas"/>
+    <egg name="simplejson"                    options="with_binding_json"/>
+    <egg name="xlwt"                          options="with_binding_xlwt"    />
+    <egg name="pypdf"                         options="with_binding_pdf"     />
+    <egg name="ogcserver"                     options="with_gis_mapnik"      />
+    <egg name="pycairo"                       options="with_binding_cairo" />
+    <egg name="geopy"                         options="with_gis_geopy" />
+    <egg name="pylint"                        options="with_egg_pylint"  scripts="pylint,pylint-gui" />
+    <egg name="docutils"                      options="with_egg_sphinx"  scripts="rst2html.py,rst2latex.py,rst2xml.py,xhtml2pdf" />
+    <egg name="Sphinx"                        options="with_egg_sphinx"  scripts="sphinx-autogen,sphinx-build,sphinx-quickstart" />
+    <egg name="jinja2"                        options="with_egg_sphinx" />
+    <egg name="Pygments"                      options="with_egg_sphinx"/>
+    <egg name="GDal"                          options="with_gis_gdal"/>
+    <egg name="pisa"                          options="with_egg_pisa"/>
+    <egg name="html5lib"                      options="with_egg_html5lib"/>
+  </eggs>
+  <!--
+    Enter here mandatory version pinnings
+    Valid items are:
+
+    <version p="" v="" options=""/>
+
+      p: egg name
+      v: egg version
+      name: description to add as comment into the resulting buildout
+    -->
+  <versions>
+    <version p="zc.buildout"             v="1.5.2"  name="zc.buildout core stuff"/>
+    <version p="distribute"              v="0.6.18" name="zc.buildout core stuff"/>
+    <version p="mocker"                  v="1.0"    name="zc.buildout core stuff"/>
+    <version p="zc.recipe.egg"           v="1.3.2"  name="zc.buildout core stuff"/>
+    <version p="ipython"                 v="0.10"   name="IPython py2.4 compatible version"/>
+    <version p="CherryPy"                v="3.2.0"  name="pyramid base packages"/>
+
+    <version p="SQLAlchemy"                   v="0.7.3" name="pyramid base packages"/>
+    <version p="egenix-mx-base"               v="3.2.1" name="pyramid base packages"/>
+    <version p="ipython"                      v="0.10"  name="pyramid base packages"/>
+    <version p="mr.developer"                 v="1.19"  name="pyramid base packages"/>
+    <version p="z3c.checkversions"            v="0.4.1" name="pyramid base packages"/>
+    <version p="zc.recipe.testrunner"         v="1.4.0" name="pyramid base packages"/>
+
+  </versions>
+  <!--
+    Enter here know good set versions stuff
+    Valid items are:
+
+    <version p="" v="" options=""/>
+
+      p: egg name
+      v: egg version
+      options: comma separated list of options to enable the pinning
+    -->
+  <checkedversions>
+    <version p="html5lib"              v="0.90"   options="with_egg_html5lib"  />
+    <version p="jinja2"                v="2.5.6"  options="with_egg_sphinx"  />
+    <version p="docutils"              v="0.7"    options="with_egg_sphinx"  />
+    <version p="pylint"                v="0.25.0" options="with_egg_pylint"  />
+    <version p="Sphinx"                v="1.0.4"  options="with_egg_sphinx"  />
+    <version p="greenlet"              v="0.3.1"  options="with_egg_greenlet"  />
+    <version p="pyramid-debugtoolbar"  v="0.9.4"  options="with_pyramid_debugtoolbar"/>
+    <version p="pyramid-exclog"        v="0.5"    options="with_pyramid_exclog"   />
+    <version p="pyramid-extdirect"     v="0.3"    options="with_pyramid_extdirect"/>
+    <version p="pyramid-formalchemy"   v="0.4.1"  options="with_pyramid_formalchemy" />
+    <version p="pyramid-formish"       v="0.1"    options="with_pyramid_formish"  />
+    <version p="pyramid-handlers"      v="0.3"    options="with_pyramid_handlers" />
+    <version p="pyramid-jinja2"        v="1.2"    options="with_pyramid_jinja2"   />
+    <version p="pyramid-pyctpp2"       v="0.2.0"  options="with_pyramid_pyctpp2"/>
+    <version p="pyramid-tm"            v="0.3"    options="with_pyramid_tm"       />
+    <version p="pyramid-zcml"          v="0.7"    options="with_pyramid_zcml"     />
+    <version p="pyramid-zodbconn"      v="0.2"    options="with_pyramid_zodbconn" />
+    <version p="pyramid-mailer"        v="0.4.1"  options="with_pyramid_mailer" />
+    <version p="pyramid-mongodb"       v="1.0"    options="with_pyramid_mongodb"     />
+    <version p="pyramid-mongoengine"   v="0.1"    options="with_pyramid_mongoengine" />
+    <version p="pyramid-xmlrpc"        v="0.1"    options="with_pyramid_xmlrpc"      />
+    <version p="pyramid-simpleform"    v="0.6.1"  options="with_pyramid_simpleform"/>
+    <version p="pyramid-rpc"           v="0.3"    options="with_pyramid_rpc"      />
+    <version p="pyramid-socketio"      v="0.8"    options="with_pyramid_socketio" />
+    <version p="pyramid-who"           v="0.2"    options="with_pyramid_who"      />
+    <version p="pyramid-traversalwrapper"    v="0.1"  options="with_pyramid_traversalwrapper"/>
+    <version p="pyramid-chameleon-genshi"    v="0.6" options="with_pyramid_chameleon_genshi"  />
+    <version p="pyramid-scaffolds-decoupled" v="1.0" options="with_pyramid_scaffolds_decouple" />
+
+    <version p="pyOpenSSL"             v="0.11"   options="with_egg_pisa"  />
+    <version p="pyramid_debugtoolbar"  v="0.9.4"  options="with_pyramid_debugtoolbar"/>
+    <version p="pyramid_exclog"        v="0.5"    options="with_pyramid_exclog"   />
+    <version p="pyramid_extdirect"     v="0.3"    options="with_pyramid_extdirect"/>
+    <version p="pyramid_formalchemy"   v="0.4.1"  options="with_pyramid_formalchemy" />
+    <version p="pyramid_formish"       v="0.1"    options="with_pyramid_formish"  />
+    <version p="pyramid_handlers"      v="0.3"    options="with_pyramid_handlers" />
+    <version p="pyramid_jinja2"        v="1.2"    options="with_pyramid_jinja2"   />
+    <version p="pyramid_pyctpp2"       v="0.2.0"  options="with_pyramid_pyctpp2"/>
+    <version p="pyramid_tm"            v="0.3"    options="with_pyramid_tm"       />
+    <version p="pyramid_zcml"          v="0.7"    options="with_pyramid_zcml"     />
+    <version p="pyramid_zodbconn"      v="0.2"    options="with_pyramid_zodbconn" />
+    <version p="pyramid_mailer"        v="0.4.1"  options="with_pyramid_mailer" />
+    <version p="pyramid_mongodb"       v="1.0"    options="with_pyramid_mongodb"     />
+    <version p="pyramid_mongoengine"   v="0.1"    options="with_pyramid_mongoengine" />
+    <version p="pyramid_xmlrpc"        v="0.1"    options="with_pyramid_xmlrpc"      />
+    <version p="pyramid_simpleform"    v="0.6.1"  options="with_pyramid_simpleform"/>
+    <version p="pyramid_rpc"           v="0.3"    options="with_pyramid_rpc"      />
+    <version p="pyramid_socketio"      v="0.8"    options="with_pyramid_socketio" />
+    <version p="pyramid_who"           v="0.2"    options="with_pyramid_who"      />
+    <version p="pyramid_traversalwrapper"  v="0.1"  options="with_pyramid_traversalwrapper"/>
+    <version p="pyramid_chameleon_genshi"  v="0.6" options="with_pyramid_chameleon_genshi"  />
+    <version p="pyramid_scaffolds_decoupled" v="1.0" options="with_pyramid_scaffolds_decouple" />
+    <version p="reportlab"             v="2.5"    options="with_tool_reportlab,with_egg_pisa"  />
+  </checkedversions>
+  <!--
+    Old style plone products to checkout using the [productsdistros] part
+  -->
+  <!--
+    Sources for mr.developer
+    links to the SCM of a product, autocheckout will be enabled when option in in options.
+
+  -->
+  <sources>
+  </sources>
+    <!--
+    Some very ecliptic products doesnt fit with previous declaration, we will describe how to add the options to the underlying policy there.
+    (the packages/products that we want into the tests to be added.
+    <product name="" zpackage="" zcml="" zcmlorder="" zcml=""/>
+      name is mandatory only for zcml slugs.
+  -->
+  </template>
+  <purge/>
+</root>
+

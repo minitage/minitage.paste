@@ -1,0 +1,91 @@
+# hudson contineous integration with buildout
+# This is not integrated by default in others templates
+# To add this support, just add the three parts to the etc/base.cfg
+#
+#    extends ...  hudson/$project/hudson.cfg  ...
+#    parts += ...
+#         ${sane_name}_hudson_env
+#         ${sane_name}_hudson_job
+#         ${sane_name}_hudson_deploy
+#echo '#\n'
+#echo '#\n'
+# Hudson is a tool tha allow us to make conteneous integration, see: http://hudson-ci.org/
+# The scripts inside etc/hudson/build/*.sh are the scripts used as a build sequence for running our hudson job.
+#echo '#\n'
+#echo '#\n'
+# We do 3 things there:
+# - give a build sequence to update, build and test the project
+# - a config.xml template file describing the hudson jpb (and what hudson is waiting for)
+# - a part to deploy to an underlying tomat instance running in a minitage instance
+#echo '#\n'
+#echo '#\n'
+# By default, you will have:
+#echo '#\n'
+# etc/hudson
+# |-- etc/hudson/$project/build/activate_env.sh              -> (generated) activate environment variables needed by other scripts
+# |-- etc/hudson/$project/build/build.sh                     -> build the project (maybe also minitage dependencies)
+# |-- etc/hudson/$project/build/test.sh                      -> run all needed test and produce reports inside parts/test/testreports n JUnit test xml format
+# |-- etc/hudson/$project/build/update_mrdeveloper.sh        -> udpate sources grabbed via mr.developer
+# |-- etc/hudson/$project/build/update_project.sh            -> udpate project code
+# |-- etc/hudson/$project/config.xml                         -> an hudson config.xml job file
+#echo '#\n'
+# etc/templates/hudson/
+# |-- etc/templates/hudson/$project/build/activate_env.sh.in -> template to put things in the environment used during scripts execution
+# `-- etc/templates/hudson/$project/config.xml.in            -> template for the job configuration to put inside your \$HUDSON_HOME/jobs/$project/config.xml
+#echo '#\n'
+#echo '#\n'
+# Deploy an hudson instance with minitage
+# minitage/bin/paster create -t minitage.instances.tomcat $project --no-interactive
+# minitage/bin/paster create -t minitage.instances.hudson $project --no-interactive
+
+# please edit the .in files to fit your needs
+# the envionment needs hudson has during builds
+[${sane_name}_hudson_env]
+recipe = collective.recipe.template
+input =\${buildout:directory}/etc/templates/hudson/$project/build/activate_env.sh.in
+output=\${buildout:directory}/etc/hudson/$project/build/activate_env.sh
+project=\${${sane_name}_hudson_job:project}
+# testrunner to use
+test-command=\${buildout:directory}/bin/${sane_name}.test
+# eggs to test
+tested-packages=
+    ${project}
+# where to find junit test reports to aggregate
+reports=\${buildout:directory}/parts/${sane_name}.test/testreports 
+
+# a template for a job configuration file
+[${sane_name}_hudson_job]
+recipe = collective.recipe.template
+input =\${buildout:directory}/etc/templates/hudson/$project/config.xml.in
+output =\${buildout:directory}/etc/hudson/$project/config.xml
+project=$project
+update-project-cmd=\${buildout:directory}/etc/hudson/$project/build/update_project.sh
+update-mrdeveloper-cmd=\${buildout:directory}/etc/hudson/$project/build/update_mrdeveloper.sh
+build-cmd=\${buildout:directory}/etc/hudson/build/build.sh
+test-cmd=\${buildout:directory}/etc/hudson/build/test.sh
+
+# where to send mails (comma separated)
+recipients=$author_email
+# component used to checkout the sources and the asociated url
+scm_type=SubversionSCM
+# where are our sources living
+scm_url=$uri
+# cron to determine how is built the project (be careful, no whitespace!)
+cron =\${crons:buildbot-${project}}
+
+# make this thing easy to integrate with an hudson instance deployed via minitage
+[${sane_name}_hudson_deploy]
+recipe=plone.recipe.command
+update-command = \${${sane_name}_hudson_deploy:command}
+hudson-instance=${sane_name}buildbot
+command =
+    mkdir -pv \${buildout:directory}/sys/var/data/hudson/\${${sane_name}_hudson_deploy:hudson-instance}/hudson/jobs/\${${sane_name}_hudson_job:project};
+    cp -vf \${${sane_name}_hudson_job:output} \${buildout:directory}/sys/var/data/hudson/\${${sane_name}_hudson_deploy:hudson-instance}/hudson/jobs/\${${sane_name}_hudson_job:project}/config.xml
+
+[${sane_name}_hudson_chmod]
+recipe = plone.recipe.command
+update-command = \${${sane_name}_hudson_chmod:command}
+command =
+    chmod -v 750 \${buildout:directory}/etc/hudson/${project}/build/*.sh
+
+# vim:set ft=cfg:

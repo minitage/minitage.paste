@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# install .env if in minitage
+cwd="\${buildout:directory}"
+project="\${${sane_name}_hudson_env:project}"
+test_command="\${${sane_name}_hudson_env:test-command}"
+category="\$(basename \$(dirname \$(dirname \$cwd)))"
+minibuild="\$(basename \$cwd)"
+hudson=\$cwd/etc/hudson
+envfile=\$cwd/sys/share/minitage/minitage.env
+mcfg=\$ins/../../etc/minimerge.cfg
+if [[ -f \$mcfg ]];then
+    if [[ ! -e \$envfile ]];then    
+        easy_install -U minitage.paste
+        ../../bin/paster create -t minitage.instances.env \$minibuild
+    fi
+fi
+if [[ -e \$envfile ]];then    
+    source \$envfile
+fi
+xmlreports="\${${sane_name}_hudson_env:reports}"
+tested_packages="\${${sane_name}_hudson_env:tested-packages}"
+# vim:set et sts=4 ts=4 tw=80:
