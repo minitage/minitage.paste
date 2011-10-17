@@ -279,8 +279,9 @@ class Template(common.Template):
         # openldap
         if vars['with_binding_ldap'] and vars['inside_minitage']:
             cs = search_latest('cyrus-sasl-\d\.\d*', vars['minilays'])
-            vars['opt_deps'] += ' %s %s' % (
+            vars['opt_deps'] += ' %s %s %s' % (
                 search_latest('openldap-\d\.\d*', vars['minilays']),
+                search_latest('openssl-1', vars['minilays']),
                 cs
             )
             vars['includesdirs'] = '\n    %s'%  os.path.join(
@@ -439,7 +440,7 @@ class Template(common.Template):
         zaztk_path = pkg_resources.resource_filename(
             'minitage.paste',
             'projects/plone%s/zopeapp.versions.cfg' % suffix
-        ) 
+        )
         ztk_path = pkg_resources.resource_filename(
             'minitage.paste',
             'projects/plone%s/ztk.versions.cfg' % suffix
