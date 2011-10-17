@@ -59,3 +59,5 @@ executable=\${python${pyver}:executable}
 #if $with_binding_ldap:
 includes-dirs = $includesdirs
 #end if
+
+# vim:set ft=cfg:
