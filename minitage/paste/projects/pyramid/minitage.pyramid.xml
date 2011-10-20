@@ -202,6 +202,11 @@
     <version p="CherryPy"                v="3.2.0"  name="pyramid base packages"/>
 
     <version p="SQLAlchemy"                   v="0.7.3" name="pyramid base packages"/>
+    <version p="cryptacular" v="1.2.1" name="pyramid base packages"/>
+    <version p="repoze.tm2" v="1.0b2" name="pyramid base packages"/>
+    <version p="Pygments" v="1.4"      name="pyramid base packages"/>
+    <version p="transaction" v="1.1.1" name="pyramid base packages"/>
+
     <version p="egenix-mx-base"               v="3.2.1" name="pyramid base packages"/>
     <version p="ipython"                      v="0.10"  name="pyramid base packages"/>
     <version p="mr.developer"                 v="1.19"  name="pyramid base packages"/>

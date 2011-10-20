@@ -43,12 +43,14 @@ ${product}
 #end if
 #end for
 interpreter = pyramidpy
+env-file=\${buildout:directory}/etc/${project}.env
+
 dependent-scripts=true
 #paster-initialization=
 
 [test]
 recipe = zc.recipe.testrunner
-eggs = \${instance:egg} [test]
+eggs = \${scripts:eggs}
 script = selftest
 
 [omelette]

@@ -78,7 +78,10 @@ for name in sources_k:
         )
     )
 
-base_pyramid_eggs = ['pyramid', 
+base_pyramid_eggs = ['pyramid',
+                     'repoze.tm2',
+                     #'pyramid_who', 
+                     'cryptacular',
                      'PasteDeploy', 'Paste',
                      'WebOb', 'WebError', 'repoze.vhm',
                      'CherryPy', 'gunicorn',]
@@ -249,7 +252,7 @@ class Template(common.Template):
             )
             vars['includesdirs'] = '\n    %s'%  os.path.join(
                 vars['mt'], 'dependencies', cs, 'parts', 'part', 'include', 'sasl'
-            ) 
+            )
 
         # do we need some pinned version
         vars['plone_versions'] = []

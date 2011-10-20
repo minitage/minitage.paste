@@ -49,10 +49,14 @@ $product
 #end for
 
 # various addons pre configurations
-pyramid.debug_templates=\${instance:debug} 
-pyramid.reload_assets=\${instance:debug} 
-pyramid.debug_routematch=\${instance:debug} 
-pyramid.reload_resources=\${instance:debug} 
+mako.directories=\${instance:egg}:templates
+pyramid.debug_all=\${instance:debug}
+pyramid.debug_routematch=\${instance:debug}
+pyramid.debug_templates=\${instance:debug}
+pyramid.reload_all=\${instance:debug}
+pyramid.reload_assets=\${instance:debug}
+pyramid.reload_resources=\${instance:debug}
+pyramid.reload_templates=\${instance:debug}
 
 #if $with_pyramid_debugtoolbar
 #debug toolbar
