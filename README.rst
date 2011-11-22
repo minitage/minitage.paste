@@ -32,7 +32,7 @@ Projects templates
     - minitage.geodjango: A sample layout for a geo-django application
     - minitage.dependency: A sample layout for a compiled dependency
     - minitage.egg: A sample layout for an egg dependency
-    - minitage.pylons : A simple layout for a pylons project
+    - minitage.pyramid : A simple layout for a pyramid project
 
 Projects  instances
 =======================
