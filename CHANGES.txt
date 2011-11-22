@@ -29,6 +29,8 @@ CHANGES
             - quintagroup.plonecaptchas
             - solgema.fullcalendar
 
+- add pyramid template
+
 1.3.1855 (2011-04-01)
 ---------------------
 
