@@ -493,6 +493,7 @@ def parse_xmlconfig(xml,
                             'options': options,
                             'default': oattrs.get('default', '').strip(),
                             'autocheckout': oattrs.get('autocheckout', '').strip(),
+                            'opt_arg': oattrs.get('optarg', '').strip(),
                             'asegg': asegg,
                             'path': spath,
                         }

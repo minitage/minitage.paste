@@ -48,7 +48,7 @@ ${i18ncomment}    i18ndude
     zopeskel
 
 auto-checkout +=
-    zopeskel
+#    zopeskel
 
 
 [hosts]
@@ -84,8 +84,8 @@ eggs+= plone.reload
     gprof2dot
     Products.Clouseau
     Products.DocFinderTab
-    Products.Gloworm
-    Products.MemoryProfiler
+#    Products.Gloworm
+#    Products.MemoryProfiler
     Products.signalstack
     Products.ZopeProfiler
     profilehooks

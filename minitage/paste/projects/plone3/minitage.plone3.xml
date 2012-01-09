@@ -519,9 +519,11 @@
     -->
     <version p="jsonlib"                 v="1.3.10"    name="For cynin"/>
     <version p="ipython"                 v="0.10"    name="IPython py2.4 compatible version"/>
+
+    <!-- purged on p4 +-->
     <version p="cssutils"                v="0.9.5.1" name="break S D - http://groups.google.com/group/singing-dancing/browse_thread/thread/568de0b8226184f6"/>
     <version p="StoneageHTML"            v="0.1.5"   name="break S D"/>
-    <version p='Cheetah'                 v='2.2.1'   name='Markdown crazy stuff'/>
+    <version p='Cheetah'                 v='2.2.1'   name='Markdown crazy stuff'/> 
     <version p='Products.Archetypes'     v='1.5.16'  name='Needed for fixing https://dev.plone.org/plone/ticket/10088'/>
     <version p='Products.DataGridField'  v='1.6'     name='Needed for work on plone before 4'/>
     <version p='Products.validation'     v='1.6.4'   name='Needed for fixing https://dev.plone.org/plone/ticket/10088'/>
@@ -529,7 +531,7 @@
     <version p="plone.app.z3cform"       v="0.4.9"   name="plone.z3cform >= 0.6.0 break Singing and Dancing"/>
     <version p="plone.z3cform"           v="0.5.10"  name="plone.z3cform >= 0.6.0 break Singing and Dancing"/>
     <version p="plone.directives.form"   v="1.0b5"   name="plone.z3cform >= 0.6.0 break Singing and Dancing"/>
-    <version p='z3c.form'                v='1.9.0'   name="plone.z3cform >= 0.6.0 break Singing and Dancing"/>
+    <version p='z3c.form'                v='1.9.0'   name="plone.z3cform >= 0.6.0 break Singing and Dancing"/> 
   </versions>
 <!--
     Enter here know good set versions stuff
@@ -542,27 +544,21 @@
       options: comma separated list of options to enable the pinning
     -->
   <checkedversions>
-    <version p="Solgema.fullcalendar"       v="1.8"     options="with_ploneproduct_sfcalendar"/>
-    <version p="Solgema.ContextualContentMenu"       v="0.1"     options="with_ploneproduct_sfcalendar"/>
-    <version p='collective.z3cform.norobots'    v='1.2.1'    options="with_ploneproduct_cz3cformnorobots"/>
-    <version p='qi.portlet.TagClouds'    v='1.32'    options="with_ploneproduct_qiptagcloud"/>
-    <version p='collective.gallery'      v='1.0b5'   options="with_ploneproduct_cgallery"/>
-    <version p='collective.js.galleriffic' v='1.0'   options="with_ploneproduct_cgallery"/>
-    <version p='flickrapi'               v='1.4.2'   options="with_ploneproduct_cgallery"/>
-    <version p='gdata'                   v='2.0.14'   options="with_ploneproduct_cgallery"/>
-    <version p='collective.watcherlist'  v='0.2'   options="with_ploneproduct_poi"/>
-    <version p='plone.outputfilters'      v='1.0b1'   options="with_ploneproduct_tinymce"/>
-    <version p='collective.googleanalytics'     v='1.1'   options="with_ploneproduct_cga"/>
-    <version p='archetypes.schemaextender'      v='2.0.3'   options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />
-    <version p='aws.pdfbook'                    v='1.0.0b1' options='with_ploneproduct_awspdfbook' />
+    <version p='aws.pdfbook'                    v='1.0.1' options='with_ploneproduct_awspdfbook' />
     <version p='bda.cache'                      v='1.1.3'   options='with_ploneproduct_cynin' />
     <version p='bda.ldap'                       v='1.5.2'   options='with_ploneproduct_cynin' />
-    <version p='collective.contentlicensing'    v='2.2.0-final'   options='with_ploneproduct_contentlicensing' />
-    <version p='collective.js.jqueryui'         v='1.7.2.7' options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
-    <version p='collective.plonetruegallery'    v='1.0.3'     options="with_ploneproduct_truegallery"/>
+    <version p='collective.contentlicensing'    v='2.2.1'   options='with_ploneproduct_contentlicensing' />
+    <version p='collective.gallery'      v='1.1'   options="with_ploneproduct_cgallery"/>
+    <version p='collective.googleanalytics'     v='1.2'   options="with_ploneproduct_cga"/>
+    <version p='collective.js.galleriffic' v='1.0'   options="with_ploneproduct_cgallery"/>
+    <version p='collective.plonetruegallery'    v='1.3.3'     options="with_ploneproduct_truegallery"/>
     <version p='collective.portlettabber'       v='0.2.0'   options='with_ploneproduct_cportlettabber'/>
+    <version p='collective.watcherlist'  v='0.3'   options="with_ploneproduct_poi"/>
+    <version p='collective.z3cform.norobots'    v='1.2.1'    options="with_ploneproduct_cz3cformnorobots"/>
     <version p='dateable.chronos'               v='0.7.1'   options="with_ploneproduct_p4a_cal"/>
     <version p='dateable.kalends'               v='0.5'     options="with_ploneproduct_p4a_cal"/>
+    <version p='flickrapi'               v='1.4.2'   options="with_ploneproduct_cgallery"/>
+    <version p='gdata'                   v='2.0.14'   options="with_ploneproduct_cgallery"/>
     <version p='hachoir-core'                   v='1.3.3'   options="with_ploneproduct_p4a_vid"/>
     <version p='hachoir-metadata'               v='1.3.3'   options="with_ploneproduct_p4a_vid"/>
     <version p='hachoir-parser'                 v='1.3.4'   options="with_ploneproduct_p4a_vid"/>
@@ -582,33 +578,32 @@
     <version p='p4a.video'                      v='1.3'     options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.z2utils'                    v='1.0.2'   options="with_ploneproduct_p4a_vid"/>
     <version p='plomino.tinymce'                v='0.6.7'   options="with_ploneproduct_plominotinymce"/>
-    <version p='Plomino'                        v='1.10.1'   options="with_ploneproduct_plominotinymce,with_ploneproduct_plomino"/>
-    <version p="plone.app.blob"                 v="1.5"     options="with_ploneproduct_ploneappblob"/>
-    <version p="plone.app.jquerytools"          v="1.2b4"   options="with_ploneproduct_plonejqtools"/>
-    <version p='plone.formwidget.autocomplete'  v='1.1.1'     options='with_ploneproduct_autocomplete'/>
-    <version p='Products.AddRemoveWidget'       v='1.4.4'   options='with_ploneproduct_addremovewidget,with_ploneproduct_poi'/>
+    <version p='Plomino'                        v='1.13'   options="with_ploneproduct_plominotinymce,with_ploneproduct_plomino"/>
+    <version p="plone.app.blob"                 v="1.5.1"     options="with_ploneproduct_ploneappblob"/>
+    <version p="plone.app.jquerytools"          v="1.4b1"   options="with_ploneproduct_plonejqtools"/>
+    <version p='plone.formwidget.autocomplete'  v='1.2.2'     options='with_ploneproduct_autocomplete'/>
+    <version p='plone.outputfilters'      v='1.1'   options="with_ploneproduct_tinymce"/>
+    <version p='Products.AddRemoveWidget'       v='1.4.5'   options='with_ploneproduct_addremovewidget,with_ploneproduct_poi'/>
     <version p='Products.ATSchemaEditorNG'      v='0.8'     options='with_ploneproduct_atschemaeditor'/>
-    <version p='Products.ATVocabularyManager'   v='1.6'     options='with_ploneproduct_atvmanager'/>
-    <version p='Products.Clouseau'              v='0.9'     options="with_ploneproduct_clouseau"/>
-    <version p='Products.Collage'               v='1.3.0-final'     options="with_ploneproduct_collage"/>
+    <version p='Products.ATVocabularyManager'   v='1.6.1'     options='with_ploneproduct_atvmanager'/>
+    <version p='Products.Clouseau'              v='1.0'     options="with_ploneproduct_clouseau"/>
+    <version p='Products.Collage'               v='1.3.7'     options="with_ploneproduct_collage"/>
     <version p='Products.ContentWellPortlets'   v='3.0'     options="with_ploneproduct_contentwellportlet"/>
-    <version p='Products.FacultyStaffDirectory' v='3.0b3'   options="with_ploneproduct_facultystaff"/>
-    <version p='Products.LinguaPlone'           v='3.2'     options="with_ploneproduct_lingua"/>
+    <version p='Products.FacultyStaffDirectory' v='3.1b1'   options="with_ploneproduct_facultystaff"/>
     <version p='Products.Maps'                  v='2.1.0'   options="with_ploneproduct_maps"/>
-    <version p='Products.MasterSelectWidget'    v='0.4.4'   options='with_ploneproduct_masterselect'/>
-    <version p='Products.membrane'              v='2.0.1'   options='with_ploneproduct_remember,with_ploneproduct_membrane'/>
-    <version p='Products.PloneArticle'          v='4.1.10'  options="with_ploneproduct_plonearticle"/>
+    <version p='Products.MasterSelectWidget'    v='0.4.5'   options='with_ploneproduct_masterselect'/>
+    <version p='Products.membrane'              v='2.1.2'   options='with_ploneproduct_remember,with_ploneproduct_membrane'/>
     <version p='Products.PloneboardNotify'      v='0.4.1'   options="with_ploneproduct_ploneboardnotify"/>
-    <version p='Products.PloneFormGen'          v='1.7.0a1'   options='with_ploneproduct_ploneformgen'/>
-    <version p='Products.PloneLanguageTool'     v='3.0.9'   options="with_ploneproduct_lingua"/>
-    <version p='Products.Poi'                   v='2.0b1'   options="with_ploneproduct_poi"/>
-    <version p='Products.remember'              v='1.1b3'   options='with_ploneproduct_remember'/>
-    <version p='Products.SimpleAttachment'      v='3.7'     options="with_ploneproduct_ploneboard"/>
+    <version p='Products.PloneFormGen'          v='1.7rc1'   options='with_ploneproduct_ploneformgen'/>
+    <version p='Products.remember'              v='1.9.1'   options='with_ploneproduct_remember'/>
+    <version p='Products.SimpleAttachment'      v='4.2'     options="with_ploneproduct_ploneboard"/>
     <version p='Products.SmartPrintNG'          v='1.2.13'  options='with_ploneproduct_smartprintng' />
-    <version p='Products.TinyMCE'               v='1.2.3'   options='with_ploneproduct_tinymce,with_ploneproduct_plominotinymce' />
+    <version p='Products.TinyMCE'               v='1.2.9'   options='with_ploneproduct_tinymce,with_ploneproduct_plominotinymce' />
     <version p='python_dateutil'                v='1.5'     options="with_ploneproduct_p4a_cal"/>
     <version p='python-dateutil'                v='1.5'     options="with_ploneproduct_p4a_cal"/>
-    <version p='z3c.relationfield'              v='0.6.1'   options='with_ploneproduct_z3crelationfield,with_ploneproduct_dexterity'/>
+    <version p='qi.portlet.TagClouds'    v='1.33'    options="with_ploneproduct_qiptagcloud"/>
+    <version p="Solgema.ContextualContentMenu"       v="0.1"     options="with_ploneproduct_sfcalendar"/>
+    <version p="Solgema.fullcalendar"       v="2.0.2"     options="with_ploneproduct_sfcalendar"/>
 
     <version p='collective.singing'             v='0.7.1'   options='with_ploneproduct_sgdcg'/>
     <version p='collective.dancing'             v='0.9.5'   options='with_ploneproduct_sgdcg'/>
@@ -631,6 +626,17 @@
     <version p='grokcore.viewlet'               v='1.3'     options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
     <version p='five.localsitemanager'          v='1.1'     options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
     <version p='martian'                        v='0.11'    options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+
+
+    <!-- purged on p4+-->
+    <version p='collective.js.jqueryui'         v='1.7.2.7' options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
+    <version p='Products.Poi'                   v='2.0b1'   options="with_ploneproduct_poi"/>
+    <version p='archetypes.schemaextender'      v='2.0.3'   options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />
+    <version p='Products.PloneArticle'          v='4.1.10'  options="with_ploneproduct_plonearticle"/>
+    <version p='z3c.relationfield'              v='0.6.1'   options='with_ploneproduct_z3crelationfield,with_ploneproduct_dexterity'/>
+    <version p='Products.LinguaPlone'           v='3.2'     options="with_ploneproduct_lingua"/>
+    <version p='Products.PloneLanguageTool'     v='3.0.9'   options="with_ploneproduct_lingua"/>
+
   </checkedversions>
   <!--
     Old style plone products to checkout using the [productsdistros] part
@@ -645,19 +651,19 @@
 
   -->
   <sources>
-    <source name="Solgema.fullcalendar"             type="svn"  url="http://svn.plone.org/svn/collective/Solgema.fullcalendar/trunk" options="with_ploneproduct_sfcalendar"/>
-    <source name="qi.portlet.TagClouds"             type="svn"  url="http://svn.plone.org/svn/collective/qi.portlet.TagClouds/trunk" options="with_ploneproduct_qiptagcloud"/>
-    <source name="Products.ATWorkgroup"             type="svn"  url="https://svn.plone.org/svn/collective/ATWorkgroup/branches/eggification/Products.ATWorkgroup" options="with_ploneproduct_atworkgroup" default="y"/>
-    <source name="aws.pdfbook"                      type="svn"  url="https://svn.plone.org/svn/collective/aws.pdfbook/trunk"                                      options="with_ploneproduct_awspdfbook"/>
+    <source name="archetypes.gridfield"             type="svn"  url="https://svn.plone.org/svn/archetypes/MoreFieldsAndWidgets/archetypes.gridfield/trunk"        options="with_ploneproduct_agridfield"/>
     <source name="archetypes.schemaextender"        type="svn"  url="https://svn.plone.org/svn/archetypes/archetypes.schemaextender/trunk"                        options="with_ploneproduct_schemaextender,with_ploneproduct_facultystaff,with_ploneproduct_cynin"/>
     <source name="archetypes.tuning"                type="svn"  url="https://svn.plone.org/svn/archetypes/archetypes.schematuning/trunk"                          options="with_ploneproduct_schematuning"/>
-    <source name="collective.contentlicensing"      type="svn"  url="https://svn.plone.org/svn/collective/collective.contentlicensing/trunk"                      options="with_ploneproduct_contentlicensing" />
+    <source name="aws.pdfbook"                      type="svn"  url="https://svn.plone.org/svn/collective/aws.pdfbook/trunk"                                      options="with_ploneproduct_awspdfbook"/>
+    <source name="collective.contentlicensing"      type="git"  url="https://github.com/collective/collective.contentlicensing.git"                      options="with_ploneproduct_contentlicensing" />
     <source name="collective.dancing"               type="svn"  url="https://svn.plone.org/svn/collective/collective.dancing/trunk"                               options="with_ploneproduct_sgdcg"/>
     <source name="collective.flowplayer"            type="svn"  url="https://svn.plone.org/svn/collective/collective.flowplayer/trunk"                            options="with_ploneproduct_flowplayer"/>
     <source name="collective.indexing"              type="svn"  url="https://svn.plone.org/svn/collective/collective.indexing/trunk"                              options="with_ploneproduct_ci"/>
     <source name="collective.plonetruegallery"      type="svn"  url="https://svn.plone.org/svn/collective/collective.plonetruegallery/trunk"                      options="with_ploneproduct_truegallery"/>
     <source name="collective.portlet.tal"           type="svn"  url="https://svn.plone.org/svn/collective/collective.portlet.tal/trunk"                           options="with_ploneproduct_tal_portlet"/>
     <source name="collective.singing"               type="svn"  url="https://svn.plone.org/svn/collective/collective.singing/trunk"                               options="with_ploneproduct_sgdcg"/>
+    <source name="collective.transmogrifier"        type="svn"  url="https://svn.plone.org/svn/collective/collective.transmogrifier/trunk"                        options="with_ploneproduct_patransmo"/>
+    <source name="iw.fss"                           type="svn"  url="https://svn.plone.org/svn/collective/iw.fss/trunk/"                                          options="with_ploneproduct_fss"/>
     <source name="p4a.common"                       type="svn"  url="https://svn.plone.org/svn/collective/p4a/p4a.common/trunk"                                   options="with_ploneproduct_p4a_vid"/>
     <source name="p4a.fileimage"                    type="svn"  url="https://svn.plone.org/svn/collective/p4a/p4a.fileimage/trunk"                                options="with_ploneproduct_p4a_vid"/>
     <source name="p4a.plonecalendar"                type="svn"  url="https://svn.plone.org/svn/collective/p4a/p4a.plonecalendar/trunk"                            options="with_ploneproduct_p4a_cal"/>
@@ -666,51 +672,43 @@
     <source name="p4a.plonevideo"                   type="svn"  url="https://svn.plone.org/svn/collective/p4a/p4a.plonevideo/trunk"                               options="with_ploneproduct_p4a_vid"/>
     <source name="p4a.video"                        type="svn"  url="https://svn.plone.org/svn/collective/p4a/p4a.video/trunk"                                    options="with_ploneproduct_p4a_vid"/>
     <source name="p4a.z2utils"                      type="svn"  url="https://svn.plone.org/svn/collective/p4a/p4a.z2utils/trunk"                                  options="with_ploneproduct_p4a_vid"/>
-    <source name="plone.app.iterate"                type="svn"  url="https://svn.plone.org/svn/plone/plone.app.iterate/trunk"                                     options="with_ploneproduct_iterate" default="y"/>
-    <source name="plone.app.ldap"                   type="svn"  url="https://svn.plone.org/svn/plone/plone.app.ldap/trunk"                                        options="with_ploneproduct_ldap" />
-    <source name="plone.app.z3cform"                type="svn"  url="https://svn.plone.org/svn/plone/plone.app.z3cform/trunk"                                     options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"/>
-    <source name="plone.directives.form"            type="svn"  url="https://svn.plone.org/svn/plone/plone.directives.form/trunk"                                 options="with_ploneproduct_pz3cform"/>
+    <source name="plone.app.transmogrifier"         type="svn"  url="https://svn.plone.org/svn/collective/plone.app.transmogrifier/trunk"                         options="with_ploneproduct_patransmo"/>
     <source name="plone.z3cform"                    type="svn"  url="svn://svn.zope.org/repos/main/plone.z3cform/trunk"                                           options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"/>
+    <source name="Products.AddRemoveWidget"         type="svn"  url="https://svn.plone.org/svn/archetypes/Products.AddRemoveWidget/trunk"                         options="with_ploneproduct_addremovewidget"/>
     <source name="Products.ATBackRef"               type="svn"  url="https://svn.plone.org/svn/archetypes/MoreFieldsAndWidgets/ATBackRef/trunk"                   options="with_ploneproduct_atbackref"/>
+    <source name="Products.ATExtensions"            type="svn"  url="https://svn.plone.org/svn/archetypes/Products.ATExtensions/trunk"                            options="with_ploneproduct_atextensions"/>
+    <source name="Products.ATSchemaEditorNG"        type="svn"  url="https://svn.plone.org/svn/collective/ATSchemaEditorNG/trunk"                                  options="with_ploneproduct_atschemaeditor"/>
+    <source name="Products.ATVocabularyManager"     type="git"  url="https://github.com/collective/Products.ATVocabularyManager.git"                     options="with_ploneproduct_atvmanager"/>
+    <source name="Products.ATWorkgroup"             type="svn"  url="https://svn.plone.org/svn/collective/ATWorkgroup/branches/eggification/Products.ATWorkgroup" options="with_ploneproduct_atworkgroup" default="y"/>
     <source name="Products.CacheSetup"              type="svn"  url="https://svn.plone.org/svn/collective/Products.CacheSetup/trunk"                              options="with_ploneproduct_cachesetup"       />
     <source name="Products.CMFPlacefulWorkflow"     type="svn"  url="https://svn.plone.org/svn/collective/Products.CMFPlacefulWorkflow/trunk"                     options="with_ploneproduct_cpwkf" default="y"/>
-    <source name="Products.ContentWellPortlets"     type="svn"  url="https://weblion.psu.edu/svn/weblion/weblion/Products.ContentWellPortlets/trunk"              options="with_ploneproduct_contentwellportlet"/>
     <source name="Products.Collage"                 type="svn"  url="https://svn.plone.org/svn/collective/Products.Collage/trunk"                                 options="with_ploneproduct_collage"/>
+    <source name="Products.ContentWellPortlets"     type="svn"  url="https://weblion.psu.edu/svn/weblion/weblion/Products.ContentWellPortlets/trunk"              options="with_ploneproduct_contentwellportlet"/>
     <source name="Products.FacultyStaffDirectory"   type="svn"  url="https://weblion.psu.edu/svn/weblion/weblion/Products.FacultyStaffDirectory/trunk"            options="with_ploneproduct_facultystaff"/>
     <source name="Products.LDAPMultiPlugins"        type="svn"  url="https://svn.dataflake.org/svn/Products.LDAPMultiPlugins/trunk"                               options="with_ploneproduct_ldap"/>
     <source name="Products.LDAPUserFolder"          type="svn"  url="https://svn.dataflake.org/svn/Products.LDAPUserFolder/trunk"                                 options="with_ploneproduct_ldap"/>
-    <source name="Products.LinguaPlone"             type="svn"  url="https://svn.plone.org/svn/plone/Products.LinguaPlone/trunk"                                  options="with_ploneproduct_lingua"/>
+    <source name="Products.MasterSelectWidget"      type="svn"  url="https://svn.plone.org/svn/archetypes/MoreFieldsAndWidgets/Products.MasterSelectWidget/trunk" options="with_ploneproduct_masterselect"/>
+    <source name="Products.membrane"                type="svn"  url="https://svn.plone.org/svn/collective/Products.membrane/trunk"                                options="with_ploneproduct_remember,with_ploneproduct_membrane"/>
     <source name="Products.PloneArticle"            type="svn"  url="https://svn.plone.org/svn/collective/Products.PloneArticle/trunk"                            options="with_ploneproduct_plonearticle"/>
+    <source name="Products.PloneboardNotify"        type="svn"  url="http://svn.plone.org/svn/collective/Products.PloneboardNotify/trunk/"                        options="with_ploneproduct_ploneboardnotify"/>
     <source name="Products.Ploneboard"              type="svn"  url="https://svn.plone.org/svn/collective/Products.Ploneboard/trunk"                              options="with_ploneproduct_ploneboard"/>
     <source name="Products.PloneFormGen"            type="svn"  url="https://svn.plone.org/svn/collective/Products.PloneFormGen/trunk"                            options="with_ploneproduct_ploneformgen"/>
     <source name="Products.PloneLDAP"               type="svn"  url="https://svn.plone.org/svn/collective/Products.PloneLDAP/trunk"                               options="with_ploneproduct_ldap"/>
     <source name="Products.PloneSurvey"             type="svn"  url="https://svn.plone.org/svn/collective/Products.PloneSurvey/trunk"                             options="with_ploneproduct_plonesurvey"/>
     <source name="Products.Quills"                  type="svn"  url="https://svn.plone.org/svn/collective/Products.Quills/trunk"                                  options="with_ploneproduct_quills"/>
-    <source name="quills.remoteblogging"            type="svn"  url="https://svn.plone.org/svn/collective/quills.remoteblogging/trunk"                            options="with_ploneproduct_quills"/>
-    <source name="quills.core"                      type="svn"  url="https://svn.plone.org/svn/collective/quills.app/trunk"                                       options="with_ploneproduct_quills"/>
-    <source name="quills.app"                       type="svn"  url="https://svn.plone.org/svn/collective/quills.core/trunk"                                      options="with_ploneproduct_quills"/>
+    <source name="Products.remember"                type="svn"  url="https://svn.plone.org/svn/collective/Products.remember/trunk"                                options="with_ploneproduct_remember"/>
     <source name="Products.SimpleAttachment"        type="svn"  url="https://svn.plone.org/svn/collective/Products.SimpleAttachment/trunk"                        options="with_ploneproduct_ploneboard"/>
+    <source name="Products.SmartPrintNG"            type="svn"  url="https://svn.plone.org/svn/collective/Products.SmartPrintNG/trunk"                            options="with_ploneproduct_smartprintng"/>
     <source name="Products.TinyMCE"                 type="svn"  url="https://svn.plone.org/svn/collective/Products.TinyMCE/trunk"                                 options="with_ploneproduct_tinymce,with_ploneproduct_plominotinymce"/>
-    <source name="webcouturier.dropdownmenu"        type="svn"  url="https://svn.plone.org/svn/collective/webcouturier.dropdownmenu/trunk"                        options="with_ploneproduct_wc_dd_menu"/>
-    <source name="plone.app.jquerytools"            type="svn"  url="https://svn.plone.org/svn/plone/plone.app.jquerytools/trunk"                                 options="with_ploneproduct_plonejqtools"/>
-    <source name="plone.app.transmogrifier"         type="svn"  url="https://svn.plone.org/svn/collective/plone.app.transmogrifier/trunk"                         options="with_ploneproduct_patransmo"/>
-    <source name="collective.transmogrifier"        type="svn"  url="https://svn.plone.org/svn/collective/collective.transmogrifier/trunk"                        options="with_ploneproduct_patransmo"/>
-    <source name="iw.fss"                           type="svn"  url="https://svn.plone.org/svn/collective/iw.fss/trunk/"                                          options="with_ploneproduct_fss"/>
+    <source name="qi.portlet.TagClouds"             type="svn"  url="http://svn.plone.org/svn/collective/qi.portlet.TagClouds/trunk" options="with_ploneproduct_qiptagcloud"/>
+    <source name="quills.app"                       type="svn"  url="https://svn.plone.org/svn/collective/quills.core/trunk"                                      options="with_ploneproduct_quills"/>
+    <source name="quills.core"                      type="svn"  url="https:/sn.plone.org/svn/collective/quills.app/trunk"                                       options="with_ploneproduct_quills"/>
+    <source name="quills.remoteblogging"            type="svn"  url="https://svn.plone.org/svn/collective/quills.remoteblogging/trunk"                            options="with_ploneproduct_quills"/>
+    <source name="Solgema.fullcalendar"             type="git"  url="https://github.com/collective/Solgema.fullcalendar.git" options="with_ploneproduct_sfcalendar"/>
     <source name="transmogrify.filesystem"          type="svn"  url="https://svn.plone.org/svn/collective/transmogrify.filesystem/trunk"                          options="with_ploneproduct_patransmo"/>
     <source name="transmogrify.sqlalchemy"          type="svn"  url="https://svn.plone.org/svn/collective/transmogrify.sqlalchemy/trunk"                          options="with_ploneproduct_patransmo"/>
-    <source name="Products.ATExtensions"            type="svn"  url="https://svn.plone.org/svn/archetypes/Products.ATExtensions/trunk"                            options="with_ploneproduct_atextensions"/>
-    <source name="archetypes.gridfield"             type="svn"  url="https://svn.plone.org/svn/archetypes/MoreFieldsAndWidgets/archetypes.gridfield/trunk"        options="with_ploneproduct_agridfield"/>
-    <source name="plone.app.jquerytools_branchnaro" type="svn"  url="https://svn.plone.org/svn/plone/plone.app.jquerytools/branches/naro-gridfield"               options="with_ploneproduct_plonejqtools"/>
+    <source name="webcouturier.dropdownmenu"        type="svn"  url="https://svn.plone.org/svn/collective/webcouturier.dropdownmenu/trunk"                        options="with_ploneproduct_wc_dd_menu"/>
     <source name="z3c.relationfield"                type="svn"  url="svn://svn.zope.org/repos/main/z3c.relationfield/trunk"                                       options="with_ploneproduct_z3crelationfield"/>
-    <source name="Products.remember"                type="svn"  url="https://svn.plone.org/svn/collective/Products.remember/trunk"                                options="with_ploneproduct_remember"/>
-    <source name="Products.membrane"                type="svn"  url="https://svn.plone.org/svn/collective/Products.membrane/trunk"                                options="with_ploneproduct_remember,with_ploneproduct_membrane"/>
-    <source name="Products.ATVocabularyManager"     type="svn"  url="https://svn.plone.org/svn/archetypes/Products.ATVocabularyManager/trunk"                     options="with_ploneproduct_atvmanager"/>
-    <source name="Products.AddRemoveWidget"         type="svn"  url="https://svn.plone.org/svn/archetypes/Products.AddRemoveWidget/trunk"                         options="with_ploneproduct_addremovewidget"/>
-    <source name="plone.formwidget.autocomplete"    type="svn"  url="https://svn.plone.org/svn/plone/plone.formwidget.autocomplete/trunk"                         options="with_ploneproduct_autocomplete"/>
-    <source name="Products.MasterSelectWidget"      type="svn"  url="https://svn.plone.org/svn/archetypes/MoreFieldsAndWidgets/Products.MasterSelectWidget/trunk" options="with_ploneproduct_masterselect"/>
-    <source name="Products.ATSchemaEditorNG"        type="svn"  url="http://svn.plone.org/svn/collective/ATSchemaEditorNG/trunk"                                  options="with_ploneproduct_atschemaeditor"/>
-    <source name="Products.PloneboardNotify"        type="svn"  url="http://svn.plone.org/svn/collective/Products.PloneboardNotify/trunk/"                        options="with_ploneproduct_ploneboardnotify"/>
-    <source name="Products.SmartPrintNG"            type="svn"  url="https://svn.plone.org/svn/collective/Products.SmartPrintNG/trunk"                            options="with_ploneproduct_smartprintng"/>
     <!-- makina -->
     <source name="buildout.minitagificator"             type="git" url="ssh://git.minitage.org/git/minitage/eggs/buildout.minitagificator"                        options="with_minitage_devpackages"/>
     <source name="ClueReleaseManager.paste"             type="git" url="ssh://git.minitage.org/git/others/ClueReleaseManager.paste"                               options="with_minitage_otherpackages"/>
@@ -733,20 +731,7 @@
     <source name="collective.z3cform.norobots"          type="svn" url="https://svn.plone.org/svn/collective/collective.z3cform.norobots/trunk"                   options="with_ploneproduct_cz3cformnorobots"/>
     <source name="experimental.aggressiveopaquespeedup" type="svn" url="https://svn.plone.org/svn/collective/experimental.aggressiveopaquespeedup/trunk"          options="with_ploneproduct_eaggressivepagespeedup" />
     <source name="collective.portlettabber" type="svn" url="http://svn.plone.org/svn/collective/collective.portlettabber/trunk/"                      options="with_ploneproduct_cportlettabber" />
-    <source name="dj.paste"                             type="git" url="ssh://git.minitage.org/git/others/dj.paste"                                               options="with_minitage_otherpackages"/>
     <source name="mapscript"                            type="git" url="ssh://git.minitage.org/git/others/mapscript/mapscript-5.6"                                options="with_binding_mapscript"/>
-    <source name="minitage.core"                        type="git" url="ssh://git.minitage.org/git/minitage/eggs/minitage.core"                                   options="with_minitage_devpackages"/>
-    <source name="minitage.paste.extras"                type="git" url="ssh://git.minitage.org/git/minitage/eggs/minitage.paste.extras"                           options="with_minitage_devpackages"/>
-    <source name="minitage.paste"                       type="git" url="ssh://git.minitage.org/git/minitage/eggs/minitage.paste"                                  options="with_minitage_devpackages"/>
-    <source name="minitage.recipe.cmmi"                 type="git" url="ssh://git.minitage.org/git/minitage/eggs/minitage.recipe.cmmi"                            options="with_minitage_devpackages"/>
-    <source name="minitage.recipe.common"               type="git" url="ssh://git.minitage.org/git/minitage/eggs/minitage.recipe.common"                          options="with_minitage_devpackages"/>
-    <source name="minitage.recipe.du"                   type="git" url="ssh://git.minitage.org/git/minitage/eggs/minitage.recipe.du"                              options="with_minitage_devpackages"/>
-    <source name="minitage.recipe.egg"                  type="git" url="ssh://git.minitage.org/git/minitage/eggs/minitage.recipe.egg"                             options="with_minitage_devpackages"/>
-    <source name="minitage.recipe.fetch"                type="git" url="ssh://git.minitage.org/git/minitage/eggs/minitage.recipe.fetch"                           options="with_minitage_devpackages"/>
-    <source name="minitage.recipe.printer"              type="git" url="ssh://git.minitage.org/git/minitage/eggs/minitage.recipe.printer"                         options="with_minitage_devpackages"/>
-    <source name="minitage.recipe.scripts"              type="git" url="ssh://git.minitage.org/git/minitage/eggs/minitage.recipe.scripts"                         options="with_minitage_devpackages"/>
-    <source name="minitage.recipe"                      type="git" url="ssh://git.minitage.org/git/minitage/eggs/minitage.recipe"                                 options="with_minitage_devpackages"/>
-    <source name="minitage.recipe.wsgi"                 type="git" url="ssh://git.minitage.org/git/minitage/eggs/minitage.recipe.wsgi"                            options="with_wsgi_cas"  />
     <source name="nmd.plonelinkasvideoembed"            type="svn" url="https://svn.plone.org/svn/collective/nmd.plonelinkasvideoembed/trunk"                     options="with_ploneproduct_nmdlinkasvideo"/>
     <source name="Products.CMFPlomino"                  type="svn" url="https://plomino.svn.sourceforge.net/svnroot/plomino/trunk/Plomino"                        options="with_ploneproduct_plomino"/>
     <source name="plomino.tinymce"                      type="svn" url="https://plomino.svn.sourceforge.net/svnroot/plomino/branches/leprodupure/plomino.tinymce" options="with_ploneproduct_plominotinymce" />
@@ -754,9 +739,6 @@
     <source name="collective.harlequin"                 type="svn" url="https://svn.plone.org/svn/collective/collective.harlequin/trunk"                          options="with_ploneproduct_harlequin"/>
     <source name="collective.googleanalytics"        type="svn" url="http://svn.plone.org/svn/collective/collective.googleanalytics/trunk"                          options="with_ploneproduct_cga"/>
     <source name="pysugarng"                            type="hg"  url="https://bitbucket.org/kiorky/pysugar"                                                     options="with_binding_sugar"/>
-    <source name="collective.generic.skel"              type="svn" url="https://svn.plone.org/svn/collective/collective.generic.skel/trunk"                       options="with_tool_cgeneric"/>
-    <source name="collective.generic.webbuilder"        type="svn" url="https://svn.plone.org/svn/collective/collective.generic.webbuilder/trunk"                 options="with_tool_cgeneric"/>
-    <source name="collective.generic.devmode"           type="svn" url="https://svn.plone.org/svn/collective/collective.generic.devmode/trunk"                    options="with_tool_cgeneric"/>
     <source name="Products.Quaestrio"                   type="svn" url="https://svn.plone.org/svn/collective/Quaestrio/trunk"                                     options="with_ploneproduct_quaestrio"/>
     <source name="repoze.who.plugins.cas"               type="git" url="http://github.com/kiorky/repoze.who.plugins.cas.git"                                      options="with_wsgi_cas"/>
     <source name="pypdf"                                type="git" url="http://github.com/mfenniak/pyPdf.git"                                                     options="with_binding_pdf"/>

@@ -79,7 +79,7 @@ extends =
 #end if
     project/versions.cfg
     project/sources.cfg
-    project/${project}-kgs.cfg
+#    project/${project}-kgs.cfg
     project/${project}.cfg
     apache/apache.cfg
     hudson/${project}/hudson.cfg
@@ -245,6 +245,8 @@ eggs=\${instance:eggs}
 
 [backup]
 recipe = collective.recipe.backup
+blobbackuplocation=\${locations:blob-backup}/backups
+blobsnapshotlocation=\${locations:blob-backup}/snapshots
 
 # Traditionnal Plone products to install
 [productdistros]
@@ -283,8 +285,5 @@ command =
     find \${buildout:directory}/var -type d -exec chmod 700 {} \;
     chmod 744 \${buildout:directory}/bin/*
 update-command = \${chown:command}
-
-
-
 
 \# vim: set ft=cfg:

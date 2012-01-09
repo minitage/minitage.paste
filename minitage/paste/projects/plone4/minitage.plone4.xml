@@ -33,32 +33,36 @@
       <version p="python-dateutil"         v="1.5"     name="various pinning for z3 packages and p4 environments"/>
       <version p="python_dateutil"         v="1.5"     name="various pinning for z3 packages and p4 environments"/>
       <version p='rwproperty'              v='1.0'     name="various pinning for z3 packages and p4 environments"/>
-      <version p='z3c.form'                v='2.4.2'   name="various pinning for z3 packages and p4 environments"/>
+      <version p='z3c.form'                v='2.4.4'   name="various pinning for z3 packages and p4 environments"/>
       <version p='z3c.formwidget.query'    v='0.5'     name="various pinning for z3 packages and p4 environments"/>
-      <version p="zope.schema"             v="3.6.1"   name="various pinning for z3 packages and p4 environments"/>
+      <version p="zope.schema"             v="3.7.1"   name="various pinning for z3 packages and p4 environments"/>
       <version p="cssutils"                v="0.9.8a1" name="singing and dancing"/>
       <version p="StoneageHTML"            v="0.2.1"   name="singing and dancing"/>
     </versions>
     <checkedversions>
+      <version p='ordereddict'             v='1.1'      options="with_tool_i18ndude"/>
+      <version p='Products.Poi'            v='2.0.1'    options="with_ploneproduct_poi"/>
+      <version p='collective.js.jqueryui'  v='1.8.16.4' options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' /> 
+      <version p='Products.ContentWellPortlets'   v='4.1.0'     options="with_ploneproduct_contentwellportlet"/> 
       <version p='archetypes.schemaextender'               v='2.0.3' options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />
-      <version p='Products.DataGridField'                  v='1.8b1' options="with_ploneproduct_poi"/>
+      <version p="collective.contentrules.mailtolocalrole" v="1.2"   options="with_ploneproduct_cmailtolrole"/>
       <version p='collective.portlet.localcumulus'         v='1.8' options="with_ploneproduct_clcumulus"/>
-      <version p='medialog.subskins'                       v='4.1b1' options="with_ploneproduct_subskins"/>
-      <version p="Products.EasyNewsletter"                 v="2.5.10a2"  options="with_ploneproduct_enewsletter"/>
-      <version p="Products.RedirectionTool"                v="1.3"   options="with_ploneproduct_rtool"/>
-      <version p="collective.quickupload"                  v="1.1.1" options="with_ploneproduct_qupload"/>
-      <version p="quintagroup.portlet.cumulus"             v="1.1.0" options="with_ploneproduct_qcumulus"/>
-      <version p="collective.contentrules.mailtolocalrole" v="1.1"   options="with_ploneproduct_cmailtolrole"/>
-      <version p='quintagroup.plonecaptchas'               v='4.0'   options="with_ploneproduct_qcaptchas"/>
+      <version p='collective.portlet.relateditems'    v='0.3.5'      options="with_ploneproduct_crelateditems"/>
+      <version p="collective.quickupload"                  v="1.3.1" options="with_ploneproduct_qupload"/>
+      <version p='contentratings'                          v='1.0' options="with_ploneproduct_pratings"/>
+      <version p='geopy'                v='0.94'  options="with_ploneproduct_cgeo"/>
+      <version p='medialog.subskins'                       v='4.2b13' options="with_ploneproduct_subskins"/>
+      <version p='plone.contentratings'                    v='1.0' options="with_ploneproduct_pratings"/>
+      <version p='Products.DataGridField'                  v='1.6.3' options="with_ploneproduct_poi"/>
+      <version p="Products.EasyNewsletter"                 v="2.6.1"  options="with_ploneproduct_enewsletter"/>
+      <version p='Products.LinguaPlone' v='4.1.1' options="with_ploneproduct_lingua"/>
+      <version p='Products.PloneLanguageTool' v='3.2.3' options="with_ploneproduct_lingua"/>
+      <version p="Products.RedirectionTool"                v="1.3.1"   options="with_ploneproduct_rtool"/>
       <version p='quintagroup.captcha.core'                v='0.2.4' options="with_ploneproduct_qcaptchas"/>
       <version p='quintagroup.formlib.captcha'               v='1.3'   options="with_ploneproduct_qcaptchas"/>
-      <version p='plone.contentratings'                    v='1.0-rc3' options="with_ploneproduct_pratings"/>
-      <version p='contentratings'                          v='1.0-rc3' options="with_ploneproduct_pratings"/>
-      <version p='collective.portlet.relateditems'    v='0.3.4'      options="with_ploneproduct_crelateditems"/>
-      <version p='geopy'                v='0.94'  options="with_ploneproduct_cgeo"/>
+      <version p='quintagroup.plonecaptchas'               v='4.0'   options="with_ploneproduct_qcaptchas"/>
+      <version p="quintagroup.portlet.cumulus"             v="1.1.0" options="with_ploneproduct_qcumulus"/>
       <version p='Shapely'              v='1.2.5' options="with_ploneproduct_cgeo"/>
-      <version p='Products.LinguaPlone' v='4.0.3' options="with_ploneproduct_lingua"/>
-      <version p='Products.PloneLanguageTool' v='3.2.2' options="with_ploneproduct_lingua"/>
       <!-- plone.app.async -->
       <version p='plone.app.async'  v='1.0'    options="with_ploneproduct_paasync"/>
       <version p='zope.app.keyreference'  v='3.6.1'    options="with_ploneproduct_paasync"/>
@@ -73,24 +77,27 @@
       <version p="zc.ngi"           v="1.1.6"  options="with_ploneproduct_paasync"/>
       <version p="zc.z3monitor"     v="0.7.0"  options="with_ploneproduct_paasync"/>
       <!-- dexterity -->
-      <version p="collective.z3cform.datetimewidget" v="1.0.4" options="with_ploneproduct_dexterity" />
-      <version p="mocker"                            v="1.0"   options="with_ploneproduct_dexterity" />
+      <version p="collective.z3cform.datagridfield" v="0.9" options="with_ploneproduct_dexterity" />
+      <version p="collective.z3cform.datetimewidget" v="1.1.1" options="with_ploneproduct_dexterity" />
+      <version p="mocker"                            v="1.1"   options="with_ploneproduct_dexterity" />
       <version p="plone.alterego"                    v="1.0" options="with_ploneproduct_dexterity" />
-      <version p="plone.dexterity"                   v="1.0" options="with_ploneproduct_dexterity" />
+      <version p="plone.dexterity"                   v="1.1" options="with_ploneproduct_dexterity" />
       <version p="plone.app.dexterity"               v="1.0" options="with_ploneproduct_dexterity" />
       <version p="plone.app.intid"                   v="1.0b3" options="with_ploneproduct_dexterity" />
-      <version p="plone.app.relationfield"           v="1.0" options="with_ploneproduct_dexterity" />
-      <version p="plone.app.textfield"               v="1.0" options="with_ploneproduct_dexterity" />
-      <version p="plone.app.versioningbehavior"      v="1.0b3" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.relationfield"           v="1.1" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.textfield"               v="1.0.2" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.lockingbehavior"         v="1.0.1" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.stagingbehavior"         v="0.1b3" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.versioningbehavior"      v="1.0" options="with_ploneproduct_dexterity" />
       <version p="plone.autoform"                    v="1.0" options="with_ploneproduct_dexterity,with_ploneproduct_cgeo,with_ploneproduct_pz3cform" />
       <version p="plone.behavior"                    v="1.0.1" options="with_ploneproduct_dexterity" />
-      <version p="plone.directives.dexterity"        v="1.0" options="with_ploneproduct_dexterity" />
+      <version p="plone.directives.dexterity"        v="1.0.2" options="with_ploneproduct_dexterity" />
       <version p="plone.folder"                      v="1.0.1" options="with_ploneproduct_dexterity" />
-      <version p="plone.formwidget.autocomplete"     v="1.2.1" options="with_ploneproduct_dexterity" />
-      <version p="plone.formwidget.contenttree"      v="1.0.1" options="with_ploneproduct_dexterity" />
-      <version p="plone.formwidget.namedfile"        v="1.0" options="with_ploneproduct_dexterity" />
+      <version p="plone.formwidget.autocomplete"     v="1.2.2" options="with_ploneproduct_dexterity" />
+      <version p="plone.formwidget.contenttree"      v="1.0.4" options="with_ploneproduct_dexterity" />
+      <version p="plone.formwidget.namedfile"        v="1.0.2" options="with_ploneproduct_dexterity" />
       <version p="plone.mocktestcase"                v="1.0b3" options="with_ploneproduct_dexterity" />
-      <version p="plone.namedfile"                   v="1.0.3" options="with_ploneproduct_dexterity" />
+      <version p="plone.namedfile"                   v="1.0.6" options="with_ploneproduct_dexterity" />
       <version p="plone.rfc822"                      v="1.0" options="with_ploneproduct_dexterity,with_ploneproduct_cgeo" />
       <version p="plone.scale"                       v="1.2.2" options="with_ploneproduct_dexterity" />
       <version p="plone.schemaeditor"                v="1.0.1" options="with_ploneproduct_dexterity" />
@@ -99,6 +106,9 @@
       <version p="uuid"                              v="1.30"  options="with_ploneproduct_dexterity,with_ploneproduct_paasync" />
       <version p="z3c.batching"                      v="1.1.0" options="with_ploneproduct_dexterity,with_ploneproduct_pz3cform" />
       <version p="z3c.blobfile"                      v="0.1.5" options="with_ploneproduct_dexterity" />
+      <version p="z3c.formwidget.query"              v="0.8"   options="with_ploneproduct_dexterity" />
+      <version p="z3c.ptcompat"                      v="0.5.7"   options="with_ploneproduct_dexterity" />
+      <version p="z3c.template"                      v="0.2.1"   options="with_ploneproduct_dexterity" />
       <version p="z3c.objpath"                       v="1.0"   options="with_ploneproduct_dexterity" />
       <version p="zc.relation"                       v="1.0"   options="with_ploneproduct_dexterity" />
       <version p="zc.sourcefactory"                  v="0.7.0" options="with_ploneproduct_dexterity" />
@@ -121,9 +131,7 @@
       <version p='zope.ptresource'         v='3.9.0'    options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
       <version p='zope.login'              v='1.0.0'    options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
 
-      <version p='ordereddict'             v='1.1'      options="with_tool_i18ndude"/>
-      <version p='Products.Poi'            v='2.0.1'    options="with_ploneproduct_poi"/>
-      <version p='collective.js.jqueryui'  v='1.8.12.2' options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
+
     </checkedversions>
     <eggs>
       <egg name="bpython"              options="with_tool_bpython"           scripts="bpython" default="y" />
@@ -179,77 +187,73 @@
       <product name="collective.geo.mapcontent"        options="with_ploneproduct_cgeo"  order="300"/>
     </gs>
     <sources>
-      <!-- collective.geo-->
-      <source name="collective.portlet.localcumulus"      type="svn" url="http://svn.plone.org/svn/collective/collective.portlet.localcumulus/trunk/"  options="with_ploneproduct_clcumulus"/>
-      <source name="Products.EasyNewsletter"      type="svn" url="http://svn.plone.org/svn/collective/Products.EasyNewsletter/trunk"  options="with_ploneproduct_enewsletter"/>
-      <source name="collective.contentrules.mailtolocalrole"      type="svn" url="http://svn.plone.org/svn/collective/collective.contentrules.mailtolocalrole/trunk"  options="with_ploneproduct_cmailtolrole"/>
-      <source name="collective.quickupload"      type="svn" url="http://svn.plone.org/svn/collective/collective.quickupload/trunk"  options="with_ploneproduct_qupload"/>
       <source name="quintagroup.plone.captchas"      type="svn" url="http://svn.quintagroup.com/products/quintagroup.plonecaptchas/branches/plone4"  options="with_ploneproduct_qcaptchas"/>
-      <source name="quintagroup.portlet.cumulus"     type="svn" url="http://svn.quintagroup.com/products/quintagroup.portlet.cumulus/trunk"          options="with_ploneproduct_qcumulus"/>
-      <source name="contentratings"            type="svn" url="http://svn.plone.org/svn/collective/contentratings/trunk"                 options="with_ploneproduct_pratings"/>
+      <source name="quintagroup.portlet.cumulus"     type="svn" url="http://svn.quintagroup.com/products/quintagroup.portlet.cumulus/trunk"          options="with_ploneproduct_qcumulus"/> 
+      <source name="collective.portlet.localcumulus" type="svn" url="http://svn.plone.org/svn/collective/collective.portlet.localcumulus/trunk/"  options="with_ploneproduct_clcumulus"/>
+      <source name="Products.EasyNewsletter"         type="git" url="https://github.com/collective/Products.EasyNewsletter.git"  options="with_ploneproduct_enewsletter"/>
+      <source name="collective.contentrules.mailtolocalrole"      type="svn" url="http://svn.plone.org/svn/collective/collective.contentrules.mailtolocalrole/trunk"  options="with_ploneproduct_cmailtolrole"/>
+      <source name="collective.quickupload"          type="svn" url="http://svn.plone.org/svn/collective/collective.quickupload/trunk"  options="with_ploneproduct_qupload"/>
+      <source name="contentratings"                  type="svn" url="http://svn.plone.org/svn/collective/contentratings/trunk"                 options="with_ploneproduct_pratings"/>
       <source name="plone.contentratings"            type="svn" url="http://svn.plone.org/svn/collective/plone.contentratings/trunk"                 options="with_ploneproduct_pratings"/>
       <source name="collective.portlet.relateditems" type="svn" url="http://svn.plone.org/svn/collective/collective.portlet.relateditems/trunk"      options="with_ploneproduct_crelateditems"/>
-      <source name="collective.js.jqueryui"          type="svn" url="https://svn.plone.org/svn/collective/collective.js.jqueryui/trunk"              options="with_ploneproduct_cjqui"/>
-      <source name="collective.geo.geoggrapher" type="svn" url="http://svn.plone.org/svn/collective/collective.geo.geographer/trunk" options="with_ploneproduct_cgeo"  autocheckout="y"/>
-      <source name="collective.z3cform.colorpicker" type="svn" url="http://svn.plone.org/svn/collective/collective.z3cform.colorpicker/trunk" options="with_ploneproduct_cgeo,with_ploneproduct_colorpickerform" autocheckout="y"/>
+      <source name="collective.js.jqueryui"          type="git" url="https://github.com/collective/collective.js.jqueryui.git"              options="with_ploneproduct_cjqui"/>
+      <source name="collective.geo.geoggrapher"      type="svn" url="http://svn.plone.org/svn/collective/collective.geo.geographer/trunk" options="with_ploneproduct_cgeo"  autocheckout="y"/>
+      <source name="collective.z3cform.colorpicker"  type="svn" url="http://svn.plone.org/svn/collective/collective.z3cform.colorpicker/trunk" options="with_ploneproduct_cgeo,with_ploneproduct_colorpickerform" autocheckout="y"/>
       <source name="collective.geo.contentlocations" type="svn" url="http://svn.plone.org/svn/collective/collective.geo.contentlocations/trunk" options="with_ploneproduct_cgeo"/>
       <source name="collective.geo.geopoint"         type="svn" url="http://svn.plone.org/svn/collective/collective.geo.geopoint/trunk" options="with_ploneproduct_cgeo"/>
       <source name="collective.geo.kml"              type="svn" url="http://svn.plone.org/svn/collective/collective.geo.kml/trunk" options="with_ploneproduct_cgeo"/>
       <source name="collective.geo.settings"         type="svn" url="http://svn.plone.org/svn/collective/collective.geo.settings/trunk" options="with_ploneproduct_cgeo"/>
       <source name="collective.geo.openlayers"       type="svn" url="http://svn.plone.org/svn/collective/collective.geo.openlayers/trunk" options="with_ploneproduct_cgeo"/>
       <source name="collective.geo.mapwidget"        type="svn" url="http://svn.plone.org/svn/collective/collective.geo.mapwidget/trunk" options="with_ploneproduct_cgeo"/>
-      <source name="collective.geo.mapcontent"        type="svn" url="http://svn.plone.org/svn/collective/collective.geo.mapcontent/trunk" options="with_ploneproduct_cgeo"/>
+      <source name="collective.geo.mapcontent"       type="svn" url="http://svn.plone.org/svn/collective/collective.geo.mapcontent/trunk" options="with_ploneproduct_cgeo"/>
 
-      <source name="plone.app.async"  autocheckout="n" type="svn" url="http://svn.plone.org/svn/plone/plone.app.async/branches/defer" options="with_ploneproduct_paasync"/>
-      <source name="medialog.subskins"  autocheckout="n" type="svn" url="https://svn.plone.org/svn/collective/medialog.subskins/trunk/" options="with_ploneproduct_subskins"/>
-      <source name="Products.Collage"   type="svn" url="https://svn.plone.org/svn/collective/Products.Collage/trunk"    options="with_ploneproduct_collage" autocheckout="y" />
-      <source name="plone.app.blob" type="svn" url="http://svn.plone.org/svn/plone/plone.app.blob/trunk" options="with_ploneproduct_ploneappblob"/>
+      <source name="medialog.subskins"  autocheckout="n"    type="svn" url="https://svn.plone.org/svn/collective/medialog.subskins/trunk/" options="with_ploneproduct_subskins"/>
+      <source name="Products.Collage"                       type="svn" url="https://svn.plone.org/svn/collective/Products.Collage/trunk"    options="with_ploneproduct_collage" autocheckout="y" />
       <source name="Products.Quills"       autocheckout="y" type="svn" url="https://svn.plone.org/svn/collective/Products.Quills/trunk" options="with_ploneproduct_quills"/>
-      <source name="quills.remoteblogging" autocheckout="y" type="svn" url="http://svn.plone.org/svn/collective/quills.remoteblogging/trunk" options="with_ploneproduct_quills"/>
-      <source name="quills.core"           autocheckout="y" type="svn" url="http://svn.plone.org/svn/collective/quills.app/trunk" options="with_ploneproduct_quills"/>
-      <source name="quills.app"            autocheckout="y" type="svn" url="http://svn.plone.org/svn/collective/quills.core/trunk" options="with_ploneproduct_quills"/>
+      <source name="quills.remoteblogging" autocheckout="y" type="svn" url="https://svn.plone.org/svn/collective/quills.remoteblogging/trunk" options="with_ploneproduct_quills"/>
+      <source name="quills.core"           autocheckout="y" type="svn" url="https://svn.plone.org/svn/collective/quills.app/trunk" options="with_ploneproduct_quills"/>
+      <source name="quills.app"            autocheckout="y" type="svn" url="https://svn.plone.org/svn/collective/quills.core/trunk" options="with_ploneproduct_quills"/>
       <source name="Products.csvreplicata" autocheckout="y" type="svn" url="https://svn.plone.org/svn/collective/Products.csvreplicata/trunk/Products.csvreplicata" options="with_ploneproduct_csvreplica"/>
-      <source name="collective.contentlicensing"  autocheckout="y"  type="svn" url="https://svn.plone.org/svn/collective/collective.contentlicensing/trunk" options="with_ploneproduct_contentlicensing"/>
+      <source name="collective.contentlicensing"  autocheckout="y"  type="svn" url="https://github.com/collective/collective.contentlicensing.git" options="with_ploneproduct_contentlicensing"/>
+      <source name="plone.app.async"          autocheckout="n"      type="svn" url="https://github.com/plone/plone.app.async.git" opt_arg="branch=defer" options="with_ploneproduct_paasync"/>
       <source name="Products.SimpleAttachment" autocheckout="y"  type="svn" url="https://svn.plone.org/svn/collective/Products.SimpleAttachment/trunk" options="with_ploneproduct_ploneboard"/>
       <!-- dexterity  -->
-      <source name="plone.alterego"                     autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.alterego/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.supermodel"                   autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.supermodel/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.behavior"                     autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.behavior/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.namedfile"                    autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.namedfile/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.rfc822"                       autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.rfc822/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="z3c.formwidget.query"               autocheckout="n" type="svn" url="http://svn.zope.org/repos/main/z3c.formwidget.query/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.formwidget.autocomplete"      autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.formwidget.autocomplete/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.formwidget.contenttree"       autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.formwidget.contenttree/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.formwidget.namedfile"         autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.formwidget.namedfile/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.autoform"                     autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.autoform/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.z3cform"                      autocheckout="n" type="svn" url="http://svn.zope.org/repos/main/plone.z3cform/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.app.z3cform"                  autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.app.z3cform/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.app.relationfield"            autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.app.relationfield/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="z3c.relationfield"                  autocheckout="n" type="svn" url="http://svn.zope.org/repos/main/z3c.relationfield/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.app.textfield"                autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.app.textfield/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.dexterity"                    autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.dexterity/trunk" options="with_ploneproduct_dexterity"/>
       <source name="five.grok"                          autocheckout="n" type="svn" url="http://svn.zope.org/repos/main/five.grok/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.directives.dexterity"         autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.directives.dexterity/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.directives.form"              autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.directives.form/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.schemaeditor"                 autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.schemaeditor/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.app.dexterity"                autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.app.dexterity/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.versioningbehavior"           autocheckout="n" type="svn" url="http://svn.plone.org/svn/plone/plone.versioningbehavior/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.stagingbehavior"              autocheckout="n" type="svn" url="http://svn.plone.org/svn/plone/plone.stagingbehavior/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.multilingual"                 autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.multilingual/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.multilingualbehavior"         autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.multilingualbehavior/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="example.dexterity"                  autocheckout="n" type="svn" url="https://svn.plone.org/svn/collective/example.dexterity/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="example.conference"                 autocheckout="n" type="svn" url="https://svn.plone.org/svn/collective/example.conference/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="collective.wtf"                     autocheckout="n" type="svn" url="https://svn.plone.org/svn/collective/collective.wtf/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="five.intid"                         autocheckout="n" type="svn" url="https://svn.plone.org/svn/collective/five.intid/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="plone.app.intid"                    autocheckout="n" type="svn" url="https://svn.plone.org/svn/plone/plone.app.intid/trunk" options="with_ploneproduct_dexterity"/>
-      <source name="collective.z3cform.datetimewidget"  autocheckout="n" type="svn" url="https://svn.plone.org/svn/collective/collective.z3cform.datetimewidget/trunk" options="with_ploneproduct_dexterity"/>
-
+      <source name="collective.z3cform.datetimewidget"  autocheckout="n" type="git" url="https://github.com/collective/collective.z3cform.datetimewidget.git" options="with_ploneproduct_dexterity"/>
+      <source name="example.conference"                 autocheckout="n" type="git" url="https://github.com/collective/example.conference.git" options="with_ploneproduct_dexterity"/>
+      <source name="example.dexterity"                  autocheckout="n" type="git" url="https://github.com/collective/example.dexterity.git" options="with_ploneproduct_dexterity"/>
+      <source name="five.intid"                         autocheckout="n" type="git" url="https://github.com/collective/five.intid.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.alterego"                     autocheckout="n" type="git" url="https://github.com/plone/plone.alterego.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.app.dexterity"                autocheckout="n" type="git" url="https://github.com/plone/plone.app.dexterity.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.app.intid"                    autocheckout="n" type="git" url="https://github.com/plone/plone.app.intid.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.app.relationfield"            autocheckout="n" type="git" url="https://github.com/plone/plone.app.relationfield.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.app.textfield"                autocheckout="n" type="git" url="https://github.com/plone/plone.app.textfield.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.app.z3cform"                  autocheckout="n" type="git" url="https://github.com/plone/plone.app.z3cform.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.autoform"                     autocheckout="n" type="git" url="https://github.com/plone/plone.autoform.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.behavior"                     autocheckout="n" type="git" url="https://github.com/plone/plone.behavior.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.dexterity"                    autocheckout="n" type="git" url="https://github.com/plone/plone.dexterity.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.directives.dexterity"         autocheckout="n" type="git" url="https://github.com/plone/plone.directives.dexterity.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.directives.form"              autocheckout="n" type="git" url="https://github.com/plone/plone.directives.form.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.formwidget.autocomplete"      autocheckout="n" type="git" url="https://github.com/plone/plone.formwidget.autocomplete.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.formwidget.contenttree"       autocheckout="n" type="git" url="https://github.com/plone/plone.formwidget.contenttree.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.formwidget.namedfile"         autocheckout="n" type="git" url="https://github.com/plone/plone.formwidget.namedfile.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.multilingual"                 autocheckout="n" type="git" url="https://github.com/plone/plone.multilingual.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.namedfile"                    autocheckout="n" type="git" url="https://github.com/plone/plone.namedfile.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.rfc822"                       autocheckout="n" type="git" url="https://github.com/plone/plone.rfc822.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.schemaeditor"                 autocheckout="n" type="git" url="https://github.com/plone/plone.schemaeditor.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.app.stagingbehavior"          autocheckout="n" type="git" url="https://github.com/plone/plone.app.stagingbehavior.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.supermodel"                   autocheckout="n" type="git" url="https://github.com/plone/plone.supermodel.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.z3cform"                      autocheckout="n" type="svn" url="https://svn.zope.org/repos/main/plone.z3cform/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="z3c.formwidget.query"               autocheckout="n" type="svn" url="https://svn.zope.org/repos/main/z3c.formwidget.query/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="z3c.relationfield"                  autocheckout="n" type="svn" url="https://svn.zope.org/repos/main/z3c.relationfield/trunk" options="with_ploneproduct_dexterity"/>
+      <source name="plone.app.versioningbehavior"       autocheckout="n" type="git" url="https://github.com/plone/plone.app.versioningbehavior.git" options="with_ploneproduct_dexterity"/>
+      <source name="plone.multilingualbehavior"         autocheckout="n" type="git" url="https://github.com/plone/plone.multilingualbehavior.git" options="with_ploneproduct_dexterity"/>
       <!-- /dexterity  -->
     </sources>
   </template>
   <purge>
     <eggs>
-      <egg name="lxml"                            options="with_ploneproduct_smartprintng,with_ploneproduct_cynin"   />
+      <egg name="lxml"                           options="with_ploneproduct_smartprintng,with_ploneproduct_cynin"   />
       <egg name="easyshop.carts"                 options="with_ploneproduct_easyshop"                      zcml="configure"/>
       <egg name="easyshop.catalog"               options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
       <egg name="easyshop.checkout"              options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
@@ -306,6 +310,7 @@
     </sources>
     <checkedversions>
       <version p='collective.js.jqueryui'    options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
+      <version p='Products.ContentWellPortlets'      options="with_ploneproduct_contentwellportlet"/>
       <version p='archetypes.schemaextender' options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />
       <version p='zope.app.publisher'    options='with_ploneproduct_fivegrok' />
       <version p='zope.app.zcmlfiles'    options='with_ploneproduct_fivegrok' />

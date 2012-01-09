@@ -79,13 +79,6 @@ input =\${buildout:directory}/etc/templates/fss_daily.sh.in
 output =\${buildout:directory}/cron_scripts/fss_daily.sh
 backuppath=\${locations:fss-backups}
 
-# please edit the .in file to fit your needs if you change the blob storage layout.
-[blobdaily]
-recipe = collective.recipe.template
-input =\${buildout:directory}/etc/templates/blob_daily.sh.in
-output =\${buildout:directory}/cron_scripts/blob_daily.sh
-backuppath=\${locations:blob-backups}
-
 # keep jkust the last backups
 [fssrotate]
 recipe = collective.recipe.template
@@ -94,12 +87,6 @@ output =\${buildout:directory}/cron_scripts/fsskeeplastbackups.sh
 backuppath=\${fssdaily:backuppath}
 to_keep=\${crons:nb_backups_to_keep}
 
-[blobrotate]
-recipe = collective.recipe.template
-input =\${buildout:directory}/etc/templates/keeplastbackups.sh.in
-output =\${buildout:directory}/cron_scripts/blobkeeplastbackups.sh
-backuppath=\${blobdaily:backuppath}
-to_keep=\${crons:nb_backups_to_keep}
 
 # backup FSS every day
 [fssdailycron]
@@ -107,19 +94,12 @@ recipe = z3c.recipe.usercrontab
 times = 15 1 * * *
 command =  \${buildout:directory}/cron_scripts/fss_daily.sh && \${buildout:directory}/cron_scripts/fsskeeplastbackups.sh
 
-# backup BLOB every day
-[blobdailycron]
-recipe = z3c.recipe.usercrontab
-times = 15 1 * * *
-command = \${buildout:directory}/cron_scripts/blob_daily.sh && \${buildout:directory}/cron_scripts/blobkeeplastbackups.sh
 
 [backupdirs]
 ${fsscomment}order=\${fssdaily:recipe}
-${blobcomment}order=\${blobdaily:recipe}
 recipe = plone.recipe.command
 update-command = \${backupdirs:command}
 command =
-${blobcomment}    mkdir -pv \${blobdaily:backuppath};\
 ${fsscomment}     mkdir -pv \${fssdaily:backuppath};\
     mkdir -pv \${buildout:directory}/var/backups;\
     mkdir -pv \${buildout:directory}/var/snapshotbackups
@@ -130,12 +110,14 @@ update-command = \${upload-datafs:command}
 command =
      rsync -av --partial --progress               \${buildout:directory}/var/backups/                \${users:staging}@\${hosts:staging}:\${locations:staging}/backups/;
      rsync -av --partial --progress               \${buildout:directory}/var/snapshotbackups/        \${users:staging}@\${hosts:staging}:\${locations:staging}/snapshotbackups/;
-${blobcomment}     rsync -av --partial --progress \${buildout:directory}/var/blobstorage/            \${users:staging}@\${hosts:staging}:\${locations:staging}/blobstorage/;
 ${fsscomment}     rsync -av --partial --progress  \${locations:fss}/                          \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_${project}/;
 
 [logrotate.conf]
 recipe = collective.recipe.template
 input =  \${buildout:directory}/etc/templates/logrotate.conf.template
 output = \${buildout:directory}/etc/logrotate.conf
+
+[backup]
+keep_blob_days=\${crons:nb_backups_to_keep} 
 
 \# vim:set ft=cfg:

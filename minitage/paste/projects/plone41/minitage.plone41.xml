@@ -7,17 +7,17 @@
   <template>
     <versions>
       <!-- z3c.form -->
-      <version p='plone.z3cform'           v='0.7.3'   name="various pinning for z3 packages" />
+      <version p='plone.z3cform'           v='0.7.8'   name="various pinning for z3 packages" />
       <version p="zope.schema"             v="3.7.1"   name="various pinning for z3 packages"/>
     </versions>
     <checkedversions>
-      <version p='archetypes.schemaextender' v='2.1'   options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />
+      <version p='archetypes.schemaextender' v='2.1.1'   options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />
     </checkedversions>
   </template>
   <purge>
     <versions>
       <version p='plone.z3cform'           v='0.7.1'   name="various pinning for z3 packages" />
-      <version p="zope.schema"             v="3.6.1"   name="various pinning for z3 packages"/> 
+      <version p="zope.schema"             v="3.6.1"   name="various pinning for z3 packages"/>
     </versions>
     <checkedversions>
       <version p='archetypes.schemaextender' options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />

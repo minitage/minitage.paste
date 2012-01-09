@@ -30,6 +30,15 @@
 w=$(dirname $0)
 cd $w
 PY="$w/../../../../../../bin/zopepy"
+
+
+filter_bad() {
+    sed -re  "s/(Paste(Deploy|Script)?\s*=.*)/#\\1 no conflicts !/g" \
+        | sed -re "s/extends =/notused-extends =/g"\
+
+}
+
+
 plone41() {
     plone=$($PY -c "from minitage.paste.projects.plone41 import Template as Template;print Template.packaged_version")
     zope2=$($PY -c "from minitage.paste.projects.plone41 import Template;print Template.packaged_zope2_version")
@@ -38,14 +47,15 @@ plone41() {
     echo
     echo  Refreshing :: $plone / $ver / $zope2 / $ztk
     echo
-    echo "#PLONE4 $plone KGS">versions.cfg
-    wget http://dist.plone.org/release/$plone/versions.cfg -O-|sed -re "s/extends =/notused-extends =/g">>versions.cfg
-    echo "#PLONE $plone SOURCES">sources.cfg
-    wget http://svn.plone.org/svn/plone/buildouts/plone-coredev/branches/$ver/sources.cfg  -O -|sed -re "s/\[buildout\]/[buildout-notused]/g">sources.cfg
-    echo "#ZOP2 2  $zope2 KGS">zope2.versions.cfg
-    wget http://download.zope.org/Zope2/index/$zope2/versions.cfg -O ->> zope2.versions.cfg
-    wget http://download.zope.org/zopetoolkit/index/$ztk/ztk-versions.cfg -O "ztk.versions.cfg"
-    wget http://download.zope.org/zopetoolkit/index/$ztk/zopeapp-versions.cfg -O "zopeapp.versions.cfg"
+    if [[ ! -d checkout ]];then
+        git clone https://github.com/plone/buildout.coredev.git checkout
+    fi
+    pushd checkout; git reset --hard; git checkout $ver; git pull; popd
+    cat checkout/sources.cfg                                                        | filter_bad > sources.cfg
+    wget http://dist.plone.org/release/$plone/versions.cfg                     -O - | filter_bad > versions.cfg
+    wget http://download.zope.org/Zope2/index/$zope2/versions.cfg | filter_bad -O - | filter_bad > "zope2.versions.cfg"
+    wget http://download.zope.org/zopetoolkit/index/$ztk/ztk-versions.cfg      -O - | filter_bad > "ztk.versions.cfg"
+    wget http://download.zope.org/zopetoolkit/index/$ztk/zopeapp-versions.cfg  -O - | filter_bad > "zopeapp.versions.cfg"
     sed -re "/\[versions\]/ {
 a #ZTK: $ztkver
 }" -i ztk.versions.cfg

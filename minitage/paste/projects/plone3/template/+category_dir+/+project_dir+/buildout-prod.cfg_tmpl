@@ -52,9 +52,6 @@ parts+=#slurp
 ${fsscomment}    fssdaily
 ${fsscomment}    fssrotate
 ${fsscomment}    fssdailycron
-${blobcomment}    blobdaily
-${blobcomment}    blobrotate
-${blobcomment}    blobdailycron
 ${fsscomment}    fss1
 ${fsscomment}    fss2
 ${fsscomment}    fss3
