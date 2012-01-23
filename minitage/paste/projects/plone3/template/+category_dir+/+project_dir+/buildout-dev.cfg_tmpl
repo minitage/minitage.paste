@@ -48,6 +48,8 @@ ${i18ncomment}    i18ndude
     zopeskel
 
 auto-checkout +=
+  Products.Gloworm
+  Products.MemoryProfiler
 #    zopeskel
 
 
@@ -60,6 +62,8 @@ zope-front=\${ports:instance}
 [sources]
 zopeskel=svn https://svn.plone.org/svn/collective/ZopeSkel/trunk
 experimental.catalogqueryplan = svn https://svn.plone.org/svn/collective/experimental.catalogqueryplan/trunk
+Products.MemoryProfiler = svn https://svn.plone.org/svn/collective/Products.MemoryProfiler/trunk
+Products.Gloworm = git https://github.com/kiorky/Products.Gloworm.git
 
 [versions]
 ctypes=1.0.2
@@ -84,8 +88,8 @@ eggs+= plone.reload
     gprof2dot
     Products.Clouseau
     Products.DocFinderTab
-#    Products.Gloworm
-#    Products.MemoryProfiler
+    Products.Gloworm
+    Products.MemoryProfiler
     Products.signalstack
     Products.ZopeProfiler
     profilehooks

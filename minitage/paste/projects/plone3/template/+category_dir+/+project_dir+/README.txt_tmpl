@@ -9,7 +9,7 @@ WARNING ABOUT BUILOOUT BOOTSTRAP WARNING
 
 If you are using the standalone (choose to answer inside_minitage=no), you must ensure to do the
 \$python bootstrap.py dance with a python compatible with the targeted zope installation (python 2.4/plone3 python 2.6/plone4)
-eg: cd $project && python2.4 bootstrap.py && bin/buildout -vvvvvvc <CONFIG_FILE>
+eg: cd $project && $python bootstrap.py && bin/buildout -vvvvvvc <CONFIG_FILE>
 
 
 Minitage users, don't worry about that, all is setted for you in the two minibuilds created for you,
