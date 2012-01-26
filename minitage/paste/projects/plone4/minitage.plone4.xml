@@ -34,7 +34,7 @@
       <version p="python_dateutil"         v="1.5"     name="various pinning for z3 packages and p4 environments"/>
       <version p='rwproperty'              v='1.0'     name="various pinning for z3 packages and p4 environments"/>
       <version p='z3c.form'                v='2.4.4'   name="various pinning for z3 packages and p4 environments"/>
-      <version p='z3c.formwidget.query'    v='0.5'     name="various pinning for z3 packages and p4 environments"/>
+      <version p='z3c.formwidget.query'    v='0.6'     name="various pinning for z3 packages and p4 environments"/>
       <version p="zope.schema"             v="3.7.1"   name="various pinning for z3 packages and p4 environments"/>
       <version p="cssutils"                v="0.9.8a1" name="singing and dancing"/>
       <version p="StoneageHTML"            v="0.2.1"   name="singing and dancing"/>
@@ -44,7 +44,6 @@
       <version p='Products.Poi'            v='2.0.1'    options="with_ploneproduct_poi"/>
       <version p='collective.js.jqueryui'  v='1.8.16.4' options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' /> 
       <version p='Products.ContentWellPortlets'   v='4.1.0'     options="with_ploneproduct_contentwellportlet"/> 
-      <version p='archetypes.schemaextender'               v='2.0.3' options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />
       <version p="collective.contentrules.mailtolocalrole" v="1.2"   options="with_ploneproduct_cmailtolrole"/>
       <version p='collective.portlet.localcumulus'         v='1.8' options="with_ploneproduct_clcumulus"/>
       <version p='collective.portlet.relateditems'    v='0.3.5'      options="with_ploneproduct_crelateditems"/>
@@ -106,7 +105,6 @@
       <version p="uuid"                              v="1.30"  options="with_ploneproduct_dexterity,with_ploneproduct_paasync" />
       <version p="z3c.batching"                      v="1.1.0" options="with_ploneproduct_dexterity,with_ploneproduct_pz3cform" />
       <version p="z3c.blobfile"                      v="0.1.5" options="with_ploneproduct_dexterity" />
-      <version p="z3c.formwidget.query"              v="0.8"   options="with_ploneproduct_dexterity" />
       <version p="z3c.ptcompat"                      v="0.5.7"   options="with_ploneproduct_dexterity" />
       <version p="z3c.template"                      v="0.2.1"   options="with_ploneproduct_dexterity" />
       <version p="z3c.objpath"                       v="1.0"   options="with_ploneproduct_dexterity" />
@@ -273,6 +271,7 @@
       <egg name="easyshop.stocks"                options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
       <egg name="easyshop.taxes"                 options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
       <egg name="zc.authorizedotnet"             options="with_ploneproduct_easyshop"     />
+      <egg name="plone.app.blob"                 options="with_ploneproduct_ploneappblob" />
       <egg name="Products.CacheSetup"            options="with_ploneproduct_cachesetup"       zproduct="y" zcml="configure"/>
       <egg name="Products.PloneArticle"          options="with_ploneproduct_plonearticle"     zproduct="y" zcml="configure"/>
       <egg name="p4a.plonecalendar"              options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
@@ -334,6 +333,9 @@
       <version p='grokcore.view'         options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
       <version p='grokcore.viewlet'      options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
       <version p='five.localsitemanager' options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
+      <version p="plone.app.blob"                 v="1.5.1"     options="with_ploneproduct_ploneappblob"/>
+      <version p='plone.outputfilters'      v='1.1'   options="with_ploneproduct_tinymce"/>
+      <version p='Products.TinyMCE'               v='1.2.9'   options='with_ploneproduct_tinymce,with_ploneproduct_plominotinymce' />
       <version p='martian'               options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
     </checkedversions>
     <versions>
@@ -347,9 +349,14 @@
       <version name="Needed for work on plone before 4"/>
       <version name="Needed for fixing https://dev.plone.org/plone/ticket/10088"/>
       <version name="Fix http://dev.plone.org/plone/ticket/9437"/>
+      <version name='good version for p3' />
     </versions>
     <miscproducts>
     </miscproducts>
+    <gs>
+      <product name="plone.app.blob"                 options="with_ploneproduct_ploneappblob" order="700" />
+      <product name="Products.TinyMCE"               options="with_ploneproduct_tinymce,with_ploneproduct_plominotinymce"     profile="TinyMCE"/> 
+    </gs>
     <qi>
       <product name="easyshop.core"                options="with_ploneproduct_easyshop"         />
       <product name="iw.fss"                       options="with_ploneproduct_fss"              />
@@ -359,6 +366,7 @@
       <product name="p4a.plonecalendar"            options="with_ploneproduct_p4a_cal"          />
       <product name="p4a.ploneevent"               options="with_ploneproduct_p4a_cal"          />
       <product name="p4a.plonevideoembed"          options="with_ploneproduct_p4a_vid"          />
+      <product name="TinyMCE"                        options="with_ploneproduct_tinymce,with_ploneproduct_plominotinymce"/>
       <product name="p4a.plonevideo"               options="with_ploneproduct_p4a_vid"          />
     </qi>
     <options>

@@ -317,7 +317,9 @@ class Template(common.Template):
         pin_added = []
         for var in self.versions_mappings:
             vars['plone_versions'].append(('# %s' % var, '',))
-            for pin in self.versions_mappings[var]:
+            vmap = self.versions_mappings[var]
+            vmap.sort()
+            for pin in vmap:
                 if not pin in pin_added:
                     pin_added.append(pin)
                     vars['plone_versions'].append(pin)
@@ -326,7 +328,9 @@ class Template(common.Template):
             for var in self.checked_versions_mappings:
                 if vars.get(var, False):
                     vars['plone_versions'].append(('# %s' % var, '',))
-                    for pin in self.checked_versions_mappings[var]:
+                    vmap = self.checked_versions_mappings[var].keys()
+                    vmap.sort()
+                    for pin in vmap:
                         if not pin in pin_added:
                             pin_added.append(pin)
                             vars['plone_versions'].append((pin, self.checked_versions_mappings[var][pin]))

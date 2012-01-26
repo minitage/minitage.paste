@@ -517,7 +517,6 @@
     <!--
       zope2.12 compatible -versions have been set for plone3 in etc/project/versions.cfg
     -->
-    <version p="jsonlib"                 v="1.3.10"    name="For cynin"/>
     <version p="ipython"                 v="0.10"    name="IPython py2.4 compatible version"/>
 
     <!-- purged on p4 +-->
@@ -532,6 +531,7 @@
     <version p="plone.z3cform"           v="0.5.10"  name="plone.z3cform >= 0.6.0 break Singing and Dancing"/>
     <version p="plone.directives.form"   v="1.0b5"   name="plone.z3cform >= 0.6.0 break Singing and Dancing"/>
     <version p='z3c.form'                v='1.9.0'   name="plone.z3cform >= 0.6.0 break Singing and Dancing"/> 
+    <version p='archetypes.schemaextender'      v='2.0.3'  name='good version for p3' />
   </versions>
 <!--
     Enter here know good set versions stuff
@@ -552,6 +552,7 @@
     <version p='collective.googleanalytics'     v='1.2'   options="with_ploneproduct_cga"/>
     <version p='collective.js.galleriffic' v='1.0'   options="with_ploneproduct_cgallery"/>
     <version p='collective.plonetruegallery'    v='1.3.3'     options="with_ploneproduct_truegallery"/>
+    <version p="jsonlib"                 v="1.3.10"  options="with_ploneproduct_cynin"/>
     <version p='collective.portlettabber'       v='0.2.0'   options='with_ploneproduct_cportlettabber'/>
     <version p='collective.watcherlist'  v='0.3'   options="with_ploneproduct_poi"/>
     <version p='collective.z3cform.norobots'    v='1.2.1'    options="with_ploneproduct_cz3cformnorobots"/>
@@ -631,7 +632,6 @@
     <!-- purged on p4+-->
     <version p='collective.js.jqueryui'         v='1.7.2.7' options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
     <version p='Products.Poi'                   v='2.0b1'   options="with_ploneproduct_poi"/>
-    <version p='archetypes.schemaextender'      v='2.0.3'   options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />
     <version p='Products.PloneArticle'          v='4.1.10'  options="with_ploneproduct_plonearticle"/>
     <version p='z3c.relationfield'              v='0.6.1'   options='with_ploneproduct_z3crelationfield,with_ploneproduct_dexterity'/>
     <version p='Products.LinguaPlone'           v='3.2'     options="with_ploneproduct_lingua"/>

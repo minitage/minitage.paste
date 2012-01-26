@@ -5,16 +5,23 @@
 -->
 <root>
   <template>
+    <options>
+      <option order="0000" name="with_ploneproduct_dexterity"  description="Dexterity, see http://plone.org/products/dexterity y/n" default="y"/> 
+      <option order="1000" name="with_ploneproduct_contentwellportlet" description="Content well porlets, see http://pypi.python.org/pypi/Products.ContentWellPortlets y/n" default="n"/>
+    </options>
     <versions>
       <!-- z3c.form -->
-      <version p='plone.z3cform'           v='0.7.8'   name="various pinning for z3 packages" />
-      <version p="zope.schema"             v="3.7.1"   name="various pinning for z3 packages"/>
+      <version p='plone.z3cform'           v='0.7.8'   name="various pinning for various packages" />
+      <version p="zope.schema"             v="3.7.1"   name="various pinning for various packages"/>
     </versions>
     <checkedversions>
-      <version p='archetypes.schemaextender' v='2.1.1'   options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />
     </checkedversions>
   </template>
   <purge>
+    <options>
+      <option order="0000" name="with_ploneproduct_dexterity"  description="Dexterity, see http://plone.org/products/dexterity y/n" default="n"/> 
+      <option order="1000" name="with_ploneproduct_contentwellportlet" description="Content well porlets, see http://pypi.python.org/pypi/Products.ContentWellPortlets y/n" default="n"/>
+    </options> 
     <versions>
       <version p='plone.z3cform'           v='0.7.1'   name="various pinning for z3 packages" />
       <version p="zope.schema"             v="3.6.1"   name="various pinning for z3 packages"/>
