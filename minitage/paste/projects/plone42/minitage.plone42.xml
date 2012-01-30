@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!-- This configuration file supports some kind of inheritment.
+  You can overwrite, add things or purge
+  To purge,only write your element in the purge node like the others and read the code to see what you can do
+-->
+<root>
+  <template>
+    <options>
+    </options>
+    <versions>
+    </versions>
+    <checkedversions>
+    </checkedversions>
+  </template>
+  <purge>
+    <options>
+    </options>
+    <versions>
+    </versions>
+    <checkedversions>
+    </checkedversions>
+  </purge>
+</root>
