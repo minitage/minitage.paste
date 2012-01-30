@@ -42,6 +42,8 @@
       <version p="zope.schema"             v="3.7.1"   name="various pinning for z3 packages and p4 environments"/>
       <version p="cssutils"                v="0.9.8a1" name="singing and dancing"/>
       <version p="StoneageHTML"            v="0.2.1"   name="singing and dancing"/>
+      <version p="plone.app.registry"      v="1.0"     name="plone.app.registry on plone4"/>
+      <version p="plone.registry"          v="1.0"     name="plone.app.registry on plone4"/> 
     </versions>
     <checkedversions>
       <version p='ordereddict'             v='1.1'      options="with_tool_i18ndude"/>
@@ -49,8 +51,7 @@
       <version p='collective.js.jqueryui'  v='1.8.16.4' options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
       <version p='Products.ContentWellPortlets'   v='4.1.0'     options="with_ploneproduct_contentwellportlet"/>
       <version p="collective.contentrules.mailtolocalrole" v="1.2"   options="with_ploneproduct_cmailtolrole"/>
-      <version p="plone.app.registry"      v="1.0"     options="with_ploneproduct_paregistry"/>
-      <version p="plone.registry"          v="1.0"     options="with_ploneproduct_paregistry"/>
+
       <version p='collective.portlet.localcumulus'         v='1.8' options="with_ploneproduct_clcumulus"/>
       <version p='collective.portlet.relateditems'    v='0.3.5'      options="with_ploneproduct_crelateditems"/>
       <version p="collective.quickupload"                  v="1.3.1" options="with_ploneproduct_qupload"/>
@@ -82,6 +83,12 @@
       <version p="zc.ngi"           v="1.1.6"  options="with_ploneproduct_paasync"/>
       <version p="zc.z3monitor"     v="0.7.0"  options="with_ploneproduct_paasync"/>
       <!-- dexterity -->
+      <version p='z3c.form'                v='2.4.4'   options="with_ploneproduct_dexterity"/>
+      <version p='z3c.formwidget.query'    v='0.6'     options="with_ploneproduct_dexterity"/>
+      <version p="python-dateutil"         v="1.5"     options="with_ploneproduct_dexterity"/>
+      <version p="plone.directives.form"   v="1.0"     options="with_ploneproduct_dexterity"/>
+      <version p="python_dateutil"         v="1.5"     options="with_ploneproduct_dexterity"/>
+      <version p='rwproperty'              v='1.0'     options="with_ploneproduct_dexterity"/>
       <version p="collective.z3cform.datagridfield" v="0.9" options="with_ploneproduct_dexterity" />
       <version p="collective.z3cform.datetimewidget" v="1.1.1" options="with_ploneproduct_dexterity" />
       <version p="mocker"                            v="1.1"   options="with_ploneproduct_dexterity" />
@@ -89,6 +96,7 @@
       <version p="plone.dexterity"                   v="1.1" options="with_ploneproduct_dexterity" />
       <version p="plone.app.dexterity"               v="1.0" options="with_ploneproduct_dexterity" />
       <version p="plone.app.intid"                   v="1.0b3" options="with_ploneproduct_dexterity" />
+      <version p="five.intid"                        v="0.5.2" options="with_ploneproduct_dexterity" />
       <version p="plone.app.relationfield"           v="1.1" options="with_ploneproduct_dexterity" />
       <version p="plone.app.textfield"               v="1.0.2" options="with_ploneproduct_dexterity" />
       <version p="plone.app.lockingbehavior"         v="1.0.1" options="with_ploneproduct_dexterity" />

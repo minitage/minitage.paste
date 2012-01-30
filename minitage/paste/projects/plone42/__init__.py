@@ -39,7 +39,7 @@ from minitage.paste.projects import common
 from minitage.paste.projects import plone41, plone3
 
 default_config = pkg_resources.resource_filename('minitage.paste', 'projects/plone42/minitage.plone42.xml')
-user_config = os.path.join( os.path.expanduser('~'), '.minitage.plone41.xml')
+user_config = os.path.join( os.path.expanduser('~'), '.minitage.plone42.xml')
 xmlvars = common.read_vars(default_config, user_config, plone41.xmlvars)
 # plone quickinstaller option/names mappings
 qi_mappings = xmlvars.get('qi_mappings', {})
@@ -120,7 +120,7 @@ class Template(plone41.Template):
         plone41.Template.pre(self, command, output_dir, vars)
 
     def post_default_template_hook(self, command, output_dir, vars, ep):
-        pass 
+        pass
 
 Template.vars = common.Template.vars +\
         [pvar('plone_version', 'Plone version, default is the one supported and packaged', default = Template.packaged_version,),
