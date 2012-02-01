@@ -37,6 +37,7 @@ Markdown=
 \#http://plone.org/products/plone/security/advisories/cve-2009-0662
 Products.PlonePAS = 3.9
 #end if
+
 #for version in $plone_versions:
 #if $version[0].startswith('#'):
 $version[0]
@@ -47,20 +48,13 @@ $version[0] = $version[1]
 
 # on Upgrades
 # Think to change the plone release URL !!!
-#if $with_wsgi_support:
-find-links += http://pypi.python.org/simple/ZODB3
-            http://dist.repoze.org/zope2/latest/
-# FOR PILWTOK
-            http://download.zope.org/distribution/
-#else
 # FOR PILWTOK
 find-links += http://download.zope.org/distribution/
-#end if
 
 #if  ($major < 4)
 # various zope3 packages needed by various plone3+ products in a zope2 installation
 # VERY IMPORTANT, DO NOT UPGRADE ON ZOPE2.10:
-# The IView and IDefaultViewName were moved to zope.publisher.interfaces. 
+# The IView and IDefaultViewName were moved to zope.publisher.interfaces.
 five.localsitemanager = 1.1
 five.intid = 0.3.0
 zope.app.publisher = 3.5.2

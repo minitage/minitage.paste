@@ -32,10 +32,14 @@ INSTALLING THIS PROJECT VITH MINITAGE
     virtualenv --no-site-packages --distribute \$MT
     source /minitage/bin/activate
     easy_install -U minitage.core minitage.paste
+#if $scm_type == 'svn'
     svn co $uri/minilays/${project} \$MT/minilays/${project}
+#elif $scm_type in ['hg', 'git']
+#set $minilay = $uri.replace('buildout', 'minilay')
+    $scm_type clone $minilay \$MT/minilays/${project}
+#end if
     minimerge -v $project
     #minimerge -v ${project}-prod
-    \$MT/bin/paster create -t minitage.instances.env ${project} #(-prod)
     source \$MT/zope/${project}/sys/share/minitage/minitage.env
     cd \$INS #enjoy !
 
@@ -135,58 +139,6 @@ CRONS
 
     |-- etc/cron_scripts/fss_daily.sh   -> backup script for fss
 
-DELIVERANCE SUPPORT
------------------------
-
-To setup correctly the reverse proxy front end:
-*PLEASE READ THE REVERSE PROXY SECTION BELOW*
-
-
-Layout
-~~~~~~~~~
-::
-
-    |-- etc/deliverance
-        |-- etc/deliverance/deliverance.cfg      -> buildout used for deliverance component installations
-        |-- etc/deliverance/deliverance.ini      -> PasteDeploy configuration file (paster serve etc/deliverance/deliverance.ini)
-        |-- etc/deliverance/deliverance-prod.ini -> PasteDeploy configuration file (paster serve etc/deliverance/deliverance.ini) (PRODUCTIO?)
-        `-- etc/deliverance/deliverance.xml      -> Main Deliverance rules file
-    |-- etc/templates
-        |-- etc/templates/deliverance/deliverance.ini.in      -> PasteDeploy configuration file template (paster serve etc/deliverance/deliverance.ini)
-        |-- etc/templates/deliverance/deliverance-prod.ini.in -> PasteDeploy configuration file template (paster serve etc/deliverance/deliverance.ini)
-        `-- etc/templates/deliverance/deliverance.xml.in      -> Main Deliverance rules file template
-
-notes
-~~~~~~~~~~~~~~
-- deliverance is launched and monitored with supervisord
-- Deliverance do not use the proxy mode but *the WSGI middleware*, and use PasteDeploy to fire the server.
-  The part triggering its contruction is ``deliverance_ini`` && ``deliverance_prod_ini``
-- Settings can be as usual changed by editing ``etc/sys/settings.cfg``
-  * hosts:deliverance / ports:deliverance / locations:deliverance-themes -> The deliverance server itself  & the default theme
-  * hosts:deliverance-backend / ports:deliverance-backend  -> The proxied backend (eg: zope server):
-In development mode, we switched the host and url of the deliveranced host to be the development instance instead of either haproxy or the first instance.
-
-
-dev mode
-~~~~~~~~
-You can launch manually deliverance via::
-
-    ./bin/deliverance-paster serve etc/deliverance/deliverance.ini
-
-- Hit thz deliverance server vith a virtualhostmonster url, if not you won't have the links rewritten.::
-
-     http://$deliverance_host:$deliverance_port/VirtualHostBase/http/$deliverance_host:$deliverance_port/${plonesite}/VirtualHostRoot/<REQUEST>
-
-- You can copy/symlink the below apache deliverance vhost to your apache configuration to test in a full environment
-- To complete your apache installation, you must add ::
-
-    127.0.0.1 ${project}.localhost
-
-- To access the deliverane log, append 'deliv_log'to the GET parmaters::
-
-     http://$deliverance_host:$deliverance_port/VirtualHostBase/http/$deliverance_host:$deliverance_port/${plonesite}/VirtualHostRoot/<REQUEST>?deliv_log=1
-
-And then hit http://${project}.localhost to view your proxified deliverance server
 
 REVERSE PROXY
 --------------
@@ -194,11 +146,9 @@ We generate two virtualhosts for a cliassical apache setup, mostly ready but fee
 ::
     etc/apache/
     |-- ${apache_vhost_number}-${project}.reverseproxy.conf                     -> a vhost for ruse with a standalone plone (even with haproxy in front of.)
-    |-- ${apache_vhost_number}-${project}.reverseproxy.deliverance.conf         -> a vhost for use with a plone behind a deliverance server.
     `-- apache.cfg
     etc/templates/apache/
     |-- ${apache_vhost_number}-${project}.reverseproxy.conf.in                   -> Template for a vhost for ruse with a standalone plone (even with haproxy in front of.)
-    `-- ${apache_vhost_number}-${project}.reverseproxy.deliverance.conf.in       -> Template for a vhost for use with a plone behind a deliverance server.
 
 In settings.cfg you have now some settings for declaring which host is your reverse proxy backend & the vhost mounting:
     * hosts:zope-front / ports:zope-front                              -> zope front backend
@@ -258,7 +208,7 @@ And you'd  better have to learn how to bootstrap some minitage environment out t
 
 CONTINEOUS INTEGRATION
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-Here ae the files needed for our hudson and/or buildbot integration.
+Here are the files needed for our hudson integration.
 
 For hudson we provide some shell helpers more or less generated to run 'a build':
 
@@ -270,7 +220,6 @@ For hudson we provide some shell helpers more or less generated to run 'a build'
 This is described in details on the related configuration files you will find in the layout below.
 ::
 
-    |-- minitage.buildout-buildbot.cfg     -> buildout for deploying a buildbot related to your project (requires to be inside a minitage)
     |-- etc/hudson/
     |   `-- $project
     |       |-- build
@@ -284,35 +233,6 @@ This is described in details on the related configuration files you will find in
             |-- build
             |   `-- activate_env.sh.in   -> buildout template to generate etc/hudson/${project}/build/activate.env.sh
             `-- config.xml.in            -> buildout template to generate etc/hudson/${project}/config.xml (hudson job/build file)
-
-CYNIN integration if any
-------------------------
-
-     |-- etc/project/buildout-cynin.cfg -> cynin specific buildout
-
-
-NOTES ABOUT WSGI SUPPORT
--------------------------
-::
-
-    etc/wsgi/
-    |-- dev.ini      -> paster production configuration for running in wsgi mode
-    `-- prod.ini     -> paster development configuration for running in wsgi mode
-
-The egg is on your cache with a particular version, the classical ZODB3 egg wont be touched if you have one.
-WHAT IS VERY IMPORTANT is that [zopepy] part must run BEFORE [instance] to get the version with appropriate patches pinned.
-This WSGI support is nowodays deprecated (on the plone side), unmaintened and not supported, use it at our own risks.
-
-As we support WSGI, there is an important thing to know:
-  - ``zopelib`` is an egg from repoze where live the zope code, we totally do not NEED it.
-        * It's useless and make things buggy.
-        * We build zopelib as a fake egg, as we have already zope in our PYTHONPATH.
-  - If you raelly want zopelib as an egg, (un)comment things in the buildout(develop, patch). But we are sure, you surely dont have to !
-  - To run in WSGI with repoze.zope2, issue::
-
-      bin/paster serve etc/wsgi/dev.ini
-      or bin/paster serve etc/wsgi/prod.ini
-
 
 $instances_description.replace('# ', '')
 

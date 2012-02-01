@@ -4,6 +4,7 @@ etc/apache/100-${project}.reverseproxy.conf
 etc/forespir.env
 etc/hudson/$project/build/activate_env.sh
 etc/hudson/$project/config.xml
+etc/${project}.env
 !etc/sys
 .installed.cfg
 minilays/
@@ -17,3 +18,4 @@ sys
 !etc/sys
 t
 var
+src.mrdeveloper/zopelib/zopelib.egg-info

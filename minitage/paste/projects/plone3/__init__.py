@@ -27,6 +27,7 @@
 
 __docformat__ = 'restructuredtext en'
 
+from glob import glob
 import copy
 import os
 import shutil
@@ -164,7 +165,7 @@ class Template(common.Template):
         if not cvars: cvars = {}
         url, v = None, None
         if self.packaged_zope2_version:
-            v = cvars.get('zope2_versino', self.packaged_zope2_version)
+            v = cvars.get('zope2_version', self.packaged_zope2_version)
         url = 'http://download.zope.org/Zope2/index/%s/versions.cfg' % v
         return url
 
@@ -235,8 +236,9 @@ class Template(common.Template):
         vars['plone_sources'] = lps
 
         # ZODB3 from egg
-        vars['additional_eggs'].append('#ZODB3 is installed as an EGG!')
-        vars['additional_eggs'].append('ZODB3')
+        if vars['major'] < 4:
+            vars['additional_eggs'].append('#ZODB3 is installed as an EGG!')
+            vars['additional_eggs'].append('ZODB3')
 
         # plone system dependencies
         if vars['inside_minitage']:
@@ -330,10 +332,12 @@ class Template(common.Template):
                     vars['plone_versions'].append(('# %s' % var, '',))
                     vmap = self.checked_versions_mappings[var].keys()
                     vmap.sort()
-                    for pin in vmap:
+                    for kpin in vmap:
+                        pin = (kpin, self.checked_versions_mappings[var][kpin])
                         if not pin in pin_added:
                             pin_added.append(pin)
-                            vars['plone_versions'].append((pin, self.checked_versions_mappings[var][pin]))
+                            vars['plone_versions'].append(pin)
+
         if not vars['mode'] in ['zodb', 'relstorage', 'zeo']:
             raise Exception('Invalid mode (not in zeo, zodb, relstorage')
         if not os.path.exists(self.output_dir):
@@ -341,6 +345,9 @@ class Template(common.Template):
 
         for section in self.sections_mappings:
             for var in [k for k in self.sections_mappings[section] if vars.get(k, '')]:
+                # skip plone products which are already in the product 's setup.py
+                if vars['with_generic'] and var.startswith('with_ploneproduct') and section == 'additional_eggs':
+                    continue
                 if not section == 'plone_zcml':
                     vars[section].append('#%s'%var)
                 for item in self.sections_mappings[section][var]:
@@ -454,6 +461,10 @@ class Template(common.Template):
             vars['have_ztk'] = True
             vars['ztk_path'] = ztk_path
             vars['zaztk_path'] = zaztk_path
+        vars['default_plone_profile'] =  '%s.policy:default' % vars['project']
+        if vars['with_generic_addon']:
+            vars['default_plone_profile'] =  '%s:default' % vars['project']
+        vars['ndot'] = '.'
 
     def post(self, command, output_dir, vars):
         common.Template.post(self, command, output_dir, vars)
@@ -475,6 +486,11 @@ class Template(common.Template):
                   os.path.join(vars['path'], '.gitignore'))
         bc = ConfigParser()
         bc.read(cfg)
+
+        for f in (glob(os.path.join(output_dir, 'scripts/*'))
+                  + glob(os.path.join(output_dir, 'etc/hudson/%s/build/*' % vars['project']))
+                 ):
+            os.chmod(f, 0700)
         # release KGS
         #try:
         #    open(vdst, 'w').write(
@@ -603,6 +619,8 @@ plone_vars = [pvar('address', 'Address to listen on', default = 'localhost',),
               pvar('plone_scripts', 'comma separeted list of scripts to generate from installed eggs', default = '',),
               pvar('with_checked_versions', 'Use product versions that interact well together (can be outdated, check [versions] in buildout.', default = 'n',),
               pvar('with_no_zcml', 'Do not include zcml information', default = 'n',),
+              pvar('with_generic', 'with_generic', default = 'n',),
+              pvar('with_generic_addon', 'with_generic_addon', default = 'n',),
              ]
 
 Template.vars = common.Template.vars +\

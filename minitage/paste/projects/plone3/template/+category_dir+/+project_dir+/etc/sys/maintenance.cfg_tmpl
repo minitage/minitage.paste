@@ -28,12 +28,6 @@
 #set $blobcomment='#'
 #end if
 
-#if $with_ploneproduct_cynin
-#set $cynincomment=''
-#else
-#set $cynincomment='#'
-#end if
-
 # make an incremental backup per day
 [repozodaily]
 recipe = z3c.recipe.usercrontab

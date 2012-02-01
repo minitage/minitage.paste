@@ -27,7 +27,7 @@ RewriteEngine  on
 RewriteCond %{REQUEST_URI} ^(/zmiroot.*)$
 RewriteRule      ^/zmiroot(.*) http://\${hosts:zope-front}:\${ports:zope-front}/VirtualHostBase/\${reverse_proxy:scheme}/%{HTTP_HOST}:\${reverse_proxy:port}/VirtualHostRoot/_vh_zmiroot$1 [L,P]
 
-# /plone-${project}-> vhmonster without deliverance filtering
+# /plone-${project}-> vhmonster direct access
 RewriteCond %{REQUEST_URI} ^(/plone-${project}.*)$
 RewriteRule      ^/plone-${project}(.*) http://\${hosts:zope-front}:\${ports:zope-front}/VirtualHostBase/\${reverse_proxy:scheme}/%{HTTP_HOST}:\${reverse_proxy:port}/\${plone:site}/VirtualHostRoot/_vh_plone-${project}$1 [L,P]
 

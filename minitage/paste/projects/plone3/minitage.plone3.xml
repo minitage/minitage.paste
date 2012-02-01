@@ -16,9 +16,6 @@
   <template>
   <options>
   <option order="0000" name="apache_vhost_number"                description="Apache vhost number" default="100"/>
-  <option order="0000" name="deliverance_host"                   description="deliverance proxy server host address" default="localhost"/>
-  <option order="0000" name="deliverance_port"                   description="deliverance proxy server port" default="8078"/>
-  <option order="0000" name="deliverance_project"                description="default deliverance ruleset name" default="deliverance"/>
   <option order="0000" name="fss_strategy"                       description='File System Storage strategy, see http://pypi.python.org/pypi/iw.fss/#storage-strategies (directory, flat, site1, site2)'  default='directory'/>
   <option order="0000" name="reverseproxy_aliases"               description="domain name aliases (comma separated) which be used in the reverse proxy" default="bis.localhost.com.bis,ter.localhost.com"/>
   <option order="0000" name="reverseproxy_host"                  description="domain name which be used in the reverse proxy" default="localhost.com"/>
@@ -38,14 +35,11 @@
   <option order="0000" name="with_database_oracle"               description="Oracle python bindings y/n"/>
   <option order="0000" name="with_database_postgresql"           description="Postgresql python bindings y/n"/>
   <option order="0000" name="with_database_sa"                   description="SQLAlchemy, see http://www.sqlalchemy.org y/n"/>
-  <option order="0000" name="with_deliverance_support"           description="deliverance, see http://pypi.python.org/pypi/Deliverance y/n" default="n"/>
   <option order="0000" name="with_experimental"                  description="Plone experimental improvments y/n" default="n"/>
   <option order="0000" name="with_indexing_solr"                 description="Solr y/n"/>
   <option order="0000" name="with_tool_i18ndude"                 description="i18n http://pypi.python.org/pypi/i18ndude y/n" default="y"/>
   <option order="0000" name="with_tool_ipython"                  description="ipython, see http://ipython.scipy.org/ y/n" default="y"/>
   <option order="0000" name="with_tool_zopeskel"                 description="ZopeSkel http://pypi.python.org/pypi/ZopeSkel y/n" default="y"/>
-  <option order="0000" name="with_wsgi_cas"                      description="WSGI CAS (SSO) capabilities, see http://pypi.python.org/pypi/repoze.who.plugins.cas y/n"/>
-  <option order="0000" name="with_wsgi_support"                  description="WSGI capabilities y/n"/>
 
   <!-- INFRA Products -->
   <option order="1000" name="with_ploneproduct_fss"                description="File System Storage, see http://plone.org/products/filesystemstorage y/n" default="n"/>
@@ -79,7 +73,6 @@
   <option order="1016" name="with_ploneproduct_patransmo"          description="transmogrifier, see http://pypi.python.org/pypi/plone.app.transmogrifier y/n" default="n"/>
   <option order="1013" name="with_ploneproduct_pz3cform"           description="Plone z3c.form, see http://pypi.python.org/pypi/plone.z3cform y/n" default="n"/>
   <!-- Communication -->
-  <option order="1000" name="with_ploneproduct_cynin"              description="Cyn.in, see http://www.cynapse.com/cynin y/n"/>
   <option order="1000" name="with_ploneproduct_atworkgroup"        description="ATWorkgroup, see http://plone.org/products/mxm-workgroup/ y/n"/>
   <option order="1000" name="with_ploneproduct_facultystaff"       description="FalcultyStaff, see http://plone.org/products/faculty-staff-directory y/n"/>
   <option order="1000" name="with_ploneproduct_flowplayer"         description="FlowPlayer, see http://plone.org/products/collective-flowplayer/ y/n"/>
@@ -167,7 +160,7 @@
     <egg name="Solgema.fullcalendar"          options="with_ploneproduct_sfcalendar" zpackage="y" zcml="configure" />
     <egg name="qi.portlet.TagClouds"          options="with_ploneproduct_qiptagcloud" zpackage="y" zcml="configure" />
     <egg name="BeautifulSoup"                 options="with_binding_bsoup,with_ploneproduct_smartprintng"   />
-    <egg name="lxml"                          options="with_ploneproduct_smartprintng,with_ploneproduct_cynin,with_binding_lxml"   />
+    <egg name="lxml"                          options="with_ploneproduct_smartprintng,with_binding_lxml"   />
     <egg name="elementtree"                   options="with_ploneproduct_smartprintng"   />
     <egg name="buildout.minitagificator"      options="with_minitage_devpackages"  />
     <egg name="ClueReleaseManager.paste"      options="with_minitage_otherpackages"  />
@@ -194,35 +187,28 @@
     <egg name="minitage.recipe"               options="with_minitage_devpackages"  />
     <egg name="minitage.recipe.printer"       options="with_minitage_devpackages"  />
     <egg name="minitage.recipe.scripts"       options="with_minitage_devpackages"  />
-    <egg name="minitage.recipe.wsgi"          options="with_minitage_devpackages"  />
     <egg name="MySQL_python"                  options="with_database_mysql"               />
-    <egg name="PasteDeploy"                   options="with_wsgi_support"                 />
-    <egg name="Paste"                         options="with_wsgi_support"                 />
-    <egg name="PasteScript"                   options="with_tool_zopeskel,with_wsgi_support" scripts="paster"/>
+    <egg name="PasteScript"                   options="with_tool_zopeskel" scripts="paster"/>
     <egg name="PIL"                       options="with_binding_pil" />
     <egg name="PIL"                       options="with_binding_pil"/>
     <egg name="psycopg2"                      options="with_database_postgresql"/>
     <egg name="pypgoptimizator"               options="with_minitage_otherpackages"  scripts="pypgoptimizator" />
     <egg name="pysugarNG"                     options="with_binding_sugar"/>
-    <egg name="python-ldap"                   options="with_binding_ldap,with_ploneproduct_ldap,with_ploneproduct_cynin"/>
-    <egg name="bda.ldap"                      options="with_binding_ldap,with_ploneproduct_ldap,with_ploneproduct_cynin"/>
+    <egg name="python-ldap"                   options="with_binding_ldap,with_ploneproduct_ldap"/>
+    <egg name="bda.ldap"                      options="with_binding_ldap,with_ploneproduct_ldap"/>
     <egg name="quills.remoteblogging"         options="with_ploneproduct_quills"/>
-    <egg name="repoze.who.plugins.cas"        options="with_wsgi_cas"/>
-    <egg name="repoze.zope2"                  options="with_wsgi_support"                 />
     <egg name="simplejson"                    options="with_binding_json"/>
-    <egg name="Spawning"                      options="with_wsgi_support"                 />
     <egg name="sqlalchemy"                    options="with_database_sa"                  />
     <egg name="xlwt"                          options="with_binding_xlwt"                />
     <egg name="z3c.unconfigure"               options="with_ploneproduct_sgdcg" />
     <egg name="zc.authorizedotnet"            options="with_ploneproduct_easyshop"/>
-    <egg name="ZODB3"                         options="with_wsgi_support"                 />
     <egg name="ZopeSkel"                      options="with_tool_zopeskel"                />
     <egg name="pypdf"                         options="with_binding_pdf"                />
 
     <!-- pure zope/plone eggs -->
     <egg name="Products.ATWorkgroup"           options="with_ploneproduct_atworkgroup"/>
     <egg name="aws.pdfbook"                    options="with_ploneproduct_awspdfbook" zcml="configure" />
-    <egg name="archetypes.schemaextender"      options="with_ploneproduct_schemaextender,with_ploneproduct_facultystaff,with_ploneproduct_cynin" zcml="configure" />
+    <egg name="archetypes.schemaextender"      options="with_ploneproduct_schemaextender,with_ploneproduct_facultystaff" zcml="configure" />
     <egg name="Products.PloneboardNotify"      options="with_ploneproduct_ploneboardnotify" zcml="configure" />
     <egg name="archetypes.schematuning"        options="with_ploneproduct_schematuning" />
     <egg name="collective.contentlicensing"    options="with_ploneproduct_contentlicensing" zpackage="y" zcml="configure"/>
@@ -265,7 +251,7 @@
     <egg name="p4a.video"                      options="with_ploneproduct_p4a_vid"                       zcml="configure"/>
     <egg name="p4a.z2utils"                    options="with_ploneproduct_p4a_vid"          />
     <egg name="plone.app.blob"                 options="with_ploneproduct_ploneappblob"  zcml="configure" zpackage="y" order="109" zcmlorder="109"/>
-    <egg name="plone.app.iterate"              options="with_ploneproduct_iterate,with_ploneproduct_cynin"          zpackage="y" zcml="configure"/>
+    <egg name="plone.app.iterate"              options="with_ploneproduct_iterate"          zpackage="y" zcml="configure"/>
     <egg name="plone.app.jquerytools"          options="with_ploneproduct_plonejqtools"       zcml="configure"/>
     <egg name="plone.app.transmogrifier"       options="with_ploneproduct_patransmo"        zcml="configure"    />
     <egg name="plone.app.z3cform"              options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"  zcml="configure" order="110" zcmlorder="110"/>
@@ -277,7 +263,7 @@
     <egg name="Products.ATSchemaEditorNG"      options="with_ploneproduct_atschemaeditor" zpackage="y" zcml="configure" />
     <egg name="Products.ATVocabularyManager"   options="with_ploneproduct_atvmanager" zpackage="y" zcml="configure" />
     <egg name="Products.CacheSetup"            options="with_ploneproduct_cachesetup"       zproduct="y" zcml="configure"/>
-    <egg name="Products.CMFPlacefulWorkflow"   options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard,with_ploneproduct_cynin"            zproduct="y" zcml="configure" />
+    <egg name="Products.CMFPlacefulWorkflow"   options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard"            zproduct="y" zcml="configure" />
     <egg name="Products.Collage"               options="with_ploneproduct_collage"          zproduct="y" zcml="configure"/>
     <egg name="Products.ContentWellPortlets"   options="with_ploneproduct_contentwellportlet" zproduct="y" zcml="configure"/>
     <egg name="Products.csvreplicata"          options="with_ploneproduct_csvreplica"       zproduct="y" zcml="configure"/>
@@ -293,8 +279,8 @@
     <egg name="Products.PloneArticle"          options="with_ploneproduct_plonearticle"     zproduct="y" zcml="configure"/>
     <egg name="Products.Ploneboard"            options="with_ploneproduct_ploneboard"       zproduct="y" zcml="configure"/>
     <egg name="Products.PloneFormGen"          options="with_ploneproduct_ploneformgen"     zproduct="y" zcml="configure"/>
-    <egg name="Products.PloneLDAP"             options="with_ploneproduct_ldap,with_ploneproduct_cynin"             zproduct="y" zcml="configure"/>
-    <egg name="plone.app.ldap"                 options="with_ploneproduct_ldap,with_ploneproduct_cynin"             zproduct="y" zcml="configure"/>
+    <egg name="Products.PloneLDAP"             options="with_ploneproduct_ldap"             zproduct="y" zcml="configure"/>
+    <egg name="plone.app.ldap"                 options="with_ploneproduct_ldap"             zproduct="y" zcml="configure"/>
     <egg name="Products.PloneSurvey"           options="with_ploneproduct_plonesurvey"      zproduct="y" zcml="configure"/>
     <egg name="Products.Quills"                options="with_ploneproduct_quills"           zpackage="y" zcml="configure"/>
     <egg name="Products.SimpleAttachment"      options="with_ploneproduct_ploneboard"       zproduct="y" zcml="configure"/>
@@ -304,19 +290,6 @@
     <egg name="webcouturier.dropdownmenu"      options="with_ploneproduct_wc_dd_menu"       zpackage="y" zcml="configure"/>
     <egg name="z3c.relationfield"              options="with_ploneproduct_z3crelationfield" zcml="configure" />
     <egg name="Products.Clouseau"              options="with_ploneproduct_clouseau" zcml="configure" zpackage="y"/>
-    <!-- cynin -->
-    <egg name="Products.fatsyndication"         options="with_ploneproduct_cynin"    zcml="configure"  />
-    <egg name="ubify.policy"         options="with_ploneproduct_cynin"    zcml="configure"  />
-    <egg name="ubify.coretypes"      options="with_ploneproduct_cynin"    zcml="configure"  />
-    <egg name="ubify.spaces"         options="with_ploneproduct_cynin"    zcml="configure"  />
-    <egg name="ubify.viewlets"       options="with_ploneproduct_cynin"    zcml="configure,overrides" />
-    <egg name="ubify.cyninv2theme"   options="with_ploneproduct_cynin"    zcml="configure,overrides" />
-    <egg name="ubify.smartview"      options="with_ploneproduct_cynin"    zcml="configure"  />
-    <egg name="ubify.recyclebin"     options="with_ploneproduct_cynin"    zcml="configure"  />
-    <egg name="ubify.xmlrpc"         options="with_ploneproduct_cynin"    zcml="configure"  />
-    <egg name="ubify.ffxmpp"         options="with_ploneproduct_cynin"    zcml="configure"  />
-    <egg name="Pygments"             options="with_ploneproduct_cynin" />
-    <egg name="jsonlib"              options="with_ploneproduct_cynin" />
 
     <!-- makina-->
     <egg name="collective.blueprint.dancing"         options="with_ploneproduct_cbdancing"                           zcml="configure"/>
@@ -365,14 +338,14 @@
     <product name="ATBackRef"                      options="with_ploneproduct_atbackref"        />
     <product name="ATExtensions"                   options="with_ploneproduct_atextensions"     />
     <product name="ATVocabularyManager"            options="with_ploneproduct_atvmanager"     />
-    <product name="CMFPlacefulWorkflow"            options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard,with_ploneproduct_cynin" />
+    <product name="CMFPlacefulWorkflow"            options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard" />
     <product name="CMFPlomino"                     options="with_ploneproduct_plomino"          />
     <product name="Collage"                        options="with_ploneproduct_collage"          />
     <product name="collective.js.jquery"           options="with_ploneproduct_cjqui,with_ploneproduct_sfcalendar"           />
     <product name="ContentWellPortlets"            options="with_ploneproduct_contentwellportlet"/>
     <product name="csvreplicata"                   options="with_ploneproduct_csvreplica"       />
     <product name="DataGridField"                  options="with_ploneproduct_agridfield"       />
-    <product name="fatsyndication"                 options="with_ploneproduct_quills,with_ploneproduct_cynin"           />
+    <product name="fatsyndication"                 options="with_ploneproduct_quills"           />
     <product name="LinguaPlone"                    options="with_ploneproduct_lingua"           />
     <product name="Maps"                           options="with_ploneproduct_maps"             />
     <product name="MasterSelectWidget"             options="with_ploneproduct_masterselect"/>
@@ -402,7 +375,6 @@
 
     <product name="CMFSquidTool"          hidden="false"  options="with_ploneproduct_cachesetup"       />
     <product name="CacheSetup"            hidden="false"  options="with_ploneproduct_cachesetup" order="9999"      />
-    <product name="ubify.policy"          hidden="false"  options="with_ploneproduct_cynin" order="7999"/>
     <product name="ATWorkgroup"           hidden="false"  options="with_ploneproduct_atworkgroup"/>
     <product name="p4a.plonevideoembed"   hidden="false"  options="with_ploneproduct_p4a_vid"/>
     <product name="p4a.plonevideo"        hidden="false"  options="with_ploneproduct_p4a_vid"/>
@@ -452,18 +424,18 @@
     <product name="membrane"              options="with_ploneproduct_membrane"        order="600" />
     <product name="p4a.ploneevent"                 options="with_ploneproduct_p4a_cal"  />
     <product name="plone.app.blob"                 options="with_ploneproduct_ploneappblob" order="700" />
-    <product name="plone.app.iterate"              options="with_ploneproduct_iterate,with_ploneproduct_cynin"      profile="plone.app.iterate"/>
+    <product name="plone.app.iterate"              options="with_ploneproduct_iterate"      profile="plone.app.iterate"/>
     <product name="plone.app.z3cform"              options="with_ploneproduct_pz3cform,with_ploneproduct_cz3cformgrok"  />
     <product name="plone.formwidget.autocomplete"  options="with_ploneproduct_autocomplete"/>
     <product name="Products.AddRemoveWidget"       options="with_ploneproduct_addremovewidget"/>
     <product name="Products.ATBackRef"             options="with_ploneproduct_atbackref"      />
     <product name="Products.ATVocabularyManager"   options="with_ploneproduct_atvmanager"/>
-    <product name="Products.CMFPlacefulWorkflow"   options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard,with_ploneproduct_cynin" profile="CMFPlacefulWorkflow" comment="before ploneboard at least" order="100"/>
+    <product name="Products.CMFPlacefulWorkflow"   options="with_ploneproduct_cpwkf,with_ploneproduct_ploneboard" profile="CMFPlacefulWorkflow" comment="before ploneboard at least" order="100"/>
     <product name="Products.Collage"               options="with_ploneproduct_collage"          />
     <product name="collective.googleanalytics"     options="with_ploneproduct_cga"          />
     <product name="Products.ContentWellPortlets"   options="with_ploneproduct_contentwellportlet"/>
     <product name="Products.csvreplicata"          options="with_ploneproduct_csvreplica"       />
-    <product name="Products.fatsyndication"        options="with_ploneproduct_quills,with_ploneproduct_cynin" order="100"/>
+    <product name="Products.fatsyndication"        options="with_ploneproduct_quills" order="100"/>
     <product name="plone.app.ldap"                 options="with_ploneproduct_ldap" profile="ldap" order="100"/>
     <product name="Products.LinguaPlone"           options="with_ploneproduct_lingua"         profile="LinguaPlone"  />
     <product name="Products.MasterSelectWidget"    options="with_ploneproduct_masterselect" />
@@ -545,14 +517,11 @@
     -->
   <checkedversions>
     <version p='aws.pdfbook'                    v='1.0.1' options='with_ploneproduct_awspdfbook' />
-    <version p='bda.cache'                      v='1.1.3'   options='with_ploneproduct_cynin' />
-    <version p='bda.ldap'                       v='1.5.2'   options='with_ploneproduct_cynin' />
     <version p='collective.contentlicensing'    v='2.2.1'   options='with_ploneproduct_contentlicensing' />
     <version p='collective.gallery'      v='1.1'   options="with_ploneproduct_cgallery"/>
     <version p='collective.googleanalytics'     v='1.2'   options="with_ploneproduct_cga"/>
     <version p='collective.js.galleriffic' v='1.0'   options="with_ploneproduct_cgallery"/>
     <version p='collective.plonetruegallery'    v='1.3.3'     options="with_ploneproduct_truegallery"/>
-    <version p="jsonlib"                 v="1.3.10"  options="with_ploneproduct_cynin"/>
     <version p='collective.portlettabber'       v='0.2.0'   options='with_ploneproduct_cportlettabber'/>
     <version p='collective.watcherlist'  v='0.3'   options="with_ploneproduct_poi"/>
     <version p='collective.z3cform.norobots'    v='1.2.1'    options="with_ploneproduct_cz3cformnorobots"/>
@@ -652,7 +621,7 @@
   -->
   <sources>
     <source name="archetypes.gridfield"             type="svn"  url="https://svn.plone.org/svn/archetypes/MoreFieldsAndWidgets/archetypes.gridfield/trunk"        options="with_ploneproduct_agridfield"/>
-    <source name="archetypes.schemaextender"        type="svn"  url="https://svn.plone.org/svn/archetypes/archetypes.schemaextender/trunk"                        options="with_ploneproduct_schemaextender,with_ploneproduct_facultystaff,with_ploneproduct_cynin"/>
+    <source name="archetypes.schemaextender"        type="svn"  url="https://svn.plone.org/svn/archetypes/archetypes.schemaextender/trunk"                        options="with_ploneproduct_schemaextender,with_ploneproduct_facultystaff"/>
     <source name="archetypes.tuning"                type="svn"  url="https://svn.plone.org/svn/archetypes/archetypes.schematuning/trunk"                          options="with_ploneproduct_schematuning"/>
     <source name="aws.pdfbook"                      type="svn"  url="https://svn.plone.org/svn/collective/aws.pdfbook/trunk"                                      options="with_ploneproduct_awspdfbook"/>
     <source name="collective.contentlicensing"      type="git"  url="https://github.com/collective/collective.contentlicensing.git"                      options="with_ploneproduct_contentlicensing" />
@@ -740,34 +709,12 @@
     <source name="collective.googleanalytics"        type="svn" url="http://svn.plone.org/svn/collective/collective.googleanalytics/trunk"                          options="with_ploneproduct_cga"/>
     <source name="pysugarng"                            type="hg"  url="https://bitbucket.org/kiorky/pysugar"                                                     options="with_binding_sugar"/>
     <source name="Products.Quaestrio"                   type="svn" url="https://svn.plone.org/svn/collective/Quaestrio/trunk"                                     options="with_ploneproduct_quaestrio"/>
-    <source name="repoze.who.plugins.cas"               type="git" url="http://github.com/kiorky/repoze.who.plugins.cas.git"                                      options="with_wsgi_cas"/>
     <source name="pypdf"                                type="git" url="http://github.com/mfenniak/pyPdf.git"                                                     options="with_binding_pdf"/>
     <source name="Products.Poi"          type="svn" url="https://svn.plone.org/svn/collective/Products.Poi/trunk"    options="with_ploneproduct_poi" />
     <source name="Products.Collage"   type="svn" url="https://svn.plone.org/svn/collective/Products.Collage/trunk"    options="with_ploneproduct_collage" />
     <source name="Products.Clouseau"  type="svn" url="https://svn.plone.org/svn/collective/Products.Clouseau/trunk"    options="with_ploneproduct_clouseau" />
     <source name="Products.Ploneboard"   autocheckout="n"    type="svn" url="https://svn.plone.org/svn/collective/Products.Ploneboard/trunk" options="with_ploneproduct_ploneboard"/>
 
-    <!-- cynin -->
-    <source name="ubify.coretypes"     type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.coretypes"      autocheckout="y"   options="with_ploneproduct_cynin"/>
-    <source name="ubify.cyninv2theme"  type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.cyninv2theme"   autocheckout="y"   options="with_ploneproduct_cynin"/>
-    <source name="ubify.ffxmpp"        type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.ffxmpp"         autocheckout="y"   options="with_ploneproduct_cynin"/>
-    <source name="ubify.freemindflash" type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.freemindflash"  autocheckout="y" asegg="false"   options="with_ploneproduct_cynin"/>
-    <source name="ubify.policy"        type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.policy"         autocheckout="y"   options="with_ploneproduct_cynin"/>
-    <source name="ubify.recyclebin"    type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.recyclebin"     autocheckout="y"   options="with_ploneproduct_cynin"/>
-    <source name="ubify.smartview"     type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.smartview"      autocheckout="y"   options="with_ploneproduct_cynin"/>
-    <source name="ubify.spaces"        type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.spaces"         autocheckout="y"   options="with_ploneproduct_cynin"/>
-    <source name="ubify.viewlets"      type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.viewlets"       autocheckout="y"   options="with_ploneproduct_cynin"/>
-    <source name="ubify.xmlrpc"        type="svn" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/src/ubify.xmlrpc"         autocheckout="y"   options="with_ploneproduct_cynin"/>
-    <source name="ATRatings"             type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/ATRatings"             autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
-    <source name="Calendaring"           type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/Calendaring"           autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
-    <source name="CMFNotification"       type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/CMFNotification"       autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
-    <source name="enablesettrace"        type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/enablesettrace"        autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
-    <source name="OpenXml"               type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/OpenXml"               autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
-    <source name="Plone4ArtistsCalendar" type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/Plone4ArtistsCalendar" autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
-    <source name="PloneSlimbox"          type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/PloneSlimbox"          autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
-    <source name="Scrawl"                type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/Scrawl"                autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
-    <source name="WebServerAuth"         type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/WebServerAuth"         autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
-    <source name="ZipFileTransport"      type="svn" asegg="false" url="http://odn.cynapse.com/svn/cynin/tags/cynin_3_2/products/ZipFileTransport"      autocheckout="y"   options="with_ploneproduct_cynin" path="${buildout:directory}/products"/>
 
     <!-- makina -->
   </sources>

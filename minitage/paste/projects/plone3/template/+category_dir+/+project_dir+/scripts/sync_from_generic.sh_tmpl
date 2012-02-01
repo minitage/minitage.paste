@@ -14,60 +14,47 @@ buildout-prod.cfg
 minitage.buildout-dev.cfg
 minitage.buildout-prod.cfg
 README.*
-etc/
 minilays/
 scripts/
 "
 for f in \$files;do
     rsync -aKzv t/\$f \$f
 done
+rsync -aKzv  --exclude=versions.cfg t/etc/ etc/
 policy="tests/base.py
 configure.zcml
+interfaces.py
 profiles/default/metadata.xml"
 policy_folder="src.mrdeveloper/\$PROJECT.policy"
 if [[ ! -e \$policy_folder ]];then
     policy_folder="src/\$PROJECT.policy"
 fi
 for i in \$policy;do
-    rsync -azKv t/src/\$PROJECT.policy/src/\$PROJECT/policy/\$i src.mrdeveloper/\$PROJECT.policy/src/\$PROJECT/policy/\$i
+    rsync -azKv t/src/\$PROJECT/src/\${PROJECT/\./\/}/\$i src.mrdeveloper/\$PROJECT/src/\${PROJECT/\./\/}/\$i
 done
 #if $scm_type == 'git':
-EGGS_IMPORT_URL="\${IMPORT_URL//\/\$PROJECT\.buildout}"
+EGGS_IMPORT_URL="\${IMPORT_URL//\/\$PROJECT\.buildout\.git}"
 #else
 EGGS_IMPORT_URL="\$IMPORT_URL/eggs"
 #end if
 sed -re "/\[sources\]/{
 #if $scm_type == 'git':
-        a \$PROJECT.policy =  git \$EGGS_IMPORT_URL/\$PROJECT.policy
-        a \$PROJECT.skin =    git \$EGGS_IMPORT_URL/\$PROJECT.skin
-        a \$PROJECT.tma =     git \$EGGS_IMPORT_URL/\$PROJECT.tma
-        a \$PROJECT.testing = git \$EGGS_IMPORT_URL/\$PROJECT.testing
+        a \$PROJECT =  git \$EGGS_IMPORT_URL/\$PROJECT.git
 #else
-        a \$PROJECT.policy =  svn \$EGGS_IMPORT_URL/\$PROJECT.policy/trunk
-        a \$PROJECT.skin =    svn \$EGGS_IMPORT_URL/\$PROJECT.skin/trunk
-        a \$PROJECT.tma =     svn \$EGGS_IMPORT_URL/\$PROJECT.tma/trunk
-        a \$PROJECT.testing = svn \$EGGS_IMPORT_URL/\$PROJECT.testing/trunk
+        a \$PROJECT =  svn \$EGGS_IMPORT_URL/\$PROJECT
 #end if
 }" -i  etc/project/sources.cfg
-sed -re "s:(src/)?\$PROJECT\.((skin)|(tma)|(policy)|(testing))::g" -i etc/project/\$PROJECT.cfg
+sed -re "s:(src/)?\$PROJECT::g" -i etc/project/\$PROJECT.cfg
 sed -re "/auto-checkout \+=/{
-        a \    \$PROJECT.policy
-        a \    \$PROJECT.tma
-        a \    \$PROJECT.skin
-        a \    \$PROJECT.testing
+        a \    \$PROJECT
 }"  -i etc/project/sources.cfg
 sed -re "/eggs \+=.*buildout:eggs/{
-        a \    \$PROJECT.policy
-        a \    \$PROJECT.tma
-        a \    \$PROJECT.skin
-        a \    \$PROJECT.testing
+        a \    \$PROJECT
 }"  -i etc/project/\$PROJECT.cfg
 sed -re "/zcml \+=/{
-        a \    \$PROJECT.policy
-        a \    \$PROJECT.tma
-        a \    \$PROJECT.skin
+        a \    \$PROJECT
 }"  -i etc/project/\$PROJECT.cfg
-sed -re "s/.*:default/    \${PROJECT}.policy:default/g" -i  etc/project/\$PROJECT.cfg
+sed -re "s/.*:default/    \${PROJECT}:default/g" -i  etc/project/\$PROJECT.cfg
 sed -re "s/(extends=.*)/\1 etc\/sys\/settings-prod.cfg/g" -i buildout-prod.cfg
 sed -re "/\[buildout\]/ {
 aallow-hosts = \\${mirrors:allow-hosts}

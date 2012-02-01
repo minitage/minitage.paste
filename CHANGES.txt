@@ -8,6 +8,7 @@ CHANGES
 - upgrade plone products to current : 30/01/2012
 - add plone42 template
 - unactivate blob maintenance and use collective.recipe.backup flavor.
+- Update the plone template to current best practise
 
 
 1.3.1859 (2011-11-22)

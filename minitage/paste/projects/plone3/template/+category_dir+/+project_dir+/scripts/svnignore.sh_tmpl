@@ -37,10 +37,8 @@ tags.python
 var
 "
 etc="\$ignore
-deliverance*.ini
 cherrypy.ini
 cherrypy-prod.ini
-deliverance.xml
 settings-prod.cfg
 init.d
 "

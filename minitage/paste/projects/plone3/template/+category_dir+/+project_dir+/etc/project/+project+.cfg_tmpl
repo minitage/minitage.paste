@@ -62,13 +62,8 @@ zeo-client-cache-size = 5MB
 extra-paths+=\${buildout:extra-paths}
 eggs += \${buildout:eggs}
     zopelib
-    Plone
 # security hotfixes
     Products.PloneHotfix20110720
-# release helpers
-    zest.releaser
-    jarn.mkrelease
-    z3c.checkversions [buildout]
 #for $product in $additional_eggs:
 #if product.startswith('#'):
 $product
@@ -83,10 +78,6 @@ products =
 
 zcml +=
 
-#if $with_ploneproduct_cynin:
-    ubify.viewlets-overrides
-    ubify.cyninv2theme-overrides
-#end if
 #for $product in $plone_zcml:
 #if product.startswith('#'):
 ${product}
@@ -152,6 +143,12 @@ ${asynccomment}blob-storage = \${zeoserver:blob-storage}
 file=\${buildout:directory}/etc/${project}-kgs.cfg
 
 [zopepy]
+eggs =
+# release helpers
+    zest.releaser
+    jarn.mkrelease
+    z3c.checkversions [buildout] 
+    \${instance:eggs}
 # Scripts generated filtering
 scripts =
 #z3c.checkversions
@@ -190,7 +187,6 @@ extra-paths += \${instance:extra-paths}
 INSTANCE_HOME=\${instance:location}
 CONFIG_FILE=\${instance:location}/etc/zope.conf
 
-
 # This testrunner is a zc.recipe.testrunner like
 # See http://pypi.python.org/pypi/zc.recipe.testrunner/
 # It can do xml reports addon if you supply -x as a command line argument
@@ -218,7 +214,7 @@ instance = instance
 products-initial=
 # profils to autorun
 profiles-initial=
-#   ${sane_name}.policy:default
+#   ${default_plone_profile}
 ${zeocomment}zeoserver = zeoserver
 
 # Plone site (re)creation

@@ -70,11 +70,6 @@ find-links = http://dist.plone.org/release/${plone_version}
              http://pypi.python.org/simple/ZODB4
 # FOR PILWTOK
              http://download.zope.org/distribution/
-#if $with_wsgi_support:
-             http://dist.repoze.org/zope2/latest/
-#else
-#             http://dist.repoze.org/zope2/latest/
-#end if
 
 
 # vim:set ft=cfg:

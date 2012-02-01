@@ -22,16 +22,6 @@ $hr
 #else
 #set $sgdgcomment='#'
 #end if
-#if $with_deliverance_support
-#set $delicomment=''
-#else
-#set $delicomment='#'
-#end if
-#if $with_ploneproduct_cynin
-#set $cynincomment=''
-#else
-#set $cynincomment='#'
-#end if
 #if $with_ploneproduct_paasync
 #set $asynccomment=''
 #else
@@ -71,9 +61,6 @@ extends =
 #if $with_experimental:
     plone/experimental.cfg
 #end if
-#if $with_ploneproduct_cynin:
-    project/cynin-buildout.cfg
-#end if
 #if $with_ploneproduct_sgdcg:
     project/newsletter.cfg
 #end if
@@ -83,12 +70,7 @@ extends =
     project/${project}.cfg
     apache/apache.cfg
     hudson/${project}/hudson.cfg
-#if not $with_deliverance_support
-# to enable deliverance support, before uncommenting things there & there, think to add to those extends:
-#    deliverance/deliverance.cfg
-#else
-    deliverance/deliverance.cfg
-#end if
+
 
 
 parts =
@@ -100,10 +82,6 @@ parts =
 ${asynccomment}    instance-worker
     zopepy
     backup
-${cynincomment}    instance-cynin
-${cynincomment}    maildrophost
-${cynincomment}    cynini18noverrides
-${fsscomment}${cynincomment}    fss-cynin
 ${sgdgcomment}    instance-newsletter
 ${fsscomment}${sgdgcomment}    fss-newsletter
 ${fsscomment}    fss
@@ -113,12 +91,6 @@ ${solrcomment}    solrinstance
     omelette
     ${sane_name}.test
 ${zeocomment}    zeoserver
-${delicomment}    deliverance
-${delicomment}    deliverance_ini
-${delicomment}    deliverance_prod_ini
-${delicomment}    deliverance_rules
-${delicomment}    apache_deliverance_vhost
-${delicomment}    deliverance.test
     apache_vhost
 # hudson integration
     ${sane_name}_hudson_env
@@ -188,7 +160,6 @@ recipe = minitage.recipe.scripts
 #if not $inside_minitage:
 urls=http://download.zope.org/distribution/PIL-1.1.7.tar.gz
 #end if
-eggs = \${instance:eggs}
 interpreter = zopepy
 env-file=\${buildout:directory}/etc/${project}.env
 

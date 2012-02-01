@@ -1,14 +1,10 @@
 # Sysadmin settings like hosts, credentials, paths, cache settings, and loglevels
 #if $with_ploneproduct_sgdcg
+ $with_ploneproduct_sgdcg
 #set $sgdgcomment=''
 #else
 #set $sgdgcomment='#'
 #end if
-#if $with_ploneproduct_cynin
-#set $cynincomment=''
-#else
-#set $cynincomment='#'
-#end if 
 
 #if $with_haproxy
 #set $hapcomment=''
@@ -32,7 +28,6 @@ instance3=$address
 instance4=$address
 instance-worker=$address
 instance-newsletter=$address
-instance-cynin=$address
 instance-buildbot=$address
 #may not be used
 supervisor=$supervisor_host
@@ -45,8 +40,6 @@ staging=$staging_host
 zope-front=\${hosts:instance1}
 #end if
 ${hapcomment}zope-front=\${hosts:balancer} 
-deliverance=$deliverance_host
-deliverance-backend=\${hosts:zope-front}
 
 [ports]
 # other instances, in case.
@@ -59,8 +52,6 @@ instance3=$http_port3
 instance4=$http_port4
 instance-worker=$http_port9
 instance-newsletter=$http_port5
-instance-cynin=$http_port6
-cynin-webdav=$http_port7
 instance-buildbot=$http_port_buildbot
 #may not be used
 supervisor=$supervisor_port
@@ -72,8 +63,6 @@ buildbot-master-web=${buildbot_master_web_port}
 zope-front=\${ports:instance1}
 #end if
 ${hapcomment}zope-front=\${ports:balancer}
-deliverance=$deliverance_port
-deliverance-backend=\${ports:zope-front}
 
 
 
@@ -139,7 +128,6 @@ password=$supervisor_password
 
 [locations]
 # aboslute paths to avoid buildout auto build of reffered part
-deliverance-themes=\${buildout:directory}/src/themes
 solr = \$solr_path
 blob-storage=\${buildout:directory}/var/blobstorage/storage
 blob-backup=\${buildout:directory}/var/blobstorage/backup
@@ -157,10 +145,6 @@ ${sgdgcomment}testfss-backup-newsletter= \${buildout:directory}/parts/instance-n
 ${sgdgcomment}testfss-storage-newsletter=\${buildout:directory}/parts/instance-newsletter/var/fss_storage
 ${sgdgcomment}fss-backup-newsletter= \${buildout:directory}/var/fss/fss_backupnewsletter_${project}
 ${sgdgcomment}fss-storage-newsletter=\${buildout:directory}/var/fss/fss_storagenewsletter_${project} 
-${cynincomment}testfss-backup-cynin= \${buildout:directory}/parts/instance-cynin/var/fss_backup
-${cynincomment}testfss-storage-cynin=\${buildout:directory}/parts/instance-cynin/var/fss_storage
-${cynincomment}fss-backup-cynin= \${buildout:directory}/var/fss/fss_backupcynin_${project}
-${cynincomment}fss-storage-cynin=\${buildout:directory}/var/fss/fss_storagecynin_${project}
 blob-backups=\${buildout:directory}/var/blobbackups
 fss-backups=\${buildout:directory}/var/fssbackups 
 staging=$staging_path
