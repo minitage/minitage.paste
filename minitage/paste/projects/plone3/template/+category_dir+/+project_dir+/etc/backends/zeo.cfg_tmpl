@@ -31,6 +31,10 @@ temporary-storage =
     mount-point /temp_folder
     container-class Products.TemporaryFolder.TemporaryContainer
 
+[instance-plain]
+<=instance
+zeo-client = off
+
 # may be not used but it is good to have it in case.
 [zeoserver]
 #if $major < 4:

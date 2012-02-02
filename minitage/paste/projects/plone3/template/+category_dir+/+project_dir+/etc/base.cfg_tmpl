@@ -79,6 +79,7 @@ parts =
 #end if
     productdistros
     instance
+    instance
 ${asynccomment}    instance-worker
     zopepy
     backup
@@ -91,6 +92,7 @@ ${solrcomment}    solrinstance
     omelette
     ${sane_name}.test
 ${zeocomment}    zeoserver
+${zeocomment}    instance-plain
     apache_vhost
 # hudson integration
     ${sane_name}_hudson_env
