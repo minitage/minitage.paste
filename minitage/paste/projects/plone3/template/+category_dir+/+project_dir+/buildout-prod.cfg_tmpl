@@ -31,8 +31,8 @@ extends=#slurp
     etc/project/cluster.cfg#slurp
     etc/sys/maintenance.cfg#slurp
     etc/sys/high-availability.cfg#slurp
-    etc/backends/${mode}.cfg#slurp
     etc/base.cfg#slurp
+    etc/backends/${mode}.cfg#slurp
 
 parts+=#slurp
     instance1

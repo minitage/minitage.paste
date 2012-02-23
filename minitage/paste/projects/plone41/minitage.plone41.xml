@@ -6,16 +6,34 @@
 <root>
   <template>
     <options>
-      <option order="0000" name="with_ploneproduct_dexterity"  description="Dexterity, see http://plone.org/products/dexterity y/n" default="y"/>
+      <option order="0000" name="with_ploneproduct_dexterity"          description="Dexterity, see http://plone.org/products/dexterity y/n" default="y"/>
+      <option order="01007" name="with_ploneproduct_patheming"     description="plone.app.theming, see http://pypi.python.org/pypi/plone.app.theming y/n" default="n"/>
       <option order="1000" name="with_ploneproduct_contentwellportlet" description="Content well porlets, see http://pypi.python.org/pypi/Products.ContentWellPortlets y/n" default="n"/>
     </options>
     <versions>
       <!-- z3c.form -->
       <version p='plone.z3cform'           v='0.7.8'   name="various pinning for various packages" />
+      <version p="lxml"                    v="2.3.3"   name="various pinning for various packages" /> 
       <version p="zope.schema"             v="3.7.1"   name="various pinning for various packages"/>
     </versions>
+    <gs>
+      <product name='plone.app.theming'   options="with_ploneproduct_patheming" order="900"/> 
+    </gs>
     <checkedversions>
+      <!-- http://good-py.appspot.com/release/plone.app.theming/1.0b9 -->
+      <version p='WebOb'                     v='1.1.3'  options="with_ploneproduct_patheming"/>
+      <version p='diazo'                     v='1.0rc4' options="with_ploneproduct_patheming"/>
+      <version p='experimental.cssselect'    v='0.1'    options="with_ploneproduct_patheming"/>
+      <version p='plone.app.theming'         v='1.0b9'  options="with_ploneproduct_patheming"/>
+      <version p='plone.app.themingplugins'  v='1.0b1'  options="with_ploneproduct_patheming"/>
+      <version p='plone.resource'            v='1.0b5'  options="with_ploneproduct_patheming"/>
+      <version p='plone.subrequest'          v='1.6.2'  options="with_ploneproduct_patheming"/>
+      <version p='repoze.xmliter'            v='0.4'    options="with_ploneproduct_patheming"/>
+      <!-- /http://good-py.appspot.com/release/plone.app.theming/1.0b9 -->
     </checkedversions>
+    <eggs>
+      <egg name="plone.app.theming"          options="with_ploneproduct_patheming" zpackage="y" zcml="configure" />
+    </eggs>
   </template>
   <purge>
     <options>
