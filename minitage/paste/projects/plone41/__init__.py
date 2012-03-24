@@ -81,9 +81,9 @@ for name in sources_k:
     )
 
 class Template(plone4.Template):
-    packaged_version = '4.1.3'
-    packaged_zope2_version = '2.13.10'
-    packaged_ztk_version = '1.0.4'
+    packaged_version = '4.1.4'
+    packaged_zope2_version = '2.13.12'
+    packaged_ztk_version = '1.0.5'
     summary                    = 'Template for creating a plone41 project'
     _template_dir = pkg_resources.resource_filename('minitage.paste', 'projects/plone3/template')
     python                     = 'python-2.6'
@@ -139,7 +139,7 @@ class Template(plone4.Template):
 
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
-        plone4.Template.pre(self, command, output_dir, vars)
+        return plone4.Template.pre(self, command, output_dir, vars)
 
     def post_default_template_hook(self, command, output_dir, vars, ep):
         pass

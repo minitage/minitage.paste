@@ -123,7 +123,7 @@ class Template(common.Template):
         if vars['inside_minitage']:
             deps = [
                 'zlib-1.*',
-                'freetype-2.\d*',
+                'freetype-2',
                 'libxml2-2.*',
                 'libiconv.*',
                 'libxslt-1.*',

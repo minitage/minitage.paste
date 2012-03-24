@@ -23,6 +23,7 @@
       <option order="01007" name="with_ploneproduct_rtool"         description="ReDirectionTool, see http://plone.org/products/easynewsletter y/n" default="n"/>
       <option order="01007" name="with_ploneproduct_clcumulus"     description="LocalCumus, see http://pypi.python.org/pypi/collective.portlet.localcumulus y/n" default="n"/>
       <option order="01007" name="with_ploneproduct_paregistry"     description="plone.app.registry, see http://pypi.python.org/pypi/plone.app.registry y/n" default="y"/>
+      <option order="01007" name="with_ploneproduct_cjsleaflet"     description="collective.js.leaflet, see http://pypi.python.org/pypi/collective.js.leaflet y/n" default="n"/>
     </options>
     <versions>
       <!-- z3c.form -->
@@ -30,7 +31,7 @@
 
       <version p="plone.directives.form"   v="1.0"     name="various pinning for z3 packages and p4 environments"/>
 
-      <version p="plone.app.z3cform"       v="0.5.4"   name="various pinning for z3 packages and p4 environments"/>
+      <version p="plone.app.z3cform"       v="0.5.7"   name="various pinning for z3 packages and p4 environments"/>
       <version p="plone.uuid"              v="1.0b2"   name="various pinning for z3 packages and p4 environments"/>
       <version p='plone.z3cform'           v='0.7.1'   name="various pinning for z3 packages and p4 environments"/>
       <version p="python-dateutil"         v="1.5"     name="various pinning for z3 packages and p4 environments"/>
@@ -47,15 +48,16 @@
       <version p="plone.registry"          v="1.0"     name="plone.app.registry on plone4"/>
     </versions>
     <checkedversions>
-      <version p='collective.recaptcha'             v='1.1.3'      options="with_ploneproduct_captcha"/>
-      <version p='collective.captcha'             v='1.6'      options="with_ploneproduct_captcha"/>
-      <version p='plone.formwidget.recaptcha'             v='1.0b3'      options="with_ploneproduct_captcha"/>
-      <version p='plone.formwidget.captcha'               v='1.0.1'      options="with_ploneproduct_captcha"/>
-      <version p='ordereddict'             v='1.1'      options="with_tool_i18ndude"/>
-      <version p='Products.Poi'            v='2.0.1'    options="with_ploneproduct_poi"/>
-      <version p='collective.js.jqueryui'  v='1.8.16.4' options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
-      <version p='Products.ContentWellPortlets'   v='4.1.0'     options="with_ploneproduct_contentwellportlet"/>
-      <version p="collective.contentrules.mailtolocalrole" v="1.2"   options="with_ploneproduct_cmailtolrole"/>
+      <version p='collective.js.leaflet'                   v='0.1.3.4'  options="with_ploneproduct_cjsleaflet"/>
+      <version p='collective.recaptcha'                    v='1.1.3'    options="with_ploneproduct_captcha"/>
+      <version p='collective.captcha'                      v='1.6'      options="with_ploneproduct_captcha"/>
+      <version p='plone.formwidget.recaptcha'              v='1.0b3'    options="with_ploneproduct_captcha"/>
+      <version p='plone.formwidget.captcha'                v='1.0.1'    options="with_ploneproduct_captcha"/>
+      <version p='ordereddict'                             v='1.1'      options="with_tool_i18ndude"/>
+      <version p='Products.Poi'                            v='2.0.1'    options="with_ploneproduct_poi"/>
+      <version p='collective.js.jqueryui'                  v='1.8.16.5' options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
+      <version p='Products.ContentWellPortlets'            v='4.1.0'    options="with_ploneproduct_contentwellportlet"/>
+      <version p="collective.contentrules.mailtolocalrole" v="1.2"      options="with_ploneproduct_cmailtolrole"/>
 
       <version p='collective.portlet.localcumulus'         v='1.8' options="with_ploneproduct_clcumulus"/>
       <version p='collective.portlet.relateditems'    v='0.3.5'      options="with_ploneproduct_crelateditems"/>
@@ -75,18 +77,18 @@
       <version p="quintagroup.portlet.cumulus"             v="1.1.0" options="with_ploneproduct_qcumulus"/>
       <version p='Shapely'              v='1.2.5' options="with_ploneproduct_cgeo"/>
       <!-- plone.app.async -->
-      <version p='plone.app.async'  v='1.0'    options="with_ploneproduct_paasync"/>
-      <version p='zope.app.keyreference'  v='3.6.1'    options="with_ploneproduct_paasync"/>
-      <version p="zc.async"         v="1.5.3"  options="with_ploneproduct_paasync"/>
-      <version p="zc.twist"         v="1.3.1"  options="with_ploneproduct_paasync"/>
-      <version p="zc.queue"         v="1.1"    options="with_ploneproduct_paasync"/>
-      <version p="zc.dict"          v="1.3b1"  options="with_ploneproduct_paasync"/>
-      <version p="zc.blist"         v="1.0b2"  options="with_ploneproduct_paasync"/>
-      <version p="zope.bforest"     v="1.2"    options="with_ploneproduct_paasync"/>
-      <version p="Twisted"          v="10.2.0" options="with_ploneproduct_paasync"/>
-      <version p="zc.monitor"       v="0.2.0"  options="with_ploneproduct_paasync"/>
-      <version p="zc.ngi"           v="1.1.6"  options="with_ploneproduct_paasync"/>
-      <version p="zc.z3monitor"     v="0.7.0"  options="with_ploneproduct_paasync"/>
+      <version p='plone.app.async      '  v='1.0'    options="with_ploneproduct_paasync"/>
+      <version p='zope.app.keyreference'  v='3.6.1'  options="with_ploneproduct_paasync"/>
+      <version p="zc.async"               v="1.5.4"  options="with_ploneproduct_paasync"/>
+      <version p="zc.twist"               v="1.3.1"  options="with_ploneproduct_paasync"/>
+      <version p="zc.queue"               v="1.1"    options="with_ploneproduct_paasync"/>
+      <version p="zc.dict"                v="1.3b1"  options="with_ploneproduct_paasync"/>
+      <version p="zc.blist"               v="1.0b2"  options="with_ploneproduct_paasync"/>
+      <version p="zope.bforest"           v="1.2"    options="with_ploneproduct_paasync"/>
+      <version p="Twisted"                v="10.2.0" options="with_ploneproduct_paasync"/>
+      <version p="zc.monitor"             v="0.2.0"  options="with_ploneproduct_paasync"/>
+      <version p="zc.ngi"                 v="1.1.6"  options="with_ploneproduct_paasync"/>
+      <version p="zc.z3monitor"           v="0.7.0"  options="with_ploneproduct_paasync"/>
       <!-- dexterity -->
       <version p='z3c.form'                v='2.4.4'   options="with_ploneproduct_dexterity"/>
       <version p='z3c.formwidget.query'    v='0.6'     options="with_ploneproduct_dexterity"/>
@@ -94,31 +96,32 @@
       <version p="plone.directives.form"   v="1.0"     options="with_ploneproduct_dexterity"/>
       <version p="python_dateutil"         v="1.5"     options="with_ploneproduct_dexterity"/>
       <version p='rwproperty'              v='1.0'     options="with_ploneproduct_dexterity"/>
-      <version p="collective.z3cform.datagridfield" v="0.9" options="with_ploneproduct_dexterity" />
+      <version p="collective.z3cform.datagridfield" v="0.10" options="with_ploneproduct_dexterity" />
       <version p="collective.z3cform.datetimewidget" v="1.1.1" options="with_ploneproduct_dexterity" />
       <version p="mocker"                            v="1.1"   options="with_ploneproduct_dexterity" />
       <version p="plone.alterego"                    v="1.0" options="with_ploneproduct_dexterity" />
-      <version p="plone.dexterity"                   v="1.1" options="with_ploneproduct_dexterity" />
-      <version p="plone.app.dexterity"               v="1.0" options="with_ploneproduct_dexterity" />
-      <version p="plone.app.intid"                   v="1.0b3" options="with_ploneproduct_dexterity" />
+      <version p="plone.dexterity"                   v="1.1.2" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.dexterity"               v="1.2.1" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.intid"                   v="1.0" options="with_ploneproduct_dexterity" />
       <version p="five.intid"                        v="0.5.2" options="with_ploneproduct_dexterity" />
       <version p="plone.app.relationfield"           v="1.1" options="with_ploneproduct_dexterity" />
-      <version p="plone.app.textfield"               v="1.0.2" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.textfield"               v="1.1" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.stagingbehavior" v="0.1b3" options="with_ploneproduct_dexterity" />
       <version p="plone.app.lockingbehavior"         v="1.0.1" options="with_ploneproduct_dexterity" />
-      <version p="plone.app.stagingbehavior"         v="0.1b3" options="with_ploneproduct_dexterity" />
-      <version p="plone.app.versioningbehavior"      v="1.0" options="with_ploneproduct_dexterity" />
-      <version p="plone.autoform"                    v="1.0" options="with_ploneproduct_dexterity,with_ploneproduct_cgeo,with_ploneproduct_pz3cform" />
+      <version p="plone.app.referenceablebehavior"   v="0.3"     options="with_ploneproduct_dexterity" />
+      <version p="plone.app.versioningbehavior"      v="1.1" options="with_ploneproduct_dexterity" />
+      <version p="plone.autoform"                    v="1.1" options="with_ploneproduct_dexterity,with_ploneproduct_cgeo,with_ploneproduct_pz3cform" />
       <version p="plone.behavior"                    v="1.0.1" options="with_ploneproduct_dexterity" />
       <version p="plone.directives.dexterity"        v="1.0.2" options="with_ploneproduct_dexterity" />
       <version p="plone.folder"                      v="1.0.1" options="with_ploneproduct_dexterity" />
-      <version p="plone.formwidget.autocomplete"     v="1.2.2" options="with_ploneproduct_dexterity" />
-      <version p="plone.formwidget.contenttree"      v="1.0.4" options="with_ploneproduct_dexterity" />
+      <version p="plone.formwidget.autocomplete"     v="1.2.3" options="with_ploneproduct_dexterity" />
+      <version p="plone.formwidget.contenttree"      v="1.0.5" options="with_ploneproduct_dexterity" />
       <version p="plone.formwidget.namedfile"        v="1.0.2" options="with_ploneproduct_dexterity" />
       <version p="plone.mocktestcase"                v="1.0b3" options="with_ploneproduct_dexterity" />
       <version p="plone.namedfile"                   v="1.0.6" options="with_ploneproduct_dexterity" />
       <version p="plone.rfc822"                      v="1.0" options="with_ploneproduct_dexterity,with_ploneproduct_cgeo" />
       <version p="plone.scale"                       v="1.2.2" options="with_ploneproduct_dexterity" />
-      <version p="plone.schemaeditor"                v="1.0.1" options="with_ploneproduct_dexterity" />
+      <version p="plone.schemaeditor"                v="1.2.0" options="with_ploneproduct_dexterity" />
       <version p="plone.supermodel"                  v="1.0.3" options="with_ploneproduct_dexterity,with_ploneproduct_cgeo" />
       <version p="plone.synchronize"                 v="1.0.1" options="with_ploneproduct_dexterity" />
       <version p="uuid"                              v="1.30"  options="with_ploneproduct_dexterity,with_ploneproduct_paasync" />
@@ -179,6 +182,7 @@
       <egg name="collective.geo.kml"               options="with_ploneproduct_cgeo"  zcml="configure"/>
       <egg name="collective.geo.settings"          options="with_ploneproduct_cgeo"  zcml="configure"/>
       <egg name="collective.geo.openlayers"        options="with_ploneproduct_cgeo"  zcml="configure"/>
+      <egg name="collective.js.leaflet"            options="with_ploneproduct_cjsleaflet"  zpackage="y" zcml="configure"/>
       <egg name="collective.geo.mapwidget"         options="with_ploneproduct_cgeo"  zcml="configure"/>
       <egg name="collective.geo.mapcontent"        options="with_ploneproduct_cgeo"  zcml="configure"/>
       <egg name="collective.z3cform.colorpicker"   options="with_ploneproduct_cgeo"  />
@@ -188,6 +192,7 @@
       <product name="medialog.subskins"            options="with_ploneproduct_subskins"   order="900" />
     </qi>
     <gs>
+      <product name='collective.js.leaflet'   options="with_ploneproduct_cjsleaflet" order="900"/>
       <product name='plone.formwidget.recaptcha'   options="with_ploneproduct_captcha" order="900"/>
       <product name='plone.formwidget.captcha'   options="with_ploneproduct_captcha" order="900"/>
       <product name="collective.portlet.localcumulus"  options="with_ploneproduct_clcumulus"     order="900" />
@@ -218,6 +223,7 @@
       <source name="quintagroup.portlet.cumulus"     type="svn" url="http://svn.quintagroup.com/products/quintagroup.portlet.cumulus/trunk"          options="with_ploneproduct_qcumulus"/>
       <source name="collective.portlet.localcumulus" type="svn" url="http://svn.plone.org/svn/collective/collective.portlet.localcumulus/trunk/"  options="with_ploneproduct_clcumulus"/>
       <source name="Products.EasyNewsletter"         type="git" url="https://github.com/collective/Products.EasyNewsletter.git"  options="with_ploneproduct_enewsletter"/>
+      <source name="collective.js.leaflet"         type="git" url="https://github.com/collective/collective.js.leaflet.git"  options="with_ploneproduct_cjsleaflet"/>
       <source name="collective.contentrules.mailtolocalrole"      type="svn" url="http://svn.plone.org/svn/collective/collective.contentrules.mailtolocalrole/trunk"  options="with_ploneproduct_cmailtolrole"/>
       <source name="collective.quickupload"          type="svn" url="http://svn.plone.org/svn/collective/collective.quickupload/trunk"  options="with_ploneproduct_qupload"/>
       <source name="contentratings"                  type="svn" url="http://svn.plone.org/svn/collective/contentratings/trunk"                 options="with_ploneproduct_pratings"/>
@@ -280,7 +286,7 @@
   </template>
   <purge>
     <eggs>
-      <egg name="lxml"                           options="with_ploneproduct_smartprintng,with_ploneproduct_cynin"   />
+      <egg name="lxml"                           options="with_ploneproduct_smartprintng"   />
       <egg name="easyshop.carts"                 options="with_ploneproduct_easyshop"                      zcml="configure"/>
       <egg name="easyshop.catalog"               options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
       <egg name="easyshop.checkout"              options="with_ploneproduct_easyshop"         zpackage="y" zcml="configure"/>
@@ -302,7 +308,6 @@
       <egg name="zc.authorizedotnet"             options="with_ploneproduct_easyshop"     />
       <egg name="plone.app.blob"                 options="with_ploneproduct_ploneappblob" />
       <egg name="Products.CacheSetup"            options="with_ploneproduct_cachesetup"       zproduct="y" zcml="configure"/>
-      <egg name="Products.PloneArticle"          options="with_ploneproduct_plonearticle"     zproduct="y" zcml="configure"/>
       <egg name="p4a.plonecalendar"              options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
       <egg name="p4a.ploneevent"                 options="with_ploneproduct_p4a_cal"          zpackage="y" zcml="configure"/>
       <egg name="p4a.common"                     options="with_ploneproduct_p4a_vid"          />
@@ -325,7 +330,6 @@
       <source name="Products.LinguaPlone"        />
       <source name="archetypes.tuning"           />
       <source name="Products.CacheSetup" />
-      <source name="Products.PloneArticle" />
       <source name="p4a.plonecalendar"   />
       <source name="Products.Quills"    />
       <source name="quills.remoteblogging"   />
@@ -339,7 +343,7 @@
     <checkedversions>
       <version p='collective.js.jqueryui'    options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
       <version p='Products.ContentWellPortlets'      options="with_ploneproduct_contentwellportlet"/>
-      <version p='archetypes.schemaextender' options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender,with_ploneproduct_cynin' />
+      <version p='archetypes.schemaextender' options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender' />
       <version p='zope.app.publisher'    options='with_ploneproduct_fivegrok' />
       <version p='zope.app.zcmlfiles'    options='with_ploneproduct_fivegrok' />
       <version p='zope.i18n'             options='with_ploneproduct_fivegrok' />
@@ -347,7 +351,6 @@
       <version p='zope.securitypolicy'   options='with_ploneproduct_fivegrok' />
       <version p='Products.Poi'          options="with_ploneproduct_poi"/>
       <version p='five.localsitemanager' options='with_ploneproduct_fivegrok' />
-      <version p='Products.PloneArticle' options="with_ploneproduct_plonearticle"/>
       <version p='zope.testing'          options='with_ploneproduct_fivegrok' />
       <version p='z3c.relationfield'     options='with_ploneproduct_z3crelationfield,with_ploneproduct_dexterity'/>
       <version p='Products.LinguaPlone'  options="with_ploneproduct_lingua"/>
@@ -391,15 +394,13 @@
       <product name="iw.fss"                       options="with_ploneproduct_fss"              />
       <product name="CMFSquidTool"                 options="with_ploneproduct_cachesetup"       />
       <product name="CacheSetup"                   options="with_ploneproduct_cachesetup"       />
-      <product name="PloneArticle"                 options="with_ploneproduct_plonearticle"     />
       <product name="p4a.plonecalendar"            options="with_ploneproduct_p4a_cal"          />
       <product name="p4a.ploneevent"               options="with_ploneproduct_p4a_cal"          />
       <product name="p4a.plonevideoembed"          options="with_ploneproduct_p4a_vid"          />
-      <product name="TinyMCE"                        options="with_ploneproduct_tinymce,with_ploneproduct_plominotinymce"/>
+      <product name="TinyMCE"                      options="with_ploneproduct_tinymce,with_ploneproduct_plominotinymce"/>
       <product name="p4a.plonevideo"               options="with_ploneproduct_p4a_vid"          />
     </qi>
     <options>
-      <option order="1400" name="with_ploneproduct_plonearticle"     description="Plone Article, see http://plone.org/products/plonearticle/ y/n"/>
       <option order="900"  name="with_ploneproduct_easyshop"    description="Easy Shop, see http://www.geteasyshop.com y/n"/>
       <option order="600"  name="with_ploneproduct_cachesetup"  description="Cachefu caching Support, see http://plone.org/products/cachefu/ y/n" default="y"/>
       <option order="1000" name="with_ploneproduct_tinymce"            description="Tinymce, see http://plone.org/products/tinymce y/n" default="y"/>

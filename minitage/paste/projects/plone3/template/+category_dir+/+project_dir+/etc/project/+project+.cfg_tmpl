@@ -53,6 +53,7 @@ auto-checkout +=
 
 
 [instance]
+webdav-address=\${hosts:webdav}:\${ports:webdav}
 
 zodb-cache-size = 50000
 zeo-client-cache-size = 5MB
@@ -117,7 +118,7 @@ ${asynccomment}<= instance
 ${asynccomment}http-address = \${hosts:instance-worker}:\${ports:instance-worker}
 ${asynccomment}zcml-additional =
 ${asynccomment}    <include package="plone.app.async" file="single_db_worker.zcml"/>
-environment-vars =
+${asynccomment}environment-vars =
 ${asynccomment}    zope_i18n_compile_mo_files = true
 ${asynccomment}    ZC_ASYNC_UUID \${buildout:directory}/var/worker-uuid.txt
 ${asynccomment}zope-conf-additional =

@@ -521,7 +521,7 @@
     <version p='collective.gallery'      v='1.1'   options="with_ploneproduct_cgallery"/>
     <version p='collective.googleanalytics'     v='1.2'   options="with_ploneproduct_cga"/>
     <version p='collective.js.galleriffic' v='1.0'   options="with_ploneproduct_cgallery"/>
-    <version p='collective.plonetruegallery'    v='1.3.3'     options="with_ploneproduct_truegallery"/>
+    <version p='collective.plonetruegallery'    v='2.1a1'     options="with_ploneproduct_truegallery"/>
     <version p='collective.portlettabber'       v='0.2.0'   options='with_ploneproduct_cportlettabber'/>
     <version p='collective.watcherlist'  v='0.3'   options="with_ploneproduct_poi"/>
     <version p='collective.z3cform.norobots'    v='1.2.1'    options="with_ploneproduct_cz3cformnorobots"/>
@@ -540,6 +540,7 @@
     <version p='p4a.fileimage'                  v='1.0.2'   options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.ploneaudio'                 v='1.1rc1'  options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.plonecalendar'              v='2.0a7'   options="with_ploneproduct_p4a_cal"/>
+    <version p='collective.flowplayer'          v='3.0rc4'   options="with_ploneproduct_p4a_cal"/>
     <version p='p4a.ploneevent'                 v='0.7.3'   options="with_ploneproduct_p4a_cal"/>
     <version p='p4a.plonevideoembed'            v='1.2'     options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.plonevideo'                 v='1.3'     options="with_ploneproduct_p4a_vid"/>
@@ -548,7 +549,7 @@
     <version p='p4a.video'                      v='1.3'     options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.z2utils'                    v='1.0.2'   options="with_ploneproduct_p4a_vid"/>
     <version p='plomino.tinymce'                v='0.6.7'   options="with_ploneproduct_plominotinymce"/>
-    <version p='Plomino'                        v='1.13'   options="with_ploneproduct_plominotinymce,with_ploneproduct_plomino"/>
+    <version p='Plomino'                        v='1.13.3'   options="with_ploneproduct_plominotinymce,with_ploneproduct_plomino"/>
     <version p="plone.app.blob"                 v="1.5.1"     options="with_ploneproduct_ploneappblob"/>
     <version p="plone.app.jquerytools"          v="1.4b1"   options="with_ploneproduct_plonejqtools"/>
     <version p='plone.formwidget.autocomplete'  v='1.2.2'     options='with_ploneproduct_autocomplete'/>
@@ -560,13 +561,14 @@
     <version p='Products.Collage'               v='1.3.7'     options="with_ploneproduct_collage"/>
     <version p='Products.ContentWellPortlets'   v='3.0'     options="with_ploneproduct_contentwellportlet"/>
     <version p='Products.FacultyStaffDirectory' v='3.1b1'   options="with_ploneproduct_facultystaff"/>
-    <version p='Products.Maps'                  v='2.1.0'   options="with_ploneproduct_maps"/>
+    <version p='Products.Maps'                  v='2.1.1'   options="with_ploneproduct_maps"/>
     <version p='Products.MasterSelectWidget'    v='0.4.5'   options='with_ploneproduct_masterselect'/>
     <version p='Products.membrane'              v='2.1.2'   options='with_ploneproduct_remember,with_ploneproduct_membrane'/>
+    <version p='Products.Ploneboard'            v='3.2'   options="with_ploneproduct_ploneboardnotify"/>
     <version p='Products.PloneboardNotify'      v='0.4.1'   options="with_ploneproduct_ploneboardnotify"/>
     <version p='Products.PloneFormGen'          v='1.7rc1'   options='with_ploneproduct_ploneformgen'/>
     <version p='Products.remember'              v='1.9.1'   options='with_ploneproduct_remember'/>
-    <version p='Products.SimpleAttachment'      v='4.2'     options="with_ploneproduct_ploneboard"/>
+    <version p='Products.SimpleAttachment'      v='4.3'     options="with_ploneproduct_ploneboard"/>
     <version p='Products.SmartPrintNG'          v='1.2.13'  options='with_ploneproduct_smartprintng' />
     <version p='Products.TinyMCE'               v='1.2.9'   options='with_ploneproduct_tinymce,with_ploneproduct_plominotinymce' />
     <version p='python_dateutil'                v='1.5'     options="with_ploneproduct_p4a_cal"/>
@@ -601,7 +603,7 @@
     <!-- purged on p4+-->
     <version p='collective.js.jqueryui'         v='1.7.2.7' options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
     <version p='Products.Poi'                   v='2.0b1'   options="with_ploneproduct_poi"/>
-    <version p='Products.PloneArticle'          v='4.1.10'  options="with_ploneproduct_plonearticle"/>
+    <version p='Products.PloneArticle'          v='4.2.0'  options="with_ploneproduct_plonearticle"/>
     <version p='z3c.relationfield'              v='0.6.1'   options='with_ploneproduct_z3crelationfield,with_ploneproduct_dexterity'/>
     <version p='Products.LinguaPlone'           v='3.2'     options="with_ploneproduct_lingua"/>
     <version p='Products.PloneLanguageTool'     v='3.0.9'   options="with_ploneproduct_lingua"/>

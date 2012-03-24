@@ -26,6 +26,7 @@ instance1=$address
 instance2=$address
 instance3=$address
 instance4=$address
+webdav=$address
 instance-worker=$address
 instance-newsletter=$address
 instance-buildbot=$address
@@ -63,6 +64,7 @@ buildbot-master-web=${buildbot_master_web_port}
 zope-front=\${ports:instance1}
 #end if
 ${hapcomment}zope-front=\${ports:balancer}
+webdav = $http_port10
 
 
 

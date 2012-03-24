@@ -82,9 +82,10 @@ for name in sources_k:
 
 class Template(plone41.Template):
     packaged_version = '4.2b1'
-    packaged_zope2_version = '2.13.10'
-    packaged_ztk_version = '1.0.4'
-    summary                    = 'Template for creating a plone42 project'
+    packaged_zope2_version = '2.13.13'
+    packaged_ztk_version = '1.0.6'
+    summary         = 'Template for creating a plone42 project'
+    python          = 'python-2.7'
 
     # buildout <-> minitage config vars mapping
     sections_mappings = {
@@ -117,7 +118,7 @@ class Template(plone41.Template):
 
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
-        plone41.Template.pre(self, command, output_dir, vars)
+        return plone41.Template.pre(self, command, output_dir, vars)
 
     def post_default_template_hook(self, command, output_dir, vars, ep):
         pass
