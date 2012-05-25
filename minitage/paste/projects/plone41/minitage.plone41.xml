@@ -44,6 +44,9 @@
       <option order="01007" name="with_ploneproduct_paregistry"     description="plone.app.registry, see http://pypi.python.org/pypi/plone.app.registry y/n" default="y"/>
     </options>
     <versions>
+    <version p='plone.app.ldap'                 v='1.2.8'   options='with_ploneproduct_ldap' />
+      <version p="plone.app.registry"      v="1.0"     name="plone.app.registry on plone4"/>
+      <version p="plone.registry"          v="1.0"     name="plone.app.registry on plone4"/> 
       <version p='plone.z3cform'           v='0.7.1'   name="various pinning for z3 packages" />
       <version p="zope.schema"             v="3.6.1"   name="various pinning for z3 packages"/>
       <version p="plone.uuid"              v="1.0b2"   name="various pinning for z3 packages and p4 environments"/>
@@ -58,9 +61,10 @@
     </versions>
     <checkedversions>
       <version p='archetypes.schemaextender' options='with_ploneproduct_ploneappblob,with_ploneproduct_schemaextender' />
-      <version p="plone.app.registry"      v="1.0"     options="with_ploneproduct_paregistry"/>
-      <version p="five.intid"                        v="0.5.2" options="with_ploneproduct_dexterity" />
-      <version p="plone.registry"          v="1.0"     options="with_ploneproduct_paregistry"/>
+      <version p="plone.app.registry"        options="with_ploneproduct_paregistry"/>
+      <version p="five.intid"                options="with_ploneproduct_dexterity" />
+    <version p='plone.app.ldap'                 v='1.2.4'   options='with_ploneproduct_ldap' />
+      <version p="plone.registry"            options="with_ploneproduct_paregistry"/>
     </checkedversions>
   </purge>
 </root>

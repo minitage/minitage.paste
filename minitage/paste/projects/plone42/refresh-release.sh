@@ -52,9 +52,9 @@ plone41() {
         git clone https://github.com/plone/buildout.coredev.git checkout
     fi
     pushd checkout; git reset --hard; git checkout $ver; git pull; popd
-    cat checkout/sources.cfg                                                        | filter_bad > sources.cfg
-    wget http://dist.plone.org/release/$plone/versions.cfg                     -O - | filter_bad > versions.cfg
-    wget http://download.zope.org/Zope2/index/$zope2/versions.cfg | filter_bad -O - | filter_bad > "zope2.versions.cfg"
+    cat checkout/sources.cfg                                                        | filter_bad > "sources.cfg"
+    wget http://dist.plone.org/release/$plone/versions.cfg                     -O - | filter_bad > "versions.cfg"
+    wget http://download.zope.org/Zope2/index/$zope2/versions.cfg              -O - | filter_bad > "zope2.versions.cfg"
     wget http://download.zope.org/zopetoolkit/index/$ztk/ztk-versions.cfg      -O - | filter_bad > "ztk.versions.cfg"
     wget http://download.zope.org/zopetoolkit/index/$ztk/zopeapp-versions.cfg  -O - | filter_bad > "zopeapp.versions.cfg"
     sed -re "/\[versions\]/ {

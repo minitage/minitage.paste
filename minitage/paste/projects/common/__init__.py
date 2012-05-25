@@ -187,6 +187,7 @@ class Template(common.Template):
             'python2.4': '2.4',
             'python2.5': '2.5',
             'python2.6': '2.6',
+            'python2.7': '2.7',
             'python3.0': '3.0',
             'python3.1': '3.1',
             'python3.2': '3.2',
@@ -346,7 +347,9 @@ def purge_nodes(document=None,
                             if sectionName == 'versions' and ('p' in oattrs):
                                 infos = (oattrs['p'], oattrs['v'])
                                 if infos in mapping:
-                                    mapping.pop(infos)
+                                    mapping.pop(mapping.index(infos))
+                                if infos in mapping[name]:
+                                    mapping[name].pop(mapping[name].index(infos))
                             else:
                                del mapping[name]
                         else:

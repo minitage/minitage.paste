@@ -24,6 +24,8 @@
       <option order="01007" name="with_ploneproduct_clcumulus"     description="LocalCumus, see http://pypi.python.org/pypi/collective.portlet.localcumulus y/n" default="n"/>
       <option order="01007" name="with_ploneproduct_paregistry"     description="plone.app.registry, see http://pypi.python.org/pypi/plone.app.registry y/n" default="y"/>
       <option order="01007" name="with_ploneproduct_cjsleaflet"     description="collective.js.leaflet, see http://pypi.python.org/pypi/collective.js.leaflet y/n" default="n"/>
+      <option order="01007" name="with_ploneproduct_cmfbibliographyat"     description="Products.CMFBibliographyAT, see http://plone.org/products/cmfbibliographyat y/n" default="n"/>
+      <option order="01007" name="with_ploneproduct_eeafn"     description="eea.facetednaviguation, see http://pypi.python.org/pypi/eea.facetednavigation y/n" default="n"/>
     </options>
     <versions>
       <!-- z3c.form -->
@@ -48,6 +50,10 @@
       <version p="plone.registry"          v="1.0"     name="plone.app.registry on plone4"/>
     </versions>
     <checkedversions>
+      <version p='eea.faceted.navigation'         v='4.5'  options="with_ploneproduct_eeafn"/>
+      <version p='eea.faceted.vocabularies'             v='4.2'  options="with_ploneproduct_eeafn"/>
+      <version p='eea.jquery'                    v='4.1'  options="with_ploneproduct_eeafn"/>
+      <version p='eea.relations'                 v='4.5'  options="with_ploneproduct_eeafn"/>
       <version p='collective.js.leaflet'                   v='0.1.3.4'  options="with_ploneproduct_cjsleaflet"/>
       <version p='collective.recaptcha'                    v='1.1.3'    options="with_ploneproduct_captcha"/>
       <version p='collective.captcha'                      v='1.6'      options="with_ploneproduct_captcha"/>
@@ -57,6 +63,12 @@
       <version p='Products.Poi'                            v='2.0.1'    options="with_ploneproduct_poi"/>
       <version p='collective.js.jqueryui'                  v='1.8.16.5' options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
       <version p='Products.ContentWellPortlets'            v='4.1.0'    options="with_ploneproduct_contentwellportlet"/>
+      <version p='Products.CMFBibliographyAT'              v='1.1.2'    options="with_ploneproduct_cmfbibliographyat"/>
+      <version p='Products.ATExtensions' v='1.1a3'         options="with_ploneproduct_cmfbibliographyat"/>
+      <version p='pyisbn' v='0.6.0'         options="with_ploneproduct_cmfbibliographyat"/>
+      <version p='bibliograph.core'              v='1.0.3'    options="with_ploneproduct_cmfbibliographyat"/>
+      <version p='bibliograph.rendering'         v='1.0.2'    options="with_ploneproduct_cmfbibliographyat"/>
+      <version p='bibliograph.parsing'           v='1.0.1'    options="with_ploneproduct_cmfbibliographyat"/>
       <version p="collective.contentrules.mailtolocalrole" v="1.2"      options="with_ploneproduct_cmailtolrole"/>
 
       <version p='collective.portlet.localcumulus'         v='1.8' options="with_ploneproduct_clcumulus"/>
@@ -128,7 +140,7 @@
       <version p="z3c.batching"                      v="1.1.0" options="with_ploneproduct_dexterity,with_ploneproduct_pz3cform" />
       <version p="z3c.blobfile"                      v="0.1.5" options="with_ploneproduct_dexterity" />
       <version p="z3c.ptcompat"                      v="0.5.7"   options="with_ploneproduct_dexterity" />
-      <version p="z3c.template"                      v="0.2.1"   options="with_ploneproduct_dexterity" />
+      <version p="z3c.template"                      v="1.2.1"   options="with_ploneproduct_dexterity" />
       <version p="z3c.objpath"                       v="1.0"   options="with_ploneproduct_dexterity" />
       <version p="zc.relation"                       v="1.0"   options="with_ploneproduct_dexterity" />
       <version p="zc.sourcefactory"                  v="0.7.0" options="with_ploneproduct_dexterity" />
@@ -161,7 +173,7 @@
       <egg name="zc.z3monitor"       options="with_ploneproduct_paasync"/>
       <egg name="plone.app.async"       options="with_ploneproduct_paasync"/>
       <egg name="zope.app.keyreference"  options="with_ploneproduct_paasync"/>
-
+      <egg name='eea.faceted.navigation'              options="with_ploneproduct_eeafn" zcml="configure,meta,overrides"/>
       <!-- collective.geo -->
       <egg name='collective.recaptcha'         zcml="configure"   options="with_ploneproduct_captcha"/>
       <egg name='plone.formwidget.captcha'         zcml="configure"   options="with_ploneproduct_captcha"/>
@@ -175,6 +187,10 @@
       <egg name="collective.quickupload"           options="with_ploneproduct_qupload"   zpackage="y" zcml="configure"/>
       <egg name="quintagroup.portlet.cumulus"      options="with_ploneproduct_qcumulus"  zpackage="y" zcml="configure"       />
       <egg name="plone.contentratings"             options="with_ploneproduct_pratings"   zpackage="y"  zcml="configure"/>
+      <egg name="bibliograph.core"           options="with_ploneproduct_cmfbibliographyat"          zcml="configure"/>
+      <egg name="bibliograph.parsing"         options="with_ploneproduct_cmfbibliographyat"          zcml="configure"/>
+      <egg name="bibliograph.rendering"       options="with_ploneproduct_cmfbibliographyat"          zcml="configure"/>
+      <egg name="Products.CMFBibliographyAT"  options="with_ploneproduct_cmfbibliographyat"          zcml="configure"/>
       <egg name="collective.portlet.relateditems"  options="with_ploneproduct_crelateditems"          zcml="configure"/>
       <egg name="collective.geo.contentlocations"  options="with_ploneproduct_cgeo"  zcml="configure"/>
       <egg name="collective.geo.geographer"        options="with_ploneproduct_cgeo"  zcml="configure"/>
@@ -192,6 +208,8 @@
       <product name="medialog.subskins"            options="with_ploneproduct_subskins"   order="900" />
     </qi>
     <gs>
+      <product name='eea.faceted.navigation'   options="with_ploneproduct_eeafn" order="900"/>
+      <product name='Products.CMFBibliographyAT'   options="with_ploneproduct_cmfbibliographyat" order="900"/>
       <product name='collective.js.leaflet'   options="with_ploneproduct_cjsleaflet" order="900"/>
       <product name='plone.formwidget.recaptcha'   options="with_ploneproduct_captcha" order="900"/>
       <product name='plone.formwidget.captcha'   options="with_ploneproduct_captcha" order="900"/>
@@ -215,6 +233,7 @@
       <product name="collective.geo.mapcontent"        options="with_ploneproduct_cgeo"  order="300"/>
     </gs>
     <sources>
+      <source name='Products.CMFBibliographyAT'  type="svn" url="http://svn.plone.org/svn/collective/Products.CMFBibliographyAT/trunk/" options="with_ploneproduct_cmfbibliographyat" order="900" autocheckout="y"/>
       <source name='plone.formwidget.recaptcha'  type="git" url="https://github.com/plone/plone.formwidget.captcha.git" options="with_ploneproduct_captcha" order="900"/>
       <source name='plone.formwidget.captcha'    type="git" url="https://github.com/plone/plone.formwidget.recaptcha.git" options="with_ploneproduct_captcha" order="900"/>
       <source name='collective.recaptcha'  type="svn" url="http://svn.plone.org/svn/collective/collective.recaptcha/trunk/" options="with_ploneproduct_captcha" order="900"/>
@@ -223,8 +242,13 @@
       <source name="quintagroup.portlet.cumulus"     type="svn" url="http://svn.quintagroup.com/products/quintagroup.portlet.cumulus/trunk"          options="with_ploneproduct_qcumulus"/>
       <source name="collective.portlet.localcumulus" type="svn" url="http://svn.plone.org/svn/collective/collective.portlet.localcumulus/trunk/"  options="with_ploneproduct_clcumulus"/>
       <source name="Products.EasyNewsletter"         type="git" url="https://github.com/collective/Products.EasyNewsletter.git"  options="with_ploneproduct_enewsletter"/>
+
+      <source name="eea.faceted.navigation"   type="git" url="https://github.com/collective/eea.faceted.navigation.git"  options="with_ploneproduct_eeafn"/>
+      <source name="eea.faceted.vocabularies" type="git" url="https://github.com/collective/eea.faceted.vocabularies.git"  options="with_ploneproduct_eeafn"/>
+      <source name="eea.jquery" type="git" url="https://github.com/collective/eea.jquery.git"  options="with_ploneproduct_eeafn"/>
+
       <source name="collective.js.leaflet"         type="git" url="https://github.com/collective/collective.js.leaflet.git"  options="with_ploneproduct_cjsleaflet"/>
-      <source name="collective.contentrules.mailtolocalrole"      type="svn" url="http://svn.plone.org/svn/collective/collective.contentrules.mailtolocalrole/trunk"  options="with_ploneproduct_cmailtolrole"/>
+      <source name="collective.contentrules.mailtolocalrole"  type="svn" url="http://svn.plone.org/svn/collective/collective.contentrules.mailtolocalrole/trunk"  options="with_ploneproduct_cmailtolrole"/>
       <source name="collective.quickupload"          type="svn" url="http://svn.plone.org/svn/collective/collective.quickupload/trunk"  options="with_ploneproduct_qupload"/>
       <source name="contentratings"                  type="svn" url="http://svn.plone.org/svn/collective/contentratings/trunk"                 options="with_ploneproduct_pratings"/>
       <source name="plone.contentratings"            type="svn" url="http://svn.plone.org/svn/collective/plone.contentratings/trunk"                 options="with_ploneproduct_pratings"/>
