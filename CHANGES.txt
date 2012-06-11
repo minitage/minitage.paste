@@ -9,7 +9,7 @@ CHANGES
 
 
 
-1.3.1872 (unreleased)
+1.3.1872 (2012-06-11)
 ---------------------
 
 - Nothing changed yet.
