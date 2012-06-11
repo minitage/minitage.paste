@@ -26,10 +26,18 @@
       <option order="01007" name="with_ploneproduct_cjsleaflet"     description="collective.js.leaflet, see http://pypi.python.org/pypi/collective.js.leaflet y/n" default="n"/>
       <option order="01007" name="with_ploneproduct_cmfbibliographyat"     description="Products.CMFBibliographyAT, see http://plone.org/products/cmfbibliographyat y/n" default="n"/>
       <option order="01007" name="with_ploneproduct_eeafn"     description="eea.facetednaviguation, see http://pypi.python.org/pypi/eea.facetednavigation y/n" default="n"/>
+      <option order="01007" name="with_ploneproduct_addthis"     description="collective.addthis, see http://pypi.python.org/pypi/collective.addthis y/n" default="n"/>
+      <option order="01007" name="with_ploneproduct_oembed"     description="collective.oembed, see http://pypi.python.org/pypi/collective.oembed y/n" default="n"/>
+      <option order="01007" name="with_ploneproduct_seo"        description="collective.seo, see http://pypi.python.org/pypi/collective.seo y/n" default="n"/>
+      <option order="01007" name="with_ploneproduct_galleria"   description="collective.galleria, see http://pypi.python.org/pypi/collective.galleria y/n" default="n"/>
+      <option order="01007" name="with_ploneproduct_masonry"   description="collective.masonry, see http://pypi.python.org/pypi/collective.masonry y/n" default="n"/>
+      <option order="01007" name="with_ploneproduct_configviews"   description="collective.configviews, see http://pypi.python.org/pypi/collective.configviews y/n" default="n"/>
+      <option order="01007" name="with_ploneproduct_jschosen"   description="collective.js.chosen, see http://pypi.python.org/pypi/collective.js.chosen y/n" default="n"/>
     </options>
     <versions>
       <!-- z3c.form -->
       <version p='five.intid'              v='0.5.2'   name="various pinning for z3 packages and p4 environments"/>
+      <version p="plone.app.jquerytools"   v="1.4b1"   name="jqtools for ploneformgen"/>
 
       <version p="plone.directives.form"   v="1.0"     name="various pinning for z3 packages and p4 environments"/>
 
@@ -50,7 +58,17 @@
       <version p="plone.registry"          v="1.0"     name="plone.app.registry on plone4"/>
     </versions>
     <checkedversions>
-      <version p='eea.faceted.navigation'         v='4.5'  options="with_ploneproduct_eeafn"/>
+      <version p='collective.js.chosen'          v='1.1'  options="with_ploneproduct_jschosen"/>
+      <version p='collective.configviews'          v='2.0'  options="with_ploneproduct_configviews"/>
+      <version p='collective.registry'          v='1.0'  options="with_ploneproduct_configviews"/>
+      <version p='collective.seo'          v='1.1'  options="with_ploneproduct_masonry"/>
+      <version p='collective.galleria'          v='1.1'  options="with_ploneproduct_masonry"/>
+      <version p='collective.masonry'          v='1.2'  options="with_ploneproduct_masonry"/>
+      <version p='collective.oembed'           v='1.2.1'  options="with_ploneproduct_oembed"/>
+      <version p='python-oembed'           v='0.2.1'  options="with_ploneproduct_oembed"/>
+      <version p='collective.portlet.oembed'   v='1.0'  options="with_ploneproduct_oembed"/>
+      <version p='collective.addthis'         v='1.3.1'  options="with_ploneproduct_addthis"/>
+      <version p='eea.eea.facetednavigation'         v='4.5'  options="with_ploneproduct_eeafn"/>
       <version p='eea.faceted.vocabularies'             v='4.2'  options="with_ploneproduct_eeafn"/>
       <version p='eea.jquery'                    v='4.1'  options="with_ploneproduct_eeafn"/>
       <version p='eea.relations'                 v='4.5'  options="with_ploneproduct_eeafn"/>
@@ -61,7 +79,7 @@
       <version p='plone.formwidget.captcha'                v='1.0.1'    options="with_ploneproduct_captcha"/>
       <version p='ordereddict'                             v='1.1'      options="with_tool_i18ndude"/>
       <version p='Products.Poi'                            v='2.0.1'    options="with_ploneproduct_poi"/>
-      <version p='collective.js.jqueryui'                  v='1.8.16.5' options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
+      <version p='collective.js.jqueryui'                  v='1.8.16.6' options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
       <version p='Products.ContentWellPortlets'            v='4.1.0'    options="with_ploneproduct_contentwellportlet"/>
       <version p='Products.CMFBibliographyAT'              v='1.1.2'    options="with_ploneproduct_cmfbibliographyat"/>
       <version p='Products.ATExtensions' v='1.1a3'         options="with_ploneproduct_cmfbibliographyat"/>
@@ -80,8 +98,8 @@
       <version p='plone.contentratings'                    v='1.0' options="with_ploneproduct_pratings"/>
       <version p='Products.DataGridField'                  v='1.6.3' options="with_ploneproduct_poi"/>
       <version p="Products.EasyNewsletter"                 v="2.6.1"  options="with_ploneproduct_enewsletter"/>
-      <version p='Products.LinguaPlone' v='4.1.1' options="with_ploneproduct_lingua"/>
-      <version p='Products.PloneLanguageTool' v='3.2.3' options="with_ploneproduct_lingua"/>
+      <version p='Products.LinguaPlone' v='4.1.2' options="with_ploneproduct_lingua"/>
+      <version p='Products.PloneLanguageTool' v='3.2.4' options="with_ploneproduct_lingua"/>
       <version p="Products.RedirectionTool"                v="1.3.1"   options="with_ploneproduct_rtool"/>
       <version p='quintagroup.captcha.core'                v='0.2.4' options="with_ploneproduct_qcaptcha"/>
       <version p='quintagroup.formlib.captcha'               v='1.3'   options="with_ploneproduct_qcaptcha"/>
@@ -170,13 +188,15 @@
       <egg name="z3c.blobfile"         options="with_ploneproduct_dexterity"/>
       <egg name="plone.app.dexterity"  options="with_ploneproduct_dexterity" zcml="meta,configure"/>
       <egg name="medialog.subskins"  options="with_ploneproduct_subskins" zcml="configure" zpackage="y"/>
+      <egg name="collective.js.chosen"  options="with_ploneproduct_jschosen" zcml="configure" zpackage="y"/>
       <egg name="zc.z3monitor"       options="with_ploneproduct_paasync"/>
       <egg name="plone.app.async"       options="with_ploneproduct_paasync"/>
       <egg name="zope.app.keyreference"  options="with_ploneproduct_paasync"/>
-      <egg name='eea.faceted.navigation'              options="with_ploneproduct_eeafn" zcml="configure,meta,overrides"/>
+      <egg name='eea.eea.facetednavigation'              options="with_ploneproduct_eeafn" zcml="configure,meta,overrides"/>
       <!-- collective.geo -->
+      <egg name='collective.configviews'        zcml="configure"   options="with_ploneproduct_configviews"/>
       <egg name='collective.recaptcha'         zcml="configure"   options="with_ploneproduct_captcha"/>
-      <egg name='plone.formwidget.captcha'         zcml="configure"   options="with_ploneproduct_captcha"/>
+      <egg name='plone.formwidget.captcha'      zcml="configure"   options="with_ploneproduct_captcha"/>
       <egg name='plone.formwidget.recaptcha'         zcml="configure"   options="with_ploneproduct_captcha"/>
       <egg name='collective.captcha'           zcml="configure"   options="with_ploneproduct_captcha"/>
       <egg name="Products.RedirectionTool"       options="with_ploneproduct_rtool" zpackage="y" zcml="configure"       />
@@ -190,6 +210,12 @@
       <egg name="bibliograph.core"           options="with_ploneproduct_cmfbibliographyat"          zcml="configure"/>
       <egg name="bibliograph.parsing"         options="with_ploneproduct_cmfbibliographyat"          zcml="configure"/>
       <egg name="bibliograph.rendering"       options="with_ploneproduct_cmfbibliographyat"          zcml="configure"/>
+      <egg name="collective.addthis"    options="with_ploneproduct_addthis"       zcml="configure"/>
+      <egg name="collective.galleria"   options="with_ploneproduct_galleria"      zcml="configure"/>
+      <egg name="collective.seo"        options="with_ploneproduct_seo"           zcml="configure"/>
+      <egg name="collective.oembed"     options="with_ploneproduct_addthis"       zcml="configure"/>
+      <egg name="collective.portlet.oembed"  options="with_ploneproduct_oembed"   zcml="configure"/>
+      <egg name="collective.masonry"    options="with_ploneproduct_masonry"       zcml="configure"/>
       <egg name="Products.CMFBibliographyAT"  options="with_ploneproduct_cmfbibliographyat"          zcml="configure"/>
       <egg name="collective.portlet.relateditems"  options="with_ploneproduct_crelateditems"          zcml="configure"/>
       <egg name="collective.geo.contentlocations"  options="with_ploneproduct_cgeo"  zcml="configure"/>
@@ -208,7 +234,15 @@
       <product name="medialog.subskins"            options="with_ploneproduct_subskins"   order="900" />
     </qi>
     <gs>
-      <product name='eea.faceted.navigation'   options="with_ploneproduct_eeafn" order="900"/>
+      <product name='collective.js.chosen'   options="with_ploneproduct_jschosen" order="900"/>
+      <product name='collective.configviews'   options="with_ploneproduct_configviews" order="900"/>
+      <product name='collective.galleria'   options="with_ploneproduct_galleria" order="900"/>
+      <product name='collective.seo'   options="with_ploneproduct_seo" order="900"/>
+      <product name='collective.oembed'   options="with_ploneproduct_oembed" order="900"/>
+      <product name='collective.portlet.oembed'   options="with_ploneproduct_oembed" order="900"/>
+      <product name='collective.masonry'   options="with_ploneproduct_masonry" order="900"/>
+      <product name='collective.addthis'   options="with_ploneproduct_addthis" order="900"/>
+      <product name='eea.facetednavigation'   options="with_ploneproduct_eeafn" order="900"/>
       <product name='Products.CMFBibliographyAT'   options="with_ploneproduct_cmfbibliographyat" order="900"/>
       <product name='collective.js.leaflet'   options="with_ploneproduct_cjsleaflet" order="900"/>
       <product name='plone.formwidget.recaptcha'   options="with_ploneproduct_captcha" order="900"/>
@@ -243,7 +277,7 @@
       <source name="collective.portlet.localcumulus" type="svn" url="http://svn.plone.org/svn/collective/collective.portlet.localcumulus/trunk/"  options="with_ploneproduct_clcumulus"/>
       <source name="Products.EasyNewsletter"         type="git" url="https://github.com/collective/Products.EasyNewsletter.git"  options="with_ploneproduct_enewsletter"/>
 
-      <source name="eea.faceted.navigation"   type="git" url="https://github.com/collective/eea.faceted.navigation.git"  options="with_ploneproduct_eeafn"/>
+      <source name="eea.eea.facetednavigation"   type="git" url="https://github.com/collective/eea.eea.facetednavigation.git"  options="with_ploneproduct_eeafn"/>
       <source name="eea.faceted.vocabularies" type="git" url="https://github.com/collective/eea.faceted.vocabularies.git"  options="with_ploneproduct_eeafn"/>
       <source name="eea.jquery" type="git" url="https://github.com/collective/eea.jquery.git"  options="with_ploneproduct_eeafn"/>
 
@@ -254,7 +288,18 @@
       <source name="plone.contentratings"            type="svn" url="http://svn.plone.org/svn/collective/plone.contentratings/trunk"                 options="with_ploneproduct_pratings"/>
       <source name="collective.portlet.relateditems" type="svn" url="http://svn.plone.org/svn/collective/collective.portlet.relateditems/trunk"      options="with_ploneproduct_crelateditems"/>
       <source name="collective.js.jqueryui"          type="git" url="https://github.com/collective/collective.js.jqueryui.git"              options="with_ploneproduct_cjqui"/>
+      <source name="collective.js.chosen"          type="git" url="https://github.com/collective/collective.js.chosen.git"              options="with_ploneproduct_jschosen"/>
       <source name="collective.geo.geoggrapher"      type="svn" url="http://svn.plone.org/svn/collective/collective.geo.geographer/trunk" options="with_ploneproduct_cgeo"  autocheckout="y"/>
+
+      <source name="collective.masonry"      type="git"        url="https://github.com/collective/collective.masonry" options="with_ploneproduct_masonry"  />
+      <source name="collective.oembed"      type="git"         url="https://github.com/collective/collective.oembed" options="with_ploneproduct_oembed"  />
+      <source name="collective.portlet.oembed"      type="git" url="https://github.com/collective/collective.portlet.oembed" options="with_ploneproduct_oembed"  />
+      <source name="collective.addthis"      type="git"        url="https://github.com/collective/collective.addthis" options="with_ploneproduct_addthis"  />
+      <source name="collective.galleria"      type="git"        url="https://github.com/collective/collective.galleria" options="with_ploneproduct_galleria"  />
+      <source name="collective.seo"      type="git"        url="https://github.com/collective/collective.seo" options="with_ploneproduct_seo"  />
+      <source name="collective.registry"      type="git"  url="https://github.com/collective/collective.configviews" options="with_ploneproduct_configviews"  />
+      <source name="collective.configviews"   type="git"  url="https://github.com/collective/collective.registry" options="with_ploneproduct_configviews"  />
+
       <source name="collective.z3cform.colorpicker"  type="svn" url="http://svn.plone.org/svn/collective/collective.z3cform.colorpicker/trunk" options="with_ploneproduct_cgeo,with_ploneproduct_colorpickerform" autocheckout="y"/>
       <source name="collective.geo.contentlocations" type="svn" url="http://svn.plone.org/svn/collective/collective.geo.contentlocations/trunk" options="with_ploneproduct_cgeo"/>
       <source name="collective.geo.geopoint"         type="svn" url="http://svn.plone.org/svn/collective/collective.geo.geopoint/trunk" options="with_ploneproduct_cgeo"/>

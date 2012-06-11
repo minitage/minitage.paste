@@ -44,6 +44,21 @@ from minitage.core.common import remove_path
 from paste.script import templates
 
 re_flags = re.M|re.U|re.I|re.S
+def which(program, envf=None):
+    pret = ''
+    execf = """which %s""" % program
+    if envf:
+        execf = ". %s;%s" % (envf, execf)
+    p = subprocess.Popen(execf,
+                         shell=True, executable="/bin/bash",stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    ret = p.wait()
+    if ret == 0:
+        content = p.stdout.read()
+        if content.strip():
+            pret = content.split()[0].strip()
+    if not pret:
+        raise Exception('%s notfound'%program)
+    return pret
 
 class Template(common.Template):
 
@@ -60,7 +75,28 @@ class Template(common.Template):
             vars['sys'], 'var', 'data', 'mysql', vars['db_name']
         )
         if not 'my_version' in vars:
-            vars['my_version'] = '5.1'
+            vars['my_version'] = '.'.join([a for a in vars['mysql_ver']])
+        envf = '%s/share/minitage/minitage.env' % (vars['sys'])
+        # try to also guess from mysqld
+        p = subprocess.Popen(""". %s/share/minitage/minitage.env;cd %s;mysql --version""" % (vars['sys'], db_path),
+                         shell=True, executable="/bin/bash",stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        ret = p.wait()
+        if ret == 0:
+            content = p.stdout.read()
+            version =  content.split('Distrib')[1].split()[0][:3]
+            vars['mysql_ver'] =  version.replace('.', '')
+            vars['my_version'] =  version
+        vars['bin_install_db'] = 'mysql_install_db'
+        if vars['inside_minitage']:
+            vars['bin_mysql'] =  which('mysql', envf)
+            vars['bin_mysqld'] =  which('mysqld', envf)
+            vars['mysql_scripts'] = os.path.join(os.path.dirname(os.path.dirname(vars['bin_mysql'])), 'scripts')
+            vars['bin_install_db'] =  os.path.join(vars['mysql_scripts'], 'mysql_install_db')
+        else:
+            vars['bin_mysql'] =  which('mysql', envf)
+            vars['bin_mysqld'] =  which('mysqld', envf)
+            vars['bin_install_db'] = which('mysql_install_db')
+        vars['mysql_base_dir'] = os.path.dirname(os.path.dirname(vars['bin_mysql']))
         if not os.path.isdir(db_path):
             self.first_run = True
 
@@ -78,14 +114,20 @@ class Template(common.Template):
             os.system("""
                       bash -c \". %s/share/minitage/minitage.env;\
                       cd %s;\
-                      mysql_install_db --defaults-file=my.cnf --verbose --datadir=%s\
-                      \"""" % (vars['sys'], db_path, db_path))
+                      %s --defaults-file=my.cnf --verbose --datadir=%s --basedir=%s\
+                      \" """ % (vars['sys'],
+                                db_path,
+                                vars['bin_install_db'],
+                                db_path,
+                                vars['mysql_base_dir'],
+                               ))
             os.system("""
                       bash -c ". %s/share/minitage/minitage.env;\
                       cd %s;\
                       mysqld_safe --defaults-file=my.cnf&\
-                      \"""" % (vars['sys'], db_path))
-            time.sleep(2)
+                      \" """ % (vars['sys'], db_path))
+            print "Waiting for db to up, 10 sec"
+            time.sleep(10)
             db_infos = {'sys':vars['sys'],
                         'db': db_path,
                         'db_name': vars['db_name'],
@@ -104,16 +146,16 @@ class Template(common.Template):
 """
 use %(db_name)s;
 
-GRANT ALL PRIVILEGES 
-ON %(db_name)s 
-to '%(db_user)s'@'%(pourcent)s' 
-IDENTIFIED BY '%(db_password)s' 
+GRANT ALL PRIVILEGES
+ON %(db_name)s
+to '%(db_user)s'@'%(pourcent)s'
+IDENTIFIED BY '%(db_password)s'
 WITH GRANT OPTION;
 
-GRANT ALL PRIVILEGES 
-ON %(db_name)s 
-to '%(db_user)s'@'localhost' 
-IDENTIFIED BY '%(db_password)s' 
+GRANT ALL PRIVILEGES
+ON %(db_name)s
+to '%(db_user)s'@'localhost'
+IDENTIFIED BY '%(db_password)s'
 WITH GRANT OPTION;
 """ % db_infos)
             db_infos['fp'] = fp
@@ -215,7 +257,7 @@ gid = pwd.getpwnam(running_user)[3]
 #group = grp.getgrgid(gid)[0]
 Template.vars = common.Template.vars + \
                 [
-                templates.var('mysql_ver', 'Mysql major version (50|51)', default = '51'),
+                templates.var('mysql_ver', 'Mysql major version (50|51)', default = '55'),
                 templates.var('db_name', 'Database name', default = 'minitagedb'),
                 templates.var('db_user', 'Default user', default = running_user),
                 templates.var('db_host', 'Host to listen on', default = 'localhost'),

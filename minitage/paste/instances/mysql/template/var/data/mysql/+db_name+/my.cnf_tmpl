@@ -32,10 +32,14 @@ socket = $sys/var/run/mysql/${db_name}.mysqld.sock
 pid-file= $sys/var/run/mysql/${db_name}.mysqld.pid
 log-error=  $sys/var/log/mysql/$db_name/mysqld.log
 
+#if int($mysql_ver) >= 55:
+skip-external-locking
+#else
 skip-locking
+#end if
 key_buffer_size = 256M
 max_allowed_packet = 1M
-#if $mysql_ver == '50':
+#if int($mysql_ver) == 50:
 table_cache = 256
 #else:
 table_open_cache = 256
@@ -62,7 +66,7 @@ thread_concurrency = 8
 log-bin=mysql-bin
 
 # binary logging format - mixed recommended
-#if $mysql_ver != '50':
+#if int($mysql_ver) >= 50:
 binlog_format=mixed
 #end if
 
