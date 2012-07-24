@@ -16,7 +16,6 @@
   <template>
   <options>
   <option order="0000" name="apache_vhost_number"                description="Apache vhost number" default="100"/>
-  <option order="0000" name="deliverance_project"                            description="default deliverance ruleset name" default="deliverance"/>
   <option order="0000" name="reverseproxy_aliases"               description="domain name aliases (comma separated) which be used in the reverse proxy" default="bis.localhost.com.bis,ter.localhost.com"/>
   <option order="0000" name="reverseproxy_host"                  description="domain name which be used in the reverse proxy" default="localhost.com"/>
   <option order="0000" name="reverseproxy_port"                  description="port of the reverse proxy" default="80"/>
@@ -33,12 +32,12 @@
   <option order="0000" name="with_database_oracle"               description="Oracle python bindings y/n"/>
   <option order="0000" name="with_database_postgresql"           description="Postgresql python bindings y/n" default="y"/>
   <option order="0000" name="with_database_sa"                   description="SQLAlchemy, see http://www.sqlalchemy.org y/n"/>
-  <option order="0000" name="with_deliverance_support"           description="deliverance, see http://pypi.python.org/pypi/Deliverance y/n" default="n"/>
   <option order="0000" name="with_tool_i18ndude"                 description="i18n http://pypi.python.org/pypi/i18ndude y/n" default="y"/>
   <option order="0000" name="with_tool_ipython"                  description="ipython, see http://ipython.scipy.org/ y/n" default="y"/>
   <option order="0000" name="with_tool_bpython"                  description="bpython, see http://bpython-interpreter.org/ y/n" default="y"/>
   <option order="0000" name="with_tool_nose"            description="nose, see http://pypi.python.org/pypi/nose y/n" default="y"/>
   <option order="0000" name="with_tool_coverage"        description="coverage, see http://pypi.python.org/pypi/coverage y/n" default="y"/>
+  <option order="0000" name="with_egg_djpaste"        description="dj.paste, see http://pypi.python.org/pypi/dj.paste y/n" default="y"/>
   <option order="0000" name="with_tool_reportlab"       description="Reportlab, see http://www.reportlab.com/ y/n" default="n"/>
   <option order="0000" name="with_wsgi_cas"             description="WSGI CAS (SSO) capabilities, see http://pypi.python.org/pypi/repoze.who.plugins.cas y/n"/>
   <option order="0000" name="with_gis_mapnik"           description="mapnik bindings, see http://mapnik.org/ y/n"/>
@@ -47,6 +46,7 @@
   <option order="0000" name="with_binding_memcache"     description="memcache bindings, see http://memcached.org/y/n"/>
   <option order="0000" name="with_gis_pgrouting"        description="pgrouting support, see http://pgrouting.postlbs.org y/n"/>
   <option order="0000" name="with_gis_mapscript"        description="mapscript/mapserver support, see http://mapserver.org/ y/n"/>
+  <option order="0000" name="with_binding_pyqt"                  description="Python Qt y/n" default="n"/>
   <!-- INFRA Products -->
   <!-- UI Products -->
   <!--Content-types related products"-->
@@ -71,6 +71,19 @@
   <option order="00000" name="with_egg_greenlet"    description="greenlet support  y/n"/>
   <option order="00000" name="with_egg_pisa"    description="pisa support  y/n"/>
   <option order="00000" name="with_egg_html5lib"    description="html5lib support  y/n"/>
+  <option order="10030" name="with_egg_pylint"      description="pylint y/n"  default="n"                        />
+  <option order="10030" name="with_egg_sphinx"      description="sphinx y/n"  default="n"                        />
+  <option order="10030" name="with_gis_tilecache"   description="TileCache y/n"  default="n"                     />
+  <option order="00000" name="with_gis_geopy"       description="geopy support, see  y/n"                        />
+  <option order="00000" name="with_egg_pyopenssl"   description="pyOpenSSL support, see  y/n"                    />
+  <option order="00000" name="with_egg_greenlet"    description="greenlet support  y/n"                          />
+  <option order="00000" name="with_egg_pisa"    description="pisa support  y/n"                                  />
+  <option order="00000" name="with_egg_html5lib"    description="html5lib support  y/n"                          />
+  <option order="00000" name="with_egg_djangostdimage"    description="django-stdimage support  y/n"    />
+  <option order="00000" name="with_egg_transmeta"    description="django-transmeta support  y/n"        />
+  <option order="00000" name="with_egg_djangoregistration"    description="django-registration support  y/n"        />
+  <option order="00000" name="with_egg_djangosocialauth"    description="django-social-auth support  y/n"        />
+
   <!--END makina -->
 
 </options>
@@ -99,8 +112,13 @@
       comma sepaated values != 'y' -> install the list of products
   -->
   <eggs>
+
+    <egg name="django-social-auth"            options="with_egg_djangosocialauth"        />
+    <egg name="django-registration"           options="with_egg_djangoregistration"        />
+    <egg name="django-transmeta"              options="with_egg_transmeta"/>
+    <egg name="django-stdimage"               options="with_egg_djangostdimage"        />
     <egg name="greenlet"                      options="with_egg_greenlet"        />
-    <egg name="reportlab"                      options="with_tool_reportlab"        />
+    <egg name="reportlab"                     options="with_tool_reportlab"        />
     <egg name="nose"                          options="with_tool_nose"   scripts="nosetests,nose"     />
     <egg name="TileCache"                     options="with_gis_tilecache"  scripts="tilecache.cgi,tilecache_clean.py,tilecache.fcgi,tilecache_http_server.py,tilecache_install_config.py,tilecache_seed.py,tilecache_seed.py" />
     <egg name="pyOpenSSL"                     options="with_egg_pyopenssl"        />
@@ -156,10 +174,22 @@
       name: description to add as comment into the resulting buildout
     -->
   <versions>
-    <version p="zc.buildout"             v="1.5.1"  name="zc.buildout core stuff"/>
-    <version p="distribute"              v="0.6.14" name="zc.buildout core stuff"/>
+    <version p="zc.buildout"             v="1.5.2"  name="zc.buildout core stuff"/>
+    <version p="distribute"              v="0.6.27" name="zc.buildout core stuff"/>
     <version p="zc.recipe.egg"           v="1.3.2"  name="zc.buildout core stuff"/>
     <version p="ipython"                 v="0.10"   name="IPython py2.4 compatible version"/>
+
+    <version p="SQLAlchemy"                   v="0.7.3" name="pyramid base packages"/>
+    <version p="cryptacular" v="1.2.1" name="pyramid base packages"/>
+    <version p="repoze.tm2" v="1.0b2" name="pyramid base packages"/>
+    <version p="Pygments" v="1.4"      name="pyramid base packages"/>
+    <version p="transaction" v="1.1.1" name="pyramid base packages"/>
+
+    <version p="egenix-mx-base"               v="3.2.4" name="pyramid base packages"/>
+    <version p="ipython"                      v="0.10"  name="pyramid base packages"/>
+    <version p="mr.developer"                 v="1.19"  name="pyramid base packages"/>
+    <version p="z3c.checkversions"            v="0.4.1" name="pyramid base packages"/>
+    <version p="zc.recipe.testrunner"         v="1.4.0" name="pyramid base packages"/> 
   </versions>
   <!--
     Enter here know good set versions stuff
@@ -172,20 +202,22 @@
       options: comma separated list of options to enable the pinning
     -->
   <checkedversions>
-    <version p="geopy"  v="0.94"     options="with_gis_geopy"  />
+    <version p="geopy"  v="0.94.2"     options="with_gis_geopy"  />
     <version p="html5lib"  v="0.90"     options="with_egg_html5lib"  />
-    <version p="jinja2"  v="2.5.5"     options="with_egg_sphinx"  />
     <version p="docutils"  v="0.7"     options="with_egg_sphinx"  />
-    <version p="pylint"  v="0.21.3"     options="with_egg_pylint"  />
+    <version p="pylint"  v="0.25.1"     options="with_egg_pylint"  />
     <version p="Sphinx"  v="1.0.4"     options="with_egg_sphinx"  />
     <version p="greenlet"  v="0.3.1"     options="with_egg_greenlet"  />
-    <version p="pyOpenSSL"  v="0.11"     options="with_egg_pisa"  />
-    <version p="reportab"  v="3.0.33"     options="with_egg_pisa"  />
-    <version p="reportab"  v="2.5"     options="with_tool_reportlab"  />
+    <version p="pyOpenSSL"  v="0.13"     options="with_egg_pisa"  />
+    <version p="reportlab"   v="2.5"     options="with_tool_reportlab"  />
     <version p="pycairo"   v="1.8.8"   options="with_binding_cairo"  />
     <version p="mapscript" v="5.6.3.0" options="with_gis_mapscript" />
-    <version p="GDal"      v="1.7.0"   options="with_gis_gdal"/>
-    <version p="GDAL"      v="1.7.0"   options="with_gis_gdal"/>
+    <version p="GDal"      v="1.9.1"   options="with_gis_gdal"/>
+    <version p="GDAL"      v="1.9.1"   options="with_gis_gdal"/>
+    <version p="django-stdimage"      v="0.2.2"   options="with_egg_djangostdimage"/>
+    <version p="django-transmeta"      v="0.6.8"   options="with_egg_transmeta"/>
+    <version p="django-registration"      v="0.8"   options="with_egg_djangoregistration"/>
+    <version p="django-social-auth"      v="0.7.0"   options="with_egg_djangosocialauth"/>
   </checkedversions>
   <!--
     Old style plone products to checkout using the [productsdistros] part
@@ -197,7 +229,11 @@
   -->
   <sources>
     <!-- makina -->
-    <source name="dj.paste" type="svn"  url="http://git.minitage.org/git/others/dj.paste" options="" />
+    <source name="social_auth" type="git"  url="https://github.com/omab/django-social-auth.git" options="with_egg_djangosocialauth"/>
+    <source name="registration" type="hg"  url="https://bitbucket.org/ubernostrum/django-registration" options="with_egg_djangoregistration"/>
+    <source name="transmeta" type="svn"  url="http://django-transmeta.googlecode.com/svn/trunk" options="with_egg_transmeta"/>
+    <source name="stdimage" type="git"  url="https://github.com/humanfromearth/django-stdimage.git" options="with_egg_djangostdimage"/>
+    <source name="dj.paste" type="git"  url="https://github.com/kiorky/dj.paste.git" options="with_egg_djpaste" autocheckout="y"/>
     <source name="ogcserver" type="hg" url="http://bitbucket.org/kiorky/ogcserver" options="with_gis_mapnik" autocheckout="y"/>
     <source name="mapnik2" type="hg" url="http://bitbucket.org/kiorky/mapnik-egg" options="with_gis_mapnik" autocheckout="y"/>
     <source name="django-piston" type="git" url="https://github.com/djcoin/django-piston.git" options="with_django_bv_server,with_django_piston" autocheckout="y"/>

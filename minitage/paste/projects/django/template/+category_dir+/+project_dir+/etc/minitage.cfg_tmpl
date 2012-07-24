@@ -9,6 +9,8 @@ location=\${buildout:directory}/../..
 site-packages=$xml2
 [libxslt]
 site-packages=$xslt
+[pyqt]
+site-packages=$pyqt 
 
 
 [python${pyver}]
@@ -27,6 +29,9 @@ eggs-directory=\${minitage:location}/eggs/cache
 extra-paths+=
     \${libxml2:site-packages}
     \${libxslt:site-packages}
+#if $with_binding_pyqt
+    \${pyqt:site-packages}
+#end if  
 
 #if $with_binding_mapscript or $with_gis_mapnik
 minitage-globalenv=true

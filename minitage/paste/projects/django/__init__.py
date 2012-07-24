@@ -25,8 +25,6 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-
-
 __docformat__ = 'restructuredtext en'
 
 import getpass
@@ -64,6 +62,7 @@ checked_versions_mappings = xmlvars.get('checked_versions_mappings',{})
 plone_np_mappings = xmlvars.get('plone_np_mappings', {})
 plone_vsp_mappings = xmlvars.get('plone_vsp_mappings', {})
 plone_sources = xmlvars.get('plone_sources', {})
+framework_apps = xmlvars.get('framework_apps', {})
 dev_desc = 'Install %s in development mode.'
 dev_vars = []
 sources_k = plone_sources.keys()
@@ -78,7 +77,7 @@ for name in sources_k:
     )
 
 base_django_eggs = ['Django',
-                    'PasteDeploy', 'Paste',
+                    'PasteDeploy', 'Paste', 'cryptacular',
                     'dj.paste', 'WebOb', 'WebError', 'repoze.vhm',
                     'CherryPy', 'gunicorn',
                    ]
@@ -87,7 +86,7 @@ class Template(common.Template):
     summary = 'Template for creating a '\
             'basic django project inside minitage'
     _template_dir = pkg_resources.resource_filename('minitage.paste', 'projects/django/template')
-    python                     = 'python-2.6'
+    python                     = 'python-2.7'
     init_messages = ()
 
     # buildout <-> minitage config vars mapping
@@ -96,6 +95,7 @@ class Template(common.Template):
         'django_vsp': plone_vsp_mappings,
         'additional_eggs': eggs_mappings,
         'plone_scripts': scripts_mappings,
+        'framework_apps': framework_apps,
     }
     addons_vars               = common.get_ordered_discovered_options(addons_vars.values())
     eggs_mappings             = eggs_mappings
@@ -106,6 +106,10 @@ class Template(common.Template):
     plone_vsp_mappings        = plone_vsp_mappings
     plone_sources             = plone_sources
 
+    def post(self, command, output_dir, vars):
+        common.Template.post(self, command, output_dir, vars) 
+        os.rename(os.path.join(vars['path'], 'gitignore'),
+                  os.path.join(vars['path'], '.gitignore')) 
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
         vars['category'] = 'django'
@@ -149,7 +153,8 @@ class Template(common.Template):
             if vars["with_binding_lxml"]:
                 deps.extend(['libxml2-\d.\d*', 'libxslt-1.\d*'])
             if vars["with_gis_gdal"]:
-                deps.extend(['gdal-\d.\d*', 'pixman-0\d*',])
+                vars['opt_deps'] += ' gdal-1'
+                deps.extend(['pixman-0\d*',])
             if vars["with_gis_pgrouting"]:
                 deps.extend(['pgrouting-1.\d*',])
             if vars["with_gis_mapnik"]:
@@ -157,9 +162,10 @@ class Template(common.Template):
                 deps.extend(['mapnik-\d.\d*',])
                 deps.extend(['boost-python-.*',])
             if vars["with_binding_cairo"]:
-                deps.extend(['cairo-1.\d*',])
+                vars['opt_deps'] += ' cairo-1.12 cairomm-1'
             if vars["with_binding_pil"]:
-                deps.extend(['libpng-1.\d*', 'pil-\d.\d.\d*', ])
+                vars['opt_deps'] += ' libpng-1'
+                deps.extend(['pil-\d.\d.\d*', ])
             if vars['with_gis_mapscript']:
                 deps.extend(['mapserver-\d\.\d*',])
             if vars["with_binding_memcache"]:
@@ -223,6 +229,32 @@ class Template(common.Template):
                      if not a in vars['additional_eggs']
                     ]
                 )
+        # pyqt
+        vars['pyqt'] = ''
+        if vars['with_binding_pyqt'] and vars['inside_minitage']:
+            vars['opt_deps'] += ' %s' % search_latest('swiglib-\d\.\d+', vars['minilays'])
+            for i in ('pyqt-\d\.\d+','sip-\d\.\d+'):
+                vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays'])
+                vars['pyqt'] += '\n   %s' %  (
+                    '${buildout:directory}/../../'
+                    'eggs/%s/parts'
+                    '/site-packages-%s/site-packages-%s' % (
+                        search_latest(i, vars['minilays']),
+                        vars['pyver'],
+                        vars['pyver'],
+                    )
+                )
+ 
+        # openldap
+        if vars['with_binding_ldap'] and vars['inside_minitage']:
+            cs = search_latest('cyrus-sasl-\d\.\d*', vars['minilays'])
+            vars['opt_deps'] += ' %s %s' % (
+                search_latest('openldap-\d\.\d*', vars['minilays']),
+                cs
+            )
+            vars['includesdirs'] = '\n    %s'%  os.path.join(
+                vars['mt'], 'dependencies', cs, 'parts', 'part', 'include', 'sasl'
+            )
 
         # do we need some pinned version
         vars['plone_versions'] = []
@@ -241,6 +273,7 @@ class Template(common.Template):
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir)
 
+        vars['framework_apps'] = []
         for section in self.sections_mappings:
             for var in [k for k in self.sections_mappings[section] if vars.get(k, '')]:
                 vars[section].append('#%s'%var)
@@ -252,6 +285,12 @@ class Template(common.Template):
         # be sure our special python is in priority
         vars['opt_deps'] = re.sub('\s*%s\s*' % self.python, ' ', vars['opt_deps'])
         vars['opt_deps'] += " %s" % self.python
+        vars['opt_deps'] += " %s" % self.python
+        opt_deps, popt_deps = [], vars['opt_deps'].split()
+        for i in popt_deps:
+            if not i in opt_deps:
+                opt_deps.append(i)
+        vars['opt_deps'] = ' '.join(opt_deps)
 
         # http serverS ports
         vars['http_port1'] = int(vars['http_port']) + 1
@@ -266,6 +305,7 @@ class Template(common.Template):
         if not vars['reverseproxy_aliases']:
             vars['reverseproxy_aliases'] = ''
         vars['sreverseproxy_aliases'] = vars['reverseproxy_aliases'].split(',')
+        vars['ndot'] = '.'
 
     def read_vars(self, command=None):
         vars = common.Template.read_vars(self, command)
@@ -283,7 +323,7 @@ class Template(common.Template):
         return vars
 
 Template.vars = common.Template.vars \
-        + [ pvar('django_version', 'Django version', default = '1.2.3',),
+        + [ pvar('django_version', 'Django version', default = '1.4',),
            pvar('address', 'Address to listen on', default = 'localhost',),
            pvar('license', 'License', default = 'BSD',),
            pvar('http_port', 'Port to listen to', default = '8081',),

@@ -16,11 +16,11 @@ eggs=
 # better to edit ./sources.cfg
 
 [scripts]
-recipe=minitage.recipe:scripts
+recipe=minitage.recipe.scripts
 # attacking zopepy:eggs make instance be built after zopepy
 # in any case thx to the buildout automatic parts sort.
 extra-paths+=\${buildout:extra-paths} 
-eggs+= \${buildout:eggs}
+eggs+= \${buildout:eggs} 
     z3c.checkversions
 #for $product in $additional_eggs
 #if product.startswith('#')
@@ -43,13 +43,14 @@ ${product}
 #end if
 #end for
     django-admin.py
+env-file=\${buildout:directory}/etc/${project}.env
 interpreter = djangopy
 dependent-scripts=true
 #paster-initialization=
 
 [test]
 recipe = zc.recipe.testrunner
-eggs = $project [test]
+eggs = \${scripts:eggs}
 script = selftest
 
 [omelette]
@@ -78,5 +79,11 @@ input =  \${buildout:directory}/etc/templates/wsgi/paster.ini.in
 output = \${buildout:directory}/etc/wsgi/instance.ini
 host=\${hosts:instance}
 port=\${ports:instance}
+# set here your project application wsgi application
+egg=\${settings:application}
+ep=\${instance:egg} 
+intercept_exc_debug=debug
+debugtoolbar.eval_exc=true
+debug=true
 
 # vim:set ft=cfg:

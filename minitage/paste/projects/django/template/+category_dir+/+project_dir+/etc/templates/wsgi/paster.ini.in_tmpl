@@ -1,11 +1,6 @@
 # bv.clientb WSGI CONFIGURATION FILE
-#if $with_deliverance_support
-#set $delicomment=''
-#else
-#set $delicomment='#'
-#end if
 [DEFAULT]
-debug=\${settings:debug}
+debug=\${instance:debug}
 
 [composite:main]
 use=egg:Paste#urlmap
@@ -13,20 +8,6 @@ use=egg:Paste#urlmap
 /admin/media/=padminmedia
 /=pmain
 /threads/=watch_threads
-
-# deliverance support
-${delicomment}/deliverange=pdeliverance
-${delicomment}/_themes = athemes
-${delicomment}[pipeline:pdeliverance]
-${delicomment}pipeline= translogger exc deliverance projectapp
-${delicomment}[filter:fdeliverance]
-${delicomment}use=egg:Deliverance
-${delicomment}theme_uri = file://\${locations:deliverance-themes}/layout.html
-${delicomment}rule_uri = file://\${buildout:directory}/etc/deliverance/deliverance.xml
-${delicomment}execute_pyref=true
-${delicomment}[app:athemes]
-${delicomment}use = egg:Paste#static
-${delicomment}document_root=\${locations:deliverance-themes}
 
 [pipeline:pmain]
 pipeline= fvhm exc translogger projectapp
@@ -52,7 +33,16 @@ logger_name = wsgi
 use=egg:Paste#printdebug
 
 [filter:exc]
-use=egg:WebError#evalerror
+use=egg:dj.paste#weberror
+debug = true
+error_email = mpa@makina-corpus.com
+from_address = mobyle@test.com 
+;show_exceptions_in_wsgi_errors = true
+smtp_server = localhost
+;smtp_use_tls = 
+;smtp_username = janitor
+;smtp_password = "janitor's password"
+error_subject_prefix = "mobyle2 Error"
 
 [app:projectapp]
 use=egg:dj.paste
@@ -66,7 +56,8 @@ resource_name=media/
 [app:adminmediaapp]
 use = egg:Paste#pkg_resources
 egg = Django
-resource_name=django/contrib/admin/media/
+resource_name=django/contrib/admin/media/ 
+
 
 [loggers]
 keys = root,wsgi,routes

@@ -5,7 +5,7 @@ IMPORT_URL="$uri"
 cd \$(dirname \$0)/..
 [[ ! -d t ]] && mkdir t
 rm -rf t/*
-tar xzvf \$(ls -1t ~/cgwb/\$PROJECT*z) -C t
+tar xzvf \$(ls -1t ~/cgwb/\$PROJECT*z|head -n1) -C t
 files="
 .gitignore
 bootstrap.py

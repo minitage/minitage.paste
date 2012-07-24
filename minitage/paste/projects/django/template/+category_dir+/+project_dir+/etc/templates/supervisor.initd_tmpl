@@ -16,7 +16,7 @@ ${sharp} Description:       $project
 ${sharp}${sharp}${sharp} END INIT INFO
 
 
-EFFECTIVE_USER="\${users:zope}"
+EFFECTIVE_USER="\${users:django}"
 INSTANCE_PATH="\${buildout:directory}"
 INSTANCE_NAME="\$(basename \${buildout:directory})"
 supervisorctl="\${buildout:directory}/bin/supervisorctl"
