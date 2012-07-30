@@ -577,7 +577,10 @@
     <version p='python-dateutil'                v='1.5'     options="with_ploneproduct_p4a_cal"/>
     <version p='qi.portlet.TagClouds'    v='1.33'    options="with_ploneproduct_qiptagcloud"/>
     <version p="Solgema.ContextualContentMenu"       v="0.1"     options="with_ploneproduct_sfcalendar"/>
-    <version p="Solgema.fullcalendar"       v="2.0.2"     options="with_ploneproduct_sfcalendar"/>
+    <version p="Solgema.fullcalendar"       v="2.1.1"     options="with_ploneproduct_sfcalendar"/>
+    <version p="collective.js.colorpicker"  v='1.0'      options="with_ploneproduct_sfcalendar"/>
+    <version p="collective.js.fullcalendar" v='1.5.2.2'  options="with_ploneproduct_sfcalendar"/>
+
 
     <version p='collective.singing'             v='0.7.1'   options='with_ploneproduct_sgdcg'/>
     <version p='collective.dancing'             v='0.9.5'   options='with_ploneproduct_sgdcg'/>

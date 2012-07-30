@@ -34,18 +34,10 @@ extensions = buildout.minitagificator mr.developer jarn.setuptoolsfixer buildout
 dump-picked-versions-file =\${buildout:directory}/etc/project/${project}-kgs.cfg
 overwrite-picked-versions-file=true
 extends-cache = \${buildout:directory}/etc/cache
-# this allow you to run buildout on offline mode and to use only the downloaded plonev3.versions.cfg
-extends -= $versions_url
-           http://download.zope.org/Zope2/index/2.12.3/versions.cfg
 extends =
 #if $major > 3:
-#if $have_ztk:
-    plone/ztk.versions.cfg
-    plone/zopeapp.versions.cfg
+    http://dist.plone.org/release/${plone_version}/versions.cfg
 #end if
-    plone/zope2.versions.cfg
-#end if
-    plone/plone${major}.versions.cfg
     plone/plone${major}.sources.cfg
     project/patches.cfg
     sys/settings.cfg

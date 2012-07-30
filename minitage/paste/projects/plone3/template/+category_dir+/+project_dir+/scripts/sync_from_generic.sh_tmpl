@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 cd \$(dirname \$0)/..
-PROJECT="$project"
 IMPORT_URL="$uri"
+PROJECT="$project"
+GITORIOUS=""
+GDOT="."
+IMPORT_URL="$uri"
+if [[ \$(echo "\$IMPORT_URL"|sed -re "s/.*gitorious.*/match/g") == "match" ]];then
+    GITORIOUS="1"
+    GDOT="-"
+fi
+GPROJECT="\${PROJECT//\./\${GDOT}}"
 cd \$(dirname \$0)/..
 [[ ! -d t ]] && mkdir t
 rm -rf t/*
@@ -29,19 +37,22 @@ policy_folder="src.mrdeveloper/\$PROJECT.policy"
 if [[ ! -e \$policy_folder ]];then
     policy_folder="src/\$PROJECT.policy"
 fi
+if [[ ! -e \$policy_folder ]];then
+    policy_folder="src/\$PROJECT"
+fi
 for i in \$policy;do
     rsync -azKv t/src/\$PROJECT/src/\${PROJECT/\./\/}/\$i src.mrdeveloper/\$PROJECT/src/\${PROJECT/\./\/}/\$i
 done
 #if $scm_type == 'git':
-EGGS_IMPORT_URL="\${IMPORT_URL//\/\$PROJECT\.buildout\.git}"
+EGGS_IMPORT_URL="\${IMPORT_URL//\/\$GPROJECT\${GDOT}buildout\.git}"
 #else
 EGGS_IMPORT_URL="\$IMPORT_URL/eggs"
 #end if
 sed -re "/\[sources\]/{
 #if $scm_type == 'git':
-        a \$PROJECT =  git \$EGGS_IMPORT_URL/\$PROJECT.git
+        a \$PROJECT =  git \$EGGS_IMPORT_URL/\$GPROJECT.git
 #else
-        a \$PROJECT =  svn \$EGGS_IMPORT_URL/\$PROJECT
+        a \$PROJECT =  svn \$EGGS_IMPORT_URL/\$GPROJECT
 #end if
 }" -i  etc/project/sources.cfg
 sed -re "s:(src/)?\$PROJECT::g" -i etc/project/\$PROJECT.cfg

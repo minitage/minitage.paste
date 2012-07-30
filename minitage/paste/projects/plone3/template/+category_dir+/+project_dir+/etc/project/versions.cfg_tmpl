@@ -11,6 +11,15 @@ distribute -= 0.6.11
 distribute -= 0.6.12
 distribute  = 0.6.13
 
+# never ever pin paste and other eggs
+
+Paste =
+PasteDeploy =
+PasteScript =
+ZopeSkel =
+distribute =
+docutils=
+
 #if ($with_ploneproduct_z3crelationfield or $with_ploneproduct_ploneappblob) and ($major < 4)
 #$with_ploneproduct_z3crelationfield
 #with_ploneproduct_ploneappblob

@@ -7,6 +7,14 @@ CHANGES
 ---------------------
 
 - remake some love to django template
+- Make plone template depends on plone.org versions file
+- factorize eggs locations on plone templates with collective.generic.skel templates 
+- Add addons:
+
+        - collective.js.datatables          
+        - collective.oembed*
+        - collective.embed*
+        - collective.easyslider
 
 
 1.3.1873 (2012-06-11)

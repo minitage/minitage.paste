@@ -187,11 +187,11 @@ class Template(common.Template):
         #    vars['with_ploneproduct_fss'] = False
         vars['plonesite'] = common.SPECIALCHARS.sub('', vars['project'])
         vars['major'] = int(vars['plone_version'][0])
-        vars['versions_url'] = self.get_versions_url(vars)
         vars['sources_url'] = self.get_sources_url(vars)
-        vars['zope2_url'] = self.get_zope2_url(vars)
-        vars['ztk_url'] = self.get_ztk_url(vars)
-        if not vars['ztk_url']:
+        #vars['versions_url'] = self.get_versions_url(vars)
+        #vars['zope2_url'] = self.get_zope2_url(vars)
+        #vars['ztk_url'] = self.get_ztk_url(vars)
+        if not vars.get('ztk_url', None):
             vars['ztk_url'] = False
         vars['sane_name'] = common.SPECIALCHARS.sub('', vars['project'])
         vars['category'] = 'zope'
@@ -344,9 +344,12 @@ class Template(common.Template):
             os.makedirs(self.output_dir)
 
         for section in self.sections_mappings:
-            for var in [k for k in self.sections_mappings[section] if vars.get(k, '')]:
+            for var in [k 
+                        for k in self.sections_mappings[
+                            section] 
+                        if vars.get(k, '')]:
                 # skip plone products which are already in the product 's setup.py
-                if vars['with_generic'] and var.startswith('with_ploneproduct') and section == 'additional_eggs':
+                if vars['with_generic'] and section == 'additional_eggs':
                     continue
                 if not section == 'plone_zcml':
                     vars[section].append('#%s'%var)
@@ -502,13 +505,13 @@ class Template(common.Template):
         suffix = vars['major']
         if vars['major'] > 3:
             suffix = self.name.replace('minitage.plone', '')
-        shutil.copy2(
-            pkg_resources.resource_filename(
-                'minitage.paste',
-                'projects/plone%s/versions.cfg' % suffix
-            ),
-            vdst
-        )
+        #shutil.copy2(
+        #    pkg_resources.resource_filename(
+        #        'minitage.paste',
+        #        'projects/plone%s/versions.cfg' % suffix
+        #    ),
+        #    vdst
+        #)
             #self.lastlogs.append(
             #    "Versions have not been fixed, be ware. Are"
             #    " you connected to the internet (%s).\n" % e
@@ -521,25 +524,25 @@ class Template(common.Template):
             #        self.packaged_version
             #    )
             #)
-        # zope2 KGS
-        if vars['have_ztk'] == True:
-            shutil.copy2(vars['ztk_path'], ztkdst)
-            shutil.copy2(vars['zaztk_path'], zaztkdst)
+        ## zope2 KGS
+        #if vars['have_ztk'] == True:
+        #    shutil.copy2(vars['ztk_path'], ztkdst)
+        #    shutil.copy2(vars['zaztk_path'], zaztkdst)
 
-        if vars['major'] > 3:
-            #try:
-            #    open(zdst, 'w').write(
-            #        urllib2.urlopen(vars['zope2_url']).read()
-            #    )
-            #    raise
-            #except Exception, e:
-            shutil.copy2(
-                pkg_resources.resource_filename(
-                    'minitage.paste',
-                    'projects/plone%s/zope2.versions.cfg' % suffix
-                ),
-                zdst
-            )
+        #if vars['major'] > 3:
+        #    #try:
+        #    #    open(zdst, 'w').write(
+        #    #        urllib2.urlopen(vars['zope2_url']).read()
+        #    #    )
+        #    #    raise
+        #    #except Exception, e:
+        #    shutil.copy2(
+        #        pkg_resources.resource_filename(
+        #            'minitage.paste',
+        #            'projects/plone%s/zope2.versions.cfg' % suffix
+        #        ),
+        #        zdst
+        #    )
 
         # release mr.developer config
         #try:
@@ -625,10 +628,13 @@ plone_vars = [pvar('address', 'Address to listen on', default = 'localhost',),
               pvar('with_generic_addon', 'with_generic_addon', default = 'n',),
              ]
 
-Template.vars = common.Template.vars +\
-        [pvar('plone_version', 'Plone version, default is the one supported and packaged', default = Template.packaged_version,),]+\
-        plone_vars + \
-        Template.addons_vars +\
-        dev_vars
+Template.vars = (common.Template.vars +
+                 [
+                     pvar('plone_version', 'Plone version, default is the one supported and packaged', default = Template.packaged_version,),
+                 ]+
+                 plone_vars + 
+                 Template.addons_vars +
+                 dev_vars
+                )
 
 # vim:set et sts=4 ts=4 tw=0:
