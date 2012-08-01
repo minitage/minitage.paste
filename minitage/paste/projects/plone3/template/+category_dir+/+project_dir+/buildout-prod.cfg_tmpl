@@ -27,6 +27,7 @@
 #end if 
 
 [buildout]
+extends-cache=etc/cache
 extends=#slurp
     etc/project/cluster.cfg#slurp
     etc/sys/maintenance.cfg#slurp

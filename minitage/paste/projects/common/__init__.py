@@ -336,6 +336,7 @@ def purge_nodes(document=None,
                 peroption=False,
                 multiple=False,
                 want=False):
+
     for purge in document.getElementsByTagName('purge'):
         for section in purge.getElementsByTagName(sectionName):
             for node in section.getElementsByTagName(elementName):
@@ -352,6 +353,14 @@ def purge_nodes(document=None,
                                     mapping[name].pop(mapping[name].index(infos))
                             else:
                                del mapping[name]
+                        elif sectionName == 'gs':
+                            indexes = dict(
+                                [(k[0], k) 
+                                 for k in mapping.keys()])
+                            if name in indexes:
+                                del mapping[indexes[name]]
+
+
                         else:
                             opts = oattrs.get('options', '').split(',')
                             for opt in opts:
@@ -442,6 +451,8 @@ def parse_xmlconfig(xml,
         purge_nodes(xml, 'versions', 'version', versions_mappings, peroption = True)
         purge_nodes(xml, 'checkedversions', 'version', checked_versions_mappings, 'p', peroption=True)
         purge_nodes(xml, 'sources', 'source', plone_sources)
+
+
         purge_nodes(xml, 'qi', 'product', qi_mappings, peroption=True)
         purge_nodes(xml, 'gs', 'product', gs_mappings, peroption=True)
         purge_nodes(xml, 'productdistros', 'productdistro', urls_mappings, key="url", peroption=True)

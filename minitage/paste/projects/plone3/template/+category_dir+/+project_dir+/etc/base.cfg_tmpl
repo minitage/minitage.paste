@@ -189,6 +189,8 @@ verbose-security=\${zope:verbose-security}
 debug-mode=\${zope:debug-mode}
 event-log-level=\${zope:event-log-level}
 z2-log-level=\${zope:z2-log-level}
+eggs+=
+zcml+=
 
 # KGS generation
 [kgs]

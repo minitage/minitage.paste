@@ -36,6 +36,7 @@
       <option order="01007" name="with_ploneproduct_masonry"   description="collective.masonry, see http://pypi.python.org/pypi/collective.masonry y/n" default="n"/>
       <option order="01007" name="with_ploneproduct_configviews"   description="collective.configviews, see http://pypi.python.org/pypi/collective.configviews y/n" default="n"/>
       <option order="01007" name="with_ploneproduct_jschosen"   description="collective.js.chosen, see http://pypi.python.org/pypi/collective.js.chosen y/n" default="n"/>
+      <option order="01007" name="with_ploneproduct_ckeditor"   description="collective.ckeditor, see http://pypi.python.org/pypi/collective.ckeditor y/n" default="n"/>
     </options>
     <versions>
       <!-- z3c.form -->
@@ -69,7 +70,7 @@
       <version p='collective.galleria'          v='1.1'  options="with_ploneproduct_masonry"/>
       <version p='collective.masonry'          v='1.2'  options="with_ploneproduct_masonry"/>
       <version p='collective.oembed'           v='1.2.1'  options="with_ploneproduct_oembed"/>
-      <version p='collective.portlet.embed'           v='1.0'  options="with_ploneproduct_cembed"/>
+      <version p='collective.portlet.embed'           v='1.0'  options="with_ploneproduct_cpembed"/>
       <version p='python-oembed'           v='0.2.1'  options="with_ploneproduct_oembed"/>
       <version p='collective.portlet.oembed'   v='1.0'  options="with_ploneproduct_oembed"/>
       <version p='collective.addthis'         v='1.3.1'  options="with_ploneproduct_addthis"/>
@@ -128,8 +129,8 @@
       <!-- dexterity -->
       <version p='z3c.form'                v='2.4.4'   options="with_ploneproduct_dexterity"/>
       <version p='z3c.formwidget.query'    v='0.6'     options="with_ploneproduct_dexterity"/>
-      <version p="python-dateutil"         v="1.5"     options="with_ploneproduct_dexterity"/>
       <version p="plone.directives.form"   v="1.0"     options="with_ploneproduct_dexterity"/>
+      <version p="python-dateutil"         v="1.5"     options="with_ploneproduct_dexterity"/>
       <version p="python_dateutil"         v="1.5"     options="with_ploneproduct_dexterity"/>
       <version p='rwproperty'              v='1.0'     options="with_ploneproduct_dexterity"/>
       <version p="collective.z3cform.datagridfield" v="0.10" options="with_ploneproduct_dexterity" />
@@ -187,12 +188,12 @@
       <version p='zope.ptresource'         v='3.9.0'    options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
       <version p='zope.login'              v='1.0.0'    options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
 
-
     </checkedversions>
     <eggs>
       <egg name="bpython"              options="with_tool_bpython"           scripts="bpython" default="y" />
       <egg name="z3c.blobfile"         options="with_ploneproduct_dexterity"/>
       <egg name="plone.app.dexterity"  options="with_ploneproduct_dexterity" zcml="meta,configure"/>
+      <egg name="collective.ckeditor"  options="with_ploneproduct_ckeditor" zcml="configure" zpackage="y"/>
       <egg name="medialog.subskins"  options="with_ploneproduct_subskins" zcml="configure" zpackage="y"/>
       <egg name="collective.js.chosen"  options="with_ploneproduct_jschosen" zcml="configure" zpackage="y"/>
       <egg name="zc.z3monitor"       options="with_ploneproduct_paasync"/>
@@ -243,6 +244,7 @@
       <product name="medialog.subskins"            options="with_ploneproduct_subskins"   order="900" />
     </qi>
     <gs>
+      <product name='collective.ckeditor'   options="with_ploneproduct_ckeditor" order="900"/>
       <product name='collective.easyslider'   options="with_ploneproduct_eslider" order="900"/>
       <product name='collective.js.chosen'   options="with_ploneproduct_jschosen" order="900"/>
       <product name='collective.configviews'   options="with_ploneproduct_configviews" order="900"/>
@@ -279,6 +281,7 @@
       <product name="collective.geo.mapcontent"        options="with_ploneproduct_cgeo"  order="300"/>
     </gs>
     <sources>
+      <source name='collective.ckeditor'  type="git" url="https://github.com/collective/collective.ckeditor.git" options="with_ploneproduct_ckeditor" order="900" autocheckout="y"/>
       <source name='Products.CMFBibliographyAT'  type="svn" url="http://svn.plone.org/svn/collective/Products.CMFBibliographyAT/trunk/" options="with_ploneproduct_cmfbibliographyat" order="900" autocheckout="y"/>
       <source name='collective.js.datatables'  type="git" url="https://github.com/collective/collective.js.datatables.git" options="with_ploneproduct_eslider" order="900"/>
       <source name='collective.easyslider'  type="git" url="https://github.com/collective/collective.easyslider.git" options="with_ploneproduct_eslider" order="900"/>

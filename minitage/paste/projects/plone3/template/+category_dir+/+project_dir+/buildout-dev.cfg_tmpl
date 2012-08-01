@@ -33,6 +33,7 @@
 
 # We want the production buildout + the debug bits.
 [buildout]
+extends-cache=etc/cache
 extends=etc/base.cfg 
     etc/backends/${devmode}.cfg 
     etc/project/cluster.cfg
@@ -79,12 +80,8 @@ debug-mode=on
 #end if
 #
 zcml+=
-    experimental.catalogqueryplan
-eggs+= plone.reload
-    collective.dist
-    collective.releaser
+eggs+= 
     docutils
-    experimental.catalogqueryplan
     gprof2dot
     Products.Clouseau
     Products.DocFinderTab
@@ -93,8 +90,8 @@ eggs+= plone.reload
     Products.signalstack
     Products.ZopeProfiler
     profilehooks
-    Sphinx
-    ZopeSkel 
+    plone.reload
+
 # Uncomment/Activate only if you want
 #    Products.PTProfiler
 #    Products.PDBDebugMode
@@ -113,8 +110,15 @@ eggs+= plone.reload
 
 
 [zopepy]
-scripts += project_deploy
-
+eggs +=
+    ZopeSkel
+    collective.dist
+    collective.releaser 
+    Sphinx
+scripts += 
+    project_deploy
+    paster
+    templer
 #Sphinx
     sphinx-build
     sphinx-quickstart

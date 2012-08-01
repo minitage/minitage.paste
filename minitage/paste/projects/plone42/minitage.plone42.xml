@@ -11,13 +11,107 @@
     </versions>
     <checkedversions>
     </checkedversions>
+    <gs>
+      <product name="Products.Maps"                  options="with_ploneproduct_maps"  />
+    </gs> 
   </template>
   <purge>
     <options>
     </options>
     <versions>
+      <version p='five.intid'              v='1.0.2'   name="various pinning for various packages"/> 
+      <version p='plone.z3cform'           v='0.7.8'   name="various pinning for various packages" />
+      <version p='five.intid'              v='0.5.2'   name="various pinning for z3 packages and p4 environments"/>
+      <version p="zope.schema"             v="3.7.1"   name="various pinning for various packages"/>
+      <version p="plone.app.registry"      v="1.0"     name="plone.app.registry on plone4"/>
+      <version p="plone.app.z3cform"       v="0.5.7"   name="various pinning for z3 packages and p4 environments"/>
+      <version p='z3c.form'                v='2.4.4'   name="various pinning for z3 packages and p4 environments"/>
+      <version p='z3c.formwidget.query'    v='0.6'     name="various pinning for z3 packages and p4 environments"/> 
+      <version p="zope.schema"             v="3.7.1"   name="various pinning for z3 packages and p4 environments"/> 
+      <version p="python-dateutil"         v="1.5"     name="various pinning for z3 packages and p4 environments"/>
+      <version p='rwproperty'              v='1.0'     name="various pinning for z3 packages and p4 environments"/>
+      <version p="plone.directives.form"   v="1.0"     name="various pinning for z3 packages and p4 environments"/>
+      <version p="plone.registry"          v="1.0"     name="plone.app.registry on plone4"/> 
+      <version p="plone.directives.form"   v="1.0"     options="with_ploneproduct_dexterity"/>
     </versions>
     <checkedversions>
+      <version p='diazo'                     v='1.0'     options="with_ploneproduct_patheming"/>
+      <version p='experimental.cssselect'    v='0.3'     options="with_ploneproduct_patheming"/>
+
+      <version p='plone.app.theming'         v='1.0'     options="with_ploneproduct_patheming"/>
+      <version p='plone.resource'            v='1.0'     options="with_ploneproduct_patheming"/>
+      <version p='plone.subrequest'          v='1.6.5'   options="with_ploneproduct_patheming"/>
+      <version p='repoze.xmliter'            v='0.5'     options="with_ploneproduct_patheming"/> 
+
+
+
+
+      <version p="python-dateutil"         v="1.5"     options="with_ploneproduct_dexterity"/>
+      <version p="python_dateutil"         v="1.5"     options="with_ploneproduct_dexterity"/> 
+
+      <version p='martian'                 v='0.11.2'   options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p='zope.browserresource'    v='3.9.0'    options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p="plone.autoform"                    v="1.1" options="with_ploneproduct_dexterity,with_ploneproduct_cgeo,with_ploneproduct_pz3cform" />
+      <version p='zope.login'              v='1.0.0'    options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p='five.localsitemanager'   v='2.0.5'    options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p="plone.scale"                       v="1.2.2" options="with_ploneproduct_dexterity" />
+      <version p="uuid"                              v="1.30"  options="with_ploneproduct_dexterity,with_ploneproduct_paasync" />
+      <version p="z3c.batching"                      v="1.1.0" options="with_ploneproduct_dexterity,with_ploneproduct_pz3cform" /> 
+      <version p="z3c.template"                      v="1.2.1"   options="with_ploneproduct_dexterity" />
+      <version p="zc.relation"                       v="1.0"   options="with_ploneproduct_dexterity" />
+      <version p="zc.sourcefactory"                  v="0.7.0" options="with_ploneproduct_dexterity" />
+      <version p="zope.filerepresentation"           v="3.6.0" options="with_ploneproduct_dexterity" />
+
+
+
+      <!-- dexterity -->
+      <version p='rwproperty'              v='1.0'     options="with_ploneproduct_dexterity"/>
+      <version p='zope.ptresource'         v='3.9.0'    options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p='z3c.relationfield'     options='with_ploneproduct_z3crelationfield,with_ploneproduct_dexterity'/> 
+      <version p="collective.z3cform.datetimewidget" v="1.1.1" options="with_ploneproduct_dexterity" />
+      <version p="zope.schema"                       v="3.7.1" options="with_ploneproduct_dexterity" /> 
+      <version p="collective.z3cform.datagridfield" v="0.10" options="with_ploneproduct_dexterity" />
+      <version p="five.intid"                        v="0.5.2" options="with_ploneproduct_dexterity" />
+      <version p="mocker"                            v="1.1"   options="with_ploneproduct_dexterity" />
+      <version p="plone.alterego"                    v="1.0" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.dexterity"               v="1.2.1" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.intid"                   v="1.0" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.lockingbehavior"         v="1.0.1" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.referenceablebehavior"   v="0.3"     options="with_ploneproduct_dexterity" />
+      <version p="plone.app.relationfield"           v="1.1" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.stagingbehavior" v="0.1b3" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.textfield"               v="1.1" options="with_ploneproduct_dexterity" />
+      <version p="plone.app.versioningbehavior"      v="1.1" options="with_ploneproduct_dexterity" />
+      <version p="plone.behavior"                    v="1.0.1" options="with_ploneproduct_dexterity" />
+      <version p="plone.dexterity"                   v="1.1.2" options="with_ploneproduct_dexterity" />
+      <version p="plone.directives.dexterity"        v="1.0.2" options="with_ploneproduct_dexterity" />
+      <version p="plone.directives.form"   v="1.0"     options="with_ploneproduct_dexterity"/>
+      <version p="plone.folder"                      v="1.0.1" options="with_ploneproduct_dexterity" />
+      <version p="plone.formwidget.autocomplete"     v="1.2.3" options="with_ploneproduct_dexterity" />
+      <version p="plone.formwidget.contenttree"      v="1.0.5" options="with_ploneproduct_dexterity" />
+      <version p="plone.formwidget.namedfile"        v="1.0.2" options="with_ploneproduct_dexterity" />
+      <version p="plone.mocktestcase"                v="1.0b3" options="with_ploneproduct_dexterity" />
+      <version p="plone.namedfile"                   v="1.0.6" options="with_ploneproduct_dexterity" />
+      <version p="plone.rfc822"                      v="1.0" options="with_ploneproduct_dexterity,with_ploneproduct_cgeo" />
+      <version p="plone.schemaeditor"                v="1.2.0" options="with_ploneproduct_dexterity" />
+      <version p="plone.supermodel"                  v="1.0.3" options="with_ploneproduct_dexterity,with_ploneproduct_cgeo" />
+      <version p="plone.synchronize"                 v="1.0.1" options="with_ploneproduct_dexterity" />
+
+      <version p="z3c.blobfile"                      v="0.1.5" options="with_ploneproduct_dexterity" />
+      <version p='z3c.form'                v='2.4.4'   options="with_ploneproduct_dexterity"/>
+      <version p='z3c.formwidget.query'    v='0.6'     options="with_ploneproduct_dexterity"/>
+      <version p="z3c.objpath"                       v="1.0"   options="with_ploneproduct_dexterity" />
+      <version p="z3c.ptcompat"                      v="0.5.7"   options="with_ploneproduct_dexterity" />
+
+      <version p='five.grok'               v='1.2.0'    options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p="collective.z3cform.datagridfield" v="0.10" options="with_ploneproduct_dexterity" /> 
+      <version p='grokcore.component'      v='1.9'      options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p='grokcore.security'       v='1.4'      options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p='grokcore.view'           v='1.13.5'   options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
+      <version p='martian'                 v='0.11.2'   options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
     </checkedversions>
+    <gs>
+      <product name="Maps"                  options="with_ploneproduct_maps"             />
+    </gs>
   </purge>
 </root>
