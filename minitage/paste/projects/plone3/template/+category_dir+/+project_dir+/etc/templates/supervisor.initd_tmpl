@@ -16,6 +16,7 @@ ${sharp} Description:       $project
 ${sharp}${sharp}${sharp} END INIT INFO
 
 
+TMPDIR="\${locations:tmp}"
 EFFECTIVE_USER="\${users:zope}"
 INSTANCE_PATH="\${buildout:directory}"
 INSTANCE_NAME="\$(basename \${buildout:directory})"
@@ -23,6 +24,8 @@ supervisorctl="\${buildout:directory}/bin/supervisorctl"
 supervisord="\${buildout:directory}/bin/supervisord"
 name="supervisord_\$INSTANCE_NAME"
 lock="\${buildout:directory}/var/\$name "
+
+export TMPDIR
 
 [ -f \$supervisord ] || exit 1
 [ -f \$supervisorctl ] || exit 1

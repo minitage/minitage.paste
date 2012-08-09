@@ -130,6 +130,7 @@ password=$supervisor_password
 
 [locations]
 # aboslute paths to avoid buildout auto build of reffered part
+TMPDIR="\${locations:tmp}"
 solr = \$solr_path
 blob-storage=\${buildout:directory}/var/blobstorage/storage
 blob-backup=\${buildout:directory}/var/blobstorage/backup

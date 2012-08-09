@@ -93,6 +93,7 @@ ${asynccomment}zcml-additional =
 ${asynccomment}    <include package="plone.app.async" file="single_db_instance.zcml" />
 environment-vars =
     zope_i18n_compile_mo_files = true
+    TMPDIR=\${locations:tmp}
 ${asynccomment}    ZC_ASYNC_UUID \${buildout:directory}/var/instance-uuid.txt
 ${asynccomment}zope-conf-additional +=
 ${asynccomment}    <zodb_db async>

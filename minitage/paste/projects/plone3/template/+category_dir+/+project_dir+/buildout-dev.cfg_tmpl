@@ -114,6 +114,7 @@ eggs +=
     ZopeSkel
     collective.dist
     collective.releaser 
+    zest.releaser
     Sphinx
 scripts += 
     project_deploy
@@ -137,7 +138,7 @@ scripts +=
     rst2pseudoxml.py
     rst2s5.py
     rst2xml.py
-    rstpep2html.p
+    rstpep2html.py
 
 
 # Aggregate all python packages on one directory to have all in one directory
@@ -204,5 +205,6 @@ scripts=i18ndude
 recipe=minitage.recipe.scripts
 eggs=zopeskel
 scripts=paster=zopeskel
+    templer
 
 # vim:set ft=cfg:
