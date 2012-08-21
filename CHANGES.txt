@@ -16,6 +16,8 @@ CHANGES
         - collective.embed*
         - collective.easyslider
 
+- removing zopeskel dep       
+
 
 1.3.1873 (2012-06-11)
 ---------------------
