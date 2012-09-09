@@ -1,0 +1,3 @@
+include *.txt *.rst *.cfg *tmpl
+recursive-include minitage *
+global-exclude *pyc
