@@ -20,11 +20,6 @@
 #else
 #set $fsscomment='#'
 #end if
-#if $with_indexing_solr
-#set $solrcomment=''
-#else
-#set $solrcomment='#'
-#end if
 #if $with_ploneproduct_sgdcg
 #set $sgdgcomment=''
 #else
@@ -140,7 +135,6 @@ scripts +=
     rst2xml.py
     rstpep2html.py
 
-
 # Aggregate all python packages on one directory to have all in one directory
 # its really great after to have it for  your tags generator or your IDE
 # see parts/omelette after running this part to understand :)
@@ -204,7 +198,7 @@ scripts=i18ndude
 [zopeskel]
 recipe=minitage.recipe.scripts
 eggs=zopeskel
-scripts=paster=zopeskel
-    templer
+scripts=paster=zopeskel-standalone
+    templer=templer-standalone
 
 # vim:set ft=cfg:

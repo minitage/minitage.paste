@@ -1,6 +1,5 @@
 # Sysadmin settings like hosts, credentials, paths, cache settings, and loglevels
 #if $with_ploneproduct_sgdcg
- $with_ploneproduct_sgdcg
 #set $sgdgcomment=''
 #else
 #set $sgdgcomment='#'
@@ -34,7 +33,6 @@ instance-buildbot=$address
 supervisor=$supervisor_host
 balancer=$haproxy_host
 syslog = 127.0.0.1
-solr = $solr_host
 buildbot-master=${buildbot_master_host}
 staging=$staging_host
 #if not $with_haproxy
@@ -57,7 +55,6 @@ instance-buildbot=$http_port_buildbot
 #may not be used
 supervisor=$supervisor_port
 balancer=$haproxy_port
-solr = $solr_port
 buildbot-master-control=${buildbot_master_control_port}
 buildbot-master-web=${buildbot_master_web_port}
 #if not $with_haproxy
@@ -65,8 +62,6 @@ zope-front=\${ports:instance1}
 #end if
 ${hapcomment}zope-front=\${ports:balancer}
 webdav = $http_port10
-
-
 
 
 [buildbot]
@@ -130,8 +125,7 @@ password=$supervisor_password
 
 [locations]
 # aboslute paths to avoid buildout auto build of reffered part
-TMPDIR="\${locations:tmp}"
-solr = \$solr_path
+tmp=\${buildout:directory}/var/tmp
 blob-storage=\${buildout:directory}/var/blobstorage/storage
 blob-backup=\${buildout:directory}/var/blobstorage/backup
 
@@ -171,18 +165,8 @@ staging=$staging_path
 #fss-backup4= \${buildout:directory}/var/fss_backup4_${project}
 #fss-storage4=\${buildout:directory}/var/fss_storage4_${project}
 
-
-# Command below is important
-# if not, fss tests or tests using fss in their configuration will fail
-# You can add here directories to create
-[mkdirs]
-command =
-#    mkdir -pv \${buildout:directory}/foo
-
-
-#do not remove, internal for zeoserver eggs buildout & extends
-[zeoserver]
-eggs=
+[buildout]
+timeout=3
 
 [mirrors]
 sourceforge = ovh.dl.sourceforge.net

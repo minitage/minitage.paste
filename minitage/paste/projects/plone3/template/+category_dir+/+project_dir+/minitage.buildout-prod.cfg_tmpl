@@ -1,4 +1,3 @@
-
 # Plone installation with minitage support
 
 # It will install your plone in production mode
@@ -10,5 +9,5 @@
 
 # We want the production buildout + the debug bits.
 [buildout]
-extends=etc/minitage/minitage.cfg buildout-prod.cfg etc/minitage/minitage.cfg 
+extends=buildout-prod.cfg etc/minitage/minitage.cfg 
 extends-cache=etc/cache

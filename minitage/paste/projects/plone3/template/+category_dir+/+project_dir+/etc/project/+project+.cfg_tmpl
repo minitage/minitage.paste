@@ -12,11 +12,6 @@ $hr
 #else
 #set $fsscomment='#'
 #end if
-#if $with_indexing_solr
-#set $solrcomment=''
-#else
-#set $solrcomment='#'
-#end if
 #if $with_ploneproduct_ploneappblob
 #set $blobcomment=''
 #else
@@ -34,34 +29,84 @@ $hr
 #end if
 
 [buildout]
+versions = versions
 develop = \${buildout:directory}/src.mrdeveloper/zopelib
 sources-dir=\${buildout:directory}/src.mrdeveloper
-
+find-links =
+    http://dist.plone.org/release/${plone_version}
+    http://pypi.python.org/simple/ZODB4
+# FOR PILWTOK
+    http://download.zope.org/distribution/
+# project packages
+eggs=
+zcml=
 # extra directories oto add to the python path
 extra-paths=
-# better to edit ./sources.cfg
-auto-checkout +=
 
-# auto tracked developement products
-[sources]
 # see http://pypi.python.org/pypi/mr.developer for documentation
-# better to edit ./sources.cfg
+sources = sources
+# auto tracked developement products, see project/sources.cfg
+[sources] 
 
-# to integrate fancy stuff to your plone install, you can have a look to
-# http://svn.plone.org/svn/plone/buildouts/plone-coredev/branches/4.0/experimental/
-# where you can find sources section to grab back to your buildout (extend, or local download/edit)
-
-
+#if $major < 4
+# Zope operating instances are created elsewhere.
+# For options see http://pypi.python.org/pypi/plone.recipe.zope2install
+[zope2]
+recipe = plone.recipe.zope2install
+url = \${versions:zope2-url}
+# fake eggs are required to satisfy Zope dependencies while
+# zope is not yet eggified.
+fake-zope-eggs = true
+additional-fake-eggs =
+    ZConfig
+    pytz
+    Zope2
+    Acquisition
+    zope.testing
+skip-fake-eggs =
+    pytz
+    ZConfig
+    ZODB3
+# inter zope2.10 / zope 2.12
+    five.localsitemanager
+    zope.app.publisher
+    zope.component
+    zope.container
+    zope.lifecycleevent
+    zope.i18n
+    zope.interface
+    zope.location
+    zope.proxy
+    zope.publisher
+    zope.schema
+    zope.sendmail
+    zope.site
+    zope.testing
+#end if
+ 
+# here is defined the Zope instance running your plone site
+# beware that zopepy part must run before isntance in order to have the right version
+# pinned for relstorage 
 [instance]
-webdav-address=\${hosts:webdav}:\${ports:webdav}
-
+recipe = plone.recipe.zope2instance
+#if $major < 4
+zope2-location = \${zope2:location}
+#end if
+http-address = \${hosts:instance}:\${ports:instance}
+user = \${zope:user}:\${zope:password}
+session-timeout-minutes = \${cache:session-timeout-minutes}
+verbose-security = \${zope:verbose-security}
+debug-mode = \${zope:debug-mode}
+event-log-level = \${zope:event-log-level}
+z2-log-level = \${zope:z2-log-level}
+webdav-address = \${hosts:webdav}:\${ports:webdav}
 zodb-cache-size = 50000
 zeo-client-cache-size = 5MB
 
 # attacking zopepy:eggs make instance be built after zopepy
 # in any case thx to the buildout automatic parts sort.
-extra-paths+=\${buildout:extra-paths}
-eggs += \${buildout:eggs}
+extra-paths = \${buildout:extra-paths}
+eggs = \${buildout:eggs}
     zopelib
 # security hotfixes
     Products.PloneHotfix20110720
@@ -77,7 +122,8 @@ products =
     \${buildout:directory}/products
     \${productdistros:location}
 
-zcml +=
+zcml =
+    \${buildout:zcml}
 
 #for $product in $plone_zcml:
 #if product.startswith('#'):
@@ -93,9 +139,9 @@ ${asynccomment}zcml-additional =
 ${asynccomment}    <include package="plone.app.async" file="single_db_instance.zcml" />
 environment-vars =
     zope_i18n_compile_mo_files = true
-    TMPDIR=\${locations:tmp}
+    TMPDIR = \${locations:tmp}
 ${asynccomment}    ZC_ASYNC_UUID \${buildout:directory}/var/instance-uuid.txt
-${asynccomment}zope-conf-additional +=
+${asynccomment}zope-conf-additional =
 ${asynccomment}    <zodb_db async>
 ${asynccomment}        cache-size \${instance:zodb-cache-size}
 ${asynccomment}        <zeoclient>
@@ -140,11 +186,38 @@ ${asynccomment}zserver-threads = 2
 ${asynccomment}zeo-address = \${zeoserver:zeo-address}
 ${asynccomment}blob-storage = \${zeoserver:blob-storage}
 
-
 [kgs]
+recipe=minitage.recipe.printer
+quiet=
+eggs=\${instance:eggs} 
 file=\${buildout:directory}/etc/${project}-kgs.cfg
 
+# Use this section to download additional old-style products.
+# List any number of URLs for product tarballs under URLs (separate
+# with whitespace, or break over several lines, with subsequent lines
+# indented). If any archives contain several products inside a top-level
+# directory, list the archive file name (i.e. the last part of the URL,
+# normally with a .tar.gz suffix or similar) under 'nested-packages'.
+# If any archives extract to a product directory with a version suffix, list
+# the archive name under 'version-suffix-packages'.
+[productdistros]
+# For more information on this step and configuration options see:
+# http://pypi.python.org/pypi/plone.recipe.distros
+recipe = plone.recipe.distros
+urls=\${groups:products-urls}
+version-suffix-packages = \${groups:version-suffix-packages}
+nested-packages = \${groups:nested-packages} 
+
+# eggs & scripts installation
 [zopepy]
+recipe = minitage.recipe.scripts
+# Important for you to note the installation of the ZODB as an egg . We will not
+# use the zodb code from the zope source distribution !!!!!!!
+#if not $inside_minitage:
+urls=http://download.zope.org/distribution/PIL-1.1.7.tar.gz
+#end if
+interpreter = zopepy
+env-file=\${buildout:directory}/etc/${project}.env
 eggs =
 # release helpers
     zest.releaser
@@ -177,9 +250,8 @@ ${product}
     ${product}
 #end if
 #end for
-
-
-extra-paths += \${instance:extra-paths}
+extra-paths = 
+    \${instance:extra-paths}
 #if $major < 4
     \${zope2:location}/lib/python
 #end if
@@ -252,4 +324,41 @@ initialization=
 eggs=\${instance:eggs}
     collective.generic.devmode
 
+[omelette]
+recipe = collective.recipe.omelette
+eggs = \${instance:eggs}
+products = \${instance:products}
+packages = #slurp
+#if $major < 4
+\${zope2:location}/lib/python #slurp
+#end if
+    ./
+
+# Command below is important
+# if not, fss tests or tests using fss in their configuration will fail
+[mkdirs]
+recipe = plone.recipe.command
+update-command = \${mkdirs:command}
+command = 
+
+[chown]
+# This recipe is used to set permissions -- and ownership for root mode installs
+recipe = plone.recipe.command
+update-command = \${chown:command} 
+command =
+    chmod 600 .installed.cfg
+    find \${buildout:directory} -type d -name var -exec chown -R \${users:zope} {} \;
+    find \${buildout:eggs-directory} -type d -name LC_MESSAGES -exec chown -R \${users:zope} {} \;
+    find \${buildout:eggs-directory}/Products.kupu* -type d -name i18n -exec chown -R \${users:zope} {} \;
+    find \${buildout:directory} -name runzope -exec chown \${users:zope} {} \;
+    find \${buildout:directory}/var -type d -exec chmod 700 {} \;
+    chmod 744 \${buildout:directory}/bin/*
+
+[backup]
+recipe = collective.recipe.backup
+blobbackuplocation=\${locations:blob-backup}/backups
+blobsnapshotlocation=\${locations:blob-backup}/snapshots 
+keep_blob_days=\${crons:nb_backups_to_keep} 
+      
+ 
 # vim:set ft=cfg:

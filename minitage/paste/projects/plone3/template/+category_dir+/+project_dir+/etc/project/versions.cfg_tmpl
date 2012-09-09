@@ -1,18 +1,7 @@
 # BASE VERSIONS PINNING
 
 [versions]
-# add hand pinned version there
-# plone32 hack to remove the bugged fixed version of buildout.
-zc.buildout =
-zc.recipe.egg -= 1.1.0
-distribute -= 0.6.8
-distribute -= 0.6.10
-distribute -= 0.6.11
-distribute -= 0.6.12
-distribute  = 0.6.13
-
-# never ever pin paste and other eggs
-
+# never ever pin paste and other base eggs
 Paste =
 PasteDeploy =
 PasteScript =

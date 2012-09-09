@@ -12,11 +12,6 @@ $hr
 #else
 #set $fsscomment='#'
 #end if
-#if $with_indexing_solr
-#set $solrcomment=''
-#else
-#set $solrcomment='#'
-#end if
 #if $with_ploneproduct_sgdcg
 #set $sgdgcomment=''
 #else
@@ -29,7 +24,6 @@ $hr
 #end if
 
 [buildout]
-timeout=3
 extensions = buildout.minitagificator mr.developer jarn.setuptoolsfixer buildout.dumppickedversions
 dump-picked-versions-file =\${buildout:directory}/etc/project/${project}-kgs.cfg
 overwrite-picked-versions-file=true
@@ -37,34 +31,25 @@ extends-cache = \${buildout:directory}/etc/cache
 extends =
 #if $major > 3:
     http://dist.plone.org/release/${plone_version}/versions.cfg
+    http://dist.plone.org/release/${plone_version}/sources.cfg
 #end if
-    plone/plone${major}.sources.cfg
+    project/${project}.cfg
+    project/sources.cfg
+    project/versions.cfg
     project/patches.cfg
+#    project/${project}-kgs.cfg
     sys/settings.cfg
-#if $with_indexing_solr:
-    backends/solr.cfg
-#end if
+#if $with_ploneproduct_sgdcg:
+    project/newsletter.cfg
+#end if 
 #if $with_ploneproduct_fss:
     backends/fss.cfg
 #end if
 #if $with_ploneproduct_ploneappblob:
     backends/blobstorage.cfg
 #end if
-#if $with_experimental:
-    plone/experimental.cfg
-#end if
-#if $with_ploneproduct_sgdcg:
-    project/newsletter.cfg
-#end if
-    project/versions.cfg
-    project/sources.cfg
-#    project/${project}-kgs.cfg
-    project/${project}.cfg
     apache/apache.cfg
     hudson/${project}/hudson.cfg
-
-
-
 parts =
 #if $major < 4:
     zope2
@@ -78,8 +63,6 @@ ${asynccomment}    instance-worker
 ${sgdgcomment}    instance-newsletter
 ${fsscomment}${sgdgcomment}    fss-newsletter
 ${fsscomment}    fss
-${solrcomment}    solr
-${solrcomment}    solrinstance
     mkdirs
     omelette
     ${sane_name}.test
@@ -92,112 +75,6 @@ ${zeocomment}    instance-plain
     ${sane_name}_hudson_deploy
     ${sane_name}_hudson_chmod
 
-find-links = \${groups:find-links}
-eggs +=
-develop +=
-versions = versions
-# see http://pypi.python.org/pypi/mr.developer for documentation
-# auto tracked developement products, see project/sources.cfg
-sources = sources
-auto-checkout +=
-# Add additional eggs here
-eggs =
-
-# Reference any eggs you are developing here, one per line
-# e.g.: develop = src/my.package
-develop =
-
-# auto tracked developement products, see project/sources.cfg
-[sources]
-
-#if $major < 4
-# Zope operating instances are created elsewhere.
-# For options see http://pypi.python.org/pypi/plone.recipe.zope2install
-[zope2]
-recipe = plone.recipe.zope2install
-url = \${versions:zope2-url}
-# fake eggs are required to satisfy Zope dependencies while
-# zope is not yet eggified.
-fake-zope-eggs = true
-additional-fake-eggs +=
-    ZConfig
-    pytz
-    Zope2
-    Acquisition
-    zope.testing
-skip-fake-eggs +=
-    pytz
-    ZConfig
-    ZODB3
-# inter zope2.10 / zope 2.12
-    five.localsitemanager
-    zope.app.publisher
-    zope.component
-    zope.container
-    zope.lifecycleevent
-    zope.i18n
-    zope.interface
-    zope.location
-    zope.proxy
-    zope.publisher
-    zope.schema
-    zope.sendmail
-    zope.site
-    zope.testing
-#end if
-
-# eggs & scripts installation
-[zopepy]
-recipe = minitage.recipe.scripts
-# Important for you to note the installation of the ZODB as an egg . We will not
-# use the zodb code from the zope source distribution !!!!!!!
-#if not $inside_minitage:
-urls=http://download.zope.org/distribution/PIL-1.1.7.tar.gz
-#end if
-interpreter = zopepy
-env-file=\${buildout:directory}/etc/${project}.env
-
-# Use this section to download additional old-style products.
-# List any number of URLs for product tarballs under URLs (separate
-# with whitespace, or break over several lines, with subsequent lines
-# indented). If any archives contain several products inside a top-level
-# directory, list the archive file name (i.e. the last part of the URL,
-# normally with a .tar.gz suffix or similar) under 'nested-packages'.
-# If any archives extract to a product directory with a version suffix, list
-# the archive name under 'version-suffix-packages'.
-[productdistros]
-# For more information on this step and configuration options see:
-# http://pypi.python.org/pypi/plone.recipe.distros
-recipe = plone.recipe.distros
-urls =
-nested-packages =
-version-suffix-packages =
-
-# here is defined the Zope instance running your plone site
-# beware that zopepy part must run before isntance in order to have the right version
-# pinned for relstorage
-[instance]
-order=\${zopepy:recipe}
-recipe = plone.recipe.zope2instance
-#if $major < 4
-zope2-location = \${zope2:location}
-#end if
-http-address=\${hosts:instance}:\${ports:instance}
-user = \${zope:user}:\${zope:password}
-session-timeout-minutes = \${cache:session-timeout-minutes}
-verbose-security=\${zope:verbose-security}
-debug-mode=\${zope:debug-mode}
-event-log-level=\${zope:event-log-level}
-z2-log-level=\${zope:z2-log-level}
-eggs+=
-zcml+=
-
-# KGS generation
-[kgs]
-recipe=minitage.recipe.printer
-quiet=
-eggs=\${instance:eggs}
-
 #if not $inside_minitage:
 #[openldap]
 #recipe = minitage.recipe.cmmi
@@ -209,48 +86,5 @@ eggs=\${instance:eggs}
 #include-dirs  = \${openldap:location}/include
 #library-dirs  = \${openldap:location}/lib
 #end if
-
-[backup]
-recipe = collective.recipe.backup
-blobbackuplocation=\${locations:blob-backup}/backups
-blobsnapshotlocation=\${locations:blob-backup}/snapshots
-
-# Traditionnal Plone products to install
-[productdistros]
-recipe = plone.recipe.distros
-urls=\${groups:products-urls}
-version-suffix-packages = \${groups:version-suffix-packages}
-nested-packages = \${groups:nested-packages}
-
-[omelette]
-recipe = collective.recipe.omelette
-eggs = \${instance:eggs}
-products = \${instance:products}
-packages = #slurp
-#if $major < 4
-\${zope2:location}/lib/python #slurp
-#end if
-    ./
-
-
-# Command below is important
-# if not, fss tests or tests using fss in their configuration will fail
-[mkdirs]
-recipe = plone.recipe.command
-update-command = \${mkdirs:command}
-command +=
-
-[chown]
-# This recipe is used to set permissions -- and ownership for root mode installs
-recipe = plone.recipe.command
-command =
-    chmod 600 .installed.cfg
-    find \${buildout:directory} -type d -name var -exec chown -R \${users:zope} {} \;
-    find \${buildout:eggs-directory} -type d -name LC_MESSAGES -exec chown -R \${users:zope} {} \;
-    find \${buildout:eggs-directory}/Products.kupu* -type d -name i18n -exec chown -R \${users:zope} {} \;
-    find \${buildout:directory} -name runzope -exec chown \${users:zope} {} \;
-    find \${buildout:directory}/var -type d -exec chmod 700 {} \;
-    chmod 744 \${buildout:directory}/bin/*
-update-command = \${chown:command}
 
 \# vim: set ft=cfg:

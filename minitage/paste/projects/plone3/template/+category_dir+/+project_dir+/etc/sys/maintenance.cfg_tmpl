@@ -47,7 +47,6 @@ recipe = z3c.recipe.usercrontab
 times = \${crons:zope-pack}
 command = wget "http://$address:\${ports:instance1}/Control_Panel/Database/manage_pack"  --http-user '\${zope:user}'  --http-passwd '\${zope:password}' --post-data '?days:float=0' -O /dev/null
 
-
 # restart zope instance every night
 [zoperestartdaily]
 recipe = z3c.recipe.usercrontab
@@ -81,13 +80,11 @@ output =\${buildout:directory}/cron_scripts/fsskeeplastbackups.sh
 backuppath=\${fssdaily:backuppath}
 to_keep=\${crons:nb_backups_to_keep}
 
-
 # backup FSS every day
 [fssdailycron]
 recipe = z3c.recipe.usercrontab
 times = 15 1 * * *
 command =  \${buildout:directory}/cron_scripts/fss_daily.sh && \${buildout:directory}/cron_scripts/fsskeeplastbackups.sh
-
 
 [backupdirs]
 ${fsscomment}order=\${fssdaily:recipe}
@@ -110,8 +107,5 @@ ${fsscomment}     rsync -av --partial --progress  \${locations:fss}/            
 recipe = collective.recipe.template
 input =  \${buildout:directory}/etc/templates/logrotate.conf.template
 output = \${buildout:directory}/etc/logrotate.conf
-
-[backup]
-keep_blob_days=\${crons:nb_backups_to_keep} 
 
 \# vim:set ft=cfg:

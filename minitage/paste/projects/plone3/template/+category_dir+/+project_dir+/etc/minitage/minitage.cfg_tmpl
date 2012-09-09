@@ -26,7 +26,7 @@ python=python${pyver}
 #else
 #python=python${pyver}
 #end if
-find-links += http://distfiles.minitage.org/public/externals/minitage/
+find-links+=http://distfiles.minitage.org/public/externals/minitage/
 eggs-directory=\${minitage:location}/eggs/cache
 extra-paths+=
     \${libxml2:site-packages}
@@ -38,7 +38,8 @@ extra-paths+=
 [versions]
 # bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
 # the one packaged in minitage !
-PIL  = 1.1.7
+PIL = 1.1.7-ZMinitagePatched-Becomepil
+Pillow  = 1.7.7
 
 [zopepy]
 #if $inside_minitage:

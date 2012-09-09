@@ -15,11 +15,6 @@
 #else
 #set $fsscomment='#'
 #end if
-#if $with_indexing_solr
-#set $solrcomment=''
-#else
-#set $solrcomment='#'
-#end if 
 #if $with_ploneproduct_ploneappblob
 #set $blobcomment=''
 #else

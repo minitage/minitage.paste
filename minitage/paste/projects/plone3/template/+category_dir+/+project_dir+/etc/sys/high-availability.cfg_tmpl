@@ -12,11 +12,7 @@ $hr
 #else
 #set $sgdgcomment='#'
 #end if
-#if $with_indexing_solr
-#set $solrcomment=''
-#else
-#set $solrcomment='#'
-#end if
+
 
 #if $with_haproxy
 #set $hapcomment=''
@@ -64,7 +60,6 @@ serverurl = http://\${hosts:supervisor}:\${ports:supervisor}
 haproxy-path=\${buildout:directory}/bin/haproxy
 programs =
 ${zeocomment}    10 zeo \${zeoserver:location}/bin/runzeo \${zeoserver:location} true \${users:zope}
-${solrcomment}    20 solr (startsecs=10) java [-Djava.security.egd=file:/dev/urandom -jar start.jar] \${buildout:parts-directory}/solrinstance true \${users:zope}
 #if $major > 3:
 ${si1}    21 instance1 \${buildout:directory}/bin/instance1 [console]                                         true \${users:zope}
 ${si2}    22 instance2 \${buildout:directory}/bin/instance2 [console]                                         true \${users:zope}

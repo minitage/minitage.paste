@@ -1,6 +1,4 @@
 # blobstorage product support and configuration
-
-
 [zeoserver]
 blob-storage = \${locations:blob-storage}
 eggs += plone.app.blob

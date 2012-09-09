@@ -4,7 +4,7 @@ $hr
 
 [buildout]
 sources=sources
-auto-checkout +=
+auto-checkout =
 #if $with_ploneproduct_ploneappblob and ($major < 4)
     Products.CMFEditions
 # else
@@ -52,7 +52,6 @@ ${product}
 #end if
 #end for
 
-
 nested-packages = #slurp
 #for $product in $plone_np:
 #if product.startswith('#'):
@@ -63,13 +62,6 @@ ${product}
 #end for
 
 vaporization=http://svn.plone.org/svn/collective/Vaporisation/trunk
-
-# on Upgrades
-# Think to change the plone release URL !!!
-find-links = http://dist.plone.org/release/${plone_version}
-             http://pypi.python.org/simple/ZODB4
-# FOR PILWTOK
-             http://download.zope.org/distribution/
 
 
 # vim:set ft=cfg:

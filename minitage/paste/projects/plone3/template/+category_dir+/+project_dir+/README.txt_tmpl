@@ -173,7 +173,6 @@ BACKENDS
     etc/backends/
     |-- etc/backends/fss.cfg                   -> Filestorage configuration if any
     |-- etc/backends/relstorage.cfg            -> relstorage configuration if any
-    |-- etc/backends/solr.cfg                  -> Solr configuration if any
     |-- etc/backends/zeo.cfg                   -> zeoserver configuration if any
     `-- etc/backends/zodb.cfg                  -> zodb configuration if any
 
