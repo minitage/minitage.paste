@@ -360,5 +360,19 @@ blobbackuplocation=\${locations:blob-backup}/backups
 blobsnapshotlocation=\${locations:blob-backup}/snapshots 
 keep_blob_days=\${crons:nb_backups_to_keep} 
       
+
+[touch]
+recipe = plone.recipe.command
+update-command = \${touch:command}
+command =  
+    touch \${buildout:directory}/var/log/instance1.log\;
+    touch \${buildout:directory}/var/log/instance.log\;
+    touch \${buildout:directory}/var/log/instance2.log\;
+    touch \${buildout:directory}/var/log/instance3.log\;
+    touch \${buildout:directory}/var/log/instance4.log\;
+    touch \${buildout:directory}/var/log/main.log\;
+    touch \${buildout:directory}/var/log/transform.log\;
+
+
  
 # vim:set ft=cfg:

@@ -35,6 +35,7 @@ parts+=#slurp
     instance2
     instance3
     instance4
+    touch
     zopepackdaily
     supervisor-initd
     zoperestartdaily
