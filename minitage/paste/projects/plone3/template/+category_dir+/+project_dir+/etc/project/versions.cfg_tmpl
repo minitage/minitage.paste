@@ -8,6 +8,8 @@ PasteScript =
 ZopeSkel =
 distribute =
 docutils=
+zc.buildout=
+zc.recipe.egg=
 
 #if ($with_ploneproduct_z3crelationfield or $with_ploneproduct_ploneappblob) and ($major < 4)
 #$with_ploneproduct_z3crelationfield

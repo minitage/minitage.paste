@@ -4,7 +4,7 @@
 # Launch it:
 # bin/buildout -c minitage.buildout-prod.cfg
 
-# minimerge -NuUvR ${project}
+# minimerge -NuUvR ${project}-prod
 # look at the extenended buildout: ./buildout-prod.cfg for other details of your plone installation
 
 # We want the production buildout + the debug bits.
