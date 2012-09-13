@@ -550,13 +550,13 @@ class Template(common.Template):
         #        urllib2.urlopen(vars['sources_url']).read()
         #    )
         #except Exception, e:
-        shutil.copy2(
-            pkg_resources.resource_filename(
-                'minitage.paste',
-                'projects/plone%s/sources.cfg' % suffix
-            ),
-            sdst
-        )
+        #shutil.copy2(
+        #    pkg_resources.resource_filename(
+        #        'minitage.paste',
+        #        'projects/plone%s/sources.cfg' % suffix
+        #    ),
+        #    sdst
+        #)
         #    if vars['major'] > 3:
         #        self.lastlogs.append(
         #            "Sources have not been fixed, be ware. Are"
