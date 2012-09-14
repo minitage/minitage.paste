@@ -285,7 +285,9 @@
     <egg name="Products.SimpleAttachment"      options="with_ploneproduct_ploneboard"       zproduct="y" zcml="configure"/>
     <egg name="Products.TinyMCE"               options="with_ploneproduct_tinymce,with_ploneproduct_plominotinymce"          zproduct="y" zcml="configure"/>
     <egg name="transmogrify.filesystem"        options="with_ploneproduct_patransmo"        zcml="configure" />
-    <egg name="transmogrify.sqlalchemy"        options="with_ploneproduct_patransmo"        zcml="configure" />
+    <!--
+      <egg name="transmogrify.sqlalchemy"        options="with_ploneproduct_patransmo"        zcml="configure" />
+      -->
     <egg name="webcouturier.dropdownmenu"      options="with_ploneproduct_wc_dd_menu"       zpackage="y" zcml="configure"/>
     <egg name="z3c.relationfield"              options="with_ploneproduct_z3crelationfield" zcml="configure" />
     <egg name="Products.Clouseau"              options="with_ploneproduct_clouseau" zcml="configure" zpackage="y"/>

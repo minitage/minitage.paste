@@ -165,6 +165,7 @@ ${asynccomment}    </product-config>
 # plone.app.async instance if any
 ${asynccomment}[instance-worker]
 ${asynccomment}<= instance
+${asynccomment}webdav-address =
 ${asynccomment}http-address = \${hosts:instance-worker}:\${ports:instance-worker}
 ${asynccomment}zcml-additional =
 ${asynccomment}    <include package="plone.app.async" file="multi_db_worker.zcml"/>
