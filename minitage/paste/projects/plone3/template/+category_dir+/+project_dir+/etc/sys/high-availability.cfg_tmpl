@@ -49,7 +49,7 @@ $hr
 
 [haproxy-build]
 recipe = plone.recipe.haproxy
-url = http://dist.jarn.com/public/haproxy-1.3.15.7.zip
+url = http://dist.jarn.com/public/haproxy-1.4.18.zip
 
 [supervisor]
 recipe = collective.recipe.supervisor
@@ -60,6 +60,9 @@ serverurl = http://\${hosts:supervisor}:\${ports:supervisor}
 haproxy-path=\${buildout:directory}/bin/haproxy
 programs =
 ${zeocomment}    10 zeo \${zeoserver:location}/bin/runzeo \${zeoserver:location} true \${users:zope}
+#if $with_ploneproduct_paasync
+${si1}    20 instance-worker \${buildout:directory}/bin/instance-worker [console]                                         true \${users:zope}
+#end if
 #if $major > 3:
 ${si1}    21 instance1 \${buildout:directory}/bin/instance1 [console]                                         true \${users:zope}
 ${si2}    22 instance2 \${buildout:directory}/bin/instance2 [console]                                         true \${users:zope}

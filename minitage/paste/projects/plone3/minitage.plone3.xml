@@ -189,8 +189,7 @@
     <egg name="minitage.recipe.scripts"       options="with_minitage_devpackages"  />
     <egg name="MySQL_python"                  options="with_database_mysql"               />
     <egg name="PasteScript"                   options="with_tool_zopeskel" scripts="paster"/>
-    <egg name="PIL"                       options="with_binding_pil" />
-    <egg name="PIL"                       options="with_binding_pil"/>
+    <egg name="Pillow"                        options="with_binding_pil" />
     <egg name="psycopg2"                      options="with_database_postgresql"/>
     <egg name="pypgoptimizator"               options="with_minitage_otherpackages"  scripts="pypgoptimizator" />
     <egg name="pysugarNG"                     options="with_binding_sugar"/>
@@ -516,7 +515,7 @@
     <version p='aws.pdfbook'                    v='1.0.1' options='with_ploneproduct_awspdfbook' />
     <version p='collective.contentlicensing'    v='2.2.1'   options='with_ploneproduct_contentlicensing' />
     <version p='collective.gallery'      v='1.1'   options="with_ploneproduct_cgallery"/>
-    <version p='collective.googleanalytics'     v='1.3'   options="with_ploneproduct_cga"/>
+    <version p='collective.googleanalytics'     v='1.4.1'   options="with_ploneproduct_cga"/>
     <version p='collective.js.galleriffic' v='1.0'   options="with_ploneproduct_cgallery"/>
     <version p='collective.plonetruegallery'    v='2.1a1'     options="with_ploneproduct_truegallery"/>
     <version p='collective.portlettabber'       v='0.2.0'   options='with_ploneproduct_cportlettabber'/>
@@ -546,7 +545,7 @@
     <version p='p4a.video'                      v='1.3'     options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.z2utils'                    v='1.0.2'   options="with_ploneproduct_p4a_vid"/>
     <version p='plomino.tinymce'                v='0.6.7'   options="with_ploneproduct_plominotinymce"/>
-    <version p='Plomino'                        v='1.13.3'   options="with_ploneproduct_plominotinymce,with_ploneproduct_plomino"/>
+    <version p='Plomino'                        v='1.13.4'   options="with_ploneproduct_plominotinymce,with_ploneproduct_plomino"/>
     <version p="plone.app.blob"                 v="1.5.1"     options="with_ploneproduct_ploneappblob"/>
     <version p="plone.app.jquerytools"          v="1.4b1"   options="with_ploneproduct_plonejqtools"/>
     <version p='plone.formwidget.autocomplete'  v='1.2.2'     options='with_ploneproduct_autocomplete'/>

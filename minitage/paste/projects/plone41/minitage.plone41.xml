@@ -22,7 +22,6 @@
     </gs>
     <checkedversions>
       <version p='plone.app.ldap'            v='1.2.8'   options='with_ploneproduct_ldap' />
-      <version p="five.intid"                v="1.0.2"   options="with_ploneproduct_dexterity" />
       <!-- http://good-py.appspot.com/release/plone.app.theming/1.0b9 -->
       <version p='WebOb'                     v='1.1.3'   options="with_ploneproduct_patheming"/>
       <version p='diazo'                     v='1.0'     options="with_ploneproduct_patheming"/>

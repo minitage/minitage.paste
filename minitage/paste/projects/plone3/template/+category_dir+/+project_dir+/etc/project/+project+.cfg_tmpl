@@ -29,6 +29,8 @@ $hr
 #end if
 
 [buildout]
+sources=sources
+auto-checkout = 
 versions = versions
 develop = \${buildout:directory}/src.mrdeveloper/zopelib
 sources-dir=\${buildout:directory}/src.mrdeveloper
@@ -39,6 +41,7 @@ find-links =
     http://download.zope.org/distribution/
 # project packages
 eggs=
+    Pillow
 zcml=
 # extra directories oto add to the python path
 extra-paths=
@@ -136,7 +139,7 @@ ${zcmlcomment}    ${product}
 
 # plone.app.async instance if any
 ${asynccomment}zcml-additional =
-${asynccomment}    <include package="plone.app.async" file="single_db_instance.zcml" />
+${asynccomment}    <include package="plone.app.async" file="multi_db_instance.zcml" />
 environment-vars =
     zope_i18n_compile_mo_files = true
     TMPDIR = \${locations:tmp}
@@ -164,7 +167,7 @@ ${asynccomment}[instance-worker]
 ${asynccomment}<= instance
 ${asynccomment}http-address = \${hosts:instance-worker}:\${ports:instance-worker}
 ${asynccomment}zcml-additional =
-${asynccomment}    <include package="plone.app.async" file="single_db_worker.zcml"/>
+${asynccomment}    <include package="plone.app.async" file="multi_db_worker.zcml"/>
 ${asynccomment}environment-vars =
 ${asynccomment}    zope_i18n_compile_mo_files = true
 ${asynccomment}    ZC_ASYNC_UUID \${buildout:directory}/var/worker-uuid.txt
@@ -185,12 +188,6 @@ ${asynccomment}    </zodb_db>
 ${asynccomment}zserver-threads = 2
 ${asynccomment}zeo-address = \${zeoserver:zeo-address}
 ${asynccomment}blob-storage = \${zeoserver:blob-storage}
-
-[kgs]
-recipe=minitage.recipe.printer
-quiet=
-eggs=\${instance:eggs} 
-file=\${buildout:directory}/etc/${project}-kgs.cfg
 
 # Use this section to download additional old-style products.
 # List any number of URLs for product tarballs under URLs (separate

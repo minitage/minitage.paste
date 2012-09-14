@@ -23,17 +23,31 @@ $hr
 #set $asynccomment='#'
 #end if
 
+#if $with_ploneproduct_paevent
+#set $eventcomment=''
+#else
+#set $eventcomment='#'
+#end if
+
 [buildout]
 extensions = buildout.minitagificator mr.developer jarn.setuptoolsfixer buildout.dumppickedversions
 dump-picked-versions-file =\${buildout:directory}/etc/project/${project}-kgs.cfg
 overwrite-picked-versions-file=true
 extends-cache = \${buildout:directory}/etc/cache
 extends =
+
+
 #if $major > 3:
     http://dist.plone.org/release/${plone_version}/versions.cfg
     http://dist.plone.org/release/${plone_version}/sources.cfg
+# activate this < plone42
+#    http://good-py.appspot.com/release/dexterity/1.2.1
+#    http://good-py.appspot.com/release/five.grok/1.3.1
 #end if
     project/${project}.cfg
+#if $major > 3:
+${eventcomment}    https://raw.github.com/collective/plone.app.event/master/sources.cfg
+#end if
     project/sources.cfg
     project/versions.cfg
     project/patches.cfg
@@ -41,7 +55,7 @@ extends =
     sys/settings.cfg
 #if $with_ploneproduct_sgdcg:
     project/newsletter.cfg
-#end if 
+#end if
 #if $with_ploneproduct_fss:
     backends/fss.cfg
 #end if
@@ -74,17 +88,5 @@ ${zeocomment}    instance-plain
     ${sane_name}_hudson_job
     ${sane_name}_hudson_deploy
     ${sane_name}_hudson_chmod
-
-#if not $inside_minitage:
-#[openldap]
-#recipe = minitage.recipe.cmmi
-#url = ftp://gd.tuwien.ac.at/infosys/network/OpenLDAP/openldap-stable/openldap-stable-20090411.tgz
-#
-#[python-ldap]
-#recipe = minitage.recipe.egg
-#egg = python-ldap
-#include-dirs  = \${openldap:location}/include
-#library-dirs  = \${openldap:location}/lib
-#end if
 
 \# vim: set ft=cfg:

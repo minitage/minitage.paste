@@ -167,20 +167,6 @@ BACKENDS
     |-- etc/backends/zeo.cfg                   -> zeoserver configuration if any
     `-- etc/backends/zodb.cfg                  -> zodb configuration if any
 
-
-KGS FILE
-----------
-We provide a part to generate the etc/${project}-kgs.cfg file.
-This will allow you to freeze software versions known to work with your project and make reproducible environment.
-This file will be generated the first time that you run buildout.
-To un it, just run bin/buildout -vvvvvvc <CONFIG_FILE> install kgs
-Then sync the content of the kgs file with ``etc/project/versions.cfg``.
-
-NOTES ABOUT RELSTORAGE SUPPORT
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-We use the ZODB as an egg which is patched during installation, please see ``etc/project/patches.cfg``
-
-
 OS SPECIFIC SYSTEM INSTALLERS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Thos popular tools around zope/plone dev (not supported, just here for your conveniance, READ BEFORE USING THEM)

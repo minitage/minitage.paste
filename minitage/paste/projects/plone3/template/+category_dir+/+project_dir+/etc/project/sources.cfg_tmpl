@@ -4,7 +4,7 @@ $hr
 
 [buildout]
 sources=sources
-auto-checkout =
+auto-checkout +=
 #if $with_ploneproduct_ploneappblob and ($major < 4)
     Products.CMFEditions
 # else

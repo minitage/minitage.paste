@@ -473,9 +473,9 @@ class Template(common.Template):
 
     def post(self, command, output_dir, vars):
         common.Template.post(self, command, output_dir, vars)
-        etc = os.path.join(vars['path'], 'etc', 'plone')
-        if not os.path.isdir(etc):
-            os.makedirs(etc)
+        #etc = os.path.join(vars['path'], 'etc', 'plone')
+        #if not os.path.isdir(etc):
+        #    os.makedirs(etc)
         cfg = os.path.join(vars['path'], 'etc', 'base.cfg')
         dst = os.path.join(vars['path'],
                            'etc', 'plone', 'plone%s.buildout.cfg' % vars['major'])

@@ -19,6 +19,7 @@ files="
 bootstrap.py
 buildout-dev.cfg
 buildout-prod.cfg
+LINK_TO_REGENERATE.html
 minitage.buildout-dev.cfg
 minitage.buildout-prod.cfg
 README.*
@@ -59,10 +60,10 @@ sed -re "s:(src/)?\$PROJECT::g" -i etc/project/\$PROJECT.cfg
 sed -re "/auto-checkout \+=/{
         a \    \$PROJECT
 }"  -i etc/project/sources.cfg
-sed -re "/eggs \+=.*buildout:eggs/{
+sed -re "/ Pillow/{
         a \    \$PROJECT
 }"  -i etc/project/\$PROJECT.cfg
-sed -re "/zcml \+=/{
+sed -re "/zcml\+?=/{
         a \    \$PROJECT
 }"  -i etc/project/\$PROJECT.cfg
 sed -re "s/.*:default/    \${PROJECT}:default/g" -i  etc/project/\$PROJECT.cfg
