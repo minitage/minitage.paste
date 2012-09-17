@@ -4,7 +4,6 @@ IMPORT_URL="$uri"
 PROJECT="$project"
 GITORIOUS=""
 GDOT="."
-IMPORT_URL="$uri"
 if [[ \$(echo "\$IMPORT_URL"|sed -re "s/.*gitorious.*/match/g") == "match" ]];then
     GITORIOUS="1"
     GDOT="-"

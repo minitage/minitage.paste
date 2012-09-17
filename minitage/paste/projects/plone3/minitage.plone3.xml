@@ -707,8 +707,8 @@
     <source name="collective.portlettabber" type="svn" url="http://svn.plone.org/svn/collective/collective.portlettabber/trunk/"                      options="with_ploneproduct_cportlettabber" />
     <source name="mapscript"                            type="git" url="ssh://git.minitage.org/git/others/mapscript/mapscript-5.6"                                options="with_binding_mapscript"/>
     <source name="nmd.plonelinkasvideoembed"            type="svn" url="https://svn.plone.org/svn/collective/nmd.plonelinkasvideoembed/trunk"                     options="with_ploneproduct_nmdlinkasvideo"/>
-    <source name="Products.CMFPlomino"                  type="svn" url="https://plomino.svn.sourceforge.net/svnroot/plomino/trunk/Plomino"                        options="with_ploneproduct_plomino"/>
-    <source name="plomino.tinymce"                      type="svn" url="https://plomino.svn.sourceforge.net/svnroot/plomino/branches/leprodupure/plomino.tinymce" options="with_ploneproduct_plominotinymce" />
+    <source name="Products.CMFPlomino"                  type="git" url="https://github.com/plomino/Plomino.git" options="with_ploneproduct_plomino"/>
+    <source name="plomino.tinymce"                      type="git" url="https://github.com/plomino/plomino.tinymce.git" options="with_ploneproduct_plominotinymce" />
     <source name="pypgoptimizator"                      type="git" url="ssh://git.minitage.org/git/others/pypgoptimizator"                                        options="with_minitage_otherpackages"  />
     <source name="collective.harlequin"                 type="svn" url="https://svn.plone.org/svn/collective/collective.harlequin/trunk"                          options="with_ploneproduct_harlequin"/>
     <source name="collective.googleanalytics"        type="svn" url="http://svn.plone.org/svn/collective/collective.googleanalytics/trunk"                          options="with_ploneproduct_cga"/>
