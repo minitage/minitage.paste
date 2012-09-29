@@ -32,22 +32,37 @@ extends-cache=etc/cache
 extends=etc/base.cfg 
     etc/backends/${devmode}.cfg 
     etc/project/cluster.cfg
-parts+= omelette
+parts+= 
     instance1
     instance2
     instance3
     instance4
-    ipzope
     devmode
     cg.devmode
-${i18ncomment}    i18ndude
+    i18ndude
     zopeskel
-
+eggs += 
+    ipython
+    docutils
+    gprof2dot
+    profilehooks
+    pyprof2calltree
+    plone.reload 
+# Uncomment/Activate only if you want
+#   Products.PTProfiler
+#   Products.PDBDebugMode
+#   Products.Clouseau
+#   Products.DocFinderTab
+#   Products.Gloworm
+#   Products.MemoryProfiler
+#   Products.signalstack
+#   Products.ZopeProfiler
+zcml+=
 auto-checkout +=
-  Products.Gloworm
-  Products.MemoryProfiler
+# Uncomment/Activate only if you want
+#  Products.Gloworm
+#  Products.MemoryProfiler
 #    zopeskel
-
 
 [hosts]
 zope-front=\${hosts:instance}
@@ -70,26 +85,6 @@ plone.reload = 1.3
 [instance]
 verbose-security = on
 debug-mode=on
-#if $linux:
-#zcml+=collective.autorestart
-#end if
-#
-zcml+=
-eggs+= 
-    docutils
-    gprof2dot
-    Products.Clouseau
-    Products.DocFinderTab
-    Products.Gloworm
-    Products.MemoryProfiler
-    Products.signalstack
-    Products.ZopeProfiler
-    profilehooks
-    plone.reload
-
-# Uncomment/Activate only if you want
-#    Products.PTProfiler
-#    Products.PDBDebugMode
 
 #if $linux:
 # plone auto reloading facility relying on inotify.
@@ -102,7 +97,6 @@ eggs+=
 #    ctypes
 #    collective.autorestart
 #end if
-
 
 [zopepy]
 eggs +=
@@ -127,43 +121,18 @@ scripts +=
     release
     longtest
 #docutils
-    st2html.py
+    rst2html.py
     rst2latex.py
     rst2newlatex.py
     rst2pseudoxml.py
     rst2s5.py
     rst2xml.py
     rstpep2html.py
-
-# Aggregate all python packages on one directory to have all in one directory
-# its really great after to have it for  your tags generator or your IDE
-# see parts/omelette after running this part to understand :)
-[omelette]
-recipe = collective.recipe.omelette
-eggs = \${instance:eggs}
-products = \${productdistros:location}
-packages =\${instance:extra-paths}
-
-# a IPython Shell for interactive use with zope running.
-# you also need to put
-# https://svn.plone.org/svn/collective/dotipython/trunk/ipy_profile_zope.py
-# to your \$HOME/.ipython directory for the following to work.
-[ipzope]
-recipe = minitage.recipe.scripts
-# make the completyion work
-ipython-patches=\${zopepy:ipython-patches}
-ipython-patch-options=\${zopepy:ipython-patch-options}
-eggs = ipython
-        \${instance:eggs}
-initialization =
-        import sys, os
-#if $major < 4:
-        os.environ["SOFTWARE_HOME"] = "\${zope2:location}/lib/python"
-#end if
-        os.environ["INSTANCE_HOME"] = "\${instance:location}"
-        sys.argv[1:1] = "-p zope".split()
-extra-paths = \${zopepy:extra-paths}
-scripts = ipython=ipzope
+#ipython
+    ipython
+# profiling
+    gprof2dot
+    pyprof2calltree
 
 # not compatible with latest sphinx !
 # be aware not to have it on your site packages before enabling it !
@@ -189,16 +158,20 @@ ${zeocomment}    \${buildout:directory}/bin/zeoserver stop;
 ${zeocomment}    \${buildout:directory}/bin/zeoserver start;
     \${buildout:directory}/bin/devmode;
 
-
 [i18ndude]
 recipe=minitage.recipe.scripts
-eggs=i18ndude
-scripts=i18ndude
+eggs=
+    i18ndude
+    babel
+scripts=
+    i18ndude
+    pybabel
 
 [zopeskel]
 recipe=minitage.recipe.scripts
 eggs=zopeskel
-scripts=paster=zopeskel-standalone
+scripts=
+    paster=zopeskel-standalone
     templer=templer-standalone
 
 # vim:set ft=cfg:
