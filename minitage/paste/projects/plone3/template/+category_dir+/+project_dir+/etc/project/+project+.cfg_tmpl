@@ -331,6 +331,7 @@ packages = #slurp
 \${zope2:location}/lib/python #slurp
 #end if
     ./
+    \${instance:extra-paths} 
 
 # Command below is important
 # if not, fss tests or tests using fss in their configuration will fail
@@ -356,6 +357,7 @@ command =
 recipe = collective.recipe.backup
 blobbackuplocation=\${locations:blob-backup}/backups
 blobsnapshotlocation=\${locations:blob-backup}/snapshots 
+keep=\${crons:nb_fullbackups_to_keep} 
 keep_blob_days=\${crons:nb_backups_to_keep} 
       
 

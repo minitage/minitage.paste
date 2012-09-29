@@ -487,7 +487,7 @@
     <!--
       zope2.12 compatible -versions have been set for plone3 in etc/project/versions.cfg
     -->
-    <version p="ipython"                 v="0.10"    name="IPython py2.4 compatible version"/>
+    <version p="ipython"                 v="0.13"    name="IPython py2.4 compatible version"/>
 
     <!-- purged on p4 +-->
     <version p="cssutils"                v="0.9.5.1" name="break S D - http://groups.google.com/group/singing-dancing/browse_thread/thread/568de0b8226184f6"/>
