@@ -74,9 +74,7 @@ class Template(common.Template):
                 os.chmod(p, stat.S_IRGRP|stat.S_IXGRP|stat.S_IRWXU)
 
 Template.required_templates = ['minitage.instances.env']
-running_user = getpass.getuser()
-gid = pwd.getpwnam(running_user)[3]
-group = grp.getgrgid(gid)[0]
+from minitage.paste.common import running_user, gid, group
 Template.vars = common.Template.vars + \
                 [
                 templates.var('config', 'The configuration file to use as a base for the init script', default = 'prod.ini'),

@@ -62,6 +62,7 @@ zope-front=\${ports:instance1}
 #end if
 ${hapcomment}zope-front=\${ports:balancer}
 webdav = $http_port10
+workermonitor=$http_port12
 
 
 [buildbot]

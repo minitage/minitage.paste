@@ -1,9 +1,5 @@
 ##############################################################################
-# Django  '$project' BUILDOUT
-#
-#   You have wrappers for classical scripts:
-#       * bin/${project}.manage
-#       * bin/django-admin.py
+# Pyramid  '$project' BUILDOUT
 #
 #   To run in WSGI, a long word to say how to start to serve your project:
 #
@@ -12,25 +8,46 @@
 ##############################################################################
 
 [buildout]
-mode=dev
 extends=etc/base.cfg
+extends-cache=etc/cache
+package-extras=
 
 [settings]
 debug=true
 
 [scripts]
 eggs+=
+    docutils
     jarn.mkrelease
     zest.releaser
+    ipython
 scripts+=
-#jarn.mkrelease
+    fullrelease
+    ipython
+    lasttagdiff
+    lasttaglog
+    longtest
     mkrelease
-#zest.releaser
+    nose
+    nosetests
+    package_svn_prepare
+    postrelease
+    prerelease
     project_diff
     project_eggs
     project_md5
     project_release
-    package_svn_prepare
+    release
     release_eggs
+    rst2html.py
+    rst2latex.py
+    rst2man.py
+    rst2odt_prepstyles.py
+    rst2odt.py
+    rst2pseudoxml.py
+    rst2s5.py
+    rst2xetex.py
+    rst2xml.py
+    rstpep2html.py
 
 \# vim:set et ts=4 sts=4 ft=cfg:

@@ -33,6 +33,7 @@ import re
 import subprocess
 import getpass
 import copy
+import pwd, getpass, grp
 
 import pkg_resources
 
@@ -40,8 +41,9 @@ from xml.dom.minidom import parse, parseString
 from minitage.paste import common
 from minitage.core.common import which, search_latest
 
+from minitage.paste.common import running_user, gid, group
+
 reflags = re.M|re.U|re.S
-running_user = getpass.getuser()
 UNSPACER = re.compile('\s+|\n', reflags)
 SPECIALCHARS = common.SPECIALCHARS
 INSTANCES_DESCRIPTION = """\
@@ -709,4 +711,6 @@ def read_vars(default_config=None, user_config=None, base_vars=None):
                 res = parse_xmlconfig(xml, base_vars)
                 break
     return res
+
+
 # vim:set et sts=4 ts=4 tw=120:

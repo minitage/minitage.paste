@@ -34,6 +34,7 @@ import sys
 import shutil
 import re
 import logging
+import grp, getpass, pwd
 
 from paste.script import templates
 
@@ -234,5 +235,24 @@ class var(templates.var):
         templates.var.__init__(self, name, description,
                                 default, should_echo)
         self.mandatory = mandatory
+
+def get_user_group():
+    try:
+        running_user = getpass.getuser()
+    except:
+        running_user='user'
+    try:
+        gid = pwd.getpwnam(running_user)[3]
+    except:
+        gid = None
+    group = 'users'
+    if gid:
+        try:
+            group = grp.getgrgid(gid)[0]
+        except:
+            pass
+    return running_user, gid, group
+
+running_user, gid, group = get_user_group()
 
 # vim:set et sts=4 ts=4 tw=80:

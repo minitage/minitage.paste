@@ -39,7 +39,7 @@ parts+=
     instance4
     devmode
     cg.devmode
-    i18ndude
+    tools
     zopeskel
 eggs += 
     ipython
@@ -59,6 +59,16 @@ eggs +=
 #   Products.ZopeProfiler
 zcml+=
 auto-checkout +=
+    templer.core
+#    templer.buildout
+    templer.zope
+    templer.plone
+    templer.dexterity
+    templer.plonebuildout
+    templer.silva
+    templer.localcommands
+    templer.plone.localcommands
+    templer.plonecore
 # Uncomment/Activate only if you want
 #  Products.Gloworm
 #  Products.MemoryProfiler
@@ -75,6 +85,17 @@ zopeskel=svn https://svn.plone.org/svn/collective/ZopeSkel/trunk
 experimental.catalogqueryplan = svn https://svn.plone.org/svn/collective/experimental.catalogqueryplan/trunk
 Products.MemoryProfiler = svn https://svn.plone.org/svn/collective/Products.MemoryProfiler/trunk
 Products.Gloworm = git https://github.com/kiorky/Products.Gloworm.git
+templer.core                = git \${remotes:collective}/templer.core.git pushurl=\${remotes:collective_push}/templer.core.git
+templer.buildout            = git \${remotes:collective}/templer.buildout.git pushurl=\${remotes:collective_push}/templer.buildout.git
+templer.zope                = git \${remotes:collective}/templer.zope.git pushurl=\${remotes:collective_push}/templer.zope.git
+templer.plone               = git \${remotes:collective}/templer.plone.git pushurl=\${remotes:collective_push}/templer.plone.git
+templer.dexterity           = git \${remotes:collective}/templer.dexterity.git pushurl=\${remotes:collective_push}/templer.dexterity.git
+templer.plonebuildout       = git \${remotes:collective}/templer.plonebuildout.git pushurl=\${remotes:collective_push}/templer.plonebuildout.git
+templer.silva               = git \${remotes:collective}/templer.silva.git pushurl=\${remotes:collective_push}/templer.silva.git
+templer.localcommands       = git \${remotes:collective}/templer.localcommands.git pushurl=\${remotes:collective_push}/templer.localcommands.git
+templer.plone.localcommands = git \${remotes:collective}/templer.plone.localcommands.git pushurl=\${remotes:collective_push}/templer.plone.localcommands.git
+templer.plonecore           = svn https://svn.plone.org/svn/collective/templer.plonecore/trunk
+ 
 
 [versions]
 ctypes=1.0.2
@@ -136,7 +157,7 @@ scripts +=
 
 # not compatible with latest sphinx !
 # be aware not to have it on your site packages before enabling it !
-# To generate sphinx documentation, just run:
+collective To generate sphinx documentation, just run:
 # bin/buildout -vvvvvv -C dev.cfg sphinxbuilder
 # Please have a look on http://pypi.python.org/pypi/collective.recipe.sphinxbuilder/
 # To see how to use it.
@@ -158,20 +179,23 @@ ${zeocomment}    \${buildout:directory}/bin/zeoserver stop;
 ${zeocomment}    \${buildout:directory}/bin/zeoserver start;
     \${buildout:directory}/bin/devmode;
 
-[i18ndude]
+[tools]
 recipe=minitage.recipe.scripts
 eggs=
     i18ndude
     babel
+    sphinx
+    zopeskel
+    toutpt.zopeskel
+    templer.dexterity
+    templer.buildout
+    templer.plone
+    templer.plone.localcommands
+    templer.zope
 scripts=
     i18ndude
     pybabel
-
-[zopeskel]
-recipe=minitage.recipe.scripts
-eggs=zopeskel
-scripts=
-    paster=zopeskel-standalone
-    templer=templer-standalone
+    templer
+    paster
 
 # vim:set ft=cfg:

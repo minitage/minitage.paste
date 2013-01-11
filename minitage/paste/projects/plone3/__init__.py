@@ -41,6 +41,7 @@ from iniparse import ConfigParser
 from minitage.paste.projects import common
 from minitage.paste.common import var as pvar
 from minitage.core.common  import search_latest
+from minitage.paste.common import running_user, gid, group
 
 class NoDefaultTemplateError(Exception): pass
 
@@ -442,6 +443,7 @@ class Template(common.Template):
         vars['http_port9'] = int(vars['http_port']) + 9
         vars['http_port10'] = int(vars['http_port']) + 10
         vars['http_port11'] = int(vars['http_port']) + 11
+        vars['http_port12'] = int(vars['http_port']) + 12
         vars['zeo_port_buildbot'] = ''
         if 'socket' == vars['zeo_port'].strip():
             vars['zeo_port_buildbot'] = int(vars['zeo_port']) + 1

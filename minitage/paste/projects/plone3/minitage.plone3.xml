@@ -36,7 +36,7 @@
   <option order="0000" name="with_database_postgresql"           description="Postgresql python bindings y/n"/>
   <option order="0000" name="with_database_sa"                   description="SQLAlchemy, see http://www.sqlalchemy.org y/n"/>
   <option order="0000" name="with_experimental"                  description="Plone experimental improvments y/n" default="n"/>
-  <option order="0000" name="with_indexing_solr"                 description="Solr y/n"/>
+  <option order="0000" name="with_ploneproduct_solr"                 description="Solr y/n"/>
   <option order="0000" name="with_tool_i18ndude"                 description="i18n http://pypi.python.org/pypi/i18ndude y/n" default="y"/>
   <option order="0000" name="with_tool_ipython"                  description="ipython, see http://ipython.scipy.org/ y/n" default="y"/>
   <option order="0000" name="with_tool_zopeskel"                 description="ZopeSkel http://pypi.python.org/pypi/ZopeSkel y/n" default="y"/>
@@ -213,7 +213,8 @@
     <egg name="collective.contentlicensing"    options="with_ploneproduct_contentlicensing" zpackage="y" zcml="configure"/>
     <egg name="collective.dancing"             options="with_ploneproduct_sgdcg"            zpackage="y" zcml="configure"/>
     <egg name="collective.flowplayer"          options="with_ploneproduct_flowplayer"   zcml="configure"/>
-    <egg name="collective.indexing"            options="with_ploneproduct_ci"               zpackage="y" zcml="configure"/>
+    <egg name="collective.indexing"            options="with_ploneproduct_ci,with_ploneproduct_solr"   zpackage="y" zcml="configure"/>
+    <egg name="collective.solr"            options="with_ploneproduct_solr"               zpackage="y" zcml="configure"/>
     <egg name="collective.plonetruegallery"    options="with_ploneproduct_truegallery"      zpackage="y" zcml="configure"/>
     <egg name="collective.portlet.tal"         options="with_ploneproduct_tal_portlet"      zpackage="y" zcml="configure"/>
     <egg name="collective.singing"             options="with_ploneproduct_sgdcg"            zpackage="y" zcml="configure"/>
@@ -398,7 +399,7 @@
     <product name="collective.contentlicensing"    options="with_ploneproduct_contentlicensing" />
     <product name="collective.dancing"             options="with_ploneproduct_sgdcg" order="1"/>
     <product name="collective.flowplayer"          options="with_ploneproduct_flowplayer"  />
-    <product name="collective.indexing"            options="with_ploneproduct_ci"               />
+    <product name="collective.solr"            options="with_ploneproduct_solr"               />
     <product name="collective.plonetruegallery"    options="with_ploneproduct_truegallery"      />
     <product name="collective.portlet.tal"         options="with_ploneproduct_tal_portlet"      />
     <product name="dateable.chronos"               options="with_ploneproduct_p4a_cal,with_ploneproduct_p4a_vid"/>
@@ -514,6 +515,9 @@
       options: comma separated list of options to enable the pinning
     -->
   <checkedversions>
+    <version p='collective.solr'      v='3.0'   options='with_ploneproduct_solr' />
+    <version p='collective.indexing'  v='2.0a3' options='with_ploneproduct_solr' />
+
     <version p='aws.pdfbook'                    v='1.0.1' options='with_ploneproduct_awspdfbook' />
     <version p='collective.contentlicensing'    v='2.2.1'   options='with_ploneproduct_contentlicensing' />
     <version p='collective.gallery'      v='1.1'   options="with_ploneproduct_cgallery"/>
@@ -546,7 +550,8 @@
     <version p='p4a.videoembed'                 v='1.1'     options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.video'                      v='1.3'     options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.z2utils'                    v='1.0.2'   options="with_ploneproduct_p4a_vid"/>
-    <version p='plomino.tinymce'                v='0.6.7'   options="with_ploneproduct_plominotinymce"/>
+    <version p='plomino.tinymce'                v='0.7.1'   options="with_ploneproduct_plominotinymce"/>
+    <version p='Products.CMFPlomino'            v='1.16.1'   options="with_ploneproduct_plominotinymce,with_ploneproduct_plomino"/>
     <version p='Plomino'                        v='1.13.4'   options="with_ploneproduct_plominotinymce,with_ploneproduct_plomino"/>
     <version p="plone.app.blob"                 v="1.5.1"     options="with_ploneproduct_ploneappblob"/>
     <version p="plone.app.jquerytools"          v="1.4b1"   options="with_ploneproduct_plonejqtools"/>
@@ -632,7 +637,8 @@
     <source name="collective.contentlicensing"      type="git"  url="https://github.com/collective/collective.contentlicensing.git"                      options="with_ploneproduct_contentlicensing" />
     <source name="collective.dancing"               type="svn"  url="https://svn.plone.org/svn/collective/collective.dancing/trunk"                               options="with_ploneproduct_sgdcg"/>
     <source name="collective.flowplayer"            type="svn"  url="https://svn.plone.org/svn/collective/collective.flowplayer/trunk"                            options="with_ploneproduct_flowplayer"/>
-    <source name="collective.indexing"              type="svn"  url="https://svn.plone.org/svn/collective/collective.indexing/trunk"                              options="with_ploneproduct_ci"/>
+    <source name="collective.indexing"              type="git"  url="https://github.com/plone/collective.indexing.git" options="with_ploneproduct_ci,with_ploneproduct_solr"/>
+    <source name="collective.solr"                  type="git"  url="https://github.com/collective/collective.solr.git" options="with_ploneproduct_solr"/>
     <source name="collective.plonetruegallery"      type="svn"  url="https://svn.plone.org/svn/collective/collective.plonetruegallery/trunk"                      options="with_ploneproduct_truegallery"/>
     <source name="collective.portlet.tal"           type="svn"  url="https://svn.plone.org/svn/collective/collective.portlet.tal/trunk"                           options="with_ploneproduct_tal_portlet"/>
     <source name="collective.singing"               type="svn"  url="https://svn.plone.org/svn/collective/collective.singing/trunk"                               options="with_ploneproduct_sgdcg"/>

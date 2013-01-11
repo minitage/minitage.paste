@@ -1,4 +1,4 @@
-rotate 4
+rotate \${settings:to_keep}
 weekly
 create
 compress
@@ -7,7 +7,7 @@ delaycompress
 
 \${buildout:directory}/var/log/main*.log {
     compress
-    rotate 10
+    rotate \${settings:to_keep}
     daily
     notifempty
     size 10M  
@@ -19,7 +19,7 @@ delaycompress
 
 \${buildout:directory}/var/log/transform*.log {
     compress
-    rotate 10
+    rotate \${settings:to_keep} 
     daily
     notifempty
     size 10M 
@@ -28,9 +28,19 @@ delaycompress
         /bin/kill -USR1 \$(cat \${buildout:directory}/var/transform.pid)
     endscript
 }
+\${buildout:directory}/var/log/instance*.log {
+    compress
+    rotate \${settings:to_keep}
+    daily
+    notifempty
+    size 10M
+    sharedscripts
+    missingok
+    copytruncate
+} 
 \${buildout:directory}/var/log/supervisor*.log {
     compress
-    rotate 10
+    rotate \${settings:to_keep}
     daily
     notifempty
     size 10M
@@ -41,7 +51,7 @@ delaycompress
 
 \${buildout:directory}/var/log/apache/*.log {
     compress
-    rotate 10
+    rotate \${settings:to_keep}
     daily
     notifempty
     size 10M

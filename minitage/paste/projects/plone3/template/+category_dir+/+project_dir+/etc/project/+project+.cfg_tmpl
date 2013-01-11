@@ -102,7 +102,7 @@ verbose-security = \${zope:verbose-security}
 debug-mode = \${zope:debug-mode}
 event-log-level = \${zope:event-log-level}
 z2-log-level = \${zope:z2-log-level}
-webdav-address = \${hosts:webdav}:\${ports:webdav}
+#webdav-address = \${hosts:webdav}:\${ports:webdav}
 zodb-cache-size = 50000
 zeo-client-cache-size = 5MB
 
@@ -158,9 +158,7 @@ ${asynccomment}            cache-size \${instance:zeo-client-cache-size}
 ${asynccomment}        </zeoclient>
 ${asynccomment}        mount-point /zasync
 ${asynccomment}    </zodb_db>
-${asynccomment}    <product-config zc.z3monitor>
-${asynccomment}        port 8081
-${asynccomment}    </product-config>
+
 
 # plone.app.async instance if any
 ${asynccomment}[instance-worker]
@@ -186,6 +184,9 @@ ${asynccomment}            cache-size \${instance-worker:zeo-client-cache-size}
 ${asynccomment}        </zeoclient>
 ${asynccomment}        mount-point /zasync
 ${asynccomment}    </zodb_db>
+${asynccomment}    <product-config zc.z3monitor>
+${asynccomment}        port \${ports:workermonitor}
+${asynccomment}    </product-config> 
 ${asynccomment}zserver-threads = 2
 ${asynccomment}zeo-address = \${zeoserver:zeo-address}
 ${asynccomment}blob-storage = \${zeoserver:blob-storage}
@@ -265,12 +266,14 @@ CONFIG_FILE=\${instance:location}/etc/zope.conf
 # It is useful for generating reports for hudson or other contineous integration
 [${sane_name}.test]
 recipe = collective.xmltestreport
-eggs = \${instance:eggs}
+eggs = 
+    ${project} [test]
+    \${instance:eggs}
 extra-paths = \${instance:extra-paths}
 #if $major < 4
     \${zope2:location}/lib/python
 #end if
-defaults = ['--exit-with-status', '--auto-color', '--auto-progress']
+defaults = ['--exit-with-status', '--auto-color', '--auto-progress', '-s', '${project}']
 environment = testenv
 extra-paths = \${zopepy:extra-paths}
 

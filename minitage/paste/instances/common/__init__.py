@@ -36,7 +36,7 @@ from minitage.core import core
 from minitage.paste import common
 from paste.script import templates
 
-running_user = getpass.getuser()
+from minitage.paste.common import running_user, gid, group
 
 class Template(common.Template):
     """A template for minitage.instances"""

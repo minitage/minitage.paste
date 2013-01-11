@@ -36,7 +36,7 @@ import stat
 
 from paste.script import templates
 from minitage.paste.instances import common
-running_user = getpass.getuser()
+from minitage.paste.common import running_user, gid, group
 
 class Template(common.Template):
     """A nginx template"""
