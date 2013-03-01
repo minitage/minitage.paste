@@ -41,6 +41,12 @@
       <version p="plone.supermodel"                  v="1.0.3" options="with_ploneproduct_dexterity,with_ploneproduct_cgeo" />
       <version p="uuid"                              v="1.30"  options="with_ploneproduct_dexterity,with_ploneproduct_paasync" />
       <version p="z3c.batching"                      v="1.1.0" options="with_ploneproduct_dexterity,with_ploneproduct_pz3cform" />
+ 
+      <version p="plone.autoform"                    v="1.1"   options="with_ploneproduct_dexterity,with_ploneproduct_cgeo,with_ploneproduct_pz3cform" />
+      <version p="plone.rfc822"                      v="1.0"   options="with_ploneproduct_dexterity,with_ploneproduct_cgeo" />
+      <version p="plone.supermodel"                  v="1.0.3" options="with_ploneproduct_dexterity,with_ploneproduct_cgeo" />
+      <version p="uuid"                              v="1.30"  options="with_ploneproduct_dexterity,with_ploneproduct_paasync" />
+      <version p="z3c.batching"                      v="1.1.0" options="with_ploneproduct_dexterity,with_ploneproduct_pz3cform" />
 
       <!-- /dexterity -->
       <version p='z3c.relationfield'       v='0.6.1'    options='with_ploneproduct_dexterity,with_ploneproduct_z3crelationfield'/>
@@ -54,7 +60,6 @@
 
       <version p="python-dateutil"         v="1.5"     options="with_ploneproduct_dexterity"/>
       <version p="python_dateutil"         v="1.5"     options="with_ploneproduct_dexterity"/> 
-
       <version p='martian'                 v='0.11.2'   options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
       <version p='zope.browserresource'    v='3.9.0'    options='with_ploneproduct_dexterity,with_ploneproduct_fivegrok' />
       <version p="plone.autoform"                    v="1.1" options="with_ploneproduct_dexterity,with_ploneproduct_cgeo,with_ploneproduct_pz3cform" />

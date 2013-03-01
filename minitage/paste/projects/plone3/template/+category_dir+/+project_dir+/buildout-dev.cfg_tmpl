@@ -32,22 +32,47 @@ extends-cache=etc/cache
 extends=etc/base.cfg 
     etc/backends/${devmode}.cfg 
     etc/project/cluster.cfg
-parts+= omelette
+parts+= 
     instance1
     instance2
     instance3
     instance4
-    ipzope
     devmode
     cg.devmode
-${i18ncomment}    i18ndude
+    tools
     zopeskel
-
+eggs += 
+    ipython
+    docutils
+    gprof2dot
+    profilehooks
+    pyprof2calltree
+    plone.reload 
+# Uncomment/Activate only if you want
+#   Products.PTProfiler
+#   Products.PDBDebugMode
+#   Products.Clouseau
+#   Products.DocFinderTab
+#   Products.Gloworm
+#   Products.MemoryProfiler
+#   Products.signalstack
+#   Products.ZopeProfiler
+zcml+=
 auto-checkout +=
-  Products.Gloworm
-  Products.MemoryProfiler
+    templer.core
+#    templer.buildout
+    templer.zope
+    templer.plone
+    templer.dexterity
+    templer.plonebuildout
+    templer.silva
+    templer.localcommands
+    templer.plone.localcommands
+    templer.plonecore
+# Uncomment/Activate only if you want
+#  Products.Gloworm
+#  Products.MemoryProfiler
 #    zopeskel
-
 
 [hosts]
 zope-front=\${hosts:instance}
@@ -60,6 +85,17 @@ zopeskel=svn https://svn.plone.org/svn/collective/ZopeSkel/trunk
 experimental.catalogqueryplan = svn https://svn.plone.org/svn/collective/experimental.catalogqueryplan/trunk
 Products.MemoryProfiler = svn https://svn.plone.org/svn/collective/Products.MemoryProfiler/trunk
 Products.Gloworm = git https://github.com/kiorky/Products.Gloworm.git
+templer.core                = git \${remotes:collective}/templer.core.git pushurl=\${remotes:collective_push}/templer.core.git
+templer.buildout            = git \${remotes:collective}/templer.buildout.git pushurl=\${remotes:collective_push}/templer.buildout.git
+templer.zope                = git \${remotes:collective}/templer.zope.git pushurl=\${remotes:collective_push}/templer.zope.git
+templer.plone               = git \${remotes:collective}/templer.plone.git pushurl=\${remotes:collective_push}/templer.plone.git
+templer.dexterity           = git \${remotes:collective}/templer.dexterity.git pushurl=\${remotes:collective_push}/templer.dexterity.git
+templer.plonebuildout       = git \${remotes:collective}/templer.plonebuildout.git pushurl=\${remotes:collective_push}/templer.plonebuildout.git
+templer.silva               = git \${remotes:collective}/templer.silva.git pushurl=\${remotes:collective_push}/templer.silva.git
+templer.localcommands       = git \${remotes:collective}/templer.localcommands.git pushurl=\${remotes:collective_push}/templer.localcommands.git
+templer.plone.localcommands = git \${remotes:collective}/templer.plone.localcommands.git pushurl=\${remotes:collective_push}/templer.plone.localcommands.git
+templer.plonecore           = svn https://svn.plone.org/svn/collective/templer.plonecore/trunk
+ 
 
 [versions]
 ctypes=1.0.2
@@ -70,26 +106,6 @@ plone.reload = 1.3
 [instance]
 verbose-security = on
 debug-mode=on
-#if $linux:
-#zcml+=collective.autorestart
-#end if
-#
-zcml+=
-eggs+= 
-    docutils
-    gprof2dot
-    Products.Clouseau
-    Products.DocFinderTab
-    Products.Gloworm
-    Products.MemoryProfiler
-    Products.signalstack
-    Products.ZopeProfiler
-    profilehooks
-    plone.reload
-
-# Uncomment/Activate only if you want
-#    Products.PTProfiler
-#    Products.PDBDebugMode
 
 #if $linux:
 # plone auto reloading facility relying on inotify.
@@ -102,7 +118,6 @@ eggs+=
 #    ctypes
 #    collective.autorestart
 #end if
-
 
 [zopepy]
 eggs +=
@@ -127,47 +142,22 @@ scripts +=
     release
     longtest
 #docutils
-    st2html.py
+    rst2html.py
     rst2latex.py
     rst2newlatex.py
     rst2pseudoxml.py
     rst2s5.py
     rst2xml.py
     rstpep2html.py
-
-# Aggregate all python packages on one directory to have all in one directory
-# its really great after to have it for  your tags generator or your IDE
-# see parts/omelette after running this part to understand :)
-[omelette]
-recipe = collective.recipe.omelette
-eggs = \${instance:eggs}
-products = \${productdistros:location}
-packages =\${instance:extra-paths}
-
-# a IPython Shell for interactive use with zope running.
-# you also need to put
-# https://svn.plone.org/svn/collective/dotipython/trunk/ipy_profile_zope.py
-# to your \$HOME/.ipython directory for the following to work.
-[ipzope]
-recipe = minitage.recipe.scripts
-# make the completyion work
-ipython-patches=\${zopepy:ipython-patches}
-ipython-patch-options=\${zopepy:ipython-patch-options}
-eggs = ipython
-        \${instance:eggs}
-initialization =
-        import sys, os
-#if $major < 4:
-        os.environ["SOFTWARE_HOME"] = "\${zope2:location}/lib/python"
-#end if
-        os.environ["INSTANCE_HOME"] = "\${instance:location}"
-        sys.argv[1:1] = "-p zope".split()
-extra-paths = \${zopepy:extra-paths}
-scripts = ipython=ipzope
+#ipython
+    ipython
+# profiling
+    gprof2dot
+    pyprof2calltree
 
 # not compatible with latest sphinx !
 # be aware not to have it on your site packages before enabling it !
-# To generate sphinx documentation, just run:
+collective To generate sphinx documentation, just run:
 # bin/buildout -vvvvvv -C dev.cfg sphinxbuilder
 # Please have a look on http://pypi.python.org/pypi/collective.recipe.sphinxbuilder/
 # To see how to use it.
@@ -189,16 +179,23 @@ ${zeocomment}    \${buildout:directory}/bin/zeoserver stop;
 ${zeocomment}    \${buildout:directory}/bin/zeoserver start;
     \${buildout:directory}/bin/devmode;
 
-
-[i18ndude]
+[tools]
 recipe=minitage.recipe.scripts
-eggs=i18ndude
-scripts=i18ndude
-
-[zopeskel]
-recipe=minitage.recipe.scripts
-eggs=zopeskel
-scripts=paster=zopeskel-standalone
-    templer=templer-standalone
+eggs=
+    i18ndude
+    babel
+    sphinx
+    zopeskel
+    toutpt.zopeskel
+    templer.dexterity
+    templer.buildout
+    templer.plone
+    templer.plone.localcommands
+    templer.zope
+scripts=
+    i18ndude
+    pybabel
+    templer
+    paster
 
 # vim:set ft=cfg:

@@ -194,22 +194,32 @@
       name: description to add as comment into the resulting buildout
     -->
   <versions>
-    <version p="zc.buildout"             v="1.5.2"  name="zc.buildout core stuff"/>
-    <version p="distribute"              v="0.6.18" name="zc.buildout core stuff"/>
+    <version p="zc.buildout"             v="1.6.3"  name="zc.buildout core stuff"/>
+    <version p="distribute"              v="0.6.30" name="zc.buildout core stuff"/>
     <version p="mocker"                  v="1.0"    name="zc.buildout core stuff"/>
     <version p="zc.recipe.egg"           v="1.3.2"  name="zc.buildout core stuff"/>
-    <version p="ipython"                 v="0.10"   name="IPython py2.4 compatible version"/>
-    <version p="CherryPy"                v="3.2.0"  name="pyramid base packages"/>
+    <version p="ipython"                 v="0.13.1" name="IPython py2.4 compatible version"/>
+    <version p="CherryPy"                v="3.2.2"  name="pyramid base packages"/>
 
-    <version p="SQLAlchemy"                   v="0.7.3" name="pyramid base packages"/>
-    <version p="cryptacular" v="1.2.1" name="pyramid base packages"/>
-    <version p="repoze.tm2" v="1.0b2" name="pyramid base packages"/>
-    <version p="Pygments" v="1.4"      name="pyramid base packages"/>
-    <version p="transaction" v="1.1.1" name="pyramid base packages"/>
+    <version p="nose"              v="1.2.1" name="pyramid base packages"/>
+    <version p="Mako"              v="0.7.3" name="pyramid base packages"/>
+    <version p="Chameleon"              v="2.1" name="pyramid base packages"/>
+    <version p="pyramid-debugtoolbar"              v="1.0.3" name="pyramid base packages"/>
+    <version p="repoze.lru"              v="0.6" name="pyramid base packages"/>
+    <version p="pbkdf2"                  v="1.3" name="pyramid base packages"/>
+    <version p="translationstring"       v="1.1" name="pyramid base packages"/>
+    <version p="gunicorn"                v="0.15.0" name="pyramid base packages"/>
+    <version p="MarkupSafe"              v="0.15" name="pyramid base packages"/>
+    <version p="sqlalchemy"              v="0.7.9" name="pyramid base packages"/>
+    <version p="SQLAlchemy"              v="0.7.9" name="pyramid base packages"/>
+    <version p="cryptacular"             v="1.4.1" name="pyramid base packages"/>
+    <version p="repoze.tm2"              v="1.0" name="pyramid base packages"/>
+    <version p="Pygments"                v="1.5"      name="pyramid base packages"/>
+    <version p="transaction"             v="1.3.0" name="pyramid base packages"/>
+    <version p="waitress" v="0.8.1" name="pyramid base packages"/>
 
-    <version p="egenix-mx-base"               v="3.2.1" name="pyramid base packages"/>
-    <version p="ipython"                      v="0.10"  name="pyramid base packages"/>
-    <version p="mr.developer"                 v="1.19"  name="pyramid base packages"/>
+    <version p="egenix-mx-base"               v="3.2.4" name="pyramid base packages"/>
+    <version p="mr.developer"                 v="1.22"  name="pyramid base packages"/>
     <version p="z3c.checkversions"            v="0.4.1" name="pyramid base packages"/>
     <version p="zc.recipe.testrunner"         v="1.4.0" name="pyramid base packages"/>
 
@@ -231,52 +241,52 @@
     <version p="pylint"                v="0.25.0" options="with_egg_pylint"  />
     <version p="Sphinx"                v="1.0.4"  options="with_egg_sphinx"  />
     <version p="greenlet"              v="0.3.1"  options="with_egg_greenlet"  />
-    <version p="pyramid-debugtoolbar"  v="0.9.4"  options="with_pyramid_debugtoolbar"/>
-    <version p="pyramid-exclog"        v="0.5"    options="with_pyramid_exclog"   />
-    <version p="pyramid-extdirect"     v="0.3"    options="with_pyramid_extdirect"/>
-    <version p="pyramid-formalchemy"   v="0.4.1"  options="with_pyramid_formalchemy" />
-    <version p="pyramid-formish"       v="0.1"    options="with_pyramid_formish"  />
-    <version p="pyramid-handlers"      v="0.3"    options="with_pyramid_handlers" />
-    <version p="pyramid-jinja2"        v="1.2"    options="with_pyramid_jinja2"   />
-    <version p="pyramid-pyctpp2"       v="0.2.0"  options="with_pyramid_pyctpp2"/>
-    <version p="pyramid-tm"            v="0.3"    options="with_pyramid_tm"       />
-    <version p="pyramid-zcml"          v="0.7"    options="with_pyramid_zcml"     />
-    <version p="pyramid-zodbconn"      v="0.2"    options="with_pyramid_zodbconn" />
-    <version p="pyramid-mailer"        v="0.4.1"  options="with_pyramid_mailer" />
-    <version p="pyramid-mongodb"       v="1.0"    options="with_pyramid_mongodb"     />
-    <version p="pyramid-mongoengine"   v="0.1"    options="with_pyramid_mongoengine" />
-    <version p="pyramid-xmlrpc"        v="0.1"    options="with_pyramid_xmlrpc"      />
-    <version p="pyramid-simpleform"    v="0.6.1"  options="with_pyramid_simpleform"/>
-    <version p="pyramid-rpc"           v="0.3"    options="with_pyramid_rpc"      />
-    <version p="pyramid-socketio"      v="0.8"    options="with_pyramid_socketio" />
-    <version p="pyramid-who"           v="0.2"    options="with_pyramid_who"      />
-    <version p="pyramid-traversalwrapper"    v="0.1"  options="with_pyramid_traversalwrapper"/>
-    <version p="pyramid-chameleon-genshi"    v="0.6" options="with_pyramid_chameleon_genshi"  />
-    <version p="pyramid-scaffolds-decoupled" v="1.0" options="with_pyramid_scaffolds_decouple" />
 
     <version p="pyOpenSSL"             v="0.11"   options="with_egg_pisa"  />
-    <version p="pyramid_debugtoolbar"  v="0.9.4"  options="with_pyramid_debugtoolbar"/>
-    <version p="pyramid_exclog"        v="0.5"    options="with_pyramid_exclog"   />
-    <version p="pyramid_extdirect"     v="0.3"    options="with_pyramid_extdirect"/>
-    <version p="pyramid_formalchemy"   v="0.4.1"  options="with_pyramid_formalchemy" />
-    <version p="pyramid_formish"       v="0.1"    options="with_pyramid_formish"  />
-    <version p="pyramid_handlers"      v="0.3"    options="with_pyramid_handlers" />
-    <version p="pyramid_jinja2"        v="1.2"    options="with_pyramid_jinja2"   />
-    <version p="pyramid_pyctpp2"       v="0.2.0"  options="with_pyramid_pyctpp2"/>
-    <version p="pyramid_tm"            v="0.3"    options="with_pyramid_tm"       />
-    <version p="pyramid_zcml"          v="0.7"    options="with_pyramid_zcml"     />
-    <version p="pyramid_zodbconn"      v="0.2"    options="with_pyramid_zodbconn" />
-    <version p="pyramid_mailer"        v="0.4.1"  options="with_pyramid_mailer" />
-    <version p="pyramid_mongodb"       v="1.0"    options="with_pyramid_mongodb"     />
-    <version p="pyramid_mongoengine"   v="0.1"    options="with_pyramid_mongoengine" />
-    <version p="pyramid_xmlrpc"        v="0.1"    options="with_pyramid_xmlrpc"      />
-    <version p="pyramid_simpleform"    v="0.6.1"  options="with_pyramid_simpleform"/>
-    <version p="pyramid_rpc"           v="0.3"    options="with_pyramid_rpc"      />
-    <version p="pyramid_socketio"      v="0.8"    options="with_pyramid_socketio" />
-    <version p="pyramid_who"           v="0.2"    options="with_pyramid_who"      />
-    <version p="pyramid_traversalwrapper"  v="0.1"  options="with_pyramid_traversalwrapper"/>
     <version p="pyramid_chameleon_genshi"  v="0.6" options="with_pyramid_chameleon_genshi"  />
+    <version p="pyramid-chameleon-genshi"  v="0.6" options="with_pyramid_chameleon_genshi"  />
+    <version p="pyramid_debugtoolbar"  v="0.9.4"  options="with_pyramid_debugtoolbar"/>
+    <version p="pyramid-debugtoolbar"  v="0.9.4"  options="with_pyramid_debugtoolbar"/>
+    <version p="pyramid_exclog"        v="0.5"    options="with_pyramid_exclog"   />
+    <version p="pyramid-exclog"        v="0.5"    options="with_pyramid_exclog"   />
+    <version p="pyramid_extdirect"     v="0.3"    options="with_pyramid_extdirect"/>
+    <version p="pyramid-extdirect"     v="0.3"    options="with_pyramid_extdirect"/>
+    <version p="pyramid_formalchemy"   v="0.4.1"  options="with_pyramid_formalchemy" />
+    <version p="pyramid-formalchemy"   v="0.4.1"  options="with_pyramid_formalchemy" />
+    <version p="pyramid_formish"       v="0.1"    options="with_pyramid_formish"  />
+    <version p="pyramid-formish"       v="0.1"    options="with_pyramid_formish"  />
+    <version p="pyramid_handlers"      v="0.3"    options="with_pyramid_handlers" />
+    <version p="pyramid-handlers"      v="0.3"    options="with_pyramid_handlers" />
+    <version p="pyramid_jinja2"        v="1.2"    options="with_pyramid_jinja2"   />
+    <version p="pyramid-jinja2"        v="1.2"    options="with_pyramid_jinja2"   />
+    <version p="pyramid_mailer"        v="0.4.1"  options="with_pyramid_mailer" />
+    <version p="pyramid-mailer"        v="0.4.1"  options="with_pyramid_mailer" />
+    <version p="pyramid_mongodb"       v="1.0"    options="with_pyramid_mongodb"     />
+    <version p="pyramid-mongodb"       v="1.0"    options="with_pyramid_mongodb"     />
+    <version p="pyramid_mongoengine"   v="0.1"    options="with_pyramid_mongoengine" />
+    <version p="pyramid-mongoengine"   v="0.1"    options="with_pyramid_mongoengine" />
+    <version p="pyramid_pyctpp2"       v="0.2.0"  options="with_pyramid_pyctpp2"/>
+    <version p="pyramid-pyctpp2"       v="0.2.0"  options="with_pyramid_pyctpp2"/>
+    <version p="pyramid_rpc"           v="0.3"    options="with_pyramid_rpc"      />
+    <version p="pyramid-rpc"           v="0.3"    options="with_pyramid_rpc"      />
     <version p="pyramid_scaffolds_decoupled" v="1.0" options="with_pyramid_scaffolds_decouple" />
+    <version p="pyramid-scaffolds-decoupled" v="1.0" options="with_pyramid_scaffolds_decouple" />
+    <version p="pyramid_simpleform"    v="0.6.1"  options="with_pyramid_simpleform"/>
+    <version p="pyramid-simpleform"    v="0.6.1"  options="with_pyramid_simpleform"/>
+    <version p="pyramid_socketio"      v="0.8"    options="with_pyramid_socketio" />
+    <version p="pyramid-socketio"      v="0.8"    options="with_pyramid_socketio" />
+    <version p="pyramid_tm"            v="0.3"    options="with_pyramid_tm"       />
+    <version p="pyramid-tm"            v="0.3"    options="with_pyramid_tm"       />
+    <version p="pyramid_traversalwrapper"  v="0.1"  options="with_pyramid_traversalwrapper"/>
+    <version p="pyramid-traversalwrapper"    v="0.1"  options="with_pyramid_traversalwrapper"/>
+    <version p="pyramid_who"           v="0.2"    options="with_pyramid_who"      />
+    <version p="pyramid-who"           v="0.2"    options="with_pyramid_who"      />
+    <version p="pyramid_xmlrpc"        v="0.1"    options="with_pyramid_xmlrpc"      />
+    <version p="pyramid-xmlrpc"        v="0.1"    options="with_pyramid_xmlrpc"      />
+    <version p="pyramid_zcml"          v="0.7"    options="with_pyramid_zcml"     />
+    <version p="pyramid-zcml"          v="0.7"    options="with_pyramid_zcml"     />
+    <version p="pyramid_zodbconn"      v="0.2"    options="with_pyramid_zodbconn" />
+    <version p="pyramid-zodbconn"      v="0.2"    options="with_pyramid_zodbconn" />
     <version p="reportlab"             v="2.5"    options="with_tool_reportlab,with_egg_pisa"  />
   </checkedversions>
   <!--

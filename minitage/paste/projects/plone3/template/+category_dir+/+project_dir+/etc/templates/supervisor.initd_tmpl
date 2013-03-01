@@ -36,7 +36,7 @@ RETVAL=0
 start() {
     echo -n "Starting \$name: "
     if [[ `whoami` == root ]];then
-        su \$EFFECTIVE_USER -c "if [ -f "\$envf" ];then source \$envf;fi;\$supervisord"
+        su \$EFFECTIVE_USER -c "bash -c \"if [ -f "\$envf" ];then source \$envf;fi;\$supervisord\""
     else
       if [ -f "\$envf" ];then source \$envf;fi;"\$supervisord"
     fi

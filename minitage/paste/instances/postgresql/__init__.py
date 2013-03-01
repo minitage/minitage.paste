@@ -43,7 +43,7 @@ from minitage.core.common import remove_path, which
 from paste.script import templates
 
 re_flags = re.M|re.U|re.I|re.S
-running_user = getpass.getuser()
+from minitage.paste.common import running_user, gid, group
 special_chars_re = re.compile('[-._@|{(\[|)\]}]', re_flags)
 
 class Template(common.Template):

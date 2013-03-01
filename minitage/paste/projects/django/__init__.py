@@ -40,10 +40,7 @@ from minitage.paste.projects import common
 from minitage.paste.common import var as pvar
 from minitage.core.common import  search_latest
 
-
-running_user = getpass.getuser()
-gid = pwd.getpwnam(running_user)[3]
-group = grp.getgrgid(gid)[0]
+from minitage.paste.common import running_user, gid, group
 
 default_config = pkg_resources.resource_filename('minitage.paste', 'projects/django/minitage.django.xml')
 user_config = os.path.join( os.path.expanduser('~'), '.minitage.django.xml')

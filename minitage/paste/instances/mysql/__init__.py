@@ -252,8 +252,7 @@ WITH GRANT OPTION;
         print "Those informations have been saved in %s." % README
 
 Template.required_templates = ['minitage.instances.env']
-running_user = getpass.getuser()
-gid = pwd.getpwnam(running_user)[3]
+from minitage.paste.common import running_user, gid, group
 #group = grp.getgrgid(gid)[0]
 Template.vars = common.Template.vars + \
                 [

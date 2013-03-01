@@ -62,6 +62,7 @@ zope-front=\${ports:instance1}
 #end if
 ${hapcomment}zope-front=\${ports:balancer}
 webdav = $http_port10
+workermonitor=$http_port12
 
 
 [buildbot]
@@ -78,7 +79,9 @@ repozo-daily=05 1 * * *
 # only sunday at 1:10am
 repozo-weekly=10 1 * * 6
 # number of backups to rotate
-nb_backups_to_keep=16
+nb_backups_to_keep=35
+# number of  fimm backups to rotate
+nb_fullbackups_to_keep=5
 
 #if 'relstorage' in $mode:
 [database]

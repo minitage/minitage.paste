@@ -1,24 +1,14 @@
 ##############################################################################
-# Django  '$project' BUILDOUT
+# Pyramid  '$project' BUILDOUT
 #
-#   You have wrappers for classical scripts:
-#       * bin/${project}.manage
-#       * bin/django-admin.py
-#
-#   To run in WSGI, a long word to say how to start to serve your project:
-#
-#      bin/paster serve  --reload etc/paster.ini
+#   To run your project, use supervisor (bin/supervisord & bin/supervisorctl)
 #
 ##############################################################################
 
 
 #set $slashdn = $project.replace('.', '/')
 [buildout]
-extends=
-    etc/base.cfg
-    etc/sys/maintenance.cfg
-    etc/project/cluster.cfg
-mode=prod
+extends=etc/base.cfg
 parts+=instance1
     instance2
     instance3
@@ -36,6 +26,5 @@ parts+=instance1
 debug=false
 intercept_exc_debug=false
 debugtoolbar.eval_exc=false
-
 
 \# vim:set et ts=4 sts=4 ft=cfg:

@@ -42,10 +42,8 @@ from minitage.paste.projects import common
 from minitage.paste.common import var as pvar
 from minitage.core.common import  search_latest
 
+from minitage.paste.common import running_user, gid, group
 
-running_user = getpass.getuser()
-gid = pwd.getpwnam(running_user)[3]
-group = grp.getgrgid(gid)[0]
 
 default_config = pkg_resources.resource_filename('minitage.paste', 'projects/pyramid/minitage.pyramid.xml')
 user_config = os.path.join( os.path.expanduser('~'), '.minitage.pyramid.xml')
@@ -82,7 +80,7 @@ base_pyramid_eggs = ['pyramid',
                      'repoze.tm2',
                      #'pyramid_who', 
                      'cryptacular',
-                     'PasteDeploy', 'Paste',
+                     'PasteDeploy', 'waitress',
                      'WebOb', 'WebError', 'repoze.vhm',
                      'CherryPy', 'gunicorn',]
 class Template(common.Template):
@@ -90,7 +88,7 @@ class Template(common.Template):
     summary = 'Template for creating a '\
             'basic pyramid project inside minitage'
     _template_dir = pkg_resources.resource_filename('minitage.paste', 'projects/pyramid/template')
-    python                     = 'python-2.6'
+    python                     = 'python-2.7'
     init_messages = ()
 
     # buildout <-> minitage config vars mapping

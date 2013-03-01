@@ -10,6 +10,9 @@ extra-paths+=
 # better have mr.developer mananing your eggs, see sources.cfg
 develop=
 eggs=
+    \${buildout:package}
+package=\${settings:application}
+package-extras=
 
 [sources]
 # see http://pypi.python.org/pypi/mr.developer for documentation
@@ -19,8 +22,8 @@ eggs=
 recipe=minitage.recipe.scripts
 # attacking zopepy:eggs make instance be built after zopepy
 # in any case thx to the buildout automatic parts sort.
-extra-paths+=\${buildout:extra-paths}
-eggs += \${buildout:eggs}
+extra-paths=\${buildout:extra-paths}
+eggs = \${buildout:eggs}
     z3c.checkversions
 #for $product in $additional_eggs
 #if product.startswith('#')
@@ -30,10 +33,16 @@ $product
 #end if
 #end for
 # Scripts generated filtering
-scripts+=
-#z3c.checkversions
+scripts=
+    bfg2pyramid
+    pcreate
+    pserve
+    pshell
+    proutes
+    pviews
+    ptweens
+    prequest
     checkversions
-#zope2
     paster#slurp
 #for $product in $plone_scripts:
 #if product.startswith('#'):
@@ -44,7 +53,6 @@ ${product}
 #end for
 interpreter = pyramidpy
 env-file=\${buildout:directory}/etc/${project}.env
-
 dependent-scripts=true
 #paster-initialization=
 
@@ -68,13 +76,17 @@ packages =\${scripts:extra-paths}
 # It is useful for generating reports for hudson or other contineous integration
 [${sane_name}.test]
 recipe = collective.xmltestreport
-eggs = \${scripts:eggs}
+eggs =
+    \${buildout:package} \${buildout:package-extras}
+    \${scripts:eggs}
 extra-paths = \${scripts:extra-paths}
-defaults = ['--exit-with-status', '--auto-color', '--auto-progress']
+defaults = ['--exit-with-status', '--auto-color', '--auto-progress', '-s', '\${buildout:package}']
 environment = testenv
 
 [instance]
+name = instance
 recipe = collective.recipe.template
+server = egg:waitress#main
 # set here your project application wsgi application
 egg=\${settings:application}
 ep=\${instance:egg}
@@ -91,5 +103,9 @@ commit_veto = pyramid_tm.default_commit_veto
 # scheme type can be zeo | file
 # see https://docs.pylonsproject.org/projects/pyramid_zodbconn/dev/
 zodb = zeo://\${hosts:zeo}:\${ports:zeo}
+
+[supervisor]
+programs =
+${si1}    60 instance \${buildout:directory}/bin/paster [serve --pid-file=${buildout:directory}/var/instance1.pid  --log-file=\${buildout:directory}/var/log/instance.log \${buildout:directory}/etc/wsgi/instance.ini] \${buildout:directory} true \${users:pyramid}
 
 # vim:set ft=cfg:

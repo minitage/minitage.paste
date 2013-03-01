@@ -49,21 +49,23 @@ $product
 #end for
 
 # various addons pre configurations
+pyramid.default_locale_name = en
 mako.directories=\${instance:egg}:templates
 pyramid.debug_all=\${instance:debug}
-pyramid.debug_routematch=\${instance:debug}
-pyramid.debug_templates=\${instance:debug}
+#pyramid.debug_authorization=\${instance:debug}
+#pyramid.debug_routematch=\${instance:debug}
+#pyramid.debug_templates=\${instance:debug}
 pyramid.reload_all=\${instance:debug}
-pyramid.reload_assets=\${instance:debug}
-pyramid.reload_resources=\${instance:debug}
-pyramid.reload_templates=\${instance:debug}
+#pyramid.reload_assets=\${instance:debug}
+#pyramid.reload_resources=\${instance:debug}
+#pyramid.reload_templates=\${instance:debug}
+pyramid.includes =
+    pyramid_debugtoolbar
 
-#if $with_pyramid_debugtoolbar
 #debug toolbar
 debugtoolbar.intercept_exc=\${instance:intercept_exc_debug}
 debugtoolbar.eval_exc=\${instance:debug}
 debugtoolbar.enabled=\${instance:debug}
-#end if
 
 #if $with_pyramid_tm
 # pyramid_tm
@@ -140,7 +142,7 @@ formatter = generic
 # Handler for writing access.log style log lines to an "access.log" file
 [handler_fconsole]
 class = FileHandler
-args = ('\${buildout:directory}/var/log/console.log','a')
+args = ('\${buildout:directory}/var/log/\${name}console.log','a')
 level = INFO
 formatter = generic
 
@@ -148,14 +150,14 @@ formatter = generic
 # Handler for writing access.log style log lines to an "access.log" file
 [handler_accesslog]
 class = FileHandler
-args = ('\${buildout:directory}/var/log/access.log','a')
+args = ('\${buildout:directory}/var/log/\${name}access.log','a')
 level = INFO
 formatter = accesslog
 
 # Handler for writing error messages to an "error.log" file
 [handler_errorlog]
 class = FileHandler
-args = ('\${buildout:directory}/var/log/error.log','a')
+args = ('\${buildout:directory}/var/log/\${name}.error.log','a')
 level = WARNING
 formatter = generic
 
@@ -169,7 +171,7 @@ format = %(asctime)s %(name)s[%(levelname)s] %(message)s
 format = %(message)s
 
 [server:main]
-use=egg:Paste#http
+use=\${server}
 host=\${host}
 port=\${port}
 

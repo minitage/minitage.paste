@@ -70,7 +70,6 @@ parts =
 #end if
     productdistros
     instance
-    instance
 ${asynccomment}    instance-worker
     zopepy
     backup
