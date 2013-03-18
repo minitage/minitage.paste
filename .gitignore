@@ -3,3 +3,10 @@
 minitage/paste/projects/plone41/checkout/
 dist
 *egg-info
+*pyc
+*egg-info
+dist
+eggs/
+develop-eggs/
+.installed.cfg
+bin

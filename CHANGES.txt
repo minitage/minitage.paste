@@ -3,10 +3,16 @@ CHANGES
 ==============
 
 
-1.4.3 (unreleased)
+1.4.4 (unreleased)
 ------------------
 
 - Nothing changed yet.
+
+
+1.4.3 (2013-03-01)
+------------------
+
+- fix broken dep
 
 
 1.4.2 (2012-09-10)
