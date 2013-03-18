@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!-- This configuration file supports some kind of inheritment.
+  You can overwrite, add things or purge
+  To purge,only write your element in the purge node like the others and read the code to see what you can do
+-->
+<root>
+  <template>
+    <options>
+    </options>
+    <versions>
+    </versions>
+    <checkedversions>
+      <version p='collective.js.jqueryui'  v='1.10.1.2' options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
+    </checkedversions>
+    <gs>
+    </gs>
+  </template>
+  <purge>
+    <options>
+    </options>
+    <versions>
+    </versions>
+    <checkedversions>
+      <version p='collective.js.jqueryui'                  v='1.8.16.9' options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
+    </checkedversions>
+    <gs>
+    </gs>
+  </purge>
+</root>

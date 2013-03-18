@@ -287,7 +287,10 @@ log_filename='postgresql-%(p)sY-%(p)sm-%(p)sd.log'
         return vars
 
 Template.required_templates = ['minitage.instances.env']
-gid = pwd.getpwnam(running_user)[3]
+try:
+    gid = pwd.getpwnam(running_user)[3]
+except:
+    gid = 'users'
 #group = grp.getgrgid(gid)[0]
 Template.vars = common.Template.vars + \
                 [

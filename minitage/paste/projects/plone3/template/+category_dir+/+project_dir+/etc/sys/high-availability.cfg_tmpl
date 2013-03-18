@@ -45,6 +45,11 @@ $hr
 #else:
 #set $si4='#'
 #end if  
+#if $with_ploneproduct_etherpad
+#set $etherpadcomment=''
+#else:
+#set $etherpadcomment='#'
+#end if 
 
 
 [haproxy-build]
@@ -54,7 +59,7 @@ target=generic
 
 [supervisor]
 recipe = collective.recipe.supervisor
-port = \${ports:supervisor}
+port = \${hosts:supervisor}:\${ports:supervisor}
 user = \${supervisor-webadmin:user}
 password = \${supervisor-webadmin:password}
 serverurl = http://\${hosts:supervisor}:\${ports:supervisor}
@@ -78,6 +83,7 @@ ${si4}    24 instance4 \${buildout:directory}/parts/instance4/bin/runzope true \
 ${sgdgcomment}    40 instance-newsletter \${buildout:directory}/parts/instance-newsletter/bin/runzope  true \${users:zope}
 #end if
 ${hapcomment}     50 balancer  \${supervisor:haproxy-path} [-f \${buildout:directory}/etc/loadbalancing/balancer.conf -db]       true \${users:zope}
+${etherpadcomment} 60 etherpad \${buildout:directory}/bin/node [node_modules/ep_etherpad-lite/node/server.js] \${etherpad-lite:location}/bin true \${users:zope} 
 
 [supervisor-initd]
 recipe = collective.recipe.template

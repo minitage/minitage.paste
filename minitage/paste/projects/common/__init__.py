@@ -305,10 +305,10 @@ Template.vars = common.Template.vars + \
                     'static can be used for both '
                     'http, ftp and file:// uris: '
                     '(only useful in a minitage)',
-                    default = 'hg',),
+                    default = 'git',),
          common.var('uri',
                     'Url of the project to checkout (only useful in a minitage)',
-                    default = 'http://hg.foo.net',),
+                    default = 'git@gitorious-git.makina-corpus.net/',),
          common.var('install_method',
                     'The install method of your minibuild '
                     '(only useful in a minitage)',

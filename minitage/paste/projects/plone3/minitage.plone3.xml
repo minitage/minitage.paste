@@ -550,8 +550,8 @@
     <version p='p4a.videoembed'                 v='1.1'     options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.video'                      v='1.3'     options="with_ploneproduct_p4a_vid"/>
     <version p='p4a.z2utils'                    v='1.0.2'   options="with_ploneproduct_p4a_vid"/>
-    <version p='plomino.tinymce'                v='0.7.1'   options="with_ploneproduct_plominotinymce"/>
-    <version p='Products.CMFPlomino'            v='1.16.1'   options="with_ploneproduct_plominotinymce,with_ploneproduct_plomino"/>
+    <version p='plomino.tinymce'                v='0.7.2'   options="with_ploneproduct_plominotinymce"/>
+    <version p='Products.CMFPlomino'            v='1.16.4'   options="with_ploneproduct_plominotinymce,with_ploneproduct_plomino"/>
     <version p='Plomino'                        v='1.13.4'   options="with_ploneproduct_plominotinymce,with_ploneproduct_plomino"/>
     <version p="plone.app.blob"                 v="1.5.1"     options="with_ploneproduct_ploneappblob"/>
     <version p="plone.app.jquerytools"          v="1.4b1"   options="with_ploneproduct_plonejqtools"/>

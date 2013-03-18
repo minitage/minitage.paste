@@ -27,6 +27,11 @@ $hr
 #else
 #set $asynccomment='#'
 #end if
+#if $with_ploneproduct_etherpad
+#set $etherpadcomment=''
+#else:
+#set $etherpadcomment='#'
+#end if  
 
 [buildout]
 sources=sources
@@ -50,6 +55,12 @@ extra-paths=
 sources = sources
 # auto tracked developement products, see project/sources.cfg
 [sources] 
+
+[lxml]
+recipe = z3c.recipe.staticlxml
+egg = lxml
+build-libxslt=true
+build-libxml2=true
 
 #if $major < 4
 # Zope operating instances are created elsewhere.
@@ -112,7 +123,7 @@ extra-paths = \${buildout:extra-paths}
 eggs = \${buildout:eggs}
     zopelib
 # security hotfixes
-    Products.PloneHotfix20110720
+#    Products.PloneHotfix20110720
 #for $product in $additional_eggs:
 #if product.startswith('#'):
 $product
@@ -342,19 +353,32 @@ packages = #slurp
 recipe = plone.recipe.command
 update-command = \${mkdirs:command}
 command = 
+    mkdir -pv \${locations:tmp};
+    mkdir -pv \${buildout:directory}/var/log/apache;
+    mkdir -pv \${buildout:directory}/var/log/nginx;
+
+
+ 
+[chmod]
+# This recipe is used to set permissions -- and ownership for root mode installs
+recipe = plone.recipe.command
+update-command = \${chmod:command} 
+command =
+    chmod 600 .installed.cfg
+    find \${buildout:directory}/var -type d -exec chmod 700 {} \;
+    chmod 744 \${buildout:directory}/bin/*;
+    chmod -R 740 \${buildout:directory}/parts/;
 
 [chown]
 # This recipe is used to set permissions -- and ownership for root mode installs
 recipe = plone.recipe.command
 update-command = \${chown:command} 
 command =
-    chmod 600 .installed.cfg
     find \${buildout:directory} -type d -name var -exec chown -R \${users:zope} {} \;
     find \${buildout:eggs-directory} -type d -name LC_MESSAGES -exec chown -R \${users:zope} {} \;
     find \${buildout:eggs-directory}/Products.kupu* -type d -name i18n -exec chown -R \${users:zope} {} \;
     find \${buildout:directory} -name runzope -exec chown \${users:zope} {} \;
-    find \${buildout:directory}/var -type d -exec chmod 700 {} \;
-    chmod 744 \${buildout:directory}/bin/*
+
 
 [backup]
 recipe = collective.recipe.backup
@@ -368,14 +392,53 @@ keep_blob_days=\${crons:nb_backups_to_keep}
 recipe = plone.recipe.command
 update-command = \${touch:command}
 command =  
-    touch \${buildout:directory}/var/log/instance1.log\;
-    touch \${buildout:directory}/var/log/instance.log\;
-    touch \${buildout:directory}/var/log/instance2.log\;
-    touch \${buildout:directory}/var/log/instance3.log\;
-    touch \${buildout:directory}/var/log/instance4.log\;
-    touch \${buildout:directory}/var/log/main.log\;
-    touch \${buildout:directory}/var/log/transform.log\;
+    touch \${buildout:directory}/var/log/instance1.log;
+    touch \${buildout:directory}/var/log/instance.log;
+    touch \${buildout:directory}/var/log/instance2.log;
+    touch \${buildout:directory}/var/log/instance3.log;
+    touch \${buildout:directory}/var/log/instance4.log;
+    touch \${buildout:directory}/var/log/main.log;
+    touch \${buildout:directory}/var/log/transform.log;
 
+${etherpadcomment}[etherpad-lite]
+${etherpadcomment}recipe=hexagonit.recipe.download
+${etherpadcomment}url=https://github.com/ether/etherpad-lite/archive/\${versions:etherpad}.zip
+${etherpadcomment}strip-top-level-dir=true
+${etherpadcomment}
+${etherpadcomment}[etherpad-sh]
+${etherpadcomment}recipe=collective.recipe.template
+${etherpadcomment}output = \${buildout:directory}/bin/etherpad.sh
+${etherpadcomment}mode = 755
+${etherpadcomment}input = inline:
+${etherpadcomment}    #! /bin/sh
+${etherpadcomment}    export PATH=\${buildout:directory}/bin:\$PATH
+${etherpadcomment}    cd \${etherpad-lite:location}
+${etherpadcomment}    ./bin/run.sh
+${etherpadcomment}
+${etherpadcomment}[etherpad-config]
+${etherpadcomment}recipe=collective.recipe.template
+${etherpadcomment}input = \${buildout:directory}/etc/templates/pad.settings.json.template
+${etherpadcomment}output = \${etherpad-lite:location}/settings.json
+${etherpadcomment}title=Etherpad for Plone
+${etherpadcomment}ip=\${hosts:etherpad}
+${etherpadcomment}port=\${ports:etherpad}
+${etherpadcomment}dbType=dirty
+${etherpadcomment}dbSettings={"filename" : "var/dirty.db"}
+${etherpadcomment}requireSession=true
+${etherpadcomment}editOnly=false
+${etherpadcomment}adminPassword=\${zope:password}
+${etherpadcomment}
+${etherpadcomment}[etherpad-apikey]
+${etherpadcomment}recipe=collective.recipe.template
+${etherpadcomment}output = \${etherpad-lite:location}/APIKEY.txt
+${etherpadcomment}input = inline:
+${etherpadcomment}    PLONEAPIKEY
+${etherpadcomment}
+${etherpadcomment}
 
- 
+[nodejs]
+recipe = gp.recipe.node
+npms = coffee-script less
+scripts = coffee lessc npm
+url = http://nodejs.org/dist/v\${versions:nodejs}/node-v\${versions:nodejs}.tar.gz
 # vim:set ft=cfg:

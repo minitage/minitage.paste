@@ -26,8 +26,8 @@ python=python${pyver}
 #else
 #python=python${pyver}
 #end if
-find-links+=http://distfiles.minitage.org/public/externals/minitage/
 eggs-directory=\${minitage:location}/eggs/cache
+parts-=lxml
 extra-paths+=
     \${libxml2:site-packages}
     \${libxslt:site-packages}

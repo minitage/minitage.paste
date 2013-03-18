@@ -432,18 +432,11 @@ class Template(common.Template):
         # be sure our special python is in priority
         vars['opt_deps'] = re.sub('\s*%s\s*' % self.python, ' ', vars['opt_deps'])
         vars['opt_deps'] += " %s" % self.python
-        vars['http_port1'] = int(vars['http_port']) + 1
-        vars['http_port2'] = int(vars['http_port']) + 2
-        vars['http_port3'] = int(vars['http_port']) + 3
-        vars['http_port4'] = int(vars['http_port']) + 4
-        vars['http_port5'] = int(vars['http_port']) + 5
-        vars['http_port_buildbot'] = int(vars['http_port']) + 6
-        vars['http_port6'] = int(vars['http_port']) + 7
-        vars['http_port7'] = int(vars['http_port']) + 8
-        vars['http_port9'] = int(vars['http_port']) + 9
-        vars['http_port10'] = int(vars['http_port']) + 10
-        vars['http_port11'] = int(vars['http_port']) + 11
-        vars['http_port12'] = int(vars['http_port']) + 12
+
+        for port in range(500):
+            vars['http_port%s'%port] = int(
+                vars['http_port']) + port
+        vars['http_port_buildbot'] = int(vars['http_port']) + port + 1
         vars['zeo_port_buildbot'] = ''
         if 'socket' == vars['zeo_port'].strip():
             vars['zeo_port_buildbot'] = int(vars['zeo_port']) + 1

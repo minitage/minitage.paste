@@ -11,6 +11,11 @@
 #set $hapcomment='#'
 #end if
 
+#if $with_ploneproduct_etherpad
+#set $etherpadcomment=''
+#else:
+#set $etherpadcomment='#'
+#end if 
 [reverse_proxy]
 scheme=$reverseproxy_scheme
 host=$reverseproxy_host
@@ -25,6 +30,8 @@ instance1=$address
 instance2=$address
 instance3=$address
 instance4=$address
+${etherpadcomment}etherpad=$address
+supervisor=$supervisor_host
 webdav=$address
 instance-worker=$address
 instance-newsletter=$address
@@ -63,6 +70,7 @@ zope-front=\${ports:instance1}
 ${hapcomment}zope-front=\${ports:balancer}
 webdav = $http_port10
 workermonitor=$http_port12
+${etherpadcomment}etherpad=$http_port13
 
 
 [buildbot]
@@ -149,6 +157,11 @@ blob-backups=\${buildout:directory}/var/blobbackups
 fss-backups=\${buildout:directory}/var/fssbackups 
 staging=$staging_path
 
+
+[v]
+project=${project} 
+
+
 # if you want separated FSS directories, you can use that
 #testfss-backup1= \${buildout:directory}/parts/instance1/var/fss_backup
 #testfss-storage1=\${buildout:directory}/parts/instance1/var/fss_storage
@@ -168,6 +181,9 @@ staging=$staging_path
 #fss-backup4= \${buildout:directory}/var/fss_backup4_${project}
 #fss-storage4=\${buildout:directory}/var/fss_storage4_${project}
 
+[apache_vhost]
+listen=*
+
 [buildout]
 timeout=3
 
@@ -176,4 +192,27 @@ sourceforge = ovh.dl.sourceforge.net
 minitage = distfiles.minitage.org/public/externals/minitage
 plone = plone.org
 zope = download.zope.org
+allow-hosts =
+     *localhost*
+     *willowrise.org*
+     *plone.org*
+     *zope.org*
+     *effbot.org*
+     *python.org*
+     *initd.org*
+     *googlecode.com*
+     *plope.com*
+     *bitbucket.org*
+     *repoze.org*
+     *crummy.com*
+     *minitage.org*
+     *bpython-interpreter.org*
+     *stompstompstomp.com*
+     *ftp.tummy.com*
+     *pybrary.net*
+     *www.tummy.com*
+     *www.riverbankcomputing.com*
+     *.selenic.com* 
+
+
 # vim:set ft=cfg:

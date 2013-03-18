@@ -4,15 +4,15 @@
 # description: supervisor init script
 
 ${sharp}${sharp}${sharp} BEGIN INIT INFO
-${sharp} Provides:          $project
+${sharp} Provides:          \${v:project}
 ${sharp} Required-Start:    \$syslog \$network \$time
 ${sharp} Required-Stop:     \$syslog \$network
 ${sharp} Should-Start:
 ${sharp} Should-Stop:
 ${sharp} Default-Start:     2 3 4 5
 ${sharp} Default-Stop:      0 1 6
-${sharp} Short-Description: $project
-${sharp} Description:       $project
+${sharp} Short-Description: \${v:project}
+${sharp} Description:       \${v:project}
 ${sharp}${sharp}${sharp} END INIT INFO
 
 
@@ -22,7 +22,7 @@ INSTANCE_PATH="\${buildout:directory}"
 INSTANCE_NAME="\$(basename \${buildout:directory})"
 supervisorctl="\${buildout:directory}/bin/supervisorctl"
 supervisord="\${buildout:directory}/bin/supervisord"
-name="supervisord_\$INSTANCE_NAME"
+name="supervisord_\${v:project}_\$INSTANCE_NAME"
 lock="\${buildout:directory}/var/\$name "
 
 export TMPDIR

@@ -40,7 +40,6 @@ parts+=
     devmode
     cg.devmode
     tools
-    zopeskel
 eggs += 
     ipython
     docutils
@@ -154,20 +153,6 @@ scripts +=
 # profiling
     gprof2dot
     pyprof2calltree
-
-# not compatible with latest sphinx !
-# be aware not to have it on your site packages before enabling it !
-collective To generate sphinx documentation, just run:
-# bin/buildout -vvvvvv -C dev.cfg sphinxbuilder
-# Please have a look on http://pypi.python.org/pypi/collective.recipe.sphinxbuilder/
-# To see how to use it.
-#[sphinxbuilder]
-#recipe = collective.recipe.sphinxbuilder
-#project = $project
-#suffix = .rst
-#author = You
-#dot = _
-
 
 [goto-devmode]
 recipe = plone.recipe.command

@@ -1,6 +1,10 @@
+cron_scripts/
+etc/init.d/
+etc/loadbalancing/
+etc/logrotate.conf
+etc/sys/settings-prod.cfg
 bin
 develop-eggs/
-etc/apache/100-${project}.reverseproxy.conf
 etc/forespir.env
 etc/hudson/$project/build/activate_env.sh
 etc/hudson/$project/config.xml
@@ -20,3 +24,7 @@ t
 var
 src.mrdeveloper/zopelib/zopelib.egg-info
 *.env
+etc/apache/100*.reverseproxy.conf
+var/log/instance?.log
+var/log/apache/*.log
+etc/project/${project}-kgs.cfg

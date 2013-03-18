@@ -69,5 +69,6 @@ ${fsscomment}    fss4
 #    supervisor
 #end if
     chown
+    chmod
 
 \# vim:set ft=cfg:

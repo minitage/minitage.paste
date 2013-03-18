@@ -1,6 +1,7 @@
 # BASE VERSIONS PINNING
 
 [versions]
+
 # never ever pin paste and other base eggs
 Paste =
 PasteDeploy =
@@ -46,10 +47,6 @@ $version[0] = $version[1]
 #end if
 #end for
 
-# on Upgrades
-# Think to change the plone release URL !!!
-# FOR PILWTOK
-find-links += http://download.zope.org/distribution/
 
 #if  ($major < 4)
 # various zope3 packages needed by various plone3+ products in a zope2 installation
@@ -72,5 +69,12 @@ zope.sendmail = 3.5.1
 zope.site = 3.6.1
 zope.testing = 3.8.1
 zope.securitypolicy = 3.4.1
+#end if
+etherpad = 1.2.7
+#if $with_ploneproduct_etherpad
+nodejs = 0.8.9
+#nodejs = 0.10.0
+#else
+nodejs = 0.10.0
 #end if
 # vim:set ft=cfg:
