@@ -28,6 +28,11 @@ $hr
 #else
 #set $eventcomment='#'
 #end if
+#if $with_ploneproduct_etherpad
+#set $etherpadcomment=''
+#else:
+#set $etherpadcomment='#'
+#end if   
 
 [buildout]
 extensions = buildout.minitagificator mr.developer jarn.setuptoolsfixer buildout.dumppickedversions
@@ -92,6 +97,10 @@ ${zeocomment}    instance-plain
     ${sane_name}_hudson_job
     ${sane_name}_hudson_deploy
     ${sane_name}_hudson_chmod
+${etherpadcomment}    etherpad-lite
+${etherpadcomment}    etherpad-sh
+${etherpadcomment}    etherpad-config
+${etherpadcomment}    etherpad-apikey
     chmod
 
 \# vim: set ft=cfg:
