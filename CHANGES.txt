@@ -6,7 +6,7 @@ CHANGES
 1.4.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- fix release
 
 
 1.4.3 (2013-03-01)
