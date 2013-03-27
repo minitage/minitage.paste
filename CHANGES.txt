@@ -3,10 +3,16 @@ CHANGES
 ==============
 
 
-1.4.4 (unreleased)
+1.4.5 (unreleased)
 ------------------
 
 - Nothing changed yet.
+
+
+1.4.4 (2013-03-25)
+------------------
+
+- fix release
 
 
 1.4.3 (2013-03-01)

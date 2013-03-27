@@ -1,4 +1,4 @@
 include *.txt *.rst *.cfg
-recursive-include src *py
 recursive-include src *
+recursive-include minitage *
 global-exclude *pyc
