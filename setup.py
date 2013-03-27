@@ -54,7 +54,6 @@ setup(
     zip_safe=False,
     install_requires = ['setuptools',
                         'PasteScript',
-                        'zc.buildout',
                         'iniparse',
                         #'Cheetah>1.0,<=2.2.1',
                        ],
