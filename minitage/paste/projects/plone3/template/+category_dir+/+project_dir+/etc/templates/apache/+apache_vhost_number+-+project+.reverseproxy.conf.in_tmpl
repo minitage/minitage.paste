@@ -40,10 +40,12 @@ RewriteRule      ^/plone-${project}(.*) http://\${hosts:zope-front}:\${ports:zop
 ProxyPass         /supervisor/ http://\${hosts:supervisor}:\${ports:supervisor}/
 ProxyPassReverse  /supervisor/ http://\${hosts:supervisor}:\${ports:supervisor}/
 
+#if $with_ploneproduct_etherpad
 ${etherpadcomment}#etherpad
 ${etherpadcomment}ProxyPass         /pad/ http://\${hosts:etherpad}:\${ports:etherpad}/
 ${etherpadcomment}ProxyPassReverse  /pad/ http://\${hosts:etherpad}:\${ports:etherpad}/
 ${etherpadcomment}ProxyTimeout 1200
+#end if
 
 # /-> vhmonster proxyreverse because of redirects !
 ProxyPass         /     http://\${hosts:zope-front}:\${ports:zope-front}/VirtualHostBase/\${scheme}/\${host}:\${port}/\${plone:site}/VirtualHostRoot/
@@ -89,10 +91,12 @@ RewriteRule      ^/plone-${project}(.*) http://\${hosts:zope-front}:\${ports:zop
 ProxyPass         /supervisor/ http://\${hosts:supervisor}:\${ports:supervisor}/
 ProxyPassReverse  /supervisor/ http://\${hosts:supervisor}:\${ports:supervisor}/
 
+#if $with_ploneproduct_etherpad
 ${etherpadcomment}#etherpad
 ${etherpadcomment}ProxyPass         /pad/ http://\${hosts:etherpad}:\${ports:etherpad}/
 ${etherpadcomment}ProxyPassReverse  /pad/ http://\${hosts:etherpad}:\${ports:etherpad}/
 ${etherpadcomment}ProxyTimeout 1200
+#end if
 
 
 # /-> vhmonster proxyreverse because of redirects !

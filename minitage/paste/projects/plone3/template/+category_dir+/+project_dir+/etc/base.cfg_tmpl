@@ -74,7 +74,6 @@ ${eventcomment}    https://raw.github.com/collective/plone.app.event/master/sour
     hudson/${project}/hudson.cfg
 parts =
     lxml
-    nodejs
 #if $major < 4:
     zope2
 #end if
@@ -97,6 +96,7 @@ ${zeocomment}    instance-plain
     ${sane_name}_hudson_job
     ${sane_name}_hudson_deploy
     ${sane_name}_hudson_chmod
+${etherpadcomment}    nodejs
 ${etherpadcomment}    etherpad-lite
 ${etherpadcomment}    etherpad-sh
 ${etherpadcomment}    etherpad-config

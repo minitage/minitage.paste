@@ -520,9 +520,9 @@
 
     <version p='aws.pdfbook'                    v='1.0.1' options='with_ploneproduct_awspdfbook' />
     <version p='collective.contentlicensing'    v='2.2.1'   options='with_ploneproduct_contentlicensing' />
-    <version p='collective.gallery'      v='1.1'   options="with_ploneproduct_cgallery"/>
+    <version p='collective.gallery'      v='2.0'   options="with_ploneproduct_cgallery"/>
     <version p='collective.googleanalytics'     v='1.4.1'   options="with_ploneproduct_cga"/>
-    <version p='collective.js.galleriffic' v='1.0'   options="with_ploneproduct_cgallery"/>
+    <version p='collective.js.galleriffic' v='1.1'   options="with_ploneproduct_cgallery"/>
     <version p='collective.plonetruegallery'    v='2.1a1'     options="with_ploneproduct_truegallery"/>
     <version p='collective.portlettabber'       v='0.2.0'   options='with_ploneproduct_cportlettabber'/>
     <version p='collective.watcherlist'  v='0.3'   options="with_ploneproduct_poi"/>
@@ -559,7 +559,7 @@
     <version p='plone.outputfilters'      v='1.1'   options="with_ploneproduct_tinymce"/>
     <version p='Products.AddRemoveWidget'       v='1.4.5'   options='with_ploneproduct_addremovewidget,with_ploneproduct_poi'/>
     <version p='Products.ATSchemaEditorNG'      v='0.8'     options='with_ploneproduct_atschemaeditor'/>
-    <version p='Products.ATVocabularyManager'   v='1.6.1'     options='with_ploneproduct_atvmanager'/>
+    <version p='Products.ATVocabularyManager'   v='1.6.3'     options='with_ploneproduct_atvmanager'/>
     <version p='Products.Clouseau'              v='1.0'     options="with_ploneproduct_clouseau"/>
     <version p='Products.Collage'               v='1.3.7'     options="with_ploneproduct_collage"/>
     <version p='Products.ContentWellPortlets'   v='3.0'     options="with_ploneproduct_contentwellportlet"/>
@@ -586,14 +586,14 @@
 
 
     <version p='collective.singing'             v='0.7.1'   options='with_ploneproduct_sgdcg'/>
-    <version p='collective.dancing'             v='0.9.5'   options='with_ploneproduct_sgdcg'/>
+    <version p='collective.dancing'             v='0.9.10'   options='with_ploneproduct_sgdcg'/>
     <version p='BeautifulSoup'                  v='3.2.0'   options='with_ploneproduct_sgdcg'/>
     <version p='zc.queue'                       v='1.1'   options='with_ploneproduct_sgdcg'/>
 
-    <version p='plone.app.ldap'                 v='1.2.4'   options='with_ploneproduct_ldap' />
-    <version p='Products.PloneLDAP'             v='1.1'     options="with_ploneproduct_ldap"/>
-    <version p='Products.LDAPMultiPlugins'      v='1.12'    options="with_ploneproduct_ldap"/>
-    <version p='Products.LDAPUserFolder'        v='2.18'    options="with_ploneproduct_ldap"/>
+    <version p='plone.app.ldap'                 v='1.3.0'   options='with_ploneproduct_ldap' />
+    <version p='Products.PloneLDAP'             v='1.2'     options="with_ploneproduct_ldap"/>
+    <version p='Products.LDAPMultiPlugins'      v='1.14'    options="with_ploneproduct_ldap"/>
+    <version p='Products.LDAPUserFolder'        v='2.24'    options="with_ploneproduct_ldap"/>
 
     <!-- FIVE.GROK -->
     <version p='five.grok'                      v='1.0'     options='with_ploneproduct_fivegrok,with_ploneproduct_cz3cformgrok' />
@@ -635,13 +635,13 @@
     <source name="archetypes.tuning"                type="svn"  url="https://svn.plone.org/svn/archetypes/archetypes.schematuning/trunk"                          options="with_ploneproduct_schematuning"/>
     <source name="aws.pdfbook"                      type="svn"  url="https://svn.plone.org/svn/collective/aws.pdfbook/trunk"                                      options="with_ploneproduct_awspdfbook"/>
     <source name="collective.contentlicensing"      type="git"  url="https://github.com/collective/collective.contentlicensing.git"                      options="with_ploneproduct_contentlicensing" />
-    <source name="collective.dancing"               type="svn"  url="https://svn.plone.org/svn/collective/collective.dancing/trunk"                               options="with_ploneproduct_sgdcg"/>
+    <source name="collective.dancing"               type="git"  url="https://github.com/collective/collective.dancing.git"                               options="with_ploneproduct_sgdcg"/>
     <source name="collective.flowplayer"            type="svn"  url="https://svn.plone.org/svn/collective/collective.flowplayer/trunk"                            options="with_ploneproduct_flowplayer"/>
     <source name="collective.indexing"              type="git"  url="https://github.com/plone/collective.indexing.git" options="with_ploneproduct_ci,with_ploneproduct_solr"/>
     <source name="collective.solr"                  type="git"  url="https://github.com/collective/collective.solr.git" options="with_ploneproduct_solr"/>
     <source name="collective.plonetruegallery"      type="svn"  url="https://svn.plone.org/svn/collective/collective.plonetruegallery/trunk"                      options="with_ploneproduct_truegallery"/>
     <source name="collective.portlet.tal"           type="svn"  url="https://svn.plone.org/svn/collective/collective.portlet.tal/trunk"                           options="with_ploneproduct_tal_portlet"/>
-    <source name="collective.singing"               type="svn"  url="https://svn.plone.org/svn/collective/collective.singing/trunk"                               options="with_ploneproduct_sgdcg"/>
+    <source name="collective.singing"  type="git"  url="https://github.com/collective/collective.singing.git"                               options="with_ploneproduct_sgdcg"/>
     <source name="collective.transmogrifier"        type="svn"  url="https://svn.plone.org/svn/collective/collective.transmogrifier/trunk"                        options="with_ploneproduct_patransmo"/>
     <source name="iw.fss"                           type="svn"  url="https://svn.plone.org/svn/collective/iw.fss/trunk/"                                          options="with_ploneproduct_fss"/>
     <source name="p4a.common"                       type="svn"  url="https://svn.plone.org/svn/collective/p4a/p4a.common/trunk"                                   options="with_ploneproduct_p4a_vid"/>
@@ -670,8 +670,8 @@
     <source name="Products.MasterSelectWidget"      type="svn"  url="https://svn.plone.org/svn/archetypes/MoreFieldsAndWidgets/Products.MasterSelectWidget/trunk" options="with_ploneproduct_masterselect"/>
     <source name="Products.membrane"                type="svn"  url="https://svn.plone.org/svn/collective/Products.membrane/trunk"                                options="with_ploneproduct_remember,with_ploneproduct_membrane"/>
     <source name="Products.PloneArticle"            type="svn"  url="https://svn.plone.org/svn/collective/Products.PloneArticle/trunk"                            options="with_ploneproduct_plonearticle"/>
-    <source name="Products.PloneboardNotify"        type="svn"  url="http://svn.plone.org/svn/collective/Products.PloneboardNotify/trunk/"                        options="with_ploneproduct_ploneboardnotify"/>
-    <source name="Products.Ploneboard"              type="svn"  url="https://svn.plone.org/svn/collective/Products.Ploneboard/trunk"                              options="with_ploneproduct_ploneboard"/>
+    <source name="Products.PloneboardNotify"        type="git"  url="https://github.com/makinacorpus/Products.PloneboardNotify.git"                        options="with_ploneproduct_ploneboardnotify"/>
+    <source name="Products.Ploneboard"              type="git"  url="http://github.com/makinacorpus/Products.Ploneboard.git"                              options="with_ploneproduct_ploneboard"/>
     <source name="Products.PloneFormGen"            type="svn"  url="https://svn.plone.org/svn/collective/Products.PloneFormGen/trunk"                            options="with_ploneproduct_ploneformgen"/>
     <source name="Products.PloneLDAP"               type="svn"  url="https://svn.plone.org/svn/collective/Products.PloneLDAP/trunk"                               options="with_ploneproduct_ldap"/>
     <source name="Products.PloneSurvey"             type="svn"  url="https://svn.plone.org/svn/collective/Products.PloneSurvey/trunk"                             options="with_ploneproduct_plonesurvey"/>

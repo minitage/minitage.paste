@@ -1,5 +1,5 @@
 $hr
-# Externals mr.developer products & software not packages as python eggs.
+# Externals mr.developer products & software not packaged as python eggs.
 $hr
 
 [buildout]
