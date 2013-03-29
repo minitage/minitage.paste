@@ -165,6 +165,7 @@
 
     </checkedversions>
     <eggs>
+      <egg name="Products.CMFPlomino"               options="with_ploneproduct_plomino"/>
       <egg name="plone.directives.dexterity"        options="with_ploneproduct_dexterity"                  />
       <egg name="plone.directives.form"             options="with_ploneproduct_dexterity"                  />
       <egg name="collective.dexteritytextindexer"   options="with_ploneproduct_dexterity"                  />
@@ -412,6 +413,7 @@
       <egg name="p4a.plonevideo"                 options="with_ploneproduct_p4a_vid"          zpackage="y" zcml="configure"/>
       <egg name="p4a.video"                      options="with_ploneproduct_p4a_vid"                       zcml="configure"/>
       <egg name="p4a.z2utils"                    options="with_ploneproduct_p4a_vid"          />
+      <egg name="Plomino"                        options="with_ploneproduct_plomino"/>
     </eggs>
     <sources>
       <source name="collective.js.jqueryui" />
