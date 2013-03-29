@@ -10,3 +10,6 @@ eggs/
 develop-eggs/
 .installed.cfg
 bin
+*pyo
+*pyc
+build
