@@ -3,7 +3,7 @@ CHANGES
 ==============
 
 
-1.4.6 (unreleased)
+1.4.6 (2013-04-01)
 ------------------
 
 - Rename to src folder
