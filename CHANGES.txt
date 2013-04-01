@@ -6,7 +6,7 @@ CHANGES
 1.4.6 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Rename to src folder
 
 
 1.4.5 (2013-03-28)
