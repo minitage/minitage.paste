@@ -10,7 +10,7 @@ ZopeSkel =
 distribute =
 docutils=
 zc.buildout=
-zc.recipe.egg=
+zc.recipe.egg=1.3.2
 
 #if ($with_ploneproduct_z3crelationfield or $with_ploneproduct_ploneappblob) and ($major < 4)
 #$with_ploneproduct_z3crelationfield
