@@ -1,22 +1,13 @@
-#if $with_haproxy
-#set $hapcomment=''
-#else:
-#set $hapcomment='#'
-#end if
-
-
 [settings]
+mysql_database=projectdb
+google_client_id=foo
+google_client_secret=secret
+google_map_key=foo
+adminmail=$django_admin
 debug=false
-application  = ${project}.core
-find-links =
-    http://\${mirrors:zope}/ppix/
-    http://gijsbert.org/downloads/cmemcache/
-    http://\${mirrors:zope}/distribution/
-    http://gijsbert.org/downloads/cmemcache/
-    http://initd.org/pub/software/psycopg/PSYCOPG-2-0/
-    http://cairographics.org/releases/
-    http://dist.plone.org/thirdparty/
-    http://pypi.python.org/simple/ZODB4
+dsm=settings
+#wsgi_server=egg:Paste#http
+wsgi_server= egg:gunicorn#main
 
 [reverse_proxy]
 scheme=$reverseproxy_scheme
@@ -24,56 +15,61 @@ host=$reverseproxy_host
 port=$reverseproxy_port
 
 [hosts]
-instance= $address
-instance1=$address
-instance2=$address
-instance3=$address
-instance4=$address
-#may not be used
-supervisor=$supervisor_host
-balancer=$haproxy_host
-#if not $with_haproxy
+instance= localhost
+instance1=localhost
+instance2=localhost
+rabbitmq=127.0.0.1
+instance3=localhost
+instance4=localhost
+supervisor=127.0.0.1
 front=\${hosts:instance1}
-#end if
-${hapcomment}front=\${hosts:balancer}
+#may not be used
+balancer=127.0.0.1
+mysql=127.0.0.1
+mongodb=127.0.0.1
 
 [ports]
-instance=$http_port
-instance1=$http_port1
-instance2=$http_port2
-instance3=$http_port3
-instance4=$http_port4
+supervisor=$http_port1
+instance=$http_port2
+instance1=$http_port3
+instance2=$http_port4
+instance3=$http_port5
+instance4=$http_port6
+rabbitmq=$http_port7
+mysql=$http_port8
+mongodb=$http_port9
 #may not be used
-supervisor=$supervisor_port
-balancer=$haproxy_port
-#if not $with_haproxy
+balancer=$http_port10
 front=\${ports:instance1}
-#end if
-${hapcomment}front=\${ports:balancer}
 
 [users]
-admin=${admin_user}
-django=
+admin=admin
+django=\${env:USER}
+group=\${grp:GROUP}
+
 [passwords]
-admin=${admin_password}
-django=
+admin    = secret
+rabbitmq = \${passwords:admin}
+mysql    = \${passwords:admin}
+django   = \${passwords:admin}
 
 [locations]
-deliverance-themes=\${buildout:directory}/deliverancex
+mysql_bin=\${locations:mysql}/bin
+mysql=/usr
+mysql_backup=\${buildout:directory}/var/backups/mysql
+mongodb_backup=\${buildout:directory}/var/backups/mongodb
 
 [crons]
-# at 3:00am NO WHITESPACE!!!
-buildbot-${project}=$buildbot_cron
 pgsql = 15 1 * * *
 
 [backup_pgsql]
 # shall we do a full backup (set this to y)
 full=y
-host=$db_host
-port=$db_port
-user=$db_user
+host=localhost
+port=5432
+user=kiorky
 # space separated list of databases to save on this cluster
-databases=$db_name
+databases=minitagedb
 # how much do we rotate ?
 to_keep=8
 # where to stock dumps
@@ -81,7 +77,33 @@ dumps_path=\${buildout:directory}/var/pgsql_dumps
 pgdump_args=-Fc
 pgdumpall_args=
 
-[mirrors]
-zope = download.zope.org
+[automysqlbackup-conf]
+DBS=\${settings:mysql_database}
 
-\# vim:set et ts=4 sts=4 ft=cfg:
+[mirrors]
+allow-hosts =
+     *localhost*
+     *willowrise.org*
+     *plone.org*
+     *zope.org*
+     *effbot.org*
+     *python.org*
+     *initd.org*
+     *googlecode.com*
+     *plope.com*
+     *bitbucket.org*
+     *repoze.org*
+     *crummy.com*
+     *minitage.org*
+     *genshi.edgewall.org*
+     *bpython-interpreter.org*
+     *stompstompstomp.com*
+     *ftp.tummy.com*
+     *pybrary.net*
+     *www.tummy.com*
+     *download.cherrypy.org*
+     *ftp.edgewall.org*
+     *www.riverbankcomputing.com*
+     *.selenic.com*
+
+# vim:set et ts=4 sts=4 ft=cfg:

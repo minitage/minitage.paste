@@ -1,0 +1,3 @@
+#!/bin/sh
+
+${locations:mysql_bin}/mysql --defaults-file=${mycnf-conf:output} $*

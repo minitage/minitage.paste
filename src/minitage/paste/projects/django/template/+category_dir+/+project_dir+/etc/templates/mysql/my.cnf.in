@@ -1,0 +1,71 @@
+# * server and clients
+[client]
+default-character-set=${mycnf:charset}
+user	 = ${mycnf:user}
+port	 = ${mycnf:port}
+socket	 = ${mycnf:sock}
+password = "${mycnf:password}"
+
+[mysqld]
+skip-character-set-client-handshake
+collation_server                    = ${mycnf:collation-server}
+character-set-server                = ${mycnf:charset}
+init-connect='SET NAMES ${mycnf:charset};SET collation_connection = ${mycnf:collation-server};'
+
+user		 = ${mycnf:user}
+socket		 = ${mycnf:sock}
+port		 = ${mycnf:port}
+basedir		 = ${mycnf:basedir}
+datadir		 = ${mycnf:datadir}
+tmpdir		 = ${buildout:directory}/var/tmp
+bind-address = ${mycnf:host}
+
+#
+# * Fine Tuning
+#
+key_buffer         =   ${mycnf:key_buffer}
+query_cache_size   =   ${mycnf:query_cache_size}
+query_cache_limit  =   ${mycnf:query_cache_limit}
+table_cache        =   ${mycnf:table_cache}
+sort_buffer_size   =   ${mycnf:sort_buffer_size}
+tmp_table_size     =   ${mycnf:tmp_table_size}
+max_allowed_packet =   ${mycnf:max_allowed_packet}
+thread_stack       =   ${mycnf:thread_stack}
+thread_cache_size  =   ${mycnf:thread_cache_size}
+myisam-recover     =   ${mycnf:myisam-recover}
+#
+# * Query Cache Configuration
+#
+query_cache_limit = ${mycnf:query_cache_limit}
+query_cache_size  = ${mycnf:query_cache_size}
+#
+# * Logging and Replication
+#
+general_log_file = ${buildout:directory}/var/log/mysql.log
+log_error        = ${buildout:directory}/var/log/mysql-error.log
+#log_slow_queries	= ${buildout:directory}/var/log/mysql-slow.log
+#long_query_time = 2
+#log-queries-not-using-indexes
+#log_bin			= ${buildout:directory}/var/log/mysql-bin.log
+#expire_logs_days	= 10
+#max_binlog_size         = 100M
+#binlog_do_db		= include_database_name
+#binlog_ignore_db	= include_database_name
+#
+# * Security Features
+#
+# chroot = /var/lib/mysql/
+# ssl-ca=/etc/mysql/cacert.pem
+# ssl-cert=/etc/mysql/server-cert.pem
+# ssl-key=/etc/mysql/server-key.pem
+
+[mysqldump]
+quick
+quote-names
+max_allowed_packet = ${mycnf:max_allowed_packet}
+database           = ${mycnf:database}
+
+[isamchk]
+#key_buffer		= 16M
+#
+#!includedir /etc/mysql/conf.d/

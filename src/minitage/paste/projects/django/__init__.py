@@ -73,11 +73,30 @@ for name in sources_k:
         )
     )
 
-base_django_eggs = ['Django',
-                    'PasteDeploy', 'Paste', 'cryptacular',
-                    'dj.paste', 'WebOb', 'WebError', 'repoze.vhm',
-                    'CherryPy', 'gunicorn',
-                   ]
+base_django_eggs = ['celery',
+                    'CherryPy',
+                    'coverage',
+                    'cryptacular',
+                    'Django',
+                    'django-celery',
+                    'django-guardian',
+                    'django-nose',
+                    'django-registration',
+                    'django-templated-email',
+                    'dj.paste',
+                    'gunicorn',
+                    'lxml',
+                    'Paste',
+                    'PasteDeploy',
+                    'Pillow',
+                    'repoze.vhm',
+                    'South',
+                    'SQLAlchemy',
+                    'WebError',]
+
+
+
+
 class Template(common.Template):
 
     summary = 'Template for creating a '\
@@ -104,9 +123,9 @@ class Template(common.Template):
     plone_sources             = plone_sources
 
     def post(self, command, output_dir, vars):
-        common.Template.post(self, command, output_dir, vars) 
+        common.Template.post(self, command, output_dir, vars)
         os.rename(os.path.join(vars['path'], 'gitignore'),
-                  os.path.join(vars['path'], '.gitignore')) 
+                  os.path.join(vars['path'], '.gitignore'))
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
         vars['category'] = 'django'
@@ -126,47 +145,47 @@ class Template(common.Template):
                 'libxslt-1.*',
                 'fontconfig-2.\d*',
             ]
-            if vars['with_database_mysql']:
-                deps.extend(['mysql-\d.\d*'],)
-            if vars['with_database_postgresql']:
-               deps.extend(['postgresql-\d.\d'],)
-            if (vars['with_database_sqlite']
-                or (
-                    not vars['with_database_postgresql']
-                    and not vars['with_database_mysql'])
-               ):
-              deps.extend(['sqlite-\d.\d',])
-            # openldap
-            if vars['with_binding_ldap']:
-                cs = search_latest('cyrus-sasl-\d\.\d*', vars['minilays'])
-                deps.extend(['openldap-\d\.\d*', cs])
-                vars['includesdirs'] = '\n    %s'%  os.path.join(
-                    vars['mt'], 'dependencies', cs, 'parts', 'part', 'include', 'sasl'
-                )
+            #if vars['with_database_mysql']:
+            #    deps.extend(['mysql-\d.\d*'],)
+            #if vars['with_database_postgresql']:
+            #   deps.extend(['postgresql-\d.\d'],)
+            #if (vars['with_database_sqlite']
+            #    or (
+            #        not vars['with_database_postgresql']
+            #        and not vars['with_database_mysql'])
+            #   ):
+            #  deps.extend(['sqlite-\d.\d',])
+            ## openldap
+            #if vars['with_binding_ldap']:
+            #    cs = search_latest('cyrus-sasl-\d\.\d*', vars['minilays'])
+            #    deps.extend(['openldap-\d\.\d*', cs])
+            #    vars['includesdirs'] = '\n    %s'%  os.path.join(
+            #        vars['mt'], 'dependencies', cs, 'parts', 'part', 'include', 'sasl'
+            #    )
 
             # haproxy
-            if vars['with_haproxy']:
-                deps.extend(['haproxy-\d\.\d*'])
-            if vars["with_binding_lxml"]:
-                deps.extend(['libxml2-\d.\d*', 'libxslt-1.\d*'])
-            if vars["with_gis_gdal"]:
-                vars['opt_deps'] += ' gdal-1'
-                deps.extend(['pixman-0\d*',])
-            if vars["with_gis_pgrouting"]:
-                deps.extend(['pgrouting-1.\d*',])
-            if vars["with_gis_mapnik"]:
-                #deps.extend(['py-mapnik-\d.\d*', 'mapnik-\d.\d*',])
-                deps.extend(['mapnik-\d.\d*',])
-                deps.extend(['boost-python-.*',])
-            if vars["with_binding_cairo"]:
-                vars['opt_deps'] += ' cairo-1.12 cairomm-1'
-            if vars["with_binding_pil"]:
-                vars['opt_deps'] += ' libpng-1'
-                deps.extend(['pil-\d.\d.\d*', ])
-            if vars['with_gis_mapscript']:
-                deps.extend(['mapserver-\d\.\d*',])
-            if vars["with_binding_memcache"]:
-                deps.extend(['libmemcache-\d.\d*',])
+            #if vars['with_haproxy']:
+            #    deps.extend(['haproxy-\d\.\d*'])
+            #if vars["with_binding_lxml"]:
+            #    deps.extend(['libxml2-\d.\d*', 'libxslt-1.\d*'])
+            #if vars["with_gis_gdal"]:
+            #    vars['opt_deps'] += ' gdal-1'
+            #    deps.extend(['pixman-0\d*',])
+            #if vars["with_gis_pgrouting"]:
+            #    deps.extend(['pgrouting-1.\d*',])
+            #if vars["with_gis_mapnik"]:
+            #    #deps.extend(['py-mapnik-\d.\d*', 'mapnik-\d.\d*',])
+            #    deps.extend(['mapnik-\d.\d*',])
+            #    deps.extend(['boost-python-.*',])
+            #if vars["with_binding_cairo"]:
+            #    vars['opt_deps'] += ' cairo-1.12 cairomm-1'
+            #if vars["with_binding_pil"]:
+            #    vars['opt_deps'] += ' libpng-1'
+            #    deps.extend(['pil-\d.\d.\d*', ])
+            #if vars['with_gis_mapscript']:
+            #    deps.extend(['mapserver-\d\.\d*',])
+            #if vars["with_binding_memcache"]:
+            #    deps.extend(['libmemcache-\d.\d*',])
             for dep in deps:
                 vars['opt_deps'] += ' %s' % search_latest(dep, vars['minilays'])
 
@@ -179,35 +198,35 @@ class Template(common.Template):
             if var in vars:
                 vars[var] = [a.strip() for a in vars[var].split(',')]
 
-        vars['autocheckout'] = []
-        for var in vars:
-            if var.startswith('with_autocheckout') and vars[var]:
-                vn = var.replace('with_autocheckout_', '')
-                vars['autocheckout'].append(
-                    self.plone_sources[vn]['name']
-                )
-
-        for var in self.plone_sources:
-            if self.plone_sources[var].get('autocheckout', '') == 'y':
-                if not self.plone_sources[var]['name'] in vars['autocheckout']:
-                    if ((True in [vars.get(o, False)
-                                  for o in self.plone_sources[var]['options']])
-                        and (self.plone_sources[var]['name'] not in vars['autocheckout'])):
-                        vars['autocheckout'].append(
-                            self.plone_sources[var]['name']
-                        )
-
-        lps = copy.deepcopy(self.plone_sources)
-        for item in self.plone_sources:
-            col = self.plone_sources[item]
-            found = False
-            for option in col['options']:
-                if vars.get(option, False):
-                    found = True
-                    break
-            if not found:
-                del lps[item]
-        vars['plone_sources'] = lps
+        #vars['autocheckout'] = []
+        #for var in vars:
+        #    if var.startswith('with_autocheckout') and vars[var]:
+        #        vn = var.replace('with_autocheckout_', '')
+        #        vars['autocheckout'].append(
+        #            self.plone_sources[vn]['name']
+        #        )
+        #
+        #for var in self.plone_sources:
+        #    if self.plone_sources[var].get('autocheckout', '') == 'y':
+        #        if not self.plone_sources[var]['name'] in vars['autocheckout']:
+        #            if ((True in [vars.get(o, False)
+        #                          for o in self.plone_sources[var]['options']])
+        #                and (self.plone_sources[var]['name'] not in vars['autocheckout'])):
+        #                vars['autocheckout'].append(
+        #                    self.plone_sources[var]['name']
+        #                )
+        #
+        #lps = copy.deepcopy(self.plone_sources)
+        #for item in self.plone_sources:
+        #    col = self.plone_sources[item]
+        #    found = False
+        #    for option in col['options']:
+        #        if vars.get(option, False):
+        #            found = True
+        #            break
+        #    if not found:
+        #        del lps[item]
+        #vars['plone_sources'] = lps
 
 
         # Django core eggs
@@ -215,57 +234,57 @@ class Template(common.Template):
         vars['additional_eggs'].extend(base_django_eggs)
 
         # databases
-        for db in [var.replace('with_database_', '')
-                    for var in vars
-                    if 'with_database_' in var
-                        and vars[var]]:
-            if not db in ['sqlite',]:
-                vars['additional_eggs'].extend(
-                    [a
-                     for a in eggs_mappings['with_database_%s'%db]
-                     if not a in vars['additional_eggs']
-                    ]
-                )
+        #for db in [var.replace('with_database_', '')
+        #            for var in vars
+        #            if 'with_database_' in var
+        #                and vars[var]]:
+        #    if not db in ['sqlite',]:
+        #        vars['additional_eggs'].extend(
+        #            [a
+        #             for a in eggs_mappings['with_database_%s'%db]
+        #             if not a in vars['additional_eggs']
+        #            ]
+        #        )
         # pyqt
-        vars['pyqt'] = ''
-        if vars['with_binding_pyqt'] and vars['inside_minitage']:
-            vars['opt_deps'] += ' %s' % search_latest('swiglib-\d\.\d+', vars['minilays'])
-            for i in ('pyqt-\d\.\d+','sip-\d\.\d+'):
-                vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays'])
-                vars['pyqt'] += '\n   %s' %  (
-                    '${buildout:directory}/../../'
-                    'eggs/%s/parts'
-                    '/site-packages-%s/site-packages-%s' % (
-                        search_latest(i, vars['minilays']),
-                        vars['pyver'],
-                        vars['pyver'],
-                    )
-                )
- 
-        # openldap
-        if vars['with_binding_ldap'] and vars['inside_minitage']:
-            cs = search_latest('cyrus-sasl-\d\.\d*', vars['minilays'])
-            vars['opt_deps'] += ' %s %s' % (
-                search_latest('openldap-\d\.\d*', vars['minilays']),
-                cs
-            )
-            vars['includesdirs'] = '\n    %s'%  os.path.join(
-                vars['mt'], 'dependencies', cs, 'parts', 'part', 'include', 'sasl'
-            )
+        #vars['pyqt'] = ''
+        #if vars['with_binding_pyqt'] and vars['inside_minitage']:
+        #    vars['opt_deps'] += ' %s' % search_latest('swiglib-\d\.\d+', vars['minilays'])
+        #    for i in ('pyqt-\d\.\d+','sip-\d\.\d+'):
+        #        vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays'])
+        #        vars['pyqt'] += '\n   %s' %  (
+        #            '${buildout:directory}/../../'
+        #            'eggs/%s/parts'
+        #            '/site-packages-%s/site-packages-%s' % (
+        #                search_latest(i, vars['minilays']),
+        #                vars['pyver'],
+        #                vars['pyver'],
+        #            )
+        #        )
+
+        ## openldap
+        #if vars['with_binding_ldap'] and vars['inside_minitage']:
+        #    cs = search_latest('cyrus-sasl-\d\.\d*', vars['minilays'])
+        #    vars['opt_deps'] += ' %s %s' % (
+        #        search_latest('openldap-\d\.\d*', vars['minilays']),
+        #        cs
+        #    )
+        #    vars['includesdirs'] = '\n    %s'%  os.path.join(
+        #        vars['mt'], 'dependencies', cs, 'parts', 'part', 'include', 'sasl'
+        #    )
 
         # do we need some pinned version
-        vars['plone_versions'] = []
-        for var in self.versions_mappings:
-            vars['plone_versions'].append(('# %s' % var, '',))
-            for pin in self.versions_mappings[var]:
-                vars['plone_versions'].append(pin)
+        #vars['plone_versions'] = []
+        #for var in self.versions_mappings:
+        #    vars['plone_versions'].append(('# %s' % var, '',))
+        #    for pin in self.versions_mappings[var]:
+        #        vars['plone_versions'].append(pin)
 
-        if vars["with_checked_versions"]:
-            for var in self.checked_versions_mappings:
-                if vars.get(var, False):
-                    vars['plone_versions'].append(('# %s' % var, '',))
-                    for pin in self.checked_versions_mappings[var]:
-                        vars['plone_versions'].append((pin, self.checked_versions_mappings[var][pin]))
+        #if vars["with_checked_versions"]:
+        #    for var in self.checked_versions_mappings:
+        #        if vars.get(var, False):
+        #            vars['plone_versions'].append(('# %s' % var, '',))
+        #            for pin in self.checked_versions_mappings[var]:
+        #                vars['plone_versions'].append((pin, self.checked_versions_mappings[var][pin]))
 
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir)
@@ -297,12 +316,23 @@ class Template(common.Template):
         vars['http_port5'] = int(vars['http_port']) + 5
         vars['http_port6'] = int(vars['http_port']) + 6
         vars['http_port7'] = int(vars['http_port']) + 7
+        vars['http_port8'] = int(vars['http_port']) + 8
+        vars['http_port9'] = int(vars['http_port']) + 9
+        vars['http_port10'] = int(vars['http_port']) + 10
+        vars['http_port11'] = int(vars['http_port']) + 11
+        vars['http_port12'] = int(vars['http_port']) + 12
+        vars['http_port13'] = int(vars['http_port']) + 13
         vars['running_user'] = common.running_user
         vars['instances_description'] = common.INSTANCES_DESCRIPTION % vars
-        if not vars['reverseproxy_aliases']:
-            vars['reverseproxy_aliases'] = ''
-        vars['sreverseproxy_aliases'] = vars['reverseproxy_aliases'].split(',')
+        #if not vars['reverseproxy_aliases']:
+        #    vars['reverseproxy_aliases'] = ''
+        #vars['sreverseproxy_aliases'] = vars['reverseproxy_aliases'].split(',')
         vars['ndot'] = '.'
+        for i in ['rabbitmq', 'mysql', 'mongo']:
+            if vars['with_django_%s'%i]:
+                vars['%s_comment'%i] = ''
+            else:
+                vars['%s_comment'%i] = '#'
 
     def read_vars(self, command=None):
         vars = common.Template.read_vars(self, command)
@@ -317,39 +347,43 @@ class Template(common.Template):
             if var.name in ['reverseproxy_host',] and command:
                 sane_name = '%s.localhost' % common.SPECIALCHARS.sub('', command.args[0])
                 vars[i].default = sane_name
+
         return vars
 
 Template.vars = common.Template.vars \
         + [ pvar('django_version', 'Django version', default = '1.4',),
-           pvar('address', 'Address to listen on', default = 'localhost',),
+           #pvar('address', 'Address to listen on', default = 'localhost',),
            pvar('license', 'License', default = 'BSD',),
            pvar('http_port', 'Port to listen to', default = '8081',),
-           pvar('admin_user', 'Administrator Login', default = 'admin',),
-           pvar('admin_password', 'Admin Password', default = 'secret',),
-           pvar('effective_user', 'effective user to give the files to in production', default = running_user,),
-           pvar('db_type', ' database type (sqlite, postgresql, mysql)', default = 'postgresql',),
-           pvar('db_host', 'database host', default = 'localhost',),
-           pvar('db_port', 'databse port. (postgresql : 5432, mysql : 3306)', default = '5432',),
-           pvar('db_name', 'database name', default = 'minitagedb',),
-           pvar('db_user', 'database user', default = common.running_user),
-           pvar('db_password', 'database password', default = 'secret',),
-           pvar('supervisor_host', 'Supervisor host', default = '127.0.0.1',),
-           pvar('supervisor_port', 'Supervisor port', default = '9001',),
-           pvar('supervisor_user', 'Supervisor web user', default = 'admin',),
-           pvar('supervisor_password', 'Supervisor web password', default = 'secret',),
-           pvar('with_supervisor', 'Supervisor support (monitoring), http://supervisord.org/ y/n', default = 'y',),
-           pvar('with_supervisor_instance1', 'Supervisor will automaticly launch instance 1 in production mode  y/n', default = 'y',),
-           pvar('with_supervisor_instance2', 'Supervisor will automaticly launch instance 2 in production mode, y/n', default = 'n',),
-           pvar('with_supervisor_instance3', 'Supervisor will automaticly launch instance 3 in production mode, y/n', default = 'n',),
-           pvar('with_supervisor_instance4', 'Supervisor will automaticly launch instance 4 in production mode, y/n', default = 'n',),
-           pvar('with_haproxy', 'haproxy configuration file generation support (loadbalancing), http://haproxy.1wt.eu/ y/n', default = 'y',),
-           pvar('haproxy_host', 'Haproxy host', default = '127.0.0.1',),
-           pvar('haproxy_port', 'Haproxy port', default = '8201',),
+           pvar('with_django_rabbitmq', 'Rabbitmq', default = 'n',),
+           pvar('with_django_mongo', 'Mongo', default = 'n',),
+           pvar('with_django_mysql', 'mysql', default = 'n',),
+           #pvar('admin_user', 'Administrator Login', default = 'admin',),
+           #pvar('admin_password', 'Admin Password', default = 'secret',),
+           #pvar('effective_user', 'effective user to give the files to in production', default = running_user,),
+           #pvar('db_type', ' database type (sqlite, postgresql, mysql)', default = 'postgresql',),
+           #pvar('db_host', 'database host', default = 'localhost',),
+           #pvar('db_port', 'databse port. (postgresql : 5432, mysql : 3306)', default = '5432',),
+           #pvar('db_name', 'database name', default = 'minitagedb',),
+           #pvar('db_user', 'database user', default = common.running_user),
+           #pvar('db_password', 'database password', default = 'secret',),
+           #pvar('supervisor_host', 'Supervisor host', default = '127.0.0.1',),
+           #pvar('supervisor_port', 'Supervisor port', default = '9001',),
+           #pvar('supervisor_user', 'Supervisor web user', default = 'admin',),
+           #pvar('supervisor_password', 'Supervisor web password', default = 'secret',),
+           #pvar('with_supervisor', 'Supervisor support (monitoring), http://supervisord.org/ y/n', default = 'y',),
+           #pvar('with_supervisor_instance1', 'Supervisor will automaticly launch instance 1 in production mode  y/n', default = 'y',),
+           #pvar('with_supervisor_instance2', 'Supervisor will automaticly launch instance 2 in production mode, y/n', default = 'n',),
+           #pvar('with_supervisor_instance3', 'Supervisor will automaticly launch instance 3 in production mode, y/n', default = 'n',),
+           #pvar('with_supervisor_instance4', 'Supervisor will automaticly launch instance 4 in production mode, y/n', default = 'n',),
+           #pvar('with_haproxy', 'haproxy configuration file generation support (loadbalancing), http://haproxy.1wt.eu/ y/n', default = 'y',),
+           #pvar('haproxy_host', 'Haproxy host', default = '127.0.0.1',),
+           #pvar('haproxy_port', 'Haproxy port', default = '8201',),
            pvar('plone_products', 'comma separeted list of adtionnal products to install: eg: file://a.tz file://b.tgz', default = '',),
            pvar('additional_eggs', 'comma separeted list of additionnal eggs to install', default = '',),
            pvar('plone_scripts', 'comma separeted list of scripts to generate from installed eggs', default = '',),
-           pvar('with_checked_versions', 'Use product versions that interact well together (can be outdated, check [versions] in buildout.', default = 'n',),
-              pvar('buildbot_cron',  'Buildbot cron to schedule builds', default = '0 3 * * *',),
+           #pvar('with_checked_versions', 'Use product versions that interact well together (can be outdated, check [versions] in buildout.', default = 'n',),
+              #pvar('buildbot_cron',  'Buildbot cron to schedule builds', default = '0 3 * * *',),
           ] + Template.addons_vars + dev_vars
 
 # vim:set et sts=4 ts=4 tw=80:

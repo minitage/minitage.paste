@@ -19,3 +19,15 @@ sys
 t
 var
 src.mrdeveloper/zopelib/zopelib.egg-info
+etc/init.d/
+etc/logrotate.conf
+etc/rabbitmq-env.conf
+etc/rabbitmq.config
+etc/wsgi_instance.ini
+etc/wsgi_instance1.ini
+etc/wsgi_instance2.ini
+etc/wsgi_instance3.ini
+etc/wsgi_instance4.ini
+etc/www/apache_vhost.conf
+local_settings.py
+

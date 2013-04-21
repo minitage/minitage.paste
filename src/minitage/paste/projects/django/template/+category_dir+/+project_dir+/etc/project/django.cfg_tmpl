@@ -1,0 +1,242 @@
+###########################################################
+#             Project specific settings
+###########################################################
+
+[settings]
+pil-url=http://dist.plone.org/thirdparty/PIL-1.1.7.tar.gz#egg=PIL-1.1.7
+
+[buildout]
+find-links=
+    \${settings:pil-url}
+    http://cairographics.org/releases/
+    http://dist.plone.org/thirdparty/
+    http://downloads.egenix.com/python/egenix-mx-base-3.2.1.tar.gz
+    http://downloads.egenix.com/python/egenix-mx-base-3.2.4.tar.gz
+    http://downloads.egenix.com/python/index/ucs4/
+    http://downloads.egenix.com/python/index/ucs4/egenix-mx-base/3.2.1/
+    http://downloads.egenix.com/python/index/ucs4/egenix-mx-base/3.2.2/
+    http://initd.org/pub/software/psycopg/PSYCOPG-2-0/
+extra-paths=
+extras =
+eggs =
+# change to your django app dir
+app-dir=\${buildout:directory}
+sources=sources
+sources-dir=\${buildout:directory}/src.mrdeveloper
+auto-checkout +=
+    dj.paste
+django-init-parts=
+    init_django
+    staticfiles
+    i18n
+django-parts=
+    logrotate.conf
+    apache_vhost
+    numpy
+    scripts
+    omelette
+    instance
+    instance1
+    instance2
+    instance3
+    instance4
+    djangosettings
+django-programs=
+
+$rabbitmq_comment    30 celery_beat (stopwaitsecs=600 startsecs=10) \${buildout:directory}/bin/django_manage [celery beat --schedule=\${buildout:directory}/var/lib/celery/celerybeat-schedule --pidfile=\${buildout:directory}/var/celerybeat.pid --loglevel=INFO]  \${buildout:directory} true \${users:django}
+$rabbitmq_comment    50 celery_d    (stopwaitsecs=600 startsecs=10) \${buildout:directory}/bin/django_manage [celery worker --pidfile=\${buildout:directory}/var/celery_worker.pid --loglevel=INFO]  \${buildout:directory} true \${users:django}
+    70 instance1   (autostart=true) \${buildout:directory}/bin/paster [serve \${buildout:directory}/etc/wsgi_instance1.ini] \${buildout:directory} true \${users:django}
+    70 instance2   (autostart=\${supervisor:additionnal}) \${buildout:directory}/bin/paster [serve \${buildout:directory}/etc/wsgi_instance2.ini] \${buildout:directory} true \${users:django}
+    70 instance3   (autostart=\${supervisor:additionnal}) \${buildout:directory}/bin/paster [serve \${buildout:directory}/etc/wsgi_instance3.ini] \${buildout:directory} true \${users:django}
+    70 instance4   (autostart=\${supervisor:additionnal}) \${buildout:directory}/bin/paster [serve \${buildout:directory}/etc/wsgi_instance4.ini] \${buildout:directory} true \${users:django}
+
+[sources]
+# see http://pypi.python.org/pypi/mr.developer for documentation
+
+[sources]
+dj.paste = git https://github.com/kiorky/dj.paste.git
+
+[ubuntulibs]
+recipe = plone.recipe.command
+update-command = \${ubuntulibs:command}
+command =
+    ln -sfv /usr/lib/x86_64-linux-gnu/libz.so        \${buildout:directory}/.libs/
+    ln -sfv /usr/lib/x86_64-linux-gnu/libjpeg.so     \${buildout:directory}/.libs/
+    ln -sfv /usr/lib/x86_64-linux-gnu/libfreetype.so \${buildout:directory}/.libs/
+
+[pil]
+recipe = minitage.recipe.scripts
+eggs=PIL
+index=\${settings:pil-url}
+library-dirs=\${buildout:directory}/.libs
+find-links=\${settings:pil-url}
+interpreter=pilpy
+scripts=pilpy
+PIL-pre-setup-hook=\${buildout:directory}/etc/project/pil.py:pil
+environment=
+    LD_LIBRARY_PATH=\${buildout:directory}/.libs:\$LD_LIBRARY_PATH
+
+[scriptsc]
+executable = python
+extra-paths=\${buildout:extra-paths}
+    \${buildout:sources-dir}
+# Scripts generated filtering
+scripts=
+    django-admin.py
+    django_manage
+    paster
+    bpython
+    nosetests
+    nose
+#z3c.checkversions
+    checkversions
+#zope2
+    paster#slurp
+#for $product in $plone_scripts:
+#if product.startswith('#'):
+${product}
+#else:
+    ${product}
+#end if
+#end for
+interpreter = djangopy
+dependent-scripts=true
+
+[numpy]
+recipe=minitage.recipe.scripts
+<=scriptsc
+eggs=numpy
+
+[djangosettings]
+recipe = collective.recipe.template[genshi]
+output=\${buildout:app-dir}/local_settings.py
+input=\${buildout:directory}/etc/templates/settings.py
+mode=700
+
+[scripts]
+recipe=minitage.recipe.scripts
+env-file=\${buildout:directory}/etc/django.env
+interpreter = djangopy
+<=scriptsc
+django_manage-initialization=
+    import os
+    os.environ['DJANGO_SETTINGS_MODULE'] = '\${settings:dsm}'
+entry-points=
+    django_manage=django.core.management:execute_from_command_line
+eggs=#slurp
+#for $product in $additional_eggs
+#if product.startswith('#')
+$product
+#else
+    ${product}
+#end if
+#end for
+
+[omelette]
+recipe = collective.recipe.omelette
+eggs = \${scripts:eggs}
+packages =\${scripts:extra-paths}
+
+[instance]
+mode=700
+recipe = collective.recipe.template[genshi]:genshi
+input =  \${buildout:directory}/etc/templates/wsgi/paster.ini.in
+output = \${buildout:directory}/etc/wsgi_instance.ini
+host=\${hosts:instance}
+port=\${ports:instance}
+debugtoolbar.eval_exc=true
+intercept_exc_debug=debug
+debug=\${settings:debug}
+dsm=\${settings:dsm}
+wsgi_server=\${settings:wsgi_server}
+
+[instance1]
+<= instance
+output = \${buildout:directory}/etc/wsgi_instance1.ini
+host=\${hosts:instance1}
+port=\${ports:instance1}
+
+[instance2]
+<= instance
+output = \${buildout:directory}/etc/wsgi_instance2.ini
+host=\${hosts:instance2}
+port=\${ports:instance2}
+
+[instance3]
+<= instance
+output = \${buildout:directory}/etc/wsgi_instance3.ini
+host=\${hosts:instance3}
+port=\${ports:instance3}
+
+[instance4]
+<= instance
+output = \${buildout:directory}/etc/wsgi_instance4.ini
+host=\${hosts:instance4}
+port=\${ports:instance4}
+
+[chmod]
+recipe = plone.recipe.command
+update-command = \${chmod:command}
+command=
+    chmod     650 .installed.cfg
+    chmod     750 \${buildout:directory}/bin/*
+    chmod -v  750 \${buildout:directory}/etc/init.d/*
+    chmod -Rf 750 \${buildout:directory}/etc
+    chmod -Rf 750 \${buildout:sources-dir}
+    chmod -Rf 750 \${buildout:directory}/var
+    chmod     750 \${buildout:directory}
+
+[chown]
+recipe = plone.recipe.command
+update-command = \${chown:command}
+command=
+    chown -Rf  \${users:django}:\${users:group}  \${buildout:directory}/etc
+    chown -Rf  \${users:django}:\${users:group}  \${buildout:directory}/var
+    chown -Rf  \${users:django}:\${users:group}  \${buildout:sources-dir}
+    chown      \${users:django}:\${users:group}  \${buildout:directory}
+    find \${buildout:directory} -type d -name var -exec chown -R \${users:django}:\${users:group} {} \;
+
+[mkdirs]
+recipe = plone.recipe.command
+update-command = \${mkdirs:command}
+command=
+    mkdir -p \${buildout:directory}/var/log/apache;
+    mkdir -pv \${buildout:directory}/var/lib/celery/celerybeat-schedule/.empty;
+
+[staticfiles]
+recipe = plone.recipe.command
+update-command = \${staticfiles:command}
+command=
+    cd \${buildout:directory};
+    \${buildout:directory}/bin/django_manage collectstatic --noinput;
+
+[i18n]
+recipe = plone.recipe.command
+update-command = \${i18n:command}
+command=
+    export PATH="\${buildout:directory}/bin":\$PATH
+    d=\${buildout:aoo-dir}
+    cd \$d
+    django_manage  compilemessages;
+    for app in {main,odk_viewer};do
+        cd "\$d/\$app"
+        django-admin.py compilemessages
+    done
+
+[init_django]
+recipe = plone.recipe.command
+update-command = \${init_django:command}
+command=
+    export PATH="\${buildout:directory}/bin":\$PATH
+    d=\${buildout:app-dir}
+    cd \$d
+    django_manage syncdb --all
+    django_manage migrate --fake --all
+
+[env]
+recipe = gocept.recipe.env
+
+[grp]
+recipe = collective.recipe.grp
+
+# vim:set ftrcfg:
