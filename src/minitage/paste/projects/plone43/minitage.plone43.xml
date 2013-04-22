@@ -14,12 +14,21 @@
     </checkedversions>
     <gs>
     </gs>
+    <sources>
+      <!--
+      <source name="plone.multilingualbehavior"         autocheckout="y" type="git" url="https://github.com/plone/plone.multilingualbehavior.git" options="with_ploneproduct_pamultilingual,with_ploneproduct_dexterity"/>
+      <source name="plone.multilingual"                 autocheckout="y" type="git" url="https://github.com/plone/plone.multilingual.git"         options="with_ploneproduct_pamultilingual,with_ploneproduct_dexterity"/>
+      <source name="plone.app.multilingual"             autocheckout="y" type="git" url="https://github.com/plone/plone.app.multilingual.git"     options="with_ploneproduct_pamultilingual,with_ploneproduct_dexterity"/> 
+            -->
+    </sources>
   </template>
   <purge>
     <options>
     </options>
     <versions>
     </versions>
+    <sources>
+    </sources>
     <checkedversions>
       <version p='collective.js.jqueryui'                  v='1.8.16.9' options='with_ploneproduct_cjqui,with_ploneproduct_sfcalendar' />
     </checkedversions>

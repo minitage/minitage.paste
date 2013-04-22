@@ -124,7 +124,8 @@
       <version p='collective.portlet.relateditems'    v='0.3.5'      options="with_ploneproduct_crelateditems"/>
       <version p='plone.app.multilingual'    v='1.0'      options="with_ploneproduct_pamultilingual,with_ploneproduct_dexterity"/>
       <version p='plone.multilingual'    v='1.0'      options="with_ploneproduct_pamultilingual,with_ploneproduct_dexterity"/>
-      <version p='plone.multilingualbehavior'    v='1.0'      options="with_ploneproduct_pamultilingual, with_ploneproduct_dexterity"/>
+      <version p='archetypes.multilingual'    v='1.0'      options="with_ploneproduct_pamultilingual,with_ploneproduct_dexterity"/>
+      <version p='plone.multilingualbehavior'    v='1.0'      options="with_ploneproduct_pamultilingual,with_ploneproduct_dexterity"/>
       <version p="collective.quickupload"    v="1.5.8" options="with_ploneproduct_qupload"/>
       <version p='contentratings'                          v='1.0' options="with_ploneproduct_pratings"/>
       <version p='geopy'                v='0.94'  options="with_ploneproduct_cgeo"/>
@@ -175,7 +176,7 @@
 
       <egg name="plone.app.caching"     options="with_ploneproduct_pacaching" zcml="configure" />
       <egg name="plone.app.multilingual [dexterity,archetypes]"     options="with_ploneproduct_pamultilingual" zcml="configure" />
-      <egg name="plone.multilingualbehavior"     options="with_ploneproduct_dexterity" zcml="configure" />
+      <egg name="plone.multilingualbehavior"     options="with_ploneproduct_pamultilingual" zcml="configure" />
       <egg name="collective.cron"     options="with_ploneproduct_ccron" zcml="configure" />
       <egg name="plone.app.event [archetypes,dexterity]"     options="with_ploneproduct_paevent" zcml="configure" />
       <egg name="z3c.unconfigure"      options="with_ploneproduct_paevent"  />
@@ -243,8 +244,9 @@
       <product name='collective.datatablesviews'   options="with_ploneproduct_dtviews" order="900"/>
       <product name='eea.daviz'   options="with_ploneproduct_eeadaviz" order="900"/>
       <product name='collective.etherpad'   options="with_ploneproduct_etherpad" order="900"/>
+      <product name='plone.app.multilingual'   options="with_ploneproduct_pamultilingual" order="900"/>
       <product name='archetypes.multilingual'   options="with_ploneproduct_pamultilingual" order="900"/>
-      <product name='plone.multilingualbehavior'   options="with_ploneproduct_dexterity,with_ploneproduct_pamultilingual" order="900"/>
+      <product name='plone.multilingualbehavior'   options="with_ploneproduct_pamultilingual" order="900"/>
       <product name='plone.app.caching'   options="with_ploneproduct_pacaching" order="900"/>
       <product name='plone.app.event.ploneintegration'   options="with_ploneproduct_paevent" order="900"/>
       <product name='collective.ckeditor'   options="with_ploneproduct_ckeditor" order="900"/>
@@ -378,8 +380,8 @@
       <source name="z3c.relationfield"                  autocheckout="n" type="svn" url="https://svn.zope.org/repos/main/z3c.relationfield/trunk" options="with_ploneproduct_dexterity"/>
       <source name="plone.app.versioningbehavior"       autocheckout="n" type="git" url="https://github.com/plone/plone.app.versioningbehavior.git" options="with_ploneproduct_dexterity"/>
       <source name="plone.multilingualbehavior"         autocheckout="n" type="git" url="https://github.com/plone/plone.multilingualbehavior.git" options="with_ploneproduct_pamultilingual,with_ploneproduct_dexterity"/>
-      <source name="plone.multilingual"                 autocheckout="y" type="git" url="https://github.com/plone/plone.multilingual.git"         options="with_ploneproduct_pamultilingual,with_ploneproduct_dexterity"/>
-      <source name="plone.app.multilingual"             autocheckout="y" type="git" url="https://github.com/plone/plone.app.multilingual.git"     options="with_ploneproduct_pamultilingual,with_ploneproduct_dexterity"/>
+      <source name="plone.multilingual"                 autocheckout="n" type="git" url="https://github.com/plone/plone.multilingual.git"         options="with_ploneproduct_pamultilingual,with_ploneproduct_dexterity"/>
+      <source name="plone.app.multilingual"             autocheckout="n" type="git" url="https://github.com/plone/plone.app.multilingual.git"     options="with_ploneproduct_pamultilingual,with_ploneproduct_dexterity"/>
       <source name="plone.app.caching"             autocheckout="n" type="git" url="https://github.com/plone/plone.app.caching.git"     options="with_ploneproduct_pacaching"/>
       <!-- /dexterity  -->
     </sources>
