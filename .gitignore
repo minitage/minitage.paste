@@ -1,4 +1,5 @@
 *.pyc
+bin
 minitage/paste/projects/plone41/checkout/
 dist
 *egg-info
