@@ -1,0 +1,27 @@
+#!/usr/bin/python
+#!!! #GENERATED VIA MINITAGE.recipe !!!
+
+import sys
+
+
+
+sys.path[0:0] = [ '/home/kiorky/minitage/sources/minitage.paste/src',
+'/home/kiorky/minitage/eggs/cache.local/zest.releaser-3.43-py2.7.egg',
+'/home/kiorky/minitage/eggs/cache.local/PasteScript-1.7.5-py2.7.egg',
+'/home/kiorky/minitage/eggs/cache.local/distribute-0.6.35-py2.7.egg',
+'/home/kiorky/minitage/eggs/cache.local/iniparse-0.4-py2.7.egg',
+'/home/kiorky/minitage/eggs/cache.local/PasteDeploy-1.5.0-py2.7.egg',
+'/home/kiorky/minitage/eggs/cache.local/Paste-1.7.5.1-py2.7.egg',
+'/home/kiorky/minitage/eggs/cache.local/distribute-0.6.35-py2.7.egg' ]
+
+
+
+import zest.releaser.prerelease
+
+if __name__ == '__main__':
+    ret = zest.releaser.prerelease.main()
+    try:
+        sys.exit(ret)
+    except:
+        pass
+

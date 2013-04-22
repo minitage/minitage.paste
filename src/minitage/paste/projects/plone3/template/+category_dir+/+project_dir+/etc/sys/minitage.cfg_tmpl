@@ -1,0 +1,64 @@
+#if $inside_minitage:
+[minitage]
+location=\${buildout:directory}/../..
+#end if
+
+# site-packages
+[libxml2]
+site-packages=$xml2
+[libxslt]
+site-packages=$xslt
+[pyqt]
+site-packages=$pyqt
+
+[python${pyver}]
+#if $inside_minitage:
+executable=$python
+#else
+#executable=$python
+#end if
+python=python${pyver}
+name=python${pyver}
+
+[buildout]
+#if $inside_minitage:
+python=python${pyver}
+#else
+#python=python${pyver}
+#end if
+eggs-directory=\${minitage:location}/eggs/cache
+parts-=lxml
+extra-paths+=
+    \${libxml2:site-packages}
+    \${libxslt:site-packages}
+#if $with_binding_pyqt
+    \${pyqt:site-packages}
+#end if
+
+[versions]
+# bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
+# the one packaged in minitage !
+PIL = 1.1.7-ZMinitagePatched-Becomepil
+Pillow  = 1.7.7
+
+[zopepy]
+#if $inside_minitage:
+executable=\${python${pyver}:executable}
+#else
+#executable=\${python${pyver}:executable}
+#end if
+#if $with_binding_ldap:
+includes-dirs = $includesdirs
+#end if
+
+[${sane_name}.test]
+#if $inside_minitage:
+executable=\${python${pyver}:executable}
+#else
+#executable=\${python${pyver}:executable}
+#end if
+#if $with_binding_ldap:
+includes-dirs = $includesdirs
+#end if 
+
+# vim:set ft=cfg:

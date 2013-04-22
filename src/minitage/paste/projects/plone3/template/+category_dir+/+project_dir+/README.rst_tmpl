@@ -26,35 +26,20 @@ THE MINITAGE DANCE
 ::
 
     export MT=/minitage
-    virtualenv --no-site-packages --distribute \$MT
-    source /minitage/bin/activate
-    easy_install -U minitage.core minitage.paste
+    cd \$MT
+    wget -O minitagetool.sh https://raw.github.com/minitage/minitage.shell/master/minitagetool.sh
+    chmod +x minitagetool.sh
+    ./minitagetool.sh bootstrap # take a coffee...
 #if $scm_type == 'svn'
     svn co $uri/minilays/${project} \$MT/minilays/${project}
 #elif $scm_type in ['hg', 'git']
 #set $minilay = $uri.replace('buildout', 'minilay')
     $scm_type clone $minilay \$MT/minilays/${project}
 #end if
-    minimerge -v $project
-    #minimerge -v ${project}-prod
+    minitagetool.sh deploy -v $project
+    #minitagetool.sh deploy -v ${project}-prod
     source \$MT/zope/${project}/sys/share/minitage/minitage.env
     cd \$INS #enjoy !
-
-
-CREATE A FIRST PLONESITE OBJECT
----------------------------------
-Just run your plone and install ${project}
-
-PLAYING WITH DATAFS & PROJECT DATABASES
--------------------------------------------
-- Upload the latest datafs from production to staging server::
-
-    bin/buildout -vNc <CONFIG>-prod.cfg install upload-datafs
-
-- Get the latest datafs from production to staging server::
-
-    bin/buildout -vNc <CONFIG> install get-datafs
-
 
 DEVELOP MODE
 ---------------
@@ -78,7 +63,7 @@ Love to know that Minitage support includes xml libs, ldap, dbs; python, depende
     |-- etc/base.cfg               -> The base buildout
     |-- buildout-prod.cfg          -> buildout for production
     |-- buildout-dev.cfg           -> buildout for development
-    |-- etc/minitage/minitage.cfg  -> some buildout tweaks to run in the best of the world with minitage
+    |-- etc/sys/minitage.cfg  -> some buildout tweaks to run in the best of the world with minitage
     |-- minitage.buildout-prod.cfg -> buildout for production  with minitage support
     |-- minitage.buildout-dev.cfg  -> buildout for development with minitage support
 
@@ -95,15 +80,9 @@ Set the project developement  specific settings there
 ::
 
     etc/project/
-    |-- ${project}.cfg       -> your project needs (packages, sources, products)
-    |-- sources.cfg          -> externals sources of your project:
-    |                           - Sources not packaged as python eggs.
-    |                           - Eggs Grabbed from svn, add here your develoment eggs.
-    |                           - Links to find distributions.
-    |-- patches.cfg          -> patches used on the project
-    |-- cluster.cfg          -> define new zope instances here & also their FileSystemStorage if any.
+    |-- plone.cfg       -> your project needs (packages, sources, products)
     |-- newsletter.cfg       -> singing & dancing integration (new instance with clockserver, version pinning, fss if any)
-    |-- ${project}-kgs.cfg   -> Generated KGS for your project (minitage's printer or buildout.dumppickledversion)
+    |-- kgs.cfg   -> Generated KGS for your project (minitage's printer or buildout.dumppickledversion)
     `-- versions.cfg         -> minimal version pinning for installing your project
 
 
@@ -131,11 +110,8 @@ REVERSE PROXY
 --------------
 We generate two virtualhosts for a cliassical apache setup, mostly ready but feel free to copy/adapt.
 ::
-    etc/apache/
-    |-- ${apache_vhost_number}-${project}.reverseproxy.conf     -> a vhost for ruse with a standalone plone (even with haproxy in front of.)
-    `-- apache.cfg
-    etc/templates/apache/
-    |-- ${apache_vhost_number}-${project}.reverseproxy.conf.in  -> Template for a vhost for ruse with a standalone plone (even with haproxy in front of.)
+    etc/www/{apache, nginx}.reverseproxy.conf     -> a vhost to integrate with a frontal httpd server
+    etc/templates/www -> templates
 
 In settings.cfg you have now some settings for declaring which host is your reverse proxy backend & the vhost mounting:
     * hosts:zope-front / ports:zope-front                              -> zope front backend
@@ -179,36 +155,5 @@ And you'd  better have to learn how to bootstrap some minitage environment out t
         |-- opensuse.sh     -> suse specific
         |-- osx.sh          -> osx specific
         `-- ubuntu.sh       -> ubuntu specific
-
-
-CONTINEOUS INTEGRATION
-~~~~~~~~~~~~~~~~~~~~~~~~~
-Here are the files needed for our hudson integration.
-
-For hudson we provide some shell helpers more or less generated to run 'a build':
-
-    - an helper which set some variables in the current environement for others helpers
-    - an helper which update the project
-    - an helper which update the associated sources grabbed via mr.developer
-    - an helper which run all the tests
-
-This is described in details on the related configuration files you will find in the layout below.
-::
-
-    |-- etc/hudson/
-    |   `-- $project
-    |       |-- build
-    |           |-- build.sh               -> the project build helper
-    |           |-- test.sh                -> the project test executor helper (launch all tests needed)
-    |           |-- update_mrdeveloper.sh  -> update sources grabbed via mrdeveloper
-    |           `-- update_project.sh      -> update this layout
-    |
-    |-- etc/templates/hudson/
-        `-- ${project}
-            |-- build
-            |   `-- activate_env.sh.in   -> buildout template to generate etc/hudson/${project}/build/activate.env.sh
-            `-- config.xml.in            -> buildout template to generate etc/hudson/${project}/config.xml (hudson job/build file)
-
-$instances_description.replace('# ', '')
 
 .. vim:set ft=rst:

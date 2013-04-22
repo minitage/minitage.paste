@@ -28,11 +28,14 @@
 
 # We want the production buildout + the debug bits.
 [buildout]
+autostart_instance1=false
+autostart_instance2=false
+autostart_instance3=false
+autostart_instance4=false
 extends-cache=etc/cache
-extends=etc/base.cfg 
-    etc/backends/${devmode}.cfg 
-    etc/project/cluster.cfg
-parts+= 
+extends=etc/base.cfg
+    etc/backends/${devmode}.cfg
+parts+=
     instance1
     instance2
     instance3
@@ -40,13 +43,13 @@ parts+=
     devmode
     cg.devmode
     tools
-eggs += 
+eggs +=
     ipython
     docutils
     gprof2dot
     profilehooks
     pyprof2calltree
-    plone.reload 
+    plone.reload
 # Uncomment/Activate only if you want
 #   Products.PTProfiler
 #   Products.PDBDebugMode
@@ -74,27 +77,10 @@ auto-checkout +=
 #    zopeskel
 
 [hosts]
-zope-front=\${hosts:instance}
+#zope-front=\${hosts:instance}
 
 [ports]
-zope-front=\${ports:instance}
-
-[sources]
-zopeskel=svn https://svn.plone.org/svn/collective/ZopeSkel/trunk
-experimental.catalogqueryplan = svn https://svn.plone.org/svn/collective/experimental.catalogqueryplan/trunk
-Products.MemoryProfiler = svn https://svn.plone.org/svn/collective/Products.MemoryProfiler/trunk
-Products.Gloworm = git https://github.com/kiorky/Products.Gloworm.git
-templer.core                = git \${remotes:collective}/templer.core.git pushurl=\${remotes:collective_push}/templer.core.git
-templer.buildout            = git \${remotes:collective}/templer.buildout.git pushurl=\${remotes:collective_push}/templer.buildout.git
-templer.zope                = git \${remotes:collective}/templer.zope.git pushurl=\${remotes:collective_push}/templer.zope.git
-templer.plone               = git \${remotes:collective}/templer.plone.git pushurl=\${remotes:collective_push}/templer.plone.git
-templer.dexterity           = git \${remotes:collective}/templer.dexterity.git pushurl=\${remotes:collective_push}/templer.dexterity.git
-templer.plonebuildout       = git \${remotes:collective}/templer.plonebuildout.git pushurl=\${remotes:collective_push}/templer.plonebuildout.git
-templer.silva               = git \${remotes:collective}/templer.silva.git pushurl=\${remotes:collective_push}/templer.silva.git
-templer.localcommands       = git \${remotes:collective}/templer.localcommands.git pushurl=\${remotes:collective_push}/templer.localcommands.git
-templer.plone.localcommands = git \${remotes:collective}/templer.plone.localcommands.git pushurl=\${remotes:collective_push}/templer.plone.localcommands.git
-templer.plonecore           = svn https://svn.plone.org/svn/collective/templer.plonecore/trunk
- 
+#zope-front=\${ports:instance}
 
 [versions]
 ctypes=1.0.2
@@ -121,10 +107,10 @@ debug-mode=on
 [zopepy]
 eggs +=
     collective.dist
-    collective.releaser 
+    collective.releaser
     zest.releaser
     Sphinx
-scripts += 
+scripts +=
     project_deploy
 #Sphinx
     sphinx-build

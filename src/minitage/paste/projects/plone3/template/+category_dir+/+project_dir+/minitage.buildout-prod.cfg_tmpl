@@ -9,5 +9,5 @@
 
 # We want the production buildout + the debug bits.
 [buildout]
-extends=buildout-prod.cfg etc/minitage/minitage.cfg 
+extends=buildout-prod.cfg etc/sys/minitage.cfg 
 extends-cache=etc/cache

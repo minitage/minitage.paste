@@ -121,8 +121,9 @@
 
       <version p='collective.portlet.localcumulus'         v='1.8' options="with_ploneproduct_clcumulus"/>
       <version p='collective.portlet.relateditems'    v='0.3.5'      options="with_ploneproduct_crelateditems"/>
-      <version p='plone.app.multilingual'    v='1.0rc1'      options="with_ploneproduct_pamultilingual"/>
-      <version p='plone.multilingualbehavior'    v='1.0rc1'      options="with_ploneproduct_pamultilingual"/>
+      <version p='plone.app.multilingual'    v='1.0'      options="with_ploneproduct_pamultilingual,with_ploneproduct_dexterity"/>
+      <version p='plone.multilingual'    v='1.0'      options="with_ploneproduct_pamultilingual,with_ploneproduct_dexterity"/>
+      <version p='plone.multilingualbehavior'    v='1.0'      options="with_ploneproduct_pamultilingual, with_ploneproduct_dexterity"/>
       <version p="collective.quickupload"    v="1.5.8" options="with_ploneproduct_qupload"/>
       <version p='contentratings'                          v='1.0' options="with_ploneproduct_pratings"/>
       <version p='geopy'                v='0.94'  options="with_ploneproduct_cgeo"/>

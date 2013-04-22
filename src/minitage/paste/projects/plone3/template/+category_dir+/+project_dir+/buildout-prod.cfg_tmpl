@@ -4,71 +4,25 @@
 # bin/buildout -c buildout-prod.cfg
 # or minimerge -NuUvR ${project}-prod-light
 # Look at the base buildout: ./etc/base.cfg for other details of your plone installation
-
-#if $with_ploneproduct_sgdcg
-#set $sgdgcomment=''
-#else
-#set $sgdgcomment='#'
-#end if
 #if $with_ploneproduct_fss
 #set $fsscomment=''
 #else
 #set $fsscomment='#'
 #end if
-#if $with_ploneproduct_ploneappblob
-#set $blobcomment=''
+#if $with_ploneproduct_sgdcg
+#set $sgdgcomment=''
 #else
-#set $blobcomment='#'
+#set $sgdgcomment='#'
 #end if 
 
 [buildout]
 extends-cache=etc/cache
-extends=#slurp
-    etc/project/cluster.cfg#slurp
-    etc/sys/maintenance.cfg#slurp
-    etc/sys/high-availability.cfg#slurp
-    etc/base.cfg#slurp
-    etc/backends/${mode}.cfg#slurp
-
-parts+=#slurp
-    instance1
-    instance2
-    instance3
-    instance4
-    touch
-    zopepackdaily
-    supervisor-initd
-    zoperestartdaily
-#if not 'relstorage' in $mode:
-    repozodaily
-    repozoweekly
-#else
-#    repozodaily
-#    repozoweekly
-#end if
-${fsscomment}    fssdaily
-${fsscomment}    fssrotate
-${fsscomment}    fssdailycron
-${fsscomment}    fss1
-${fsscomment}    fss2
-${fsscomment}    fss3
-${fsscomment}    fss4
-    chmodcron
-    backupdirs
-    logrotate.conf
-    initd-chmod
-#if $with_haproxy
-    balancer.config
-    haproxy-build
-#else
-#    balancer.config
-#end if
-#if $with_supervisor
-    supervisor
-#else
-#    supervisor
-#end if
-    chown
-    chmod
+extends=
+    etc/base.cfg
+    etc/backends/${mode}.cfg
+    etc/sys/settings-prod.cfg
+parts+=
+    \${buildout:maintainance-parts}
+${fsscomment}    \${buildout:fss-maintainance-parts}
 
 \# vim:set ft=cfg:

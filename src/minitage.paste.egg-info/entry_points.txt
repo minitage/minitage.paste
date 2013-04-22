@@ -1,0 +1,21 @@
+[paste.paster_create_template]
+minitage.django = minitage.paste.projects.django:Template
+minitage.dependency = minitage.paste.projects.dependency:Template
+minitage.instances.env = minitage.paste.instances.env:Template
+minitage.pyramid = minitage.paste.projects.pyramid:Template
+minitage.plone42 = minitage.paste.projects.plone42:Template
+minitage.plone43 = minitage.paste.projects.plone43:Template
+minitage.plone41 = minitage.paste.projects.plone41:Template
+minitage.plone25 = minitage.paste.projects.plone25:Template
+minitage.plone3 = minitage.paste.projects.plone3:Template
+minitage.instances.varnish = minitage.paste.instances.varnish:Template
+minitage.egg = minitage.paste.projects.egg:Template
+minitage.instances.varnish2 = minitage.paste.instances.varnish2:Template
+minitage.instances.nginx = minitage.paste.instances.nginx:Template
+minitage.instances.paste-initd = minitage.paste.instances.pasteinitd:Template
+minitage.instances.mysql = minitage.paste.instances.mysql:Template
+minitage.instances.apache = minitage.paste.instances.apache:Template
+minitage.plone44 = minitage.paste.projects.plone44:Template
+minitage.instances.postgresql = minitage.paste.instances.postgresql:Template
+minitage.plone4 = minitage.paste.projects.plone4:Template
+

@@ -436,15 +436,15 @@ class Template(common.Template):
         for port in range(500):
             vars['http_port%s'%port] = int(
                 vars['http_port']) + port
-        vars['http_port_buildbot'] = int(vars['http_port']) + port + 1
-        vars['zeo_port_buildbot'] = ''
-        if 'socket' == vars['zeo_port'].strip():
-            vars['zeo_port_buildbot'] = int(vars['zeo_port']) + 1
+        #vars['http_port_buildbot'] = int(vars['http_port']) + port + 1
+        #vars['zeo_port_buildbot'] = ''
+        #if 'socket' == vars['zeo_port'].strip():
+        #    vars['zeo_port_buildbot'] = int(vars['zeo_port']) + 1
         vars['running_user'] = common.running_user
         vars['instances_description'] = common.INSTANCES_DESCRIPTION % vars
-        if not vars['reverseproxy_aliases']:
-            vars['reverseproxy_aliases'] = ''
-        vars['sreverseproxy_aliases'] = vars['reverseproxy_aliases'].split(',')
+        #if not vars['reverseproxy_aliases']:
+        #    vars['reverseproxy_aliases'] = ''
+        #vars['sreverseproxy_aliases'] = vars['reverseproxy_aliases'].split(',')
         suffix = vars['major']
         if vars['major'] > 3:
             suffix = self.name.replace('minitage.plone', '')
@@ -577,7 +577,7 @@ plone_vars = [pvar('address', 'Address to listen on', default = 'localhost',),
               pvar('mode', 'Mode to use : zodb|relstorage|zeo', default = 'zeo'),
               pvar('devmode', 'Mode to use in development mode: zodb|relstorage|zeo', default = 'zeo'),
               pvar('zeo_host', 'Address for the zeoserver (zeo mode only)', default = 'localhost',),
-              pvar('zeo_port', 'Port for the zeoserver (zeo mode only)', default = '8100',),
+              #pvar('zeo_port', 'Port for the zeoserver (zeo mode only)', default = '8100',),
               pvar('with_zeo_socket', 'Use socket for zeo, y/n', default = 'n',),
               pvar('zope_user', 'Administrator login', default = 'admin',),
               pvar('zope_password', 'Admin Password in the ZMI', default = 'secret',),
@@ -587,30 +587,28 @@ plone_vars = [pvar('address', 'Address to listen on', default = 'localhost',),
               pvar('relstorage_dbname', 'Relstorage database name (only useful for relstorage mode)', default = 'minitagedb',),
               pvar('relstorage_dbuser', 'Relstorage user (only useful for relstorage mode)', default = common.running_user),
               pvar('relstorage_password', 'Relstorage password (only useful for relstorage mode)', default = 'secret',),
-              pvar('solr_host', 'Solr host (only useful if you want solr)', default = '127.0.0.1',),
-              pvar('solr_port', 'Solr port (only useful if you want solr)', default = '8983',),
-              pvar('solr_path', 'Solr path (only useful if you want solr)', default = '/solr',),
-              pvar('staging_host', 'Host to get a datafs from address', default = 'host',),
-              pvar('staging_user', 'User for connecting to the staging host', default = 'user',),
-              pvar('staging_path', 'Path to the buildout root on the staging host', default = '/',),
-              pvar('supervisor_host', 'Supervisor host', default = '127.0.0.1',),
-              pvar('supervisor_port', 'Supervisor port', default = '9001',),
-              pvar('supervisor_user', 'Supervisor web user', default = 'admin',),
-              pvar('supervisor_password', 'Supervisor web password', default = 'secret',),
-              pvar('with_supervisor', 'Supervisor support (monitoring), http://supervisord.org/ y/n', default = 'y',),
+              #pvar('solr_host', 'Solr host (only useful if you want solr)', default = '127.0.0.1',),
+              #pvar('solr_port', 'Solr port (only useful if you want solr)', default = '8983',),
+              #pvar('solr_path', 'Solr path (only useful if you want solr)', default = '/solr',),
+              #pvar('staging_host', 'Host to get a datafs from address', default = 'host',),
+              #pvar('staging_user', 'User for connecting to the staging host', default = 'user',),
+              #pvar('staging_path', 'Path to the buildout root on the staging host', default = '/',),
+              #pvar('supervisor_host', 'Supervisor host', default = '127.0.0.1',),
+              #pvar('supervisor_port', 'Supervisor port', default = '9001',),
+              #pvar('supervisor_user', 'Supervisor web user', default = 'admin',),
+              #pvar('supervisor_password', 'Supervisor web password', default = 'secret',),
+              pvar('with_cache_support', 'Proxy cache (varnish)  support y/n', default = 'n',),
               pvar('with_supervisor', 'Supervisor support (monitoring), http://supervisord.org/ y/n', default = 'y',),
               pvar('with_supervisor_instance1', 'Supervisor will automaticly launch instance 1 in production mode  y/n', default = 'y',),
               pvar('with_supervisor_instance2', 'Supervisor will automaticly launch instance 2 in production mode, y/n', default = 'n',),
               pvar('with_supervisor_instance3', 'Supervisor will automaticly launch instance 3 in production mode, y/n', default = 'n',),
               pvar('with_supervisor_instance4', 'Supervisor will automaticly launch instance 4 in production mode, y/n', default = 'n',),
-              pvar('buildbot_master_web_port', 'Buildbot master web port', default = '9080',),
-              pvar('buildbot_master_control_port', 'Buildbot master control port', default = '9081',),
-              pvar('buildbot_master_host', 'Buildbot master host', default = '127.0.0.1',),
-              pvar('buildbot_slave_password',  'Buildbot password', default = 'i_am_a_buildbot_slave_password',),
-              pvar('buildbot_cron',  'Buildbot cron to schedule builds', default = '0 3 * * *',),
-              pvar('with_haproxy', 'haproxy configuration file generation support (loadbalancing), http://haproxy.1wt.eu/ y/n', default = 'n',),
-              pvar('haproxy_host', 'Haproxy host', default = '127.0.0.1',),
-              pvar('haproxy_port', 'Haproxy port', default = '8201',),
+              #pvar('buildbot_master_web_port', 'Buildbot master web port', default = '9080',),
+              #pvar('buildbot_master_control_port', 'Buildbot master control port', default = '9081',),
+              #pvar('buildbot_master_host', 'Buildbot master host', default = '127.0.0.1',),
+              #pvar('buildbot_slave_password',  'Buildbot password', default = 'i_am_a_buildbot_slave_password',),
+              #pvar('buildbot_cron',  'Buildbot cron to schedule builds', default = '0 3 * * *',),
+              pvar('with_haproxy', 'haproxy support (loadbalancing), http://haproxy.1wt.eu/ y/n', default = 'n',),
               pvar('plone_products', 'comma separeted list of adtionnal products to install: eg: file://a.tz file://b.tgz', default = '',),
               pvar('additional_eggs', 'comma separeted list of additionnal eggs to install', default = '',),
               pvar('plone_zcml', 'comma separeted list of eggs to include for searching ZCML slugs', default = '',),

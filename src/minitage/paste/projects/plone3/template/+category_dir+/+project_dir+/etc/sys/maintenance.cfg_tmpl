@@ -28,6 +28,19 @@
 #set $blobcomment='#'
 #end if
 
+[buildout]
+maintainance-parts=
+    zopepackdaily
+    logrotate.conf
+    zoperestartdaily
+#if not 'relstorage' in $mode:
+    repozodaily
+    repozoweekly
+#else
+#    repozodaily
+#    repozoweekly
+#end if
+
 # make an incremental backup per day
 [repozodaily]
 recipe = z3c.recipe.usercrontab
@@ -59,13 +72,6 @@ command = \${buildout:directory}/bin/supervisorctl restart instance1
 #command = \${buildout:directory}/bin/instance1 restart
 #end if
 
-[chmodcron]
-order=\${fssdaily:recipe}
-recipe = plone.recipe.command
-update-command = \${chmodcron:command}
-command =
-    chmod -v 750 \${buildout:directory}/cron_scripts/*.sh
-
 # please edit the .in file to fit your needs if you change the fss storage layout.
 [fssdaily]
 recipe = collective.recipe.template
@@ -86,23 +92,6 @@ to_keep=\${crons:nb_backups_to_keep}
 recipe = z3c.recipe.usercrontab
 times = 15 1 * * *
 command =  \${buildout:directory}/cron_scripts/fss_daily.sh && \${buildout:directory}/cron_scripts/fsskeeplastbackups.sh
-
-[backupdirs]
-${fsscomment}order=\${fssdaily:recipe}
-recipe = plone.recipe.command
-update-command = \${backupdirs:command}
-command =
-${fsscomment}     mkdir -pv \${fssdaily:backuppath};\
-    mkdir -pv \${buildout:directory}/var/backups;\
-    mkdir -pv \${buildout:directory}/var/snapshotbackups
-
-[upload-datafs]
-recipe = plone.recipe.command
-update-command = \${upload-datafs:command}
-command =
-     rsync -av --partial --progress               \${buildout:directory}/var/backups/                \${users:staging}@\${hosts:staging}:\${locations:staging}/backups/;
-     rsync -av --partial --progress               \${buildout:directory}/var/snapshotbackups/        \${users:staging}@\${hosts:staging}:\${locations:staging}/snapshotbackups/;
-${fsscomment}     rsync -av --partial --progress  \${locations:fss}/                          \${users:staging}@\${hosts:staging}:\${locations:staging}/fss_${project}/;
 
 [logrotate.conf]
 recipe = collective.recipe.template

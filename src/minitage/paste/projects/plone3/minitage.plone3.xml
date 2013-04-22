@@ -15,10 +15,12 @@
   -->
   <template>
   <options>
-  <option order="0000" name="apache_vhost_number"                description="Apache vhost number" default="100"/>
   <option order="0000" name="fss_strategy"                       description='File System Storage strategy, see http://pypi.python.org/pypi/iw.fss/#storage-strategies (directory, flat, site1, site2)'  default='directory'/>
-  <option order="0000" name="reverseproxy_aliases"               description="domain name aliases (comma separated) which be used in the reverse proxy" default="bis.localhost.com.bis,ter.localhost.com"/>
-  <option order="0000" name="reverseproxy_host"                  description="domain name which be used in the reverse proxy" default="localhost.com"/>
+  <!--
+  <option order="0000" name="apache_vhost_number"                description="Apache vhost number" default="100"/>
+    <option order="0000" name="reverseproxy_aliases"               description="domain name aliases (comma separated) which be used in the reverse proxy" default="bis.localhost.com.bis,ter.localhost.com"/>
+    -->
+  <option order="0000" name="reverseproxy_host"                  description="domain name which be used in the reverse proxy" default="www.localhost.com"/>
   <option order="0000" name="reverseproxy_port"                  description="port of the reverse proxy" default="80"/>
   <option order="0000" name="reverseproxy_scheme"                description="HHTP(s) scheme of the reverse proxy (http/https)" default="http"/>
   <option order="0000" name="with_binding_bsoup"                 description="BeautifulSoup,see http://pypi.python.org/pypi/BeautifulSoup/ y/n"/>

@@ -1,7 +1,6 @@
 $hr
 # BASE  BUILDOUT
 $hr
-
 #if 'zeo' in $mode:
 #set $zeocomment=''
 #else
@@ -22,7 +21,6 @@ $hr
 #else
 #set $asynccomment='#'
 #end if
-
 #if $with_ploneproduct_paevent
 #set $eventcomment=''
 #else
@@ -32,17 +30,39 @@ $hr
 #set $etherpadcomment=''
 #else:
 #set $etherpadcomment='#'
-#end if   
+#end if
 
 [buildout]
-extensions = buildout.minitagificator mr.developer jarn.setuptoolsfixer buildout.dumppickedversions
-allow-hosts=\${mirrors:allow-hosts}
-dump-picked-versions-file =\${buildout:directory}/etc/project/${project}-kgs.cfg
+extensions=buildout.minitagificator mr.developer buildout.dumppickedversions
+timeout=3
+find-links =
+    http://dist.plone.org/release/${plone_version}
+    http://pypi.python.org/simple/ZODB4
+allow-hosts =
+     *localhost*
+     *willowrise.org*
+     *plone.org*
+     *zope.org*
+     *effbot.org*
+     *python.org*
+     *initd.org*
+     *googlecode.com*
+     *plope.com*
+     *bitbucket.org*
+     *repoze.org*
+     *crummy.com*
+     *minitage.org*
+     *bpython-interpreter.org*
+     *stompstompstomp.com*
+     *ftp.tummy.com*
+     *pybrary.net*
+     *www.tummy.com*
+     *www.riverbankcomputing.com*
+     *.selenic.com*
+dump-picked-versions-file =\${buildout:directory}/etc/project/kgs.cfg
 overwrite-picked-versions-file=true
 extends-cache = \${buildout:directory}/etc/cache
 extends =
-
-
 #if $major > 3:
     http://dist.plone.org/release/${plone_version}/versions.cfg
 # uncomment and correct version in url to get sources to autocheckout with mrdeveloper
@@ -51,15 +71,12 @@ extends =
 #    http://good-py.appspot.com/release/dexterity/1.2.1
 #    http://good-py.appspot.com/release/five.grok/1.3.1
 #end if
-    project/${project}.cfg
+    project/plone.cfg
 #if $major > 3:
 ${eventcomment}    https://raw.github.com/collective/plone.app.event/master/sources.cfg
 #end if
-    project/sources.cfg
     project/versions.cfg
-    project/patches.cfg
-#    project/${project}-kgs.cfg
-    sys/settings.cfg
+#    project/kgs.cfg
 #if $with_ploneproduct_sgdcg:
     project/newsletter.cfg
 #end if
@@ -69,33 +86,22 @@ ${eventcomment}    https://raw.github.com/collective/plone.app.event/master/sour
 #if $with_ploneproduct_ploneappblob or ($major > 3):
     backends/blobstorage.cfg
 #end if
-    www/apache.cfg
-    www/nginx.cfg
-    hudson/${project}/hudson.cfg
+${etherpadcomment}    project/etherpad.cfg
+    www/vhosts.cfg
+    sys/maintenance.cfg
+    sys/high-availability.cfg
+    sys/settings.cfg
 parts =
-    lxml
-#if $major < 4:
-    zope2
-#end if
-    productdistros
-    instance
-${asynccomment}    instance-worker
-    zopepy
-    backup
-${sgdgcomment}    instance-newsletter
-${fsscomment}${sgdgcomment}    fss-newsletter
-${fsscomment}    fss
-    mkdirs
-    omelette
-    ${sane_name}.test
-${zeocomment}    zeoserver
-${zeocomment}    instance-plain
-    apache_vhost
-${etherpadcomment}    nodejs
-${etherpadcomment}    etherpad-lite
-${etherpadcomment}    etherpad-sh
-${etherpadcomment}    etherpad-config
-${etherpadcomment}    etherpad-apikey
-    chmod
+    \${buildout:project-parts}
+    \${buildout:www-parts}
+    \${buildout:ha-parts}
+    \${buildout:filesystem-parts}
+${etherpadcomment}    \${buildout:etherpad-parts}
+
+[supervisor]
+programs= \${buildout:zeo-programs}
+    \${buildout:ha-programs}
+    \${buildout:project-programs}
+${etherpadcomment}    \${buildout:etherpad-programs}
 
 \# vim: set ft=cfg:

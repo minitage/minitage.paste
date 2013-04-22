@@ -1,0 +1,49 @@
+#if $with_ploneproduct_etherpad
+#set $etherpadcomment=''
+#else:
+#set $etherpadcomment='#'
+#end if
+
+[buildout]
+etherpad-programs= ${etherpadcomment} 60 etherpad \${buildout:directory}/bin/node [node_modules/ep_etherpad-lite/node/server.js] \${etherpad-lite:location}/bin true \${users:zope}
+etherpad-parts=
+    etherpad-lite
+    etherpad-sh
+    etherpad-config
+    etherpad-apikey
+
+[etherpad-lite]
+recipe=hexagonit.recipe.download
+url=https://github.com/ether/etherpad-lite/archive/\${versions:etherpad}.zip
+strip-top-level-dir=true
+
+[etherpad-sh]
+recipe=collective.recipe.template
+output = \${buildout:directory}/bin/etherpad.sh
+mode = 755
+input = inline:
+    #! /bin/sh
+    export PATH=\${buildout:directory}/bin:\$PATH
+    cd \${etherpad-lite:location}
+    ./bin/run.sh
+
+[etherpad-config]
+recipe=collective.recipe.template
+input = \${buildout:directory}/etc/templates/pad.settings.json.template
+output = \${etherpad-lite:location}/settings.json
+title=Etherpad for Plone
+ip=\${hosts:etherpad}
+port=\${ports:etherpad}
+dbType=dirty
+dbSettings={"filename" : "var/dirty.db"}
+requireSession=true
+editOnly=false
+adminPassword=\${zope:password}
+
+[etherpad-apikey]
+recipe=collective.recipe.template
+output = \${etherpad-lite:location}/APIKEY.txt
+input = inline:
+    PLONEAPIKEY
+
+\# vim:set ft=cfg:

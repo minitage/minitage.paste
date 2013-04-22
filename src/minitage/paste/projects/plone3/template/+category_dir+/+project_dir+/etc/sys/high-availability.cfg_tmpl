@@ -1,56 +1,40 @@
 $hr
 # High availability settings (production instances and load balancer)
 $hr
-
 # for haproxy, look at the template in etc/templates/balancer.conf.template
 # regenerate with: buildout -c <CONFIG_FILE> install balancer.config
 # Think for enabling the log statement!
-
 # Think to include the logrotate configuration file inside your logrotate configuration (ln ?)
 #if $with_ploneproduct_sgdcg
 #set $sgdgcomment=''
 #else
 #set $sgdgcomment='#'
 #end if
-
-
 #if $with_haproxy
 #set $hapcomment=''
 #else:
 #set $hapcomment='#'
-#end if 
-
+#end if
 #if 'zeo' in $mode:
 #set $zeocomment=''
 #else
 #set $zeocomment='#'
-#end if 
-#if $with_supervisor_instance1
-#set $si1=''
-#else:
-#set $si1='#'
-#end if  
-#if $with_supervisor_instance2
-#set $si2=''
-#else:
-#set $si2='#'
-#end if  
-#if $with_supervisor_instance3
-#set $si3=''
-#else:
-#set $si3='#'
-#end if  
-#if $with_supervisor_instance4
-#set $si4=''
-#else:
-#set $si4='#'
-#end if  
+#end if
+
 #if $with_ploneproduct_etherpad
 #set $etherpadcomment=''
 #else:
 #set $etherpadcomment='#'
-#end if 
+#end if
 
+[buildout]
+ha-programs=
+     50 balancer  \${supervisor:haproxy-path} [-f \${buildout:directory}/etc/loadbalancing/balancer.conf -db]       true \${users:zope}
+ha-parts=
+    supervisor
+    supervisor-initd
+${hapcomment}   balancer.config
+${hapcomment}   haproxy-build
 
 [haproxy-build]
 recipe = plone.recipe.haproxy
@@ -65,36 +49,12 @@ password = \${supervisor-webadmin:password}
 serverurl = http://\${hosts:supervisor}:\${ports:supervisor}
 haproxy-path=\${buildout:directory}/bin/haproxy
 programs =
-${zeocomment}    10 zeo \${zeoserver:location}/bin/runzeo \${zeoserver:location} true \${users:zope}
-#if $with_ploneproduct_paasync
-${si1}    20 instance-worker \${buildout:directory}/bin/instance-worker [console] true \${users:zope}
-#end if
-#if $major > 3:
-${si1}    21 instance1 \${buildout:directory}/bin/instance1 [console]  true \${users:zope}
-${si2}    22 instance2 \${buildout:directory}/bin/instance2 [console]  true \${users:zope}
-${si3}    23 instance3 \${buildout:directory}/bin/instance3 [console]  true \${users:zope}
-${si4}    24 instance4 \${buildout:directory}/bin/instance4 [console]  true \${users:zope}
-${sgdgcomment}    40 instance-newsletter \${buildout:directory}/bin/instance-newsletter  [console]                                        true \${users:zope}
-#else
-${si1}    21 instance1 \${buildout:directory}/parts/instance1/bin/runzope true \${users:zope}
-${si2}    22 instance2 \${buildout:directory}/parts/instance2/bin/runzope true \${users:zope}
-${si3}    23 instance3 \${buildout:directory}/parts/instance3/bin/runzope true \${users:zope}
-${si4}    24 instance4 \${buildout:directory}/parts/instance4/bin/runzope true \${users:zope}
-${sgdgcomment}    40 instance-newsletter \${buildout:directory}/parts/instance-newsletter/bin/runzope  true \${users:zope}
-#end if
-${hapcomment}     50 balancer  \${supervisor:haproxy-path} [-f \${buildout:directory}/etc/loadbalancing/balancer.conf -db]       true \${users:zope}
-${etherpadcomment} 60 etherpad \${buildout:directory}/bin/node [node_modules/ep_etherpad-lite/node/server.js] \${etherpad-lite:location}/bin true \${users:zope} 
 
 [supervisor-initd]
 recipe = collective.recipe.template
 input =  \${buildout:directory}/etc/templates/supervisor.initd
 output =  \${buildout:directory}/etc/init.d/supervisor.initd
-
-[initd-chmod]
-recipe = plone.recipe.command
-update-command = \${initd-chmod:command}
-command =
-    chmod -v 750 \${buildout:directory}/etc/init.d/*
+mode=750
 
 [balancer.config]
 recipe = collective.recipe.template

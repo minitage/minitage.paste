@@ -1,0 +1,4 @@
+minitage
+minitage.paste
+minitage.paste.instances
+minitage.paste.projects

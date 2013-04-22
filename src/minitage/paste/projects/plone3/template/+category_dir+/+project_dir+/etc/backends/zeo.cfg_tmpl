@@ -1,10 +1,5 @@
 # ZEO backend support and configuration
 
-#if $zeo_port.strip():
-#set $zeo_sep = ''
-#else
-#set $zeo_sep = ''
-#end if
 #if $with_zeo_socket:
 #set zeoa = '${buildout:directory}/var/zeocl.sock'
 #set zeoh = '#${hosts:zeo}:${ports:zeo}'
@@ -16,6 +11,18 @@
 #else
 #set $asynccomment='#'
 #end if
+#if 'zeo' in $mode:
+#set $zeocomment=''
+#else
+#set $zeocomment='#'
+#end if
+
+[buildout]
+zeo-parts=
+    zeoserver
+    instance-plain
+zeo-programs=
+    10 zeo \${zeoserver:location}/bin/runzeo \${zeoserver:location} true \${users:zope}
 
 [instance]
 zeo-client-cache-size = \${cache:zeo-client-cache-size}

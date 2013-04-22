@@ -1,0 +1,39 @@
+$hr
+# Cache settings
+$hr
+
+#if $with_cache_support
+#set $cachecomment=''
+#else:
+#set $cachecomment='#'
+#end if
+
+[buildout]
+cache-programs=
+     50 varnish \${buildout:directory}/bin/varnish [-F] true \\${users:zope}
+cache-parts=
+     pcre
+     varnish-build
+     varnish
+
+[pcre]
+recipe = minitage.recipe.cmmi
+url = http://downloads.sourceforge.net/project/pcre/pcre/8.32/pcre-8.32.tar.gz
+md5sum=234792d19a6c3c34a13ff25df82c1ce7
+
+[varnish-build]
+recipe = minitage.recipe.cmmi
+md5sum=714310c83fdbd2061d897dacd3f63d8b
+url = http://gentoo.tiscali.nl/distfiles/varnish-3.0.3.tar.gz
+configure-options =
+    PCRE_CFLAGS="-I\${buildout:directory}/parts/pcre/include"
+    PCRE_LIBS="-Wl,-rpath -Wl,"\${buildout:directory}/parts/pcre/lib" -L\${buildout:directory}/parts/pcre/lib -lpcre"
+
+[varnish]
+recipe = plone.recipe.varnish
+daemon = \${buildout:parts-directory}/varnish-build/sbin/varnishd
+bind = \${hosts:varnish}:\${ports:varnish}
+backends = \${hosts:cache-backend}:\${ports:cache-backend}
+cache-size = \${v:proxycache_size}
+
+\# vim:set ft=cfg:
