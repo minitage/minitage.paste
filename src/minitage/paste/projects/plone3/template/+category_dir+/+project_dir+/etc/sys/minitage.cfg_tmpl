@@ -27,7 +27,8 @@ python=python${pyver}
 #python=python${pyver}
 #end if
 eggs-directory=\${minitage:location}/eggs/cache
-parts-=lxml
+project-parts-=lxml
+cache-parts-=pcre
 extra-paths+=
     \${libxml2:site-packages}
     \${libxslt:site-packages}
@@ -59,6 +60,9 @@ executable=\${python${pyver}:executable}
 #end if
 #if $with_binding_ldap:
 includes-dirs = $includesdirs
-#end if 
+#end if
+
+[varnish-build]
+pcre=\${minitage:location}/dependencies/libpcre-8/parts/part
 
 # vim:set ft=cfg:

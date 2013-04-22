@@ -11,10 +11,20 @@ $hr
 [buildout]
 cache-programs=
      50 varnish \${buildout:directory}/bin/varnish [-F] true \\${users:zope}
+auto-checkout +=
+    collective.recipe.varnish
 cache-parts=
      pcre
      varnish-build
      varnish
+     varnishadm
+     varnishhist
+     varnishlog
+     varnishncsa
+     varnishreplay
+     varnishsizes
+     varnishstat
+     varnishtop
 
 [pcre]
 recipe = minitage.recipe.cmmi
@@ -25,15 +35,58 @@ md5sum=234792d19a6c3c34a13ff25df82c1ce7
 recipe = minitage.recipe.cmmi
 md5sum=714310c83fdbd2061d897dacd3f63d8b
 url = http://gentoo.tiscali.nl/distfiles/varnish-3.0.3.tar.gz
+pcre=\${buildout:directory}/parts/pcre
 configure-options =
-    PCRE_CFLAGS="-I\${buildout:directory}/parts/pcre/include"
-    PCRE_LIBS="-Wl,-rpath -Wl,"\${buildout:directory}/parts/pcre/lib" -L\${buildout:directory}/parts/pcre/lib -lpcre"
+    PCRE_CFLAGS="-I\${varnish-build:pcre}/include"
+    PCRE_LIBS="-Wl,-rpath -Wl,"\${varnish-build:pcre}/lib" -L"\${varnish-build:pcre}/lib" -lpcre"
 
 [varnish]
 recipe = plone.recipe.varnish
+name=\${v:project}
 daemon = \${buildout:parts-directory}/varnish-build/sbin/varnishd
 bind = \${hosts:varnish}:\${ports:varnish}
 backends = \${hosts:cache-backend}:\${ports:cache-backend}
 cache-size = \${v:proxycache_size}
+telnet=\${hosts:varnish}:\${ports:varnish-telnet}
+#connect-timeout=0.4s
+#first-byte-timeout=300s
+#between-bytes-timeout=60s
+varnish_version=3
+purge-hosts=
+    \${hosts:ip}
+    \${hosts:address}
+
+[varnishwrapper]
+recipe = collective.recipe.template
+mode=750
+input =  \${buildout:directory}/etc/templates/varnish/\${:_buildout_section_name_}.in
+output =  \${buildout:directory}/bin/\${:_buildout_section_name_}
+
+[varnishadm]
+<=varnishwrapper
+
+[varnishhist]
+<=varnishwrapper
+
+[varnishlog]
+<=varnishwrapper
+
+[varnishncsa]
+<=varnishwrapper
+
+[varnishreplay]
+<=varnishwrapper
+
+[varnishsizes]
+<=varnishwrapper
+
+[varnishstat]
+<=varnishwrapper
+
+[varnishtop]
+<=varnishwrapper
+
+[sources]
+collective.recipe.varnish = git https://github.com/collective/plone.recipe.varnish.git branch=varnish_3_compat
 
 \# vim:set ft=cfg:

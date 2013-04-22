@@ -81,6 +81,7 @@ webdav = $http_port10
 workermonitor=$http_port11
 ${etherpadcomment}etherpad=$http_port12
 varnish=$http_port13
+varnish-telnet=$http_port14
 #if $with_cache_support
 zope-front=\${ports:varnish}
 #zope-front=\${ports:balancer}

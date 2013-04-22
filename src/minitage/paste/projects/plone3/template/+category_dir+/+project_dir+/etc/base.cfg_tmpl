@@ -31,6 +31,16 @@ $hr
 #else:
 #set $etherpadcomment='#'
 #end if
+#if $with_haproxy
+#set $hapcomment=''
+#else:
+#set $hapcomment='#'
+#end if
+#if $with_cache_support
+#set $cachecomment=''
+#else:
+#set $cachecomment='#'
+#end if
 
 [buildout]
 extensions=buildout.minitagificator mr.developer buildout.dumppickedversions
@@ -90,18 +100,21 @@ ${etherpadcomment}    project/etherpad.cfg
     www/vhosts.cfg
     sys/maintenance.cfg
     sys/high-availability.cfg
+${cachecomment}    sys/cache.cfg
     sys/settings.cfg
 parts =
+${cachecomment}    \${buildout:cache-parts}
     \${buildout:project-parts}
     \${buildout:www-parts}
     \${buildout:ha-parts}
-    \${buildout:filesystem-parts}
 ${etherpadcomment}    \${buildout:etherpad-parts}
+    \${buildout:filesystem-parts}
 
 [supervisor]
-programs= \${buildout:zeo-programs}
-    \${buildout:ha-programs}
-    \${buildout:project-programs}
+programs= \${buildout:project-programs}
+${zeocomment}    \${buildout:zeo-programs}
+${hapcomment}    \${buildout:ha-programs}
+${cachecomment}    \${buildout:cache-programs}
 ${etherpadcomment}    \${buildout:etherpad-programs}
 
 \# vim: set ft=cfg:

@@ -186,7 +186,7 @@ class Template(common.Template):
             vars['with_ploneproduct_fss'] = False
         #if vars['with_ploneproduct_ploneappblob']:
         #    vars['with_ploneproduct_fss'] = False
-        vars['plonesite'] = common.SPECIALCHARS.sub('', vars['project'])
+        vars['plonesite'] = 'Plone'
         vars['major'] = int(vars['plone_version'][0])
         vars['sources_url'] = self.get_sources_url(vars)
         #vars['versions_url'] = self.get_versions_url(vars)
@@ -243,8 +243,11 @@ class Template(common.Template):
 
         # plone system dependencies
         if vars['inside_minitage']:
-            for i in ['libxml2', 'libxslt', 'pil-1', 'libiconv']:
+            for i in ['libxml2', 'libxslt', 'pil-1', 'libiconv', 'libpcre-8',
+                      'zlib', 'bzip2',]:
                 vars['opt_deps'] += ' %s' %  search_latest('%s.*' % i, vars['minilays'])
+            for i in ['readline-6', 'ncurses-5']:
+                vars['opt_deps'] += ' %s' %  search_latest('%s' % i, vars['minilays'])
 
         # databases
         minitage_dbs = ['mysql', 'postgresql']
@@ -345,9 +348,9 @@ class Template(common.Template):
             os.makedirs(self.output_dir)
 
         for section in self.sections_mappings:
-            for var in [k 
+            for var in [k
                         for k in self.sections_mappings[
-                            section] 
+                            section]
                         if vars.get(k, '')]:
                 # skip plone products which are already in the product 's setup.py
                 if vars['with_generic'] and section == 'additional_eggs':
@@ -625,7 +628,7 @@ Template.vars = (common.Template.vars +
                  [
                      pvar('plone_version', 'Plone version, default is the one supported and packaged', default = Template.packaged_version,),
                  ]+
-                 plone_vars + 
+                 plone_vars +
                  Template.addons_vars +
                  dev_vars
                 )
