@@ -1,7 +1,0 @@
-[apache_vhost]
-recipe = collective.recipe.template
-input =\${buildout:directory}/etc/templates/apache/${apache_vhost_number}-${project}.reverseproxy.conf.in
-output =\${buildout:directory}/etc/apache/${apache_vhost_number}-\${v:project}-${project}.reverseproxy.conf
-host=\${reverse_proxy:host}
-scheme=\${reverse_proxy:scheme}
-port=\${reverse_proxy:port}

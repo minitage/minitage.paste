@@ -30,4 +30,3 @@ etc/wsgi_instance3.ini
 etc/wsgi_instance4.ini
 etc/www/apache_vhost.conf
 local_settings.py
-

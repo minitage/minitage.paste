@@ -69,8 +69,8 @@ ${eventcomment}    https://raw.github.com/collective/plone.app.event/master/sour
 #if $with_ploneproduct_ploneappblob or ($major > 3):
     backends/blobstorage.cfg
 #end if
-    apache/apache.cfg
-    nginx/nginx.cfg
+    www/apache.cfg
+    www/nginx.cfg
     hudson/${project}/hudson.cfg
 parts =
     lxml
@@ -91,11 +91,6 @@ ${fsscomment}    fss
 ${zeocomment}    zeoserver
 ${zeocomment}    instance-plain
     apache_vhost
-# hudson integration
-    ${sane_name}_hudson_env
-    ${sane_name}_hudson_job
-    ${sane_name}_hudson_deploy
-    ${sane_name}_hudson_chmod
 ${etherpadcomment}    nodejs
 ${etherpadcomment}    etherpad-lite
 ${etherpadcomment}    etherpad-sh
