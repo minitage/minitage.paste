@@ -1,0 +1,185 @@
+# This is a basic VCL configuration file for varnish.  See the vcl(7)
+# man page for details on VCL syntax and semantics.
+#
+
+# it is done to work with plone.app.caching
+# if the X-Cache-Operation is omitted, the request wont be cached !
+
+backend backend_0 {
+	.host = "${hosts:cache-backend}";
+	.port = "${ports:cache-backend}";
+	.connect_timeout = 0.4s;
+	.first_byte_timeout = 300s;
+	.between_bytes_timeout = 60s;
+}
+
+
+acl purge {
+    "localhost";
+    "${hosts:ip}";
+	"${hosts:cache-backend}";
+}
+
+sub vcl_recv {
+    set req.grace = 120s;
+    set req.backend = backend_0;
+
+    if (req.request == "PURGE") {
+        if (!client.ip ~ purge) {
+            error 405 "Not allowed.";
+        }
+        return(lookup);
+    }
+
+    if (req.request != "GET" &&
+        req.request != "HEAD" &&
+        req.request != "PUT" &&
+        req.request != "POST" &&
+        req.request != "TRACE" &&
+        req.request != "OPTIONS" &&
+        req.request != "DELETE") {
+        /* Non-RFC2616 or CONNECT which is weird. */
+        return(pipe);
+    }
+
+    if (req.request != "GET" && req.request != "HEAD") {
+        /* We only deal with GET and HEAD by default */
+        return(pass);
+    }
+
+    if (req.http.If-None-Match) {
+        return(pass);
+    }
+
+    if (req.url ~ "createObject") {
+        return(pass);
+    }
+
+    call normalize_accept_encoding;
+    call annotate_request;
+
+    return(lookup);
+}
+
+sub vcl_pipe {
+    # This is not necessary if you do not do any request rewriting.
+    set req.http.connection = "close";
+
+}
+
+sub vcl_hit {
+
+    if (req.request == "PURGE") {
+        ban_url(req.url);
+        error 200 "Purged";
+    }
+
+    if (!obj.ttl > 0s) {
+        return(pass);
+    }
+}
+
+sub vcl_miss {
+
+    if (req.request == "PURGE") {
+        error 404 "Not in cache";
+    }
+
+}
+
+sub vcl_fetch {
+    set beresp.grace = 120s;
+    set beresp.do_esi = true;
+    if (
+            (!beresp.ttl > 0s) # do not cache uncaceable responses
+            || (req.url ~ ".*zmiroot.*") # do not cache ZMI or /zmiroot
+       ){
+        if (${varnish:debug}) {
+            set beresp.http.X-Varnish-Action = "FETCH (pass - not cacheable)";
+        }
+        return(hit_for_pass);
+    }
+    if (beresp.http.Set-Cookie) {
+        if (${varnish:debug}) {
+            set beresp.http.X-Varnish-Action = "FETCH (pass - response sets cookie)";
+        }
+        return(hit_for_pass);
+    }
+    if (!beresp.http.Cache-Control ~ "s-maxage=[1-9]" && beresp.http.Cache-Control ~ "(private|no-cache|no-store)") {
+        if (${varnish:debug}) {
+            set beresp.http.X-Varnish-Action = "FETCH (pass - response sets private/no-cache/no-store token)";
+        }
+        return(hit_for_pass);
+    }
+    if (req.http.Authorization && !beresp.http.Cache-Control ~ "public") {
+        if (${varnish:debug}) {
+            set beresp.http.X-Varnish-Action = "FETCH (pass - authorized and no public cache control)";
+        }
+        return(hit_for_pass);
+    }
+    # aggressive cache for anonymous users
+    # when a request have no cache control, cache it
+    if (req.http.X-Anonymous && !beresp.http.Cache-Control) {
+        if (${varnish:debug}) {
+            set beresp.http.X-Varnish-Action = "FETCH (override - backend not setting cache control (cache ${anon_cache_time}))";
+        }
+        set beresp.ttl = ${v:anon_cache_time};
+    }
+    if(!beresp.http.X-Cache-Operation) {
+        if (${varnish:debug}) {
+            set beresp.http.X-Varnish-Action = "FETCH (no cache rule has matched, pass)";
+        }
+        return(hit_for_pass);
+    }
+    if (${varnish:debug}) {
+        set beresp.http.X-Varnish-Action = "FETCH deliver (maybe cache)";
+    }
+    call rewrite_s_maxage;
+    return(deliver);
+}
+
+sub vcl_deliver {
+    call rewrite_age;
+}
+
+
+##########################
+#  Helper Subroutines
+##########################
+
+# Optimize the Accept-Encoding variant caching
+sub normalize_accept_encoding {
+    if (req.http.Accept-Encoding) {
+        if (req.url ~ "\.(jpe?g|png|gif|swf|pdf|gz|tgz|bz2|tbz|zip)$" || req.url ~ "/image_[^/]*$") {
+            remove req.http.Accept-Encoding;
+        } elsif (req.http.Accept-Encoding ~ "gzip") {
+            set req.http.Accept-Encoding = "gzip";
+        } else {
+            remove req.http.Accept-Encoding;
+        }
+    }
+}
+
+# Keep auth/anon variants apart if "Vary: X-Anonymous" is in the response
+sub annotate_request {
+    if (!(req.http.Authorization || req.http.cookie ~ "(^|.*; )__ac=")) {
+        set req.http.X-Anonymous = "True";
+    }
+}
+
+# The varnish response should always declare itself to be fresh
+sub rewrite_age {
+    if (resp.http.Age) {
+        set resp.http.X-Varnish-Age = resp.http.Age;
+        set resp.http.Age = "0";
+    }
+}
+
+# Rewrite s-maxage to exclude from intermediary proxies
+# (to cache *everywhere*, just use 'max-age' token in the response to avoid this override)
+sub rewrite_s_maxage {
+    if (beresp.http.Cache-Control ~ "s-maxage") {
+        set beresp.http.Cache-Control = regsub(beresp.http.Cache-Control, "s-maxage=[0-9]+", "s-maxage=0");
+    }
+}
+ 

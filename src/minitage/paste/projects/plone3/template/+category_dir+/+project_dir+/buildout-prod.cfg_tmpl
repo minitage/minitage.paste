@@ -13,7 +13,7 @@
 #set $sgdgcomment=''
 #else
 #set $sgdgcomment='#'
-#end if 
+#end if
 
 [buildout]
 extends-cache=etc/cache
@@ -24,5 +24,8 @@ extends=
 parts+=
     \${buildout:maintainance-parts}
 ${fsscomment}    \${buildout:fss-maintainance-parts}
+
+[v]
+debug=false
 
 \# vim:set ft=cfg:

@@ -15,6 +15,7 @@ auto-checkout +=
     collective.recipe.varnish
 cache-parts=
      pcre
+     vcl
      varnish-build
      varnish
      varnishadm
@@ -45,16 +46,22 @@ recipe = plone.recipe.varnish
 name=\${v:project}
 daemon = \${buildout:parts-directory}/varnish-build/sbin/varnishd
 bind = \${hosts:varnish}:\${ports:varnish}
-backends = \${hosts:cache-backend}:\${ports:cache-backend}
 cache-size = \${v:proxycache_size}
 telnet=\${hosts:varnish}:\${ports:varnish-telnet}
 #connect-timeout=0.4s
 #first-byte-timeout=300s
 #between-bytes-timeout=60s
 varnish_version=3
-purge-hosts=
-    \${hosts:ip}
-    \${hosts:address}
+config=\${vlc:output}
+debug=\${v:varnish-debug}
+
+[vcl]
+recipe = collective.recipe.template
+mode=750
+input = \${buildout:directory}/etc/templates/varnish/varnish.vcl.in
+output = \${buildout:directory}/etc/varnish.vcl
+anon_cache_time=\${v:anon_cache_time}
+
 
 [varnishwrapper]
 recipe = collective.recipe.template

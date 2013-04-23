@@ -1,4 +1,5 @@
 bin
+etc/varnish.vcl
 cron_scripts/
 develop-eggs/
 *.env
