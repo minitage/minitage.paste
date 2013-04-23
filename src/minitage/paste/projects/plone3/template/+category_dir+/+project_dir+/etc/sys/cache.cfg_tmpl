@@ -52,7 +52,7 @@ telnet=\${hosts:varnish}:\${ports:varnish-telnet}
 #first-byte-timeout=300s
 #between-bytes-timeout=60s
 varnish_version=3
-config=\${vlc:output}
+config=\${vcl:output}
 debug=\${v:varnish-debug}
 
 [vcl]
