@@ -90,6 +90,21 @@ sub vcl_miss {
 sub vcl_fetch {
     set beresp.grace = 120s;
     set beresp.do_esi = true;
+    # exemple to handle ESI varnish side
+    #if (req.url ~ "testesi.html") {
+    #    if (beresp.status == 200) {
+    #        if (${varnish:debug}) {
+    #            set beresp.http.X-Varnish-Action = "FETCH (ESI will be cached))";
+    #        }
+    #        set beresp.ttl = 20s;
+    #    } else {
+    #        if (${varnish:debug}) {
+    #            set beresp.http.X-Varnish-Action = "FETCH (ESI error detected for " + req.url + ")";
+    #        }
+    #        set beresp.ttl = 0s;
+    #    }
+    #    return(deliver);
+    #}   
     if (
             (!beresp.ttl > 0s) # do not cache uncaceable responses
             || (req.url ~ ".*zmiroot.*") # do not cache ZMI or /zmiroot
