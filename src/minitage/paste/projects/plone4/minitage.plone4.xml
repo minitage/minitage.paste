@@ -163,7 +163,7 @@
       <!-- /dexterity -->
       <version p='z3c.relationfield'       v='0.6.1'    options='with_ploneproduct_dexterity,with_ploneproduct_z3crelationfield'/>
 
-      <version p="collective.dexteritytextindexer"   options="with_ploneproduct_dexterity"    v="2.0"              />
+      <version p="collective.dexteritytextindexer"   options="with_ploneproduct_dexterity"    v="2.0"/>
       <!-- FIVE.GROK -->
 
     </checkedversions>

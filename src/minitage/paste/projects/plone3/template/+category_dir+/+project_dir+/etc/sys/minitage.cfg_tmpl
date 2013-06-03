@@ -39,7 +39,6 @@ extra-paths+=
 [versions]
 # bin/buildout -Nvvvvv |sed -ne "s/.*satisfies '//p" |sed -re "s/==/=/g"| sed -re "s/'.//g"|sort | uniq
 # the one packaged in minitage !
-PIL = 1.1.7-ZMinitagePatched-Becomepil
 Pillow  = 1.7.7
 
 [zopepy]
