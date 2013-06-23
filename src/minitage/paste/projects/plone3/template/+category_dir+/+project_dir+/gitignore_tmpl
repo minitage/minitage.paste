@@ -12,7 +12,6 @@ etc/loadbalancing/
 etc/logrotate.conf
 etc/project/kgs.cfg
 etc/project/${project}-kgs.cfg
-!etc/sys
 etc/sys/settings-prod.cfg
 etc/www/apache.reverseproxy.conf
 etc/www/nginx.reverseproxy.conf
@@ -21,12 +20,11 @@ etc/www/nginx.reverseproxy.conf
 minitage.buildout-dev.cfg.before.fixed_version.bak*
 .mr.developer.cfg
 parts
-src.mrdeveloper/*
-src.mrdeveloper/zopelib/zopelib.egg-info
 sys
 t
 var
 var/log/apache/*.log
 var/log/instance?.log
 !etc/sys
-!src.mrdeveloper/zopelib
+!src/zopelib
+!src/*${project}*

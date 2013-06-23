@@ -12,7 +12,7 @@ $hr
 cache-programs=
      50 varnish \${buildout:directory}/bin/varnish [-F] true \\${users:zope}
 auto-checkout +=
-    collective.recipe.varnish
+    plone.recipe.varnish
 cache-parts=
      pcre
      vcl
@@ -94,6 +94,6 @@ output =  \${buildout:directory}/bin/\${:_buildout_section_name_}
 <=varnishwrapper
 
 [sources]
-collective.recipe.varnish = git https://github.com/collective/plone.recipe.varnish.git branch=varnish_3_compat
+plone.recipe.varnish = git https://github.com/collective/plone.recipe.varnish.git branch=varnish_3_compat
 
 \# vim:set ft=cfg:

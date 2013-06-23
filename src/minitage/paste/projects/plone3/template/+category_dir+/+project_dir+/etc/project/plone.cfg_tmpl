@@ -108,16 +108,14 @@ ${fsscomment}    \${buildout:fss-parts}
     omelette
     ${sane_name}.test
 sources=sources
-auto-checkout =
 versions = versions
-sources-dir=\${buildout:directory}/src.mrdeveloper
 # project packages
 eggs=
     Pillow
 zcml=
 # extra directories oto add to the python path
 extra-paths=
-auto-checkout +=
+auto-checkout =
 #if $with_ploneproduct_ploneappblob and ($major < 4)
     Products.CMFEditions
 # else
@@ -129,7 +127,6 @@ auto-checkout +=
 #end for
 # see http://pypi.python.org/pypi/mr.developer for documentation
 
-sources = sources
 # auto tracked developement products
 [sources]
 zopeskel=svn https://svn.plone.org/svn/collective/ZopeSkel/trunk
@@ -365,11 +362,8 @@ http-address = \${hosts:instance4}:\${ports:instance4}
 recipe = minitage.recipe.scripts
 # Important for you to note the installation of the ZODB as an egg . We will not
 # use the zodb code from the zope source distribution !!!!!!!
-#if not $inside_minitage:
-urls=http://download.zope.org/distribution/PIL-1.1.7.tar.gz
-#end if
-interpreter = zopepy
 env-file=\${buildout:directory}/etc/plone.env
+interpreter = zopepy
 eggs =
 # release helpers
     zest.releaser
