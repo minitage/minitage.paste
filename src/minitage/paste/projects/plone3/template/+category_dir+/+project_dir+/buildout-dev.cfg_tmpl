@@ -107,7 +107,7 @@ debug-mode=on
 [zopepy]
 eggs +=
     collective.dist
-    collective.releaser
+#    collective.releaser
     zest.releaser
     Sphinx
 scripts +=
