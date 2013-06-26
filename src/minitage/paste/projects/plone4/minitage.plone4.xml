@@ -76,7 +76,7 @@
       <version p='collective.ckeditor'    v='3.6.8'   options='with_ploneproduct_ckeditor' />
       <version p='collective.js.datatables'    v='2.0'   options='with_ploneproduct_datatables' />
       <version p='collective.js.chosen'          v='1.1'  options="with_ploneproduct_jschosen"/>
-      <version p='collective.configviews'          v='2.0'  options="with_ploneproduct_configviews"/>
+      <version p='collective.configviews'          v='3.0.2'  options="with_ploneproduct_configviews"/>
       <version p='collective.registry'          v='1.0'  options="with_ploneproduct_configviews"/>
       <version p='collective.seo'          v='1.1'  options="with_ploneproduct_masonry"/>
       <version p='collective.galleria'          v='1.2.1'  options="with_ploneproduct_masonry"/>
@@ -85,7 +85,7 @@
       <version p='collective.portlet.embed'     v='1.1'  options="with_ploneproduct_cpembed"/>
       <version p='python-oembed'           v='0.2.1'  options="with_ploneproduct_oembed"/>
       <version p='collective.portlet.oembed'  v='1.1'  options="with_ploneproduct_oembed"/>
-      <version p='collective.addthis'         v='1.3.2'  options="with_ploneproduct_addthis"/>
+      <version p='collective.addthis'         v='1.3.3'  options="with_ploneproduct_addthis"/>
       <version p='eea.facetednavigation'      v='5.5'  options="with_ploneproduct_eeafn"/>
       <version p='collective.documentviewer'   v='2.2.1'  options="with_ploneproduct_docview"/>
       <version p="pyparsing" v="1.5.7"  options="with_ploneproduct_docview,with_ploneproduct_etherpad,with_ploneproduct_eeadaviz"/>
