@@ -20,11 +20,13 @@ etc/www/nginx.reverseproxy.conf
 minitage.buildout-dev.cfg.before.fixed_version.bak*
 .mr.developer.cfg
 parts
+eggs
 sys
 t
 var
 var/log/apache/*.log
 var/log/instance?.log
+src
 !etc/sys
 !src/zopelib
 !src/*${project}*

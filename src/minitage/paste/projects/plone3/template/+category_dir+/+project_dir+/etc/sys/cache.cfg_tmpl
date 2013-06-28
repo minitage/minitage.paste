@@ -10,7 +10,7 @@ $hr
 
 [buildout]
 cache-programs=
-     50 varnish \${buildout:directory}/bin/varnish [-F] true \\${users:zope}
+     50 varnish \${buildout:directory}/bin/varnish [-F] true \${users:zope}
 auto-checkout +=
     plone.recipe.varnish
 cache-parts=

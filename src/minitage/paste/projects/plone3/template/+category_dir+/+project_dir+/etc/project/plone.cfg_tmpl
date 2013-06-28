@@ -129,7 +129,7 @@ auto-checkout =
 
 # auto tracked developement products
 [sources]
-zopeskel=svn https://svn.plone.org/svn/collective/ZopeSkel/trunk
+zopeskel=git \${remotes:collective}/ZopeSkel.git pushurl=\${remotes:collective_push}/ZopeSkel.git 
 experimental.catalogqueryplan = svn https://svn.plone.org/svn/collective/experimental.catalogqueryplan/trunk
 Products.MemoryProfiler = svn https://svn.plone.org/svn/collective/Products.MemoryProfiler/trunk
 Products.Gloworm = git https://github.com/kiorky/Products.Gloworm.git
@@ -513,6 +513,12 @@ url = http://nodejs.org/dist/v\${versions:nodejs}/node-v\${versions:nodejs}.tar.
 [env]
 recipe = collective.recipe.environment
 PS1=
+TERMCAP=
+SSH_CLIENT=
+SSH_TTY=
+SSH_CONNECTION=
+LANG=
+SHELL=
 
 [grp]
 recipe = collective.recipe.grp
@@ -522,6 +528,8 @@ recipe = z3c.recipe.staticlxml
 egg = lxml
 build-libxslt=true
 build-libxml2=true
+libxslt-url=http://gentoo.tiscali.nl/distfiles/libxslt-\${versions:libxslt}.tar.gz
+libxml2-url=http://gentoo.tiscali.nl/distfiles/libxml2-\${versions:libxml2}.tar.gz
 
 [groups]
 # OLD ZOPE2 PRODUCTS SUPPORT

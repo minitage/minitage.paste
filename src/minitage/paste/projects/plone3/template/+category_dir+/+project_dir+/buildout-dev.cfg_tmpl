@@ -71,10 +71,10 @@ auto-checkout +=
     templer.localcommands
     templer.plone.localcommands
     templer.plonecore
+    zopeskel
 # Uncomment/Activate only if you want
 #  Products.Gloworm
 #  Products.MemoryProfiler
-#    zopeskel
 
 [hosts]
 #zope-front=\${hosts:instance}
