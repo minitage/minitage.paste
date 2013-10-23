@@ -13,3 +13,15 @@ server {
           proxy_pass http://\${uname}/VirtualHostBase/http/\${host}:\${port}/\${plone:site}/VirtualHostRoot/;
     }
 }
+server {
+    listen \${port};
+    server_name \${edit-host};
+    access_log \${buildout:directory}/var/log/nginx/\${host}.access.log;
+    error_log  \${buildout:directory}/var/log/nginx/\${host}.error.log;
+    location /zmiroot {
+          proxy_pass http://\${uname}/VirtualHostBase/http/\${edit-host}:\${port}/_vh_zmiroot/;
+    }
+    location / {
+          proxy_pass http://\${uname}/VirtualHostBase/http/\${edit-host}:\${port}/\${plone:site}/VirtualHostRoot/;
+    }
+} 

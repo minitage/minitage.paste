@@ -4,6 +4,9 @@
 
 # it is done to work with plone.app.caching
 # if the X-Cache-Operation is omitted, the request wont be cached !
+# It needs 2 domains:
+#  one non authenticated and cached
+#  one for authenticated users where you can "edit"
 
 backend backend_0 {
 	.host = "${hosts:cache-backend}";
@@ -24,7 +27,24 @@ sub vcl_recv {
     set req.grace = 120s;
     set req.backend = backend_0;
 
+    # do not cache edit host
+    if (req.http.X-Forwarded-Host ~ "${reverse_proxy:edit-host}") {
+		remove req.http.Last-Modified;
+		remove req.http.If-Modified-Since;
+        remove req.http.If-None-Match;
+        remove req.http.Cache-Control;
+        remove req.http.Expires;
+        remove req.http.Etag;
+        remove req.http.Pragma;
+        if (${varnish:debug}) {
+            set req.http.X-Varnish-recv-Action = "RECV - edithost matched";
+        }
+        return(pass);
+    }
     if (req.request == "PURGE") {
+        if (${varnish:debug}) {
+            set req.http.X-Varnish-recv-Action = "RECV - PURGE";
+        }
         if (!client.ip ~ purge) {
             error 405 "Not allowed.";
         }
@@ -39,24 +59,42 @@ sub vcl_recv {
         req.request != "OPTIONS" &&
         req.request != "DELETE") {
         /* Non-RFC2616 or CONNECT which is weird. */
+        if (${varnish:debug}) {
+            set req.http.X-Varnish-recv-Action = "RECV - weird";
+        }
         return(pipe);
     }
 
     if (req.request != "GET" && req.request != "HEAD") {
         /* We only deal with GET and HEAD by default */
+        if (${varnish:debug}) {
+            set req.http.X-Varnish-recv-Action = "RECV - not GET or HEAD";
+        }
         return(pass);
     }
 
-    if (req.http.If-None-Match) {
-        return(pass);
-    }
+    # activate to never cache Etags enabled requests
+    # and let backends decide
+    #if (req.http.If-None-Match) {
+    #    return(pass);
+    #}
 
     if (req.url ~ "createObject") {
-        return(pass);
+        if (${varnish:debug}) {
+            set req.http.X-Varnish-recv-Action = "RECV - createobject";
+        }
     }
 
     call normalize_accept_encoding;
     call annotate_request;
+
+    # for cached requests, disable cookies
+    if (!req.http.X-Forwarded-Host ~ "${reverse_proxy:edit-host}"){
+        unset req.http.cookie;
+    }
+    if (${varnish:debug}) {
+        set req.http.X-Varnish-recv-Action = "RECV - lookup in cache";
+    }
 
     return(lookup);
 }
@@ -68,23 +106,17 @@ sub vcl_pipe {
 }
 
 sub vcl_hit {
-
     if (req.request == "PURGE") {
-        ban_url(req.url);
+        ban_url(".*"+ req.url+".*");
         error 200 "Purged";
-    }
-
-    if (!obj.ttl > 0s) {
-        return(pass);
     }
 }
 
 sub vcl_miss {
-
     if (req.request == "PURGE") {
-        error 404 "Not in cache";
+        ban_url(".*"+ req.url+".*");
+        error 200 "Purged";
     }
-
 }
 
 sub vcl_fetch {
@@ -104,7 +136,13 @@ sub vcl_fetch {
     #        set beresp.ttl = 0s;
     #    }
     #    return(deliver);
-    #}   
+    #}
+    if (req.http.X-Forwarded-Host ~ "${reverse_proxy:edit-host}"){ # do not cache edit host
+        if (${varnish:debug}) {
+            set beresp.http.X-Varnish-Action = "FETCH (pass - edit host matched)";
+        }
+        return(hit_for_pass);
+    }
     if (
             (!beresp.ttl > 0s) # do not cache uncaceable responses
             || (req.url ~ ".*zmiroot.*") # do not cache ZMI or /zmiroot
@@ -149,12 +187,45 @@ sub vcl_fetch {
     if (${varnish:debug}) {
         set beresp.http.X-Varnish-Action = "FETCH deliver (maybe cache)";
     }
+    # exemple to override specific pages
+	# if (req.url ~ "/VirtualHostRoot/portal_memberdata/portraits") {
+    #     if (${varnish:debug}) {
+    #         set beresp.http.X-Varnish-Action = "FETCH (Page equipe)";
+    #     }
+    #     set beresp.ttl = 86400s;
+    #     set beresp.grace = beresp.ttl;
+	# }
     call rewrite_s_maxage;
     return(deliver);
 }
 
+
 sub vcl_deliver {
+    if (req.http.X-Varnish-recv-Action) {
+        set resp.http.X-Varnish-recv-Action = req.http.X-Varnish-recv-Action;
+    }
+    if (req.http.X-Forwarded-Host ~ "${reverse_proxy:edit-host}"){ # do not cache edit host
+        if (${varnish:debug}) {
+            set resp.http.X-Varnish-Deliver = "DELIVER - Removing any cache header (edit-host)";
+        }
+        unset resp.http.Last-Modified;
+        unset resp.http.If-Modified-Since;
+        unset resp.http.If-None-Match;
+        unset resp.http.Cache-Control;
+        unset resp.http.Expires;
+        unset resp.http.Etag;
+        unset resp.http.Pragma;
+    }
     call rewrite_age;
+# This just inserts a diagnostic header to let us know if the content
+# was served via a cache hit, or whether it was a miss.
+    if (${varnish:debug}) {
+        if (obj.hits > 0) {
+            set resp.http.X-Cache = "HIT";
+        } else {
+            set resp.http.X-Cache = "MISS";
+        }
+    }
 }
 
 
@@ -193,8 +264,8 @@ sub rewrite_age {
 # Rewrite s-maxage to exclude from intermediary proxies
 # (to cache *everywhere*, just use 'max-age' token in the response to avoid this override)
 sub rewrite_s_maxage {
-    if (beresp.http.Cache-Control ~ "s-maxage") {
-        set beresp.http.Cache-Control = regsub(beresp.http.Cache-Control, "s-maxage=[0-9]+", "s-maxage=0");
-    }
+    #if (beresp.http.Cache-Control ~ "s-maxage") {
+    #    set beresp.http.Cache-Control = regsub(beresp.http.Cache-Control, "s-maxage=[0-9]+", "s-maxage=0");
+    #}
 }
- 
+

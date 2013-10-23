@@ -22,12 +22,17 @@ debug=true
 project=${project}
 proxycache_size=256M
 anon_cache_time=600s
-varnish-debug=\${v:debug}
+varnish-debug=\${varnish:debug}
+
+[varnish]
+rewrite-max-age=false
+debug=true
 
 [reverse_proxy]
 listen=*
 scheme=$reverseproxy_scheme
 host=$reverseproxy_host
+edit-host=$reverseproxy_edit_host
 port=$reverseproxy_port
 
 [hosts]

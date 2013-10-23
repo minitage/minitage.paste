@@ -53,7 +53,6 @@ telnet=\${hosts:varnish}:\${ports:varnish-telnet}
 #between-bytes-timeout=60s
 varnish_version=3
 config=\${vcl:output}
-debug=\${v:varnish-debug}
 
 [vcl]
 recipe = collective.recipe.template
