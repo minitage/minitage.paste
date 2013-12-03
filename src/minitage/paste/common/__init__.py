@@ -181,7 +181,7 @@ class Template(templates.Template):
         vars['dependencies'] = deps
         vars['minilay'] = vars['project']
         if vars['inside_minitage']:
-            continue
+            pass
             #not_minitage = False
             #vars['mt'] = self.output_dir
             #if self.special_output_dir:

@@ -302,24 +302,24 @@ class Template(common.Template):
 
 Template.vars = common.Template.vars + \
         [\
-         #common.var('scm_type',
-         #           'Minibuild checkout facility'
-         #           ' (git|bzr|hg|svn|static)\n'
-         #           'static can be used for both '
-         #           'http, ftp and file:// uris: '
-         #           '(only useful in a minitage)',
-         #           default = 'git',),
-         #common.var('uri',
-         #           'Url of the project to checkout (only useful in a minitage)',
-         #           default = 'git@gitorious-git.makina-corpus.net/',),
+         common.var('scm_type',
+                    'Minibuild checkout facility'
+                    ' (git|bzr|hg|svn|static)\n'
+                    'static can be used for both '
+                    'http, ftp and file:// uris: '
+                    '(only useful in a minitage)',
+                    default = 'git',),
+         common.var('uri',
+                    'Url of the project to checkout (only useful in a minitage)',
+                    default = 'git@gitorious-git.makina-corpus.net/',),
          #common.var('install_method',
          #           'The install method of your minibuild '
          #           '(only useful in a minitage)',
          #           default = 'buildout',),
-         #common.var('homepage',
-         #           'Homepage url of your project '
-         #           '(only useful in a minitage)',
-         #           default = 'http://foo.net',),
+         common.var('homepage',
+                    'Homepage url of your project '
+                    '(only useful in a minitage)',
+                    default = 'http://foo.net',),
          #common.var('python',
          #           'the Python interpreter to use. (Only useful if you are not'
          #           'inside a minitage.',

@@ -156,11 +156,11 @@ class Template(common.Template):
     #    url = 'http://dist.plone.org/release/%s/versions.cfg' % v
     #    return url
 
-    #def get_sources_url(self, cvars=None):
-    #    if not cvars: cvars = {}
-    #    v = cvars.get('plone_version', self.packaged_version)
-    #    sources = 'http://dist.plone.org/release/%s/sources.cfg' % v
-    #    return sources
+    def get_sources_url(self, cvars=None):
+        if not cvars: cvars = {}
+        v = cvars.get('plone_version', self.packaged_version)
+        sources = 'http://dist.plone.org/release/%s/sources.cfg' % v
+        return sources
 
     #def get_zope2_url(self, cvars=None):
     #    if not cvars: cvars = {}
@@ -354,7 +354,7 @@ class Template(common.Template):
                         if vars.get(k, '')]:
                 # skip plone products which are already in the product 's setup.py
                 if vars['with_generic'] and section == 'additional_eggs':
-                    continue
+                    pass
                 if not section == 'plone_zcml':
                     vars[section].append('#%s'%var)
                 for item in self.sections_mappings[section][var]:
@@ -490,7 +490,7 @@ class Template(common.Template):
         bc = ConfigParser()
         bc.read(cfg)
 
-        for f in glob(os.path.join(output_dir, 'scripts/*'):
+        for f in glob(os.path.join(output_dir, 'scripts/*')):
             os.chmod(f, 0700)
         # release KGS
         #try:
