@@ -41,7 +41,6 @@ Set the project developement  specific settings there
 
     etc/project/
     |-- plone.cfg       -> your project needs (packages, sources, products)
-    |-- newsletter.cfg       -> singing & dancing integration (new instance with clockserver, version pinning, fss if any)
     `-- versions.cfg         -> minimal version pinning for installing your project
 
 
@@ -56,14 +55,6 @@ SYSTEM ADMINISTRATORS RELATED FILES
     |-- maintenance.cfg         -> Project maintenance settings (crons, logs)
     `-- settings.cfg            -> various settings (crons hours, hosts, installation paths, ports, passwords)
 
-#if $with_ploneproduct_fss:
-CRONS
-~~~~~~
-::
-
-    |-- etc/cron_scripts/fss_daily.sh   -> backup script for fss
-
-#end if
 
 REVERSE PROXY
 --------------
@@ -76,16 +67,13 @@ In settings.cfg you have now some settings for declaring which host is your reve
     * hosts:zope-front / ports:zope-front                              -> zope front backend
     * reverseproxy:host / reverseproxy:port / reverseproxy:mount-point -> host / port / mountpoint on the reverse proxy)
 
+
 CONFIGURATION TEMPLATES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ::
 
     etc/templates/
     |-- balancer.conf.template      -> haproxy template.
-    |                                  Copy or ln the generated file 'etc/loadbalancing/balancer.conf' to your haproxy installation if any.
-#if $with_ploneproduct_fss
-    |-- fss_daily.sh.in             -> FSS daily backup script template
-#end if
     `-- logrotate.conf.template     -> logrotate configuration file template for your Zope logs
     `-- supervisor.initd            -> template for supervisor init script
 
@@ -95,8 +83,6 @@ BACKENDS
 ::
 
     etc/backends/
-#if $with_ploneproduct_fss:
-#end if
     |-- etc/backends/zeo.cfg                   -> zeoserver configuration if any
     `-- etc/backends/zodb.cfg                  -> zodb configuration if any
 
