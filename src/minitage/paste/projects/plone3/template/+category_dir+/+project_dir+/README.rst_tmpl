@@ -6,52 +6,15 @@ INSTALLING THIS PROJECT WITHOUT MINITAGE
 -----------------------------------------
 ::
 
-    source /minitage/bin/activate
-    $scm_type clone $uri ${project}
     cd ${project}
-    python bootstrap.py -dc buildout-(dev/prod).cfg
-    bin/buildout -vvvvvNc -dc buildout-(dev/prod).cfg
-
-INSTALLING THIS PROJECT VITH MINITAGE
---------------------------------------
-ALWAYS USE THE MINITAGE ENVIRONMENT FILE INSIDE A MINITAGE
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Before doing anything in your project just after being installed, just source the environment file in your current shell::
-
-    source \$MT/zope/${project}/sys/share/minitage/minitage.env # env file is generated with \$MT/bin/paster create -t minitage.instances.env ${project}
-
-THE MINITAGE DANCE
-~~~~~~~~~~~~~~~~~~~~~~~~
-::
-
-    export MT=/minitage
-    cd \$MT
-    wget -O minitagetool.sh https://raw.github.com/minitage/minitage.shell/master/minitagetool.sh
-    chmod +x minitagetool.sh
-    ./minitagetool.sh bootstrap # take a coffee...
-#if $scm_type == 'svn'
-    svn co $uri/minilays/${project} \$MT/minilays/${project}
-#elif $scm_type in ['hg', 'git']
-#set $minilay = $uri.replace('buildout', 'minilay')
-    $scm_type clone $minilay \$MT/minilays/${project}
-#end if
-    minitagetool.sh deploy -v $project
-    #minitagetool.sh deploy -v ${project}-prod
-    source \$MT/zope/${project}/sys/share/minitage/minitage.env
-    cd \$INS #enjoy !
-
-DEVELOP MODE
----------------
-To develop your application, run the ``(minitage.)buildout-dev.cfg`` buildout, it extends this one but:
-  * it comes with development tools.
-  * it configures the instance to be more verbose (debug mode & verbose security)
-  * it has only one instance and not all the hassles from production.
+    mkdir workdir
+    $scm_type clone $uri ${project}
+    sudo apt-get install -y build-essential m4 libtool pkg-config autoconf gettext bzip2 groff man-db automake libsigc++-2.0-dev tcl8.5 git libssl-dev libxml2-dev libxslt1-dev libbz2-dev zlib1g-dev python-setuptools python-dev libjpeg62-dev libreadline-dev python-imaging wv poppler-utils libsqlite0-dev libgdbm-dev libdb-dev tcl8.5-dev tcl8.5-dev tcl8.4 tcl8.4-dev tk8.5-dev libsqlite3-dev
 
 
 PRODUCTION MODE
 ---------------
-To make your application safe for production, run the ``(minitage.)buildout-prod.cfg`` buildout'.
+To make your application safe for production, run the ``buildout-prod.cfg`` buildout'.
 It extends this one with additionnal crontabs and backup scripts and some additionnal instances creation.
 
 
@@ -63,9 +26,6 @@ Love to know that Minitage support includes xml libs, ldap, dbs; python, depende
     |-- etc/base.cfg               -> The base buildout
     |-- buildout-prod.cfg          -> buildout for production
     |-- buildout-dev.cfg           -> buildout for development
-    |-- etc/sys/minitage.cfg  -> some buildout tweaks to run in the best of the world with minitage
-    |-- minitage.buildout-prod.cfg -> buildout for production  with minitage support
-    |-- minitage.buildout-dev.cfg  -> buildout for development with minitage support
 
 
 PLONE OFFICIAL BUILDOUTS INTEGRATION
@@ -82,7 +42,6 @@ Set the project developement  specific settings there
     etc/project/
     |-- plone.cfg       -> your project needs (packages, sources, products)
     |-- newsletter.cfg       -> singing & dancing integration (new instance with clockserver, version pinning, fss if any)
-    |-- kgs.cfg   -> Generated KGS for your project (minitage's printer or buildout.dumppickledversion)
     `-- versions.cfg         -> minimal version pinning for installing your project
 
 
@@ -137,23 +96,8 @@ BACKENDS
 
     etc/backends/
 #if $with_ploneproduct_fss:
-    |-- etc/backends/fss.cfg                   -> Filestorage configuration if any
 #end if
-    |-- etc/backends/relstorage.cfg            -> relstorage configuration if any
     |-- etc/backends/zeo.cfg                   -> zeoserver configuration if any
     `-- etc/backends/zodb.cfg                  -> zodb configuration if any
-
-OS SPECIFIC SYSTEM INSTALLERS
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Thos popular tools around zope/plone dev (not supported, just here for your conveniance, READ BEFORE USING THEM)
-And you'd  better have to learn how to bootstrap some minitage environment out there, funny and more secure & reproductible!
-::
-
-    |-- etc/os
-        |-- debian.sh       -> debian specific
-        |-- opensuse-dev.sh -> opensuse/dev specific
-        |-- opensuse.sh     -> suse specific
-        |-- osx.sh          -> osx specific
-        `-- ubuntu.sh       -> ubuntu specific
 
 .. vim:set ft=rst:

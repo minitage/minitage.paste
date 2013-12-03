@@ -29,16 +29,14 @@ export TMPDIR
 
 [ -f \$supervisord ] || exit 1
 [ -f \$supervisorctl ] || exit 1
-envf="\${buildout:directory}/sys/share/minitage/minitage.env"
-
 
 RETVAL=0
 start() {
     echo -n "Starting \$name: "
     if [[ `whoami` == root ]];then
-        su \$EFFECTIVE_USER -c "bash -c \"if [ -f "\$envf" ];then source \$envf;fi;\$supervisord\""
+        su \$EFFECTIVE_USER -c "bash -c \"\$supervisord\""
     else
-      if [ -f "\$envf" ];then source \$envf;fi;"\$supervisord"
+      "\$supervisord"
     fi
     RETVAL=\$?
     [ \$RETVAL -eq 0 ] && touch \$lock

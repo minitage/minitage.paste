@@ -1,5 +1,4 @@
 # BASE VERSIONS PINNING
-
 [versions]
 
 # never ever pin paste and other base eggs
@@ -46,7 +45,6 @@ $version[0]
 $version[0] = $version[1]
 #end if
 #end for
-
 
 #if  ($major < 4)
 # various zope3 packages needed by various plone3+ products in a zope2 installation

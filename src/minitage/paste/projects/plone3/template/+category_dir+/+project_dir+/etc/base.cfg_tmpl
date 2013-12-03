@@ -43,7 +43,7 @@ $hr
 #end if
 
 [buildout]
-extensions=buildout.minitagificator mr.developer buildout.dumppickedversions
+extensions=mr.developer buildout.dumppickedversions
 timeout=3
 find-links =
     http://dist.plone.org/release/${plone_version}
@@ -61,7 +61,6 @@ allow-hosts =
      *bitbucket.org*
      *repoze.org*
      *crummy.com*
-     *minitage.org*
      *bpython-interpreter.org*
      *stompstompstomp.com*
      *ftp.tummy.com*

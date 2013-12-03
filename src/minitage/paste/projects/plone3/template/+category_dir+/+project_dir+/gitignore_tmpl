@@ -16,8 +16,6 @@ etc/sys/settings-prod.cfg
 etc/www/apache.reverseproxy.conf
 etc/www/nginx.reverseproxy.conf
 .installed.cfg
-.minitage
-minitage.buildout-dev.cfg.before.fixed_version.bak*
 .mr.developer.cfg
 parts
 eggs

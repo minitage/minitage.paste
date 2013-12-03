@@ -19,8 +19,6 @@ bootstrap.py
 buildout-dev.cfg
 buildout-prod.cfg
 LINK_TO_REGENERATE.html
-minitage.buildout-dev.cfg
-minitage.buildout-prod.cfg
 README.*
 minilays/
 scripts/

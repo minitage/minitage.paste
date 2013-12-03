@@ -129,20 +129,9 @@ auto-checkout =
 
 # auto tracked developement products
 [sources]
-zopeskel=git \${remotes:collective}/ZopeSkel.git pushurl=\${remotes:collective_push}/ZopeSkel.git 
 experimental.catalogqueryplan = svn https://svn.plone.org/svn/collective/experimental.catalogqueryplan/trunk
 Products.MemoryProfiler = svn https://svn.plone.org/svn/collective/Products.MemoryProfiler/trunk
 Products.Gloworm = git https://github.com/kiorky/Products.Gloworm.git
-templer.core                = git \${remotes:collective}/templer.core.git pushurl=\${remotes:collective_push}/templer.core.git
-templer.buildout            = git \${remotes:collective}/templer.buildout.git pushurl=\${remotes:collective_push}/templer.buildout.git
-templer.zope                = git \${remotes:collective}/templer.zope.git pushurl=\${remotes:collective_push}/templer.zope.git
-templer.plone               = git \${remotes:collective}/templer.plone.git pushurl=\${remotes:collective_push}/templer.plone.git
-templer.dexterity           = git \${remotes:collective}/templer.dexterity.git pushurl=\${remotes:collective_push}/templer.dexterity.git
-templer.plonebuildout       = git \${remotes:collective}/templer.plonebuildout.git pushurl=\${remotes:collective_push}/templer.plonebuildout.git
-templer.silva               = git \${remotes:collective}/templer.silva.git pushurl=\${remotes:collective_push}/templer.silva.git
-templer.localcommands       = git \${remotes:collective}/templer.localcommands.git pushurl=\${remotes:collective_push}/templer.localcommands.git
-templer.plone.localcommands = git \${remotes:collective}/templer.plone.localcommands.git pushurl=\${remotes:collective_push}/templer.plone.localcommands.git
-templer.plonecore           = svn https://svn.plone.org/svn/collective/templer.plonecore/trunk
 #set $psources_keys = $plone_sources.keys()
 # $psources_keys.sort()
 #for $item in $psources_keys:
@@ -359,10 +348,7 @@ http-address = \${hosts:instance4}:\${ports:instance4}
 
 # eggs & scripts installation
 [zopepy]
-recipe = minitage.recipe.scripts
-# Important for you to note the installation of the ZODB as an egg . We will not
-# use the zodb code from the zope source distribution !!!!!!!
-env-file=\${buildout:directory}/etc/plone.env
+recipe = zc.recipe.egg
 interpreter = zopepy
 eggs =
 # release helpers
@@ -420,25 +406,6 @@ extra-paths = \${instance:extra-paths}
 defaults = ['--exit-with-status', '--auto-color', '--auto-progress', '-s', '${project}']
 environment = testenv
 extra-paths = \${zopepy:extra-paths}
-
-[cg.devmode]
-recipe=minitage.recipe.scripts
-eggs=\${instance:eggs}
-    collective.generic.devmode
-scripts=cg.devmode
-mail = foo@localhost
-extra-paths = \${zopepy:extra-paths}
-
-[devmode]
-recipe=minitage.recipe.scripts
-scripts=cg.devmode=devmode
-mail = foo@localhost
-extra-paths = \${zopepy:extra-paths}
-initialization=
-    import sys
-    sys.argv[1:] = ['-m', '\${devmode:mail}', '-p', '--password', '\${zope:password}', '-l', '\${plone:site}', '-u', '\${zope:user}']
-eggs=\${instance:eggs}
-    collective.generic.devmode
 
 [omelette]
 recipe = collective.recipe.omelette

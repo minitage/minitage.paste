@@ -40,8 +40,6 @@ parts+=
     instance2
     instance3
     instance4
-    devmode
-    cg.devmode
     tools
 eggs +=
     ipython
@@ -60,21 +58,7 @@ eggs +=
 #   Products.signalstack
 #   Products.ZopeProfiler
 zcml+=
-auto-checkout +=
-    templer.core
-    templer.buildout
-    templer.zope
-    templer.plone
-    templer.dexterity
-    templer.plonebuildout
-    templer.silva
-    templer.localcommands
-    templer.plone.localcommands
-    templer.plonecore
-    zopeskel
-# Uncomment/Activate only if you want
-#  Products.Gloworm
-#  Products.MemoryProfiler
+
 
 [hosts]
 #zope-front=\${hosts:instance}
@@ -137,33 +121,16 @@ scripts +=
     gprof2dot
     pyprof2calltree
 
-[goto-devmode]
-recipe = plone.recipe.command
-update-command = \${goto-devmode:command}
-command =
-${zeocomment}    \${buildout:directory}/bin/zeoserver stop;
-    \${get-datafs:command}
-    \${buildout:directory}/bin/snapshotrestore;
-${zeocomment}    \${buildout:directory}/bin/zeoserver start;
-    \${buildout:directory}/bin/devmode;
-
 [tools]
-recipe=minitage.recipe.scripts
+recipe=zc.recipe.egg
 eggs=
     i18ndude
     babel
     sphinx
-    zopeskel
     toutpt.zopeskel
-    templer.dexterity
-    templer.buildout
-    templer.plone
-    templer.plone.localcommands
-    templer.zope
 scripts=
     i18ndude
     pybabel
-    templer
     paster
 
 # vim:set ft=cfg:

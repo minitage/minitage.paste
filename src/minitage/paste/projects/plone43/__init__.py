@@ -81,7 +81,7 @@ for name in sources_k:
     )
 
 class Template(plone42.Template):
-    packaged_version = '4.3.1'
+    packaged_version = '4.3.2'
     #packaged_zope2_version = '2.13.10'
     #packaged_ztk_version = '1.0.6'
     summary         = 'Template for creating a plone43 project'

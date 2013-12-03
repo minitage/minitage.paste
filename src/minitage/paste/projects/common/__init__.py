@@ -151,7 +151,7 @@ class Template(common.Template):
 
         )
         README = os.path.join(vars['path'],'README.%s.txt' % vars['project'])
-        open(README, 'w').write('\n'.join(self.lastlogs))
+        #open(README, 'w').write('\n'.join(self.lastlogs))
         self.lastlogs.append(
             'Those informations have been writed to %s.' % README
         )
