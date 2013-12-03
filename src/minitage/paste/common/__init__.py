@@ -163,6 +163,7 @@ class Template(templates.Template):
         # This is pointed out by sys.exec_prefix, hopefullly.
         vars['booleans'].append('inside_minitage')
         prefix = os.path.join(command.options.output_dir)
+        vars['inside_minitage'] = False
         if vars['inside_minitage'] and not self.special_output_dir:
             prefix = sys.exec_prefix
         if not vars['inside_minitage'] and not self.special_output_dir:
@@ -180,21 +181,22 @@ class Template(templates.Template):
         vars['dependencies'] = deps
         vars['minilay'] = vars['project']
         if vars['inside_minitage']:
-            not_minitage = False
-            vars['mt'] = self.output_dir
-            if self.special_output_dir:
-                vars['path'] = self.output_dir
-            # call to be in minitage but deport
-            # the minitage ROOT to the 'MT' environment variable
-            # this variable is set automaticly by the minitage.instances.env
-            # template which must has been used to set the current environment
-            if not (os.path.exists(
-                os.path.join(vars['mt'], 'etc', 'minimerge.cfg')
-            )) and 'MT' in os.environ: 
-                if os.path.exists(
-                    os.path.join(os.environ['MT'], 'etc', 'minimerge.cfg')
-                ):
-                    vars['mt'] = os.environ['MT']  
+            continue
+            #not_minitage = False
+            #vars['mt'] = self.output_dir
+            #if self.special_output_dir:
+            #    vars['path'] = self.output_dir
+            ## call to be in minitage but deport
+            ## the minitage ROOT to the 'MT' environment variable
+            ## this variable is set automaticly by the minitage.instances.env
+            ## template which must has been used to set the current environment
+            #if not (os.path.exists(
+            #    os.path.join(vars['mt'], 'etc', 'minimerge.cfg')
+            #)) and 'MT' in os.environ: 
+            #    if os.path.exists(
+            #        os.path.join(os.environ['MT'], 'etc', 'minimerge.cfg')
+            #    ):
+            #        vars['mt'] = os.environ['MT']  
         else:
             not_minitage = True
         if not_minitage or not (os.path.exists(

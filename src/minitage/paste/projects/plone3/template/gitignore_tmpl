@@ -5,8 +5,6 @@ develop-eggs/
 *.env
 etc/apache/100*.reverseproxy.conf
 etc/forespir.env
-etc/hudson/$project/build/activate_env.sh
-etc/hudson/$project/config.xml
 etc/init.d/
 etc/loadbalancing/
 etc/logrotate.conf

@@ -46,7 +46,8 @@ from minitage.paste.common import running_user, gid, group
 reflags = re.M|re.U|re.S
 UNSPACER = re.compile('\s+|\n', reflags)
 SPECIALCHARS = common.SPECIALCHARS
-INSTANCES_DESCRIPTION = """\
+INSTANCES_DESCRIPTION = """"""  #\
+# """
 # A word about minitage.paste instances
 # --------------------------------------
 # You are maybe wondering why this big buildout do not have out of the box those fancy monitoring, load-balancing or speedy databases support.
@@ -95,7 +96,7 @@ INSTANCES_DESCRIPTION = """\
 #     * minimerge -v  %(project)s # install what was not, and surely at least postgresql-8.4
 #     * minitage/bin/paster create -t minitage.instance.postgresql %(project)s
 #     * Then to start the postgres : zope/%(project)s/sys/etc/init.d/%(project)s_postgresql restart
-"""
+# """
 
 class Template(common.Template):
     """Common template"""
@@ -104,223 +105,225 @@ class Template(common.Template):
         self.lastlogs.append(
             '* A project has been created in %s.\n' % vars['path']
         )
-        minilay = os.path.join(self.output_dir, 'minilays', vars['project'])
-        if vars['inside_minitage']:
-            self.lastlogs.append(
-                '* A minilay has been installed in %s.\n'
-                '* It contains those minilbuilds:'
-                '\n\t- %s \n'
-                '\n'
-                '* Think to finish the versionning stuff and put this minilay and'
-                ' the projet under revision control.\n'
-                '* The project must be archived here \'%s\' using \'%s\' or change the minibuild '
-                'src_uri/scm_type.\n'
-                '* Install your project running: \n\t\tminimerge -v %s'
-                ''% (
-                    minilay,
-                    '\n\t- '.join(os.listdir(minilay)),
-                    vars['uri'], vars['scm_type'],
-                    vars['project']
-                )
-            )
-        self.lastlogs.append(
-            '* You can additionnaly create related databases or configuration or'
-            ' other stuff using minitage instances '
-            ' (http://minitage.org/paster/instances/index.html)\n'
-            '* Available instances are: \n'
-            '\t- %s\n'
-            '* Some extra instances are contained inside the'
-            '\'minitage.paste.extras package\', install it as a classical egg.\n'
-            '* Run an instance with: \n'
-            ' \tpaster create -t minitage.instances.PROFIL project\n'
-            '\n' % (
-                '\n\t- '.join(
-                    ["%s (%s)" % (
-                        a,
-                        pkg_resources.load_entry_point('minitage.paste',
-                                         'paste.paster_create_template',
-                                         a
-                                        ).summary
-                    )
-                        for a in pkg_resources.get_entry_map(
-                            'minitage.paste'
-                        )['paste.paster_create_template']
-                        if 'minitage.instances' in a]
-                )
-            )
+        #minilay = os.path.join(self.output_dir, 'minilays', vars['project'])
+        #if vars['inside_minitage']:
+        #    self.lastlogs.append(
+        #        '* A minilay has been installed in %s.\n'
+        #        '* It contains those minilbuilds:'
+        #        '\n\t- %s \n'
+        #        '\n'
+        #        '* Think to finish the versionning stuff and put this minilay and'
+        #        ' the projet under revision control.\n'
+        #        '* The project must be archived here \'%s\' using \'%s\' or change the minibuild '
+        #        'src_uri/scm_type.\n'
+        #        '* Install your project running: \n\t\tminimerge -v %s'
+        #        ''% (
+        #            minilay,
+        #            '\n\t- '.join(os.listdir(minilay)),
+        #            vars['uri'], vars['scm_type'],
+        #            vars['project']
+        #        )
+        #    )
+        #self.lastlogs.append(
+        #    '* You can additionnaly create related databases or configuration or'
+        #    ' other stuff using minitage instances '
+        #    ' (http://minitage.org/paster/instances/index.html)\n'
+        #    '* Available instances are: \n'
+        #    '\t- %s\n'
+        #    '* Some extra instances are contained inside the'
+        #    '\'minitage.paste.extras package\', install it as a classical egg.\n'
+        #    '* Run an instance with: \n'
+        #    ' \tpaster create -t minitage.instances.PROFIL project\n'
+        #    '\n' % (
+        #        '\n\t- '.join(
+        #            ["%s (%s)" % (
+        #                a,
+        #                pkg_resources.load_entry_point('minitage.paste',
+        #                                 'paste.paster_create_template',
+        #                                 a
+        #                                ).summary
+        #            )
+        #                for a in pkg_resources.get_entry_map(
+        #                    'minitage.paste'
+        #                )['paste.paster_create_template']
+        #                if 'minitage.instances' in a]
+        #        )
+        #    )
 
-        )
-        README = os.path.join(vars['path'],'README.%s.txt' % vars['project'])
-        #open(README, 'w').write('\n'.join(self.lastlogs))
-        self.lastlogs.append(
-            'Those informations have been writed to %s.' % README
-        )
+        #)
+        #README = os.path.join(vars['path'],'README.%s.txt' % vars['project'])
+        ##open(README, 'w').write('\n'.join(self.lastlogs))
+        #self.lastlogs.append(
+        #    'Those informations have been writed to %s.' % README
+        #)
         return common.Template.post(self, command, output_dir, vars)
 
     def pre(self, command, output_dir, vars):
         common.Template.pre(self, command, output_dir, vars)
+        vars['path'] = self.output_dir
         vars['sharp'] = '#'
         vars['linux'] = 'linux' in sys.platform
         if not 'opt_deps' in vars:
             vars['opt_deps'] = ''
-        if vars['inside_minitage']:
-            if not self.special_output_dir:
-                vars['path'] = os.path.join(
-                    self.output_dir,
-                    vars['category'],
-                    vars['project'],
-                )
-            else:
-                vars['path'] = self.output_dir
-        else:
-            vars['category'] = ''
-            if not self.special_output_dir:
-                vars['path'] = os.path.join(self.output_dir, vars['project'])
-            else:
-                vars['path'] = self.output_dir
-        if not self.special_output_dir:
-            vars['project_dir'] = vars['project']
-            vars['category_dir'] = vars['category']
-        else:
-             vars['project_dir'] = ''
-             vars['category_dir'] = ''
-        interpreter, pyver = None, None
-        pythons = {
-            'python2.4': '2.4',
-            'python2.5': '2.5',
-            'python2.6': '2.6',
-            'python2.7': '2.7',
-            'python3.0': '3.0',
-            'python3.1': '3.1',
-            'python3.2': '3.2',
-        }
-        python = getattr(self, 'python', None)
-        if vars['inside_minitage']:
-            latest_python = None
-            dsearch_latest = {'py-libxslt.*': 'xslt',
-                             'py-libxml2.*': 'xml2',
-                             'python-\d.\d': 'latest_python'}
-            vars['minilays'] = minilays = os.path.join(vars['mt'], 'minilays')
-            xml2, xslt = [search_latest(a, minilays)
-                                  for a in (
-                                      'py-libxml2-.', 
-                                      'py-libxslt-.*', 
-                                      #'py-mapnik-.*'
-                                  )]
-            for regex in dsearch_latest.keys():
-                minibuild = search_latest(regex, minilays)
-                stmt = '%s=\'%s\'' % (dsearch_latest[regex], minibuild)
-                exec  stmt
-                del dsearch_latest[regex]
-            if (not python) and latest_python:
-                python = latest_python
-            pyver = pythons[python.replace('-', '')]
-        else:
-            if not python:
-                python = vars['python']
-            else:
-                python = python.replace('-', '')
-                pyver = pythons[python]
-            interpreter = which(python)
-            executable_version = os.popen(
-                '%s -c "%s"' % (
-                    interpreter,
-                    'import sys;print sys.version[:3]'
-                )
-            ).read().replace('\n', '')
-            executable_prefix = os.path.abspath(
-                subprocess.Popen(
-                    [interpreter, '-c', 'import sys;print sys.prefix'],
-                    stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                    close_fds=True).stdout.read().replace('\n', '')
-            )
-            if pyver and (executable_version != pyver):
-                try:
-                    interpreter = which('python%s' % pyver)
-                    executable_version = os.popen(
-                        '%s -c "%s"' % (
-                            interpreter,
-                            'import sys;print sys.version[:3]'
-                        )
-                    ).read().replace('\n', '')
-                    executable_prefix = os.path.abspath(
-                        subprocess.Popen(
-                            [interpreter, '-c', 'import sys;print sys.prefix'],
-                            stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                            close_fds=True).stdout.read().replace('\n', '')
-                    )
-                except:
-                    print 'Cant find a python %s installation, you didnt give a %s python to paster' % (pyver, pyver)
-                    raise
-            if pyver and (executable_version != pyver):
-                print 'Cant find a python %s installation, you didnt give a %s python to paster' % (pyver, pyver)
-                raise Exception('Incompatible python')
+        #if vars['inside_minitage']:
+        #    if not self.special_output_dir:
+        #        vars['path'] = os.path.join(
+        #            self.output_dir,
+        #            vars['category'],
+        #            vars['project'],
+        #        )
+        #    else:
+        #        vars['path'] = self.output_dir
+        #else:
+        #    vars['category'] = ''
+        #    if not self.special_output_dir:
+        #        vars['path'] = os.path.join(self.output_dir, vars['project'])
+        #    else:
+        #        vars['path'] = self.output_dir
+        #if not self.special_output_dir:
+        #    vars['project_dir'] = vars['project']
+        #    vars['category_dir'] = vars['category']
+        #else:
+        #     vars['project_dir'] = ''
+        #     vars['category_dir'] = ''
+        #interpreter, pyver = None, None
+        #pythons = {
+        #    'python2.4': '2.4',
+        #    'python2.5': '2.5',
+        #    'python2.6': '2.6',
+        #    'python2.7': '2.7',
+        #    'python3.0': '3.0',
+        #    'python3.1': '3.1',
+        #    'python3.2': '3.2',
+        #}
+        #python = getattr(self, 'python', None)
+        #if vars['inside_minitage']:
+        #   continue
+        #   latest_python = None
+        #   dsearch_latest = {'py-libxslt.*': 'xslt',
+        #                    'py-libxml2.*': 'xml2',
+        #                    'python-\d.\d': 'latest_python'}
+        #   vars['minilays'] = minilays = os.path.join(vars['mt'], 'minilays')
+        #   xml2, xslt = [search_latest(a, minilays)
+        #                         for a in (
+        #                             'py-libxml2-.', 
+        #                             'py-libxslt-.*', 
+        #                             #'py-mapnik-.*'
+        #                         )]
+        #   for regex in dsearch_latest.keys():
+        #       minibuild = search_latest(regex, minilays)
+        #       stmt = '%s=\'%s\'' % (dsearch_latest[regex], minibuild)
+        #       exec  stmt
+        #       del dsearch_latest[regex]
+        #   if (not python) and latest_python:
+        #       python = latest_python
+        #   pyver = pythons[python.replace('-', '')]
+        #else:
+        #   if not python:
+        #       python = vars['python']
+        #   else:
+        #       python = python.replace('-', '')
+        #       pyver = pythons[python]
+        #   interpreter = which(python)
+        #   executable_version = os.popen(
+        #       '%s -c "%s"' % (
+        #           interpreter,
+        #           'import sys;print sys.version[:3]'
+        #       )
+        #   ).read().replace('\n', '')
+        #   executable_prefix = os.path.abspath(
+        #       subprocess.Popen(
+        #           [interpreter, '-c', 'import sys;print sys.prefix'],
+        #           stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+        #           close_fds=True).stdout.read().replace('\n', '')
+        #   )
+        #   if pyver and (executable_version != pyver):
+        #       try:
+        #           interpreter = which('python%s' % pyver)
+        #           executable_version = os.popen(
+        #               '%s -c "%s"' % (
+        #                   interpreter,
+        #                   'import sys;print sys.version[:3]'
+        #               )
+        #           ).read().replace('\n', '')
+        #           executable_prefix = os.path.abspath(
+        #               subprocess.Popen(
+        #                   [interpreter, '-c', 'import sys;print sys.prefix'],
+        #                   stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+        #                   close_fds=True).stdout.read().replace('\n', '')
+        #           )
+        #       except:
+        #           print 'Cant find a python %s installation, you didnt give a %s python to paster' % (pyver, pyver)
+        #           raise
+        #   if pyver and (executable_version != pyver):
+        #       print 'Cant find a python %s installation, you didnt give a %s python to paster' % (pyver, pyver)
+        #       raise Exception('Incompatible python')
+        #
+        #if vars['inside_minitage']:
+        #    interpreter = os.path.join(
+        #        '${buildout:directory}', '..', '..',
+        #        'dependencies', python, 'parts', 'part', 'bin', 'python')
+        #    executable_prefix = os.path.join(
+        #        vars['mt'], 'dependencies',
+        #        'python-%s' %  pyver, 'parts', 'part')
+        #    executable_version = pyver
+        #    vars['opt_deps'] = '%s %s  %s' % (xml2, xslt, 'python-%s' %  pyver)
+        #    vars['xml2'] = os.path.join('${minitage:location}',
+        #                                'eggs', xml2,
+        #                            'parts', 'site-packages-%s' % pyver)
+        #    #vars['mapnik'] = os.path.join('${minitage:location}',
+        #    #                        'eggs', mapnik,
+        #    #                        'parts', 'site-packages-%s' % pyver,
+        #    #                             'lib', 'python%s' % pyver, 'site-packages') 
+        #    vars['xslt'] = os.path.join('${minitage:location}',
+        #                            'eggs', xslt,
+        #                            'parts', 'site-packages-%s' % pyver)
+        #    vars['mt'] = '${buildout:directory}/../..'
+        #else:
+        #    vars['xml2'] = os.path.join(executable_prefix, 'lib', 'python%s' % executable_version, 'site-packages')
+        #    vars['xslt'] = os.path.join(executable_prefix, 'lib', 'python%s' % executable_version, 'site-packages')
+        #    #vars['mapnik'] = os.path.join(executable_prefix, 'lib', 'python%s' % executable_version, 'site-packages')
+        #    vars['opt_deps'] = ''
 
-        if vars['inside_minitage']:
-            interpreter = os.path.join(
-                '${buildout:directory}', '..', '..',
-                'dependencies', python, 'parts', 'part', 'bin', 'python')
-            executable_prefix = os.path.join(
-                vars['mt'], 'dependencies',
-                'python-%s' %  pyver, 'parts', 'part')
-            executable_version = pyver
-            vars['opt_deps'] = '%s %s  %s' % (xml2, xslt, 'python-%s' %  pyver)
-            vars['xml2'] = os.path.join('${minitage:location}',
-                                        'eggs', xml2,
-                                    'parts', 'site-packages-%s' % pyver)
-            #vars['mapnik'] = os.path.join('${minitage:location}',
-            #                        'eggs', mapnik,
-            #                        'parts', 'site-packages-%s' % pyver,
-            #                             'lib', 'python%s' % pyver, 'site-packages') 
-            vars['xslt'] = os.path.join('${minitage:location}',
-                                    'eggs', xslt,
-                                    'parts', 'site-packages-%s' % pyver)
-            vars['mt'] = '${buildout:directory}/../..'
-        else:
-            vars['xml2'] = os.path.join(executable_prefix, 'lib', 'python%s' % executable_version, 'site-packages')
-            vars['xslt'] = os.path.join(executable_prefix, 'lib', 'python%s' % executable_version, 'site-packages')
-            #vars['mapnik'] = os.path.join(executable_prefix, 'lib', 'python%s' % executable_version, 'site-packages')
-            vars['opt_deps'] = ''
+        ## minitage needs python.
+        #if not interpreter and (not vars['inside_minitage']):
+        #    raise Exception('Python interpreter not found')
 
-        # minitage needs python.
-        if not interpreter and (not vars['inside_minitage']):
-            raise Exception('Python interpreter not found')
-
-        vars['python'] = interpreter
-        vars['python26'] = re.sub('(2|3)\..', '2.6', interpreter)
-        vars['python_minibuild'] = 'python-%s' % pyver
-        vars['python_minibuild'] = 'python-%s' % pyver
-        vars['pyver'] = pyver
-        vars['libpyver'] = pyver.replace('.', '')
-        vars['python_version'] = executable_version
-        vars['executable_site_packages'] = os.path.join(
-            executable_prefix, 'lib', 'python%s'%executable_version, 'site-packages')
-        vars['executable_prefix'] = executable_prefix
+        #vars['python'] = interpreter
+        #vars['python26'] = re.sub('(2|3)\..', '2.6', interpreter)
+        #vars['python_minibuild'] = 'python-%s' % pyver
+        #vars['python_minibuild'] = 'python-%s' % pyver
+        #vars['pyver'] = pyver
+        #vars['libpyver'] = pyver.replace('.', '')
+        #vars['python_version'] = executable_version
+        #vars['executable_site_packages'] = os.path.join(
+        #    executable_prefix, 'lib', 'python%s'%executable_version, 'site-packages')
+        #vars['executable_prefix'] = executable_prefix
 
 Template.vars = common.Template.vars + \
         [\
-         common.var('scm_type',
-                    'Minibuild checkout facility'
-                    ' (git|bzr|hg|svn|static)\n'
-                    'static can be used for both '
-                    'http, ftp and file:// uris: '
-                    '(only useful in a minitage)',
-                    default = 'git',),
-         common.var('uri',
-                    'Url of the project to checkout (only useful in a minitage)',
-                    default = 'git@gitorious-git.makina-corpus.net/',),
-         common.var('install_method',
-                    'The install method of your minibuild '
-                    '(only useful in a minitage)',
-                    default = 'buildout',),
-         common.var('homepage',
-                    'Homepage url of your project '
-                    '(only useful in a minitage)',
-                    default = 'http://foo.net',),
-         common.var('python',
-                    'the Python interpreter to use. (Only useful if you are not'
-                    'inside a minitage.',
-                    default = sys.executable,),
+         #common.var('scm_type',
+         #           'Minibuild checkout facility'
+         #           ' (git|bzr|hg|svn|static)\n'
+         #           'static can be used for both '
+         #           'http, ftp and file:// uris: '
+         #           '(only useful in a minitage)',
+         #           default = 'git',),
+         #common.var('uri',
+         #           'Url of the project to checkout (only useful in a minitage)',
+         #           default = 'git@gitorious-git.makina-corpus.net/',),
+         #common.var('install_method',
+         #           'The install method of your minibuild '
+         #           '(only useful in a minitage)',
+         #           default = 'buildout',),
+         #common.var('homepage',
+         #           'Homepage url of your project '
+         #           '(only useful in a minitage)',
+         #           default = 'http://foo.net',),
+         #common.var('python',
+         #           'the Python interpreter to use. (Only useful if you are not'
+         #           'inside a minitage.',
+         #           default = sys.executable,),
          common.var('author',
                     'Author signature',
                     default = '%s <%s@localhost>' % (running_user, running_user),) ,

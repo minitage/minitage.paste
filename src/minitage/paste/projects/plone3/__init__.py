@@ -150,33 +150,33 @@ class Template(common.Template):
                 vars[i].default = sane_name
         return vars
 
-    def get_versions_url(self, cvars=None):
-        if not cvars: cvars = {}
-        v = cvars.get('plone_version', self.packaged_version)
-        url = 'http://dist.plone.org/release/%s/versions.cfg' % v
-        return url
+    #def get_versions_url(self, cvars=None):
+    #    if not cvars: cvars = {}
+    #    v = cvars.get('plone_version', self.packaged_version)
+    #    url = 'http://dist.plone.org/release/%s/versions.cfg' % v
+    #    return url
 
-    def get_sources_url(self, cvars=None):
-        if not cvars: cvars = {}
-        v = cvars.get('plone_version', self.packaged_version)
-        sources = 'http://dist.plone.org/release/%s/sources.cfg' % v
-        return sources
+    #def get_sources_url(self, cvars=None):
+    #    if not cvars: cvars = {}
+    #    v = cvars.get('plone_version', self.packaged_version)
+    #    sources = 'http://dist.plone.org/release/%s/sources.cfg' % v
+    #    return sources
 
-    def get_zope2_url(self, cvars=None):
-        if not cvars: cvars = {}
-        url, v = None, None
-        if self.packaged_zope2_version:
-            v = cvars.get('zope2_version', self.packaged_zope2_version)
-        url = 'http://download.zope.org/Zope2/index/%s/versions.cfg' % v
-        return url
+    #def get_zope2_url(self, cvars=None):
+    #    if not cvars: cvars = {}
+    #    url, v = None, None
+    #    if self.packaged_zope2_version:
+    #        v = cvars.get('zope2_version', self.packaged_zope2_version)
+    #    url = 'http://download.zope.org/Zope2/index/%s/versions.cfg' % v
+    #    return url
 
-    def get_ztk_url(self, cvars=None):
-        if not cvars: cvars = {}
-        url, v = None, None
-        if getattr(self, 'packaged_ztk_version', False):
-            v = cvars.get('ztk_version', getattr(self, 'packaged_ztk_version'))
-        url = 'http://download.zope.org/zopetoolkit/index/%s/ztk-versions.cfg' % v
-        return url
+    #def get_ztk_url(self, cvars=None):
+    #    if not cvars: cvars = {}
+    #    url, v = None, None
+    #    if getattr(self, 'packaged_ztk_version', False):
+    #        v = cvars.get('ztk_version', getattr(self, 'packaged_ztk_version'))
+    #    url = 'http://download.zope.org/zopetoolkit/index/%s/ztk-versions.cfg' % v
+    #    return url
 
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
@@ -242,64 +242,64 @@ class Template(common.Template):
             vars['additional_eggs'].append('ZODB3')
 
         # plone system dependencies
-        if vars['inside_minitage']:
-            for i in ['libxml2', 'libxslt', 'pil-1', 'libiconv', 'libpcre-8',
-                      'zlib', 'bzip2',]:
-                vars['opt_deps'] += ' %s' %  search_latest('%s.*' % i, vars['minilays'])
-            for i in ['readline-6', 'ncurses-5']:
-                vars['opt_deps'] += ' %s' %  search_latest('%s' % i, vars['minilays'])
+        #if vars['inside_minitage']:
+        #    for i in ['libxml2', 'libxslt', 'pil-1', 'libiconv', 'libpcre-8',
+        #              'zlib', 'bzip2',]:
+        #        vars['opt_deps'] += ' %s' %  search_latest('%s.*' % i, vars['minilays'])
+        #    for i in ['readline-6', 'ncurses-5']:
+        #        vars['opt_deps'] += ' %s' %  search_latest('%s' % i, vars['minilays'])
 
-        # databases
-        minitage_dbs = ['mysql', 'postgresql']
-        for db in minitage_dbs:
-            if vars['with_database_%s' % db] and vars['inside_minitage']:
-                vars['opt_deps'] += ' %s' % search_latest('%s-\d\.\d*'% db, vars['minilays'])
-        # databases
-        if vars['with_binding_mapscript'] and vars['inside_minitage']:
-            vars['opt_deps'] += ' %s' % search_latest('mapserver-\d\.\d*', vars['minilays'])
-        # collective.geo
-        if 'with_ploneproduct_cgeo' in vars:
-            if vars['with_ploneproduct_cgeo'] and vars['inside_minitage']:
-                for i in ('geos-\d\.\d*','gdal-\d\.\d*'):
-                    vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays'])
-        # tesseact
-        if vars['with_binding_tesseract'] and vars['inside_minitage']:
-            for i in ('tesseract-\d','leptonica-\d'):
-                vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays'])
-        # pyqt
-        vars['pyqt'] = ''
-        if vars['with_binding_pyqt'] and vars['inside_minitage']:
-            vars['opt_deps'] += ' %s' % search_latest('swiglib-\d\.\d+', vars['minilays'])
-            for i in ('pyqt-\d\.\d+','sip-\d\.\d+'):
-                vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays'])
-                vars['pyqt'] += '\n   %s' %  (
-                    '${buildout:directory}/../../'
-                    'eggs/%s/parts'
-                    '/site-packages-%s/site-packages-%s' % (
-                        search_latest(i, vars['minilays']),
-                        vars['pyver'],
-                        vars['pyver'],
-                    )
-                )
+        ## databases
+        #minitage_dbs = ['mysql', 'postgresql']
+        #for db in minitage_dbs:
+        #    if vars['with_database_%s' % db] and vars['inside_minitage']:
+        #        vars['opt_deps'] += ' %s' % search_latest('%s-\d\.\d*'% db, vars['minilays'])
+        ## databases
+        #if vars['with_binding_mapscript'] and vars['inside_minitage']:
+        #    vars['opt_deps'] += ' %s' % search_latest('mapserver-\d\.\d*', vars['minilays'])
+        ## collective.geo
+        #if 'with_ploneproduct_cgeo' in vars:
+        #    if vars['with_ploneproduct_cgeo'] and vars['inside_minitage']:
+        #        for i in ('geos-\d\.\d*','gdal-\d\.\d*'):
+        #            vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays'])
+        ## tesseact
+        #if vars['with_binding_tesseract'] and vars['inside_minitage']:
+        #    for i in ('tesseract-\d','leptonica-\d'):
+        #        vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays'])
+        ## pyqt
+        #vars['pyqt'] = ''
+        #if vars['with_binding_pyqt'] and vars['inside_minitage']:
+        #    vars['opt_deps'] += ' %s' % search_latest('swiglib-\d\.\d+', vars['minilays'])
+        #    for i in ('pyqt-\d\.\d+','sip-\d\.\d+'):
+        #        vars['opt_deps'] += ' %s' % search_latest(i, vars['minilays'])
+        #        vars['pyqt'] += '\n   %s' %  (
+        #            '${buildout:directory}/../../'
+        #            'eggs/%s/parts'
+        #            '/site-packages-%s/site-packages-%s' % (
+        #                search_latest(i, vars['minilays']),
+        #                vars['pyver'],
+        #                vars['pyver'],
+        #            )
+        #        )
 
-        # openldap
-        if vars['with_binding_ldap'] and vars['inside_minitage']:
-            cs = search_latest('cyrus-sasl-\d\.\d*', vars['minilays'])
-            vars['opt_deps'] += ' %s %s %s' % (
-                search_latest('openldap-\d\.\d*', vars['minilays']),
-                search_latest('openssl-1', vars['minilays']),
-                cs
-            )
-            vars['includesdirs'] = '\n    %s'%  os.path.join(
-                vars['mt'], 'dependencies', cs, 'parts', 'part', 'include', 'sasl'
-            )
+        ## openldap
+        #if vars['with_binding_ldap'] and vars['inside_minitage']:
+        #    cs = search_latest('cyrus-sasl-\d\.\d*', vars['minilays'])
+        #    vars['opt_deps'] += ' %s %s %s' % (
+        #        search_latest('openldap-\d\.\d*', vars['minilays']),
+        #        search_latest('openssl-1', vars['minilays']),
+        #        cs
+        #    )
+        #    vars['includesdirs'] = '\n    %s'%  os.path.join(
+        #        vars['mt'], 'dependencies', cs, 'parts', 'part', 'include', 'sasl'
+        #    )
 
-        # haproxy
-        if vars['with_haproxy'] and vars['inside_minitage']:
-            vars['opt_deps'] += ' %s' % search_latest('haproxy-\d\.\d*', vars['minilays'])
-        # htmldoc
-        if vars['with_ploneproduct_awspdfbook'] and vars['inside_minitage']:
-            vars['opt_deps'] += ' %s' % search_latest('htmldoc-\d\.\d*', vars['minilays'])
+        ## haproxy
+        #if vars['with_haproxy'] and vars['inside_minitage']:
+        #    vars['opt_deps'] += ' %s' % search_latest('haproxy-\d\.\d*', vars['minilays'])
+        ## htmldoc
+        #if vars['with_ploneproduct_awspdfbook'] and vars['inside_minitage']:
+        #    vars['opt_deps'] += ' %s' % search_latest('htmldoc-\d\.\d*', vars['minilays'])
 
         # relstorage
         if 'relstorage' in vars['mode']:
@@ -315,8 +315,8 @@ class Template(common.Template):
                          if not a in vars['additional_eggs']
                         ]
                     )
-                    if db in minitage_dbs and vars['inside_minitage']:
-                        vars['opt_deps'] += ' %s' % search_latest('%s-\d\.\d*'% db, vars['minilays'])
+                    #if db in minitage_dbs and vars['inside_minitage']:
+                    #    vars['opt_deps'] += ' %s' % search_latest('%s-\d\.\d*'% db, vars['minilays'])
 
         # do we need some pinned version
         vars['plone_versions'] = []
@@ -490,9 +490,7 @@ class Template(common.Template):
         bc = ConfigParser()
         bc.read(cfg)
 
-        for f in (glob(os.path.join(output_dir, 'scripts/*'))
-                  + glob(os.path.join(output_dir, 'etc/hudson/%s/build/*' % vars['project']))
-                 ):
+        for f in glob(os.path.join(output_dir, 'scripts/*'):
             os.chmod(f, 0700)
         # release KGS
         #try:
