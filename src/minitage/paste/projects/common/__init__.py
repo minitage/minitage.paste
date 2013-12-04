@@ -28,75 +28,165 @@
 __docformat__ = 'restructuredtext en'
 
 import sys
+import getpass
+import pwd
+import grp
 import os
 import re
-import subprocess
-import getpass
 import copy
-import pwd, getpass, grp
 
-import pkg_resources
+from xml.dom.minidom import parseString
 
-from xml.dom.minidom import parse, parseString
-from minitage.paste import common
-from minitage.core.common import which, search_latest
+from paste.script import templates
 
-from minitage.paste.common import running_user, gid, group
-
-reflags = re.M | re.U | re.S
-UNSPACER = re.compile('\s+|\n', reflags)
-SPECIALCHARS = common.SPECIALCHARS
+re_flags = re.M | re.U | re.S
+UNSPACER = re.compile('\s+|\n', re_flags)
+SPECIALCHARS = re.compile('[-._@|{(\[|)\]}]', re_flags)
 INSTANCES_DESCRIPTION = """"""
+__HEADER__ = ''''''
 
 
-class Template(common.Template):
+def get_user_group():
+    try:
+        running_user = getpass.getuser()
+    except:
+        running_user = 'user'
+    try:
+        gid = pwd.getpwnam(running_user)[3]
+    except:
+        gid = None
+    group = 'users'
+    if gid:
+        try:
+            group = grp.getgrgid(gid)[0]
+        except:
+            pass
+    return running_user, gid, group
+
+
+running_user, gid, group = get_user_group()
+
+
+class var(templates.var):
+    """patch pastescript to have mandatory fields"""
+
+    def __init__(self,
+                 name,
+                 description,
+                 default='',
+                 should_echo=True,
+                 mandatory=False):
+        templates.var.__init__(self, name, description, default, should_echo)
+        self.mandatory = mandatory
+
+
+def boolify(d, boolean_values=None):
+    if not 'booleans' in d:
+        d['booleans'] = []
+    if not boolean_values:
+        boolean_values = [key
+                          for key in d
+                          if key.startswith('with_')
+                          and (not key in d['booleans'])]
+    if not 'inside_minitage' in boolean_values:
+            boolean_values.append('inside_minitage')
+    d['booleans'].extend(boolean_values)
+    for var in boolean_values:
+        if var in d:
+            if isinstance(d[var], basestring):
+                if u'y' in d[var].lower():
+                    d[var] = True
+                elif u'true' == d[var].lower().strip():
+                    d[var] = True
+                else:
+                    d[var] = False
+
+
+class Template(templates.Template):
     """Common template"""
+    summary = 'OVERRIDE ME'
+    _template_dir = 'template'
+    use_cheetah = True
+    read_vars_from_templates = True
+    special_output_dir = False
+    vars = [
+        var('scm_type',
+            'Minibuild checkout facility'
+            ' (git|bzr|hg|svn|static)\n'
+            'static can be used for both '
+            'http, ftp and file:// uris: '
+            '(only useful in a minitage)',
+            default='git',),
+        var('uri',
+            'Url of the project to checkout (only useful in a minitage)',
+            default='git@gitorious-git.makina-corpus.net/',),
+        var('homepage',
+            'Homepage url of your project '
+            '(only useful in a minitage)',
+            default='http://foo.net',),
+        var('author',
+            'Author signature',
+            default='%s <%s@localhost>' % (running_user, running_user),),
+        var('author_email',
+            'Author email',
+            default='%s@localhost' % (running_user),)
+    ]
+
+    def boolify(self, d, keys=None):
+        return boolify(d, keys)
+
+    def __init__(self, name):
+        templates.Template.__init__(self, name)
+        self.output_dir = os.path.abspath('.')
+
+    def run(self, command, output_dir, vars):
+        self.boolify(vars)
+        self.pre(command, output_dir, vars)
+        # may we have register variables ?
+        if self.output_dir:
+            if not os.path.exists(self.output_dir):
+                os.makedirs(self.output_dir)
+            output_dir = self.output_dir
+        if not os.path.isdir(output_dir):
+            raise Exception('%s is not a directory' % output_dir)
+        self.write_files(command, self.output_dir, vars)
+        self.post(command, output_dir, vars)
+
+    def pre(self, command, output_dir, vars):
+        self.boolify(vars)
+        vars['booleans'] = []
+        self.special_output_dir = not(
+            command.options.output_dir.strip() in ['', '.'])
+        vars['booleans'].append('inside_minitage')
+        prefix = os.path.join(command.options.output_dir)
+        vars['inside_minitage'] = False
+        if vars['inside_minitage'] and not self.special_output_dir:
+            prefix = sys.exec_prefix
+        if not vars['inside_minitage'] and not self.special_output_dir:
+            prefix = os.path.join(command.options.output_dir, vars['project'])
+        self.old_output_dir = getattr(self, 'output_dir', None)
+        self.output_dir = prefix
+        vars['header'] = __HEADER__ % {'comment': '#'}
+        vars['path'] = self.output_dir
+        vars['sharp'] = '#'
+        vars['linux'] = 'linux' in sys.platform
 
     def post(self, command, output_dir, vars):
         self.lastlogs.append(
             '* A project has been created in %s.\n' % vars['path']
         )
-        return common.Template.post(self, command, output_dir, vars)
+        if self.lastlogs and not command.options.quiet:
+            print
+            print
+            print
+            print 'PASTER MESSAGES'
+            print
+            for log in self.lastlogs:
+                print log
 
-    def pre(self, command, output_dir, vars):
-        common.Template.pre(self, command, output_dir, vars)
-        vars['path'] = self.output_dir
-        vars['sharp'] = '#'
-        vars['linux'] = 'linux' in sys.platform
-        if not 'opt_deps' in vars:
-            vars['opt_deps'] = ''
-
-
-Template.vars = common.Template.vars + [
-    common.var('scm_type',
-               'Minibuild checkout facility'
-               ' (git|bzr|hg|svn|static)\n'
-               'static can be used for both '
-               'http, ftp and file:// uris: '
-               '(only useful in a minitage)',
-               default='git',),
-    common.var('uri',
-               'Url of the project to checkout (only useful in a minitage)',
-               default='git@gitorious-git.makina-corpus.net/',),
-    #common.var('install_method',
-    #           'The install method of your minibuild '
-    #           '(only useful in a minitage)',
-    #           default = 'buildout',),
-    common.var('homepage',
-               'Homepage url of your project '
-               '(only useful in a minitage)',
-               default='http://foo.net',),
-    #common.var('python',
-    #           'the Python interpreter to use. (Only useful if you are not'
-    #           'inside a minitage.',
-    #           default = sys.executable,),
-    common.var('author',
-               'Author signature',
-               default='%s <%s@localhost>' % (running_user, running_user),),
-    common.var('author_email',
-               'Author email',
-               default='%s@localhost' % (running_user),)
-]
+    def read_vars(self, command=None):
+        self.lastlogs = []
+        return templates.Template.read_vars(self, command)
 
 
 def purge_nodes(document=None,
@@ -176,29 +266,28 @@ def get_ordered_discovered_options(discovered_options):
 
 
 def parse_xmlconfig(xml,
-                    base_vars = None,
-                    purge=None,
-                   ):
+                    base_vars=None,
+                    purge=None):
     """Parse a minitage paster configuration file,
     mainly used in plone templates."""
     result = {
-        'qi_mappings' :                  {},
-        'qi_hidden_mappings' :           {},
-        'gs_mappings' :                  {},
-        'z2packages' :                   {},
-        'z2products' :                   {},
-        'addons_vars' :                  {},
-        'eggs_mappings' :                {},
-        'scripts_mappings' :             {},
-        'zcml_loading_order' :           {},
-        'zcml_mappings' :                {},
-        'versions_mappings' :            {},
-        'checked_versions_mappings' :    {},
-        'urls_mappings' :                {},
-        'plone_np_mappings' :            {},
-        'plone_vsp_mappings' :           {},
-        'plone_sources' :                {},
-        'framework_apps' :               {},
+        'qi_mappings': {},
+        'qi_hidden_mappings': {},
+        'gs_mappings': {},
+        'z2packages': {},
+        'z2products': {},
+        'addons_vars': {},
+        'eggs_mappings': {},
+        'scripts_mappings': {},
+        'zcml_loading_order': {},
+        'zcml_mappings': {},
+        'versions_mappings': {},
+        'checked_versions_mappings': {},
+        'urls_mappings': {},
+        'plone_np_mappings': {},
+        'plone_vsp_mappings': {},
+        'plone_sources': {},
+        'framework_apps': {},
     }
     overrides = False
     if base_vars:
@@ -262,7 +351,7 @@ def parse_xmlconfig(xml,
                     # there because paster will swallow them up
                     addons_vars[oattrs.get('name')] = (
                         order,
-                        common.var(
+                        var(
                             oattrs.get('name'),
                             UNSPACER.sub(' ',
                                          oattrs.get(

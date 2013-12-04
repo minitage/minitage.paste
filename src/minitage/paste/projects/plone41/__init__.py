@@ -28,18 +28,16 @@
 __docformat__ = 'restructuredtext en'
 
 import os
-import shutil
-import re
-import urllib2
 
 import pkg_resources
 
-from minitage.paste.common import var as pvar
-from minitage.paste.projects import common
-from minitage.paste.projects import plone4, plone3
+from minitage.paste.projects import (
+    common, plone4, plone3)
 
-default_config = pkg_resources.resource_filename('minitage.paste', 'projects/plone41/minitage.plone41.xml')
-user_config = os.path.join( os.path.expanduser('~'), '.minitage.plone41.xml')
+default_config = pkg_resources.resource_filename(
+    'minitage.paste',
+    'projects/plone41/minitage.plone41.xml')
+user_config = os.path.join(os.path.expanduser('~'), '.minitage.plone41.xml')
 xmlvars = common.read_vars(default_config, user_config, plone4.xmlvars)
 # plone quickinstaller option/names mappings
 qi_mappings = xmlvars.get('qi_mappings', {})
@@ -60,7 +58,7 @@ zcml_mappings = xmlvars.get('zcml_mappings', {})
 # mappings option/versions to pin
 versions_mappings = xmlvars.get('versions_mappings', {})
 # mappings option/versions to pin if the user wants really stable sets
-checked_versions_mappings = xmlvars.get('checked_versions_mappings',{})
+checked_versions_mappings = xmlvars.get('checked_versions_mappings', {})
 # mappings option/productdistros to install
 urls_mappings = xmlvars.get('urls_mappings', {})
 # mappings option/nested packages/version suffix packages  to install
@@ -73,35 +71,26 @@ sources_k = plone_sources.keys()
 sources_k.sort()
 for name in sources_k:
     dev_vars.append(
-        pvar(
+        common.pvar(
             'with_autocheckout_%s' % name,
-            description = name,
-            default = "n",
+            description=name,
+            default="n",
         )
     )
+
 
 class Template(plone4.Template):
     packaged_version = '4.1.6'
     #packaged_zope2_version = '2.13.13'
     #packaged_ztk_version = '1.0.6'
-    summary                    = 'Template for creating a plone41 project'
-    _template_dir = pkg_resources.resource_filename('minitage.paste', 'projects/plone3/template')
-    python                     = 'python-2.6'
+    summary = 'Template for creating a plone41 project'
+    _template_dir = pkg_resources.resource_filename(
+        'minitage.paste', 'projects/plone3/template')
+    python = 'python-2.6'
     #default_template_package   = 'ZopeSkel'
     #default_template_epn       = 'paste.paster_create_template'
     #default_template_templaten = 'plone3_buildout'
-    init_messages = (
-        '%s' % (
-            '---------------------------------------------------------\n'
-            '\tPlone 4 needs a python 2.6 to run:\n'
-            '\t * if you do not fill anything, it will use minitage or system\'s one\n'
-            '\t * if you do not provide one explicitly, it will use minitage or system\'s one\n'
-            '\t * Bindings will be automaticly included when you choose for example relstorage/mysql or plone ldap support.\n'
-            '\tAditionnaly you ll got two buildouts for production (buildout.cfg) and develoment mode (dev.cfg).\n'
-            '\tYou can also activate or safely ignore questions about zeoserver and relstorage if you do not use them.\n'
-            '---------------------------------------------------------\n'
-        ),
-    )
+    init_messages = tuple()
     # not nice, but allow us to import variables from another place like
     # from plone3 import qi_mappings and also avoid template copy/paste,
     # just inherit and redefine those variables in the child class.
@@ -116,22 +105,22 @@ class Template(plone4.Template):
         'plone_vsp': plone_vsp_mappings,
         'plone_scripts': scripts_mappings,
     }
-    qi_mappings               = qi_mappings
-    qi_hidden_mappings        = qi_hidden_mappings
-    gs_mappings               = gs_mappings
-    z2packages                = z2packages
-    z2products                = z2products
-    addons_vars               = common.get_ordered_discovered_options(addons_vars.values())
-    eggs_mappings             = eggs_mappings
-    scripts_mappings          = scripts_mappings
-    zcml_loading_order        = zcml_loading_order
-    zcml_mappings             = zcml_mappings
-    versions_mappings         = versions_mappings
+    qi_mappings = qi_mappings
+    qi_hidden_mappings = qi_hidden_mappings
+    gs_mappings = gs_mappings
+    z2packages = z2packages
+    z2products = z2products
+    addons_vars = common.get_ordered_discovered_options(addons_vars.values())
+    eggs_mappings = eggs_mappings
+    scripts_mappings = scripts_mappings
+    zcml_loading_order = zcml_loading_order
+    zcml_mappings = zcml_mappings
+    versions_mappings = versions_mappings
     checked_versions_mappings = checked_versions_mappings
-    urls_mappings             = urls_mappings
-    plone_np_mappings         = plone_np_mappings
-    plone_vsp_mappings        = plone_vsp_mappings
-    plone_sources             = plone_sources
+    urls_mappings = urls_mappings
+    plone_np_mappings = plone_np_mappings
+    plone_vsp_mappings = plone_vsp_mappings
+    plone_sources = plone_sources
 
     def read_vars(self, command=None):
         vars = plone4.Template.read_vars(self, command)
@@ -144,11 +133,12 @@ class Template(plone4.Template):
     def post_default_template_hook(self, command, output_dir, vars, ep):
         pass
 
-Template.vars = common.Template.vars +\
-        [pvar('plone_version', 'Plone version, default is the one supported and packaged', default = Template.packaged_version,),
-         pvar('zope2_version', 'Zope2 version, default is the one supported and packaged', default = Template.packaged_zope2_version,),
-        ]+\
-        plone3.plone_vars + \
-        Template.addons_vars +\
-        dev_vars
+Template.vars = common.Template.vars + [
+    common.pvar('plone_version',
+                'Plone version, default is the one supported and packaged',
+                default=Template.packaged_version,),
+    common.pvar('zope2_version',
+                'Zope2 version, default is the one supported and packaged',
+                default=Template.packaged_zope2_version,),
+] + plone3.plone_vars + Template.addons_vars + dev_vars
 # vim:set et sts=4 ts=4 tw=0:

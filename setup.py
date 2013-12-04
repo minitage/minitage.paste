@@ -72,7 +72,6 @@ setup(
             'minitage.plone41 = minitage.paste.projects.plone41:Template',
             'minitage.plone42 = minitage.paste.projects.plone42:Template',
             'minitage.plone43 = minitage.paste.projects.plone43:Template',
-            'minitage.plone44 = minitage.paste.projects.plone44:Template',
             'minitage.instances.apache = minitage.paste.instances.apache:Template',
             'minitage.instances.env = minitage.paste.instances.env:Template',
             'minitage.instances.postgresql = minitage.paste.instances.postgresql:Template',
