@@ -76,7 +76,9 @@ extends =
 #end if
     project/plone.cfg
     sys/system.cfg
-${etherpadcomment}    project/etherpad.cfg
+#if $with_ploneproduct_etherpad
+    project/etherpad.cfg
+#end if
     sys/settings.cfg
     sys/settings-local.cfg
 parts =
@@ -84,13 +86,17 @@ parts =
     \${v:www-parts}
     \${v:ha-parts}
 ${cachecomment}    \${v:cache-parts}
-${etherpadcomment}    \${v:etherpad-parts}
+#if $with_ploneproduct_etherpad
+    \${v:etherpad-parts}
+#end if
     \${v:filesystem-parts}
 
 [supervisor]
 programs = \${v:project-programs}
 ${hapcomment}    \${v:ha-programs}
 ${cachecomment}    \${v:cache-programs}
+#if $with_ploneproduct_etherpad
 ${etherpadcomment}    \${v:etherpad-programs}
+#end if
 
 \# vim: set ft=cfg:
