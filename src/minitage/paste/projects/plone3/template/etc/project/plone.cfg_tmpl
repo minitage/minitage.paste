@@ -104,7 +104,6 @@ project-parts =
 #if $major < 4:
     zope2
 #end if
-    lxml
     productdistros
     zeoserver
     instance-plain
