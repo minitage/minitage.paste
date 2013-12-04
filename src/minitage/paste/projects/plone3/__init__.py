@@ -54,7 +54,7 @@ sources_k = plone_sources.keys()
 sources_k.sort()
 for name in sources_k:
     dev_vars.append(
-        common.pvar(
+        common.var(
             'with_autocheckout_%s' % name,
             description=name,
             default="n",
@@ -67,19 +67,8 @@ class Template(common.Template):
     packaged_zope2_version = None
     summary = 'Template for creating a plone3 project'
     python = 'python-2.4'
-    init_messages = (
-        '%s' % (
-            '---------------------------------------------------------\n'
-            '\tPlone 3 needs a python 2.4 to run:\n'
-            '\t * if you do not fill anything, it will '
-            'use minitage or system\'s one\n'
-            '\t * if you do not provide one explicitly, '
-            'it will use minitage or system\'s one\n'
-            '\tAditionnaly you ll got two buildouts for '
-            'production (buildout.cfg) and develoment mode (dev.cfg).\n'
-            '---------------------------------------------------------\n'
-        ),
-    )
+    init_messages = tuple()
+
     # not nice, but allow us to import variables from another place like
     # from plone3 import qi_mappings and also avoid template copy/paste,
     # just inherit and redefine those variables in the child class.
@@ -249,7 +238,7 @@ class Template(common.Template):
                             vars[section].append(item)
 
         package_slug_re = re.compile(
-            '(.*)-(meta|configure|overrides)', common.reflags)
+            '(.*)-(meta|configure|overrides)', common.re_flags)
 
         def zcmlsort(obja, objb):
             obja = re.sub('^#', '', obja).strip()
@@ -320,9 +309,6 @@ class Template(common.Template):
         self.post_default_template_hook(command, output_dir, vars, ep)
 
         # be sure our special python is in priority
-        vars['opt_deps'] = re.sub('\s*%s\s*' % self.python, ' ',
-                                  vars['opt_deps'])
-        vars['opt_deps'] += " %s" % self.python
 
         for port in range(500):
             vars['http_port%s' % port] = int(
@@ -372,76 +358,75 @@ sd_str = '%s' % (
     ' Be sure to activate it and debug the errors. y/n'
 )
 plone_vars = [
-    common.pvar('address',
-                'Address to listen on', default='localhost',),
-    common.pvar('http_port',
-                'Port to listen to', default='8081',),
-    common.pvar('zeo_host',
-                'Address for the zeoserver (zeo mode only)',
-                default='localhost',),
-    common.pvar('with_zeo_socket',
-                'Use socket for zeo, y/n', default='n',),
-    common.pvar('zope_user',
-                'Administrator login', default='admin',),
-    common.pvar('zope_password',
-                'Admin Password in the ZMI', default='secret',),
-    common.pvar('with_cache_support',
-                'Proxy cache (varnish)  support y/n', default='y',),
-    common.pvar('with_supervisor',
-                'Supervisor support (monitoring), '
-                'http://supervisord.org/ y/n', default='y',),
-    common.pvar('with_supervisor_instance1',
-                'Supervisor will automaticly '
-                'launch instance 1 in production mode  y/n', default='y',),
-    common.pvar('with_supervisor_instance2',
-                'Supervisor will automaticly '
-                'launch instance 2 in production mode, y/n', default='n',),
-    common.pvar('with_supervisor_instance3',
-                'Supervisor will automaticly '
-                'launch instance 3 in production mode, y/n', default='n',),
-    common.pvar('with_supervisor_instance4',
-                'Supervisor will automaticly '
-                'launch instance 4 in production mode, y/n', default='n',),
-    common.pvar('with_haproxy',
-                'haproxy support (loadbalancing), '
-                'http://haproxy.1wt.eu/ y/n', default='y',),
-    common.pvar('plone_products',
-                'comma separeted list of adtionnal products '
-                'to install: eg: file://a.tz file://b.tgz', default='',),
-    common.pvar('additional_eggs',
-                'comma separeted list of additionnal eggs to install',
-                default='',),
-    common.pvar('plone_zcml',
-                'comma separeted list of eggs to include for '
-                'searching ZCML slugs', default='',),
-    common.pvar('plone_np',
-                'comma separeted list of nested packages for '
-                'products distro part', default='',),
-    common.pvar('plone_vsp',
-                'comma separeted list of versionned suffix '
-                'packages for product distro part', default='',),
-    common.pvar('plone_scripts',
-                'comma separeted list of scripts to '
-                'generate from installed eggs', default='',),
-    common.pvar('with_checked_versions',
-                'Use product versions that interact '
-                'well together (can be outdated, check '
-                '[versions] in buildout.', default='n',),
-    common.pvar('with_no_zcml',
-                'Do not include zcml information', default='n',),
-    common.pvar('with_generic',
-                'with_generic', default='n',),
-    common.pvar('with_generic_addon',
-                'with_generic_addon', default='n',),
+    common.var('address',
+               'Address to listen on', default='localhost',),
+    common.var('http_port',
+               'Port to listen to', default='8081',),
+    common.var('zeo_host',
+               'Address for the zeoserver (zeo mode only)',
+               default='localhost',),
+    common.var('with_zeo_socket',
+               'Use socket for zeo, y/n', default='n',),
+    common.var('zope_user',
+               'Administrator login', default='admin',),
+    common.var('zope_password',
+               'Admin Password in the ZMI', default='secret',),
+    common.var('with_cache_support',
+               'Proxy cache (varnish)  support y/n', default='y',),
+    common.var('with_supervisor',
+               'Supervisor support (monitoring), '
+               'http://supervisord.org/ y/n', default='y',),
+    common.var('with_supervisor_instance1',
+               'Supervisor will automaticly '
+               'launch instance 1 in production mode  y/n', default='y',),
+    common.var('with_supervisor_instance2',
+               'Supervisor will automaticly '
+               'launch instance 2 in production mode, y/n', default='n',),
+    common.var('with_supervisor_instance3',
+               'Supervisor will automaticly '
+               'launch instance 3 in production mode, y/n', default='n',),
+    common.var('with_supervisor_instance4',
+               'Supervisor will automaticly '
+               'launch instance 4 in production mode, y/n', default='n',),
+    common.var('with_haproxy',
+               'haproxy support (loadbalancing), '
+               'http://haproxy.1wt.eu/ y/n', default='y',),
+    common.var('plone_products',
+               'comma separeted list of adtionnal products '
+               'to install: eg: file://a.tz file://b.tgz', default='',),
+    common.var('additional_eggs',
+               'comma separeted list of additionnal eggs to install',
+               default='',),
+    common.var('plone_zcml',
+               'comma separeted list of eggs to include for '
+               'searching ZCML slugs', default='',),
+    common.var('plone_np',
+               'comma separeted list of nested packages for '
+               'products distro part', default='',),
+    common.var('plone_vsp',
+               'comma separeted list of versionned suffix '
+               'packages for product distro part', default='',),
+    common.var('plone_scripts',
+               'comma separeted list of scripts to '
+               'generate from installed eggs', default='',),
+    common.var('with_checked_versions',
+               'Use product versions that interact '
+               'well together (can be outdated, check '
+               '[versions] in buildout.', default='n',),
+    common.var('with_no_zcml',
+               'Do not include zcml information', default='n',),
+    common.var('with_generic',
+               'with_generic', default='n',),
+    common.var('with_generic_addon',
+               'with_generic_addon', default='n',),
 ]
 
 Template.vars = (
     common.Template.vars + [
-        common.pvar('plone_version',
-             'Plone version, default is the one supported and packaged',
-             default=Template.packaged_version,),
-    ] +
-    plone_vars + Template.addons_vars + dev_vars
+        common.var('plone_version',
+                   'Plone version, default is the one supported and packaged',
+                   default=Template.packaged_version,),
+    ] + plone_vars + Template.addons_vars + dev_vars
 )
 
 # vim:set et sts=4 ts=4 tw=0:

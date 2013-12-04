@@ -72,7 +72,7 @@ sources_k = plone_sources.keys()
 sources_k.sort()
 for name in sources_k:
     dev_vars.append(
-        common.pvar(
+        common.var(
             'with_autocheckout_%s' % name,
             description=name,
             default="n",
@@ -136,16 +136,22 @@ class Template(plone3.Template):
         """register catogory, and roll in common,"""
         plone3.Template.pre(self, command, output_dir, vars)
 
+    def post(self, command, output_dir, vars):
+        """register catogory, and roll in common,"""
+        plone3.Template.post(self, command, output_dir, vars)
+        if not vars['with_ploneproduct_etherpad']:
+            common.remove_path(self.output_dir + '/etc/project/etherpad.cfg')
+
     def post_default_template_hook(self, command, output_dir, vars, ep):
         pass
 
 Template.vars = common.Template.vars + [
-    common.pvar('plone_version',
-                'Plone version, default is the one supported and packaged',
-                default=Template.packaged_version,),
-    common.pvar('zope2_version',
-                'Zope2 version, default is the one supported and packaged',
-                default=Template.packaged_zope2_version,),
+    common.var('plone_version',
+               'Plone version, default is the one supported and packaged',
+               default=Template.packaged_version,),
+    common.var('zope2_version',
+               'Zope2 version, default is the one supported and packaged',
+               default=Template.packaged_zope2_version,),
 ] + plone3.plone_vars + Template.addons_vars + dev_vars
 
 # vim:set et sts=4 ts=4 tw=0:

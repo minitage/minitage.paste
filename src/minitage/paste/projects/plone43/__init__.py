@@ -44,7 +44,7 @@ gs_mappings = xmlvars.get('gs_mappings', {})
 # eggs registered as Zope2 packages
 z2packages = xmlvars.get('z2packages', {})
 z2products = xmlvars.get('z2products', {})
-# variables discovered via configuration
+#/p variables discovered via configuration
 addons_vars = xmlvars.get('addons_vars', {})
 # mappings option/eggs to install
 eggs_mappings = xmlvars.get('eggs_mappings', {})
@@ -69,7 +69,7 @@ sources_k = plone_sources.keys()
 sources_k.sort()
 for name in sources_k:
     dev_vars.append(
-        common.pvar(
+        common.var(
             'with_autocheckout_%s' % name,
             description=name,
             default="n",
@@ -122,11 +122,11 @@ class Template(plone42.Template):
         pass
 
 Template.vars = common.Template.vars + [
-    common.pvar('plone_version',
-                'Plone version, default is the one supported and packaged',
-                default=Template.packaged_version,),
-    common.pvar('zope2_version',
-                'Zope2 version, default is the one supported and packaged',
-                default=Template.packaged_zope2_version,),
+    common.var('plone_version',
+               'Plone version, default is the one supported and packaged',
+               default=Template.packaged_version,),
+    common.var('zope2_version',
+               'Zope2 version, default is the one supported and packaged',
+               default=Template.packaged_zope2_version,),
 ] + plone3.plone_vars + Template.addons_vars + dev_vars
 # vim:set et sts=4 ts=4 tw=0:

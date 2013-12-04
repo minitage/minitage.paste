@@ -30,6 +30,7 @@ __docformat__ = 'restructuredtext en'
 import sys
 import getpass
 import pwd
+import shutil
 import grp
 import os
 import re
@@ -44,6 +45,23 @@ UNSPACER = re.compile('\s+|\n', re_flags)
 SPECIALCHARS = re.compile('[-._@|{(\[|)\]}]', re_flags)
 INSTANCES_DESCRIPTION = """"""
 __HEADER__ = ''''''
+
+
+def remove_path(path):
+    """Remove a path."""
+    if os.path.exists(path):
+        if os.path.islink(path):
+            os.unlink(path)
+        elif os.path.isfile(path):
+            os.unlink(path)
+        elif os.path.isdir(path):
+            shutil.rmtree(path)
+        else:
+            os.remove(path)
+    else:
+        print
+        print "'%s' was asked to be deleted but does not exists." % path
+        print
 
 
 def get_user_group():
