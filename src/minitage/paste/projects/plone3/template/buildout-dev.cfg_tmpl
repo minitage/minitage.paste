@@ -6,48 +6,37 @@
 # Look at the base buildout: ./etc/base.cfg for other details of your plone installation
 
 #if $with_tool_i18ndude:
-#set $i18ncomment=''
+#set $i18ncomment = ''
 #else
-#set $i18ncomment='#'
+#set $i18ncomment = '#'
 #end if
 #if 'zeo' in $mode:
-#set $zeocomment=''
+#set $zeocomment = ''
 #else
-#set $zeocomment='#'
+#set $zeocomment = '#'
 #end if
 #if $with_ploneproduct_fss
-#set $fsscomment=''
+#set $fsscomment = ''
 #else
-#set $fsscomment='#'
+#set $fsscomment = '#'
 #end if
 #if $with_ploneproduct_sgdcg
-#set $sgdgcomment=''
+#set $sgdgcomment = ''
 #else
-#set $sgdgcomment='#'
+#set $sgdgcomment = '#'
 #end if
 
 # We want the production buildout + the debug bits.
 [buildout]
-autostart_instance1=false
-autostart_instance2=false
-autostart_instance3=false
-autostart_instance4=false
-extends-cache=etc/cache
-extends=etc/base.cfg
-    etc/backends/${devmode}.cfg
-parts+=
-    instance1
-    instance2
-    instance3
-    instance4
-    tools
+extends-cache = etc/cache
+extends = etc/base.cfg
+parts += tools
 eggs +=
     ipython
     docutils
     gprof2dot
     profilehooks
     pyprof2calltree
-    plone.reload
 # Uncomment/Activate only if you want
 #   Products.PTProfiler
 #   Products.PDBDebugMode
@@ -57,41 +46,16 @@ eggs +=
 #   Products.MemoryProfiler
 #   Products.signalstack
 #   Products.ZopeProfiler
-zcml+=
 
-
-[hosts]
-#zope-front=\${hosts:instance}
-
-[ports]
-#zope-front=\${ports:instance}
-
-[versions]
-ctypes=1.0.2
-#if $major >3:
-plone.reload = 1.3
-#end if
-
-[instance]
-verbose-security = on
-debug-mode=on
-
-#if $linux:
-# plone auto reloading facility relying on inotify.
-# Desactivated by default because it can lead to bugs when you
-# launch your instance in foreground, there are cases where
-# you can't stop it with a  KeyboardInterrupt,
-# you must kill -SIGKILL :)
-# If you reactivate it, think to add also the zcml slug in the
-# [instance] part
-#    ctypes
-#    collective.autorestart
-#end if
+[v]
+autostart_instance1 = false
+autostart_instance2 = false
+autostart_instance3 = false
+autostart_instance4 = false
 
 [zopepy]
 eggs +=
     collective.dist
-#    collective.releaser
     zest.releaser
     Sphinx
 scripts +=
@@ -122,13 +86,13 @@ scripts +=
     pyprof2calltree
 
 [tools]
-recipe=zc.recipe.egg
-eggs=
+recipe = zc.recipe.egg
+eggs =
     i18ndude
     babel
     sphinx
     toutpt.zopeskel
-scripts=
+scripts =
     i18ndude
     pybabel
     paster

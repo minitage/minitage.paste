@@ -56,45 +56,58 @@ $hr
 #else:
 #set $si4='false'
 #end if
-
-[buildout]
-autostart_instance1=$si1
-autostart_instance2=$si2
-autostart_instance3=$si3
-autostart_instance4=$si4
-autostart_instancesg=true
-autostart_instancewk=true
-project-programs=#slurp
+#if $with_zeo_socket:
+#set zeoa = '${buildout:directory}/var/zeocl.sock'
+#set zeoh = '#${hosts:zeo}:${ports:zeo}'
+#else
+#set zeoa= '${hosts:zeo}:${ports:zeo}'
+#end if
 #if $with_ploneproduct_paasync
-    20 instance-worker (autostart=\${buildout:autostart_instancewk}) \${buildout:directory}/bin/instance-worker [console] true \${users:zope}
+#set $asynccomment=''
+#else
+#set $asynccomment='#'
+#end if
+#if 'zeo' in $mode:
+#set $zeocomment=''
+#else
+#set $zeocomment='#'
+#end if
+
+[v]
+
+project-programs = #slurp
+#if $with_ploneproduct_paasync
+    10 zeo \${locations:zeoserver}/bin/runzeo \${locations:zeoserver} true \${users:zope}
+    20 instance-worker (autostart=\${v:autostart_instancewk}) \${buildout:directory}/bin/instance-worker [console] true \${users:zope}
 #end if
 #if $major > 3:
-    21 instance1 (autostart=\${buildout:autostart_instance1}) \${buildout:directory}/bin/instance1 [console]  true \${users:zope}
-    22 instance2 (autostart=\${buildout:autostart_instance2}) \${buildout:directory}/bin/instance2 [console]  true \${users:zope}
-    23 instance3 (autostart=\${buildout:autostart_instance3}) \${buildout:directory}/bin/instance3 [console]  true \${users:zope}
-    24 instance4 (autostart=\${buildout:autostart_instance4}) \${buildout:directory}/bin/instance4 [console]  true \${users:zope}
-${sgdgcomment}    40 instance-newsletter (autostart=\${buildout:autostart_instancesg}) \${buildout:directory}/bin/instance-newsletter  [console]                                        true \${users:zope}
+    21 instance1 (autostart=\${v:autostart_instance1}) \${buildout:directory}/bin/instance1 [console]  true \${users:zope}
+    22 instance2 (autostart=\${v:autostart_instance2}) \${buildout:directory}/bin/instance2 [console]  true \${users:zope}
+    23 instance3 (autostart=\${v:autostart_instance3}) \${buildout:directory}/bin/instance3 [console]  true \${users:zope}
+    24 instance4 (autostart=\${v:autostart_instance4}) \${buildout:directory}/bin/instance4 [console]  true \${users:zope}
+${sgdgcomment}    40 instance-newsletter (autostart=\${v:autostart_instancesg}) \${buildout:directory}/bin/instance-newsletter  [console]                                        true \${users:zope}
 #else
-${si1}    21 instance1 (autostart=\${buildout:autostart_instance1}) \${buildout:directory}/parts/instance1/bin/runzope true \${users:zope}
-${si2}    22 instance2 (autostart=\${buildout:autostart_instance2}) \${buildout:directory}/parts/instance2/bin/runzope true \${users:zope}
-${si3}    23 instance3 (autostart=\${buildout:autostart_instance3}) \${buildout:directory}/parts/instance3/bin/runzope true \${users:zope}
-${si4}    24 instance4 (autostart=\${buildout:autostart_instance4}) \${buildout:directory}/parts/instance4/bin/runzope true \${users:zope}
-${sgdgcomment} 40 instance-newsletter (autostart=\${buildout:autostart_instancesg}) \${buildout:directory}/parts/instance-newsletter/bin/runzope  true \${users:zope}
+${si1}    21 instance1 (autostart=\${v:autostart_instance1}) \${buildout:directory}/parts/instance1/bin/runzope true \${users:zope}
+${si2}    22 instance2 (autostart=\${v:autostart_instance2}) \${buildout:directory}/parts/instance2/bin/runzope true \${users:zope}
+${si3}    23 instance3 (autostart=\${v:autostart_instance3}) \${buildout:directory}/parts/instance3/bin/runzope true \${users:zope}
+${si4}    24 instance4 (autostart=\${v:autostart_instance4}) \${buildout:directory}/parts/instance4/bin/runzope true \${users:zope}
+${sgdgcomment} 40 instance-newsletter (autostart=\${v:autostart_instancesg}) \${buildout:directory}/parts/instance-newsletter/bin/runzope  true \${users:zope}
 #end if
-filesystem-parts=
+filesystem-parts =
     touch
     chmod
     chown
     mkdirs
-project-parts=
+project-parts =
     env
     grp
-    lxml
 #if $major < 4:
     zope2
 #end if
-${zeocomment}    \${buildout:zeo-parts}
+    lxml
     productdistros
+    zeoserver
+    instance-plain
     instance
     instance1
     instance2
@@ -102,19 +115,20 @@ ${zeocomment}    \${buildout:zeo-parts}
     instance4
 ${sgdgcomment}    instance-newsletter
 ${asynccomment}    instance-worker
-${fsscomment}    \${buildout:fss-parts}
     zopepy
     backup
     omelette
     ${sane_name}.test
-sources=sources
-versions = versions
+
+[buildout]
+versions=versions
+sources = sources
 # project packages
-eggs=
+eggs =
     Pillow
-zcml=
+zcml =
 # extra directories oto add to the python path
-extra-paths=
+extra-paths =
 auto-checkout =
 #if $with_ploneproduct_ploneappblob and ($major < 4)
     Products.CMFEditions
@@ -129,22 +143,46 @@ auto-checkout =
 
 # auto tracked developement products
 [sources]
-experimental.catalogqueryplan = svn https://svn.plone.org/svn/collective/experimental.catalogqueryplan/trunk
-Products.MemoryProfiler = svn https://svn.plone.org/svn/collective/Products.MemoryProfiler/trunk
-Products.Gloworm = git https://github.com/kiorky/Products.Gloworm.git
-#set $psources_keys = $plone_sources.keys()
-# $psources_keys.sort()
-#for $item in $psources_keys:
-#set source=$plone_sources[item]
-$source['name'] = $source['type'] $source['url'] $source['path'] $source['asegg'] $source['opt_arg']
-#end for
 
-#if $with_ploneproduct_ploneappblob and ($major < 4)
-# one plone3 we need this branch with blob storage
-Products.CMFEditions = svn http://svn.plone.org/svn/collective/Products.CMFEditions/branches/1.2
+[versions]
+# never ever pin paste and other base eggs
+Paste =
+PasteDeploy =
+PasteScript =
+ZopeSkel =
+docutils =
+
+#if ($with_ploneproduct_z3crelationfield or $with_ploneproduct_ploneappblob) and ($major < 4)
+#$with_ploneproduct_z3crelationfield
+#with_ploneproduct_ploneappblob
+# needed a recent ZODB version for some packages
+ZODB3 = 3.8.4
 #else
-#Products.CMFEditions = svn http://svn.plone.org/svn/collective/Products.CMFEditions/branches/1.2
+#if $major < 4
+# version with barebone zope2 eggified
+ZODB3 = 3.7.2
 #end if
+#end if
+
+#if $major < 4:
+plone.recipe.zope2install = 3.2
+#end if
+# do not fix latest templates
+ZopeSkel =
+# do not fix for latest Cheetah sake
+Markdown =
+
+# MISC
+etherpad = 1.2.7
+#if $with_ploneproduct_etherpad
+nodejs = 0.8.9
+#nodejs = 0.10.0
+#else
+nodejs = 0.10.0
+#end if
+
+libxml2 = 2.9.1
+libxslt = 1.1.28
 
 [remotes]
 # Plone
@@ -195,19 +233,75 @@ skip-fake-eggs =
     zope.testing
 #end if
 
-# here is defined the Zope instance running your plone site
-# beware that zopepy part must run before isntance in order to have the right version
-# pinned for relstorage
+[locations]
+zope2=\${buildout:parts-directory}/zope2
+instance1=\${buildout:parts-directory}/instance1
+instance2=\${buildout:parts-directory}/instance2
+instance3=\${buildout:parts-directory}/instance3
+instance4=\${buildout:parts-directory}/instance4
+instance=\${buildout:parts-directory}/instance
+productdistros=\${buildout:parts-directory}/productdistros
+zeoserver=\${buildout:parts-directory}/zeoserver
+
+[zeoserver]
+#if $major < 4:
+recipe = plone.recipe.zope2zeoserver
+zope2-location = \${locations:zope2}
+#else
+recipe = plone.recipe.zeoserver
+#end if
+#if $with_zeo_socket:
+# zeo-address = $zeoh
+#end if
+blob-storage = \${locations:blob-storage}
+zeo-address = $zeoa
+socket-name = \${buildout:directory}/var/zeo.zdsock
+zeo-conf-additional =
+${asynccomment}    <filestorage 2>
+${asynccomment}        path \${buildout:directory}/var/filestorage/Async.fs
+${asynccomment}    </filestorage>
+#if $major < 4:
+    %import tempstorage
+    <temporarystorage temp>
+        name temporary storage for sessioning
+    </temporarystorage>
+#end if
+
+eggs = ZopeUndo
+    ZODB3
+#if $with_ploneproduct_ploneappblob or ($major > 3):
+    plone.app.blob
+#end if
+#if $with_ploneproduct_paasync
+    \${instance:eggs}
+#end if
+
 [instance]
 recipe = plone.recipe.zope2instance
+verbose-security=\${v:verbose-security}
 #if $major < 4
-zope2-location = \${zope2:location}
+zope2-location = \${locations:zope2}
+#end if
+zeo-client-cache-size = \${cache:zeo-client-cache-size}
+zeo-client = on
+zeo-address = \${zeoserver:zeo-address}
+temporary-storage =
+    <zeoclient>
+    server \${zeoserver:zeo-address}
+        storage temp
+        name zeostorage
+        var \${buildout:directory}/var
+    </zeoclient>
+    mount-point /temp_folder
+    container-class Products.TemporaryFolder.TemporaryContainer
+
+#if $with_ploneproduct_ploneappblob or ($major > 3):
+blob-storage = \${zeoserver:blob-storage}
+shared-blob = on
 #end if
 http-address = \${hosts:instance}:\${ports:instance}
 user = \${zope:user}:\${zope:password}
 session-timeout-minutes = \${cache:session-timeout-minutes}
-verbose-security = \${zope:verbose-security}
-debug-mode = \${zope:debug-mode}
 event-log-level = \${zope:event-log-level}
 z2-log-level = \${zope:z2-log-level}
 #webdav-address = \${hosts:webdav}:\${ports:webdav}
@@ -230,7 +324,7 @@ $product
 
 products =
     \${buildout:directory}/products
-    \${productdistros:location}
+    \${locations:productdistros}
 
 zcml =
     \${buildout:zcml}
@@ -312,7 +406,6 @@ http-address = \${hosts:instance3}:\${ports:instance3}
 
 [instance4]
 <= instance
-http-address = \${hosts:instance4}:\${ports:instance4}
 
 # Use this section to download additional old-style products.
 # List any number of URLs for product tarballs under URLs (separate
@@ -329,6 +422,12 @@ recipe = plone.recipe.distros
 urls=\${groups:products-urls}
 version-suffix-packages = \${groups:version-suffix-packages}
 nested-packages = \${groups:nested-packages}
+
+[instance-plain]
+<= instance
+zeo-client = off
+zeo-address =
+temporary-storage =
 
 [instance1]
 <= instance
@@ -385,13 +484,13 @@ ${product}
 extra-paths =
     \${instance:extra-paths}
 #if $major < 4
-    \${zope2:location}/lib/python
+    \${locations:zope2}/lib/python
 #end if
 
 # zope.testing testrunner support
 [testenv]
-INSTANCE_HOME=\${instance:location}
-CONFIG_FILE=\${instance:location}/etc/zope.conf
+INSTANCE_HOME = \${locations:instance}
+CONFIG_FILE = \${locations:instance}/etc/zope.conf
 
 # See http://pypi.python.org/pypi/zc.recipe.testrunner/
 [${sane_name}.test]
@@ -401,7 +500,7 @@ eggs =
     \${instance:eggs}
 extra-paths = \${instance:extra-paths}
 #if $major < 4
-    \${zope2:location}/lib/python
+    \${locations:zope2}/lib/python
 #end if
 defaults = ['--exit-with-status', '--auto-color', '--auto-progress', '-s', '${project}']
 environment = testenv
@@ -413,7 +512,7 @@ eggs = \${instance:eggs}
 products = \${instance:products}
 packages = #slurp
 #if $major < 4
-\${zope2:location}/lib/python #slurp
+\${locations:zope2}/lib/python #slurp
 #end if
     ./
     \${instance:extra-paths}
@@ -424,6 +523,10 @@ packages = #slurp
 recipe = plone.recipe.command
 update-command = \${mkdirs:command}
 command =
+    mkdir -pv \${locations:blob-storage};
+    mkdir -pv \${locations:blob-backup};
+    mkdir -pv \${locations:blob-storage};
+    mkdir -pv \${locations:blob-backup};
     mkdir -pv \${locations:tmp};
     mkdir -pv \${buildout:directory}/var/log/apache;
     mkdir -pv \${buildout:directory}/var/log/nginx;
@@ -454,10 +557,10 @@ command =
 
 [backup]
 recipe = collective.recipe.backup
-blobbackuplocation=\${locations:blob-backup}/backups
-blobsnapshotlocation=\${locations:blob-backup}/snapshots
-keep=\${crons:nb_fullbackups_to_keep}
-keep_blob_days=\${crons:nb_backups_to_keep}
+blobbackuplocation = \${locations:blob-backup}/backups
+blobsnapshotlocation = \${locations:blob-backup}/snapshots
+keep = \${crons:nb_fullbackups_to_keep}
+keep_blob_days = \${crons:nb_backups_to_keep}
 
 [touch]
 recipe = plone.recipe.command
@@ -479,13 +582,13 @@ url = http://nodejs.org/dist/v\${versions:nodejs}/node-v\${versions:nodejs}.tar.
 
 [env]
 recipe = collective.recipe.environment
-PS1=
-TERMCAP=
-SSH_CLIENT=
-SSH_TTY=
-SSH_CONNECTION=
-LANG=
-SHELL=
+PS1 =
+TERMCAP =
+SSH_CLIENT =
+SSH_TTY =
+SSH_CONNECTION =
+LANG =
+SHELL =
 
 [grp]
 recipe = collective.recipe.grp
@@ -493,10 +596,10 @@ recipe = collective.recipe.grp
 [lxml]
 recipe = z3c.recipe.staticlxml
 egg = lxml
-build-libxslt=true
-build-libxml2=true
-libxslt-url=http://gentoo.tiscali.nl/distfiles/libxslt-\${versions:libxslt}.tar.gz
-libxml2-url=http://gentoo.tiscali.nl/distfiles/libxml2-\${versions:libxml2}.tar.gz
+build-libxslt = true
+build-libxml2 = true
+libxslt-url = http://gentoo.tiscali.nl/distfiles/libxslt-\${versions:libxslt}.tar.gz
+libxml2-url = http://gentoo.tiscali.nl/distfiles/libxml2-\${versions:libxml2}.tar.gz
 
 [groups]
 # OLD ZOPE2 PRODUCTS SUPPORT

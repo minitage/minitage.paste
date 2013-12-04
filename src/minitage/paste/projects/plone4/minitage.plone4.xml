@@ -65,8 +65,6 @@
       <version p='z3c.formwidget.query'    v='0.6'     name="various pinning for z3 packages and p4 environments"/>
 
       <version p="zope.schema"             v="3.7.1"   name="various pinning for z3 packages and p4 environments"/>
-      <version p="cssutils"                v="0.9.8a1" name="singing and dancing"/>
-      <version p="StoneageHTML"            v="0.2.1"   name="singing and dancing"/>
       <version p="plone.app.registry"      v="1.0"     name="plone.app.registry on plone4"/>
       <version p="plone.registry"          v="1.0"     name="plone.app.registry on plone4"/>
     </versions>

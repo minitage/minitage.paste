@@ -16,16 +16,13 @@
 #end if
 
 [buildout]
-extends-cache=etc/cache
-extends=
-    etc/base.cfg
-    etc/backends/${mode}.cfg
-    etc/sys/settings-prod.cfg
-parts+=
+extends-cache = etc/cache
+extends = etc/base.cfg
+parts +=
     \${buildout:maintainance-parts}
 ${fsscomment}    \${buildout:fss-maintainance-parts}
 
 [v]
-debug=false
+debug = false
 
 \# vim:set ft=cfg:

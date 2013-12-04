@@ -1,0 +1,255 @@
+$hr
+# * supervisord & haproxy settings
+# * reverse proxy settings
+# * Cache settings
+# * Cron and logrotation related stuff
+#
+# High availability settings (production instances and load balancer)
+# for haproxy, look at the template in etc/templates/balancer.conf.template
+# regenerate with: buildout -c <CONFIG_FILE> install balancer.config
+# Think for enabling the log statement!
+# Think to include the logrotate configuration file inside your logrotate configuration (ln ?)
+
+# crontabs are:
+# * make an incremental backup per day
+# * make a full backup per week
+# * pack datafs everyday
+# * restart zope instance every night
+#if $with_ploneproduct_fss:
+# * backup FSS every day
+#end if
+
+# Think to include the logrotate configuration file inside your logrotate configuration (ln ?)
+$hr
+
+
+#if $with_ploneproduct_sgdcg
+#set $sgdgcomment=''
+#else
+#set $sgdgcomment='#'
+#end if
+#if $with_ploneproduct_fss
+#set $fsscomment=''
+#else
+#set $fsscomment='#'
+#end if
+#if $with_ploneproduct_ploneappblob
+#set $blobcomment=''
+#else
+#set $blobcomment='#'
+#end if
+#if $with_haproxy
+#set $hapcomment=''
+#else:
+#set $hapcomment='#'
+#end if
+#if 'zeo' in $mode:
+#set $zeocomment=''
+#else
+#set $zeocomment='#'
+#end if
+#if $with_ploneproduct_etherpad
+#set $etherpadcomment=''
+#else:
+#set $etherpadcomment='#'
+#end if
+#if $with_cache_support
+#set $cachecomment=''
+#else:
+#set $cachecomment='#'
+#end if
+
+[v]
+cache-programs =
+     50 varnish \${buildout:directory}/bin/varnish [-F] true \${users:zope}
+cache-parts =
+     pcre
+     vcl
+     varnish-build
+     varnish
+     varnishadm
+     varnishhist
+     varnishlog
+     varnishncsa
+     varnishreplay
+     varnishsizes
+     varnishstat
+     varnishtop
+www-parts =
+    apache_vhost
+    nginx_vhost
+maintainance-parts=
+    zopepackdaily
+    logrotate.conf
+    zoperestartdaily
+    repozodaily
+    repozoweekly
+ha-programs =
+     50 balancer  \${locations:haproxy-path} [-f \${buildout:directory}/etc/loadbalancing/balancer.conf -db]       true \${users:zope}
+ha-parts =
+    supervisor
+    supervisor-initd
+${hapcomment}    balancer.config
+${hapcomment}    haproxy-build
+
+
+# REVERSE PROXIES
+[apache_vhost]
+recipe = collective.recipe.template
+input = \${buildout:directory}/etc/templates/www/apache.reverseproxy.conf.in
+output = \${buildout:directory}/etc/www/apache.reverseproxy.conf
+host = \${reverse_proxy:host}
+edit-host = \${reverse_proxy:edit-host}
+scheme = \${reverse_proxy:scheme}
+port = \${reverse_proxy:port}
+listen = \${reverse_proxy:listen}
+
+[nginx_vhost]
+recipe = collective.recipe.template
+input = \${buildout:directory}/etc/templates/www/nginx.reverseproxy.conf.in
+output = \${buildout:directory}/etc/www/nginx.reverseproxy.conf
+host = \${reverse_proxy:host}
+edit-host = \${reverse_proxy:edit-host}
+scheme = \${reverse_proxy:scheme}
+port = \${reverse_proxy:port}
+uname = zopeserver
+
+# PROXY CACHES
+[locations]
+varnish-build=\${buildout:parts-directory}/varnish-build
+pcre=\${buildout:parts-directory}/pcre
+haproxy-path=\${buildout:directory}/bin/haproxy
+
+[pcre]
+recipe = zc.recipe.cmmi
+url = http://downloads.sourceforge.net/project/pcre/pcre/8.32/pcre-8.32.tar.gz
+md5sum = 234792d19a6c3c34a13ff25df82c1ce7
+shared=false
+configure-options=--prefix=\${locations:pcre}
+
+[varnish-build]
+recipe = zc.recipe.cmmi
+md5sum = 714310c83fdbd2061d897dacd3f63d8b
+url = http://gentoo.tiscali.nl/distfiles/varnish-3.0.3.tar.gz
+shared=false
+configure-options =
+    --prefix="\${buildout:parts-directory}/varnish-build"
+    PCRE_CFLAGS="-I\${locations:pcre}/include"
+    PCRE_LIBS="-Wl,-rpath -Wl,"\${locations:pcre}/lib" -L"\${locations:pcre}/lib" -lpcre"
+
+[varnish]
+recipe = plone.recipe.varnish
+name = \${v:project}
+daemon = \${locations:varnish-build}/sbin/varnishd
+bind = \${hosts:varnish}:\${ports:varnish}
+cache-size = \${v:proxycache_size}
+telnet = \${hosts:varnish}:\${ports:varnish-telnet}
+#connect-timeout=0.4s
+#first-byte-timeout=300s
+#between-bytes-timeout=60s
+varnish_version = 3
+config = \${vcl:output}
+
+[vcl]
+recipe = collective.recipe.template
+mode = 750
+input = \${buildout:directory}/etc/templates/varnish/varnish.vcl.in
+output = \${buildout:directory}/etc/varnish.vcl
+anon_cache_time = \${v:anon_cache_time}
+
+
+[varnishwrapper]
+recipe = collective.recipe.template
+mode = 750
+input =  \${buildout:directory}/etc/templates/varnish/\${:_buildout_section_name_}.in
+output =  \${buildout:directory}/bin/\${:_buildout_section_name_}
+
+[varnishadm]
+<=varnishwrapper
+
+[varnishhist]
+<=varnishwrapper
+
+[varnishlog]
+<=varnishwrapper
+
+[varnishncsa]
+<=varnishwrapper
+
+[varnishreplay]
+<=varnishwrapper
+
+[varnishsizes]
+<=varnishwrapper
+
+[varnishstat]
+<=varnishwrapper
+
+[varnishtop]
+<=varnishwrapper
+
+# CRON JOBS
+# make an incremental backup per day
+[repozodaily]
+recipe = z3c.recipe.usercrontab
+times = \${crons:repozo-daily}
+command = \${buildout:directory}/bin/backup
+
+# make a full backup per week
+[repozoweekly]
+recipe = z3c.recipe.usercrontab
+times = \${crons:repozo-weekly}
+command = \${buildout:directory}/bin/snapshotbackup
+
+# pack datafs everyday
+# eventually, change wget to your platform CLI http browser
+[zopepackdaily]
+recipe = z3c.recipe.usercrontab
+times = \${crons:zope-pack}
+#command = wget "http://$address:\${ports:instance1}/Control_Panel/Database/manage_pack"  --http-user '\${zope:user}'  --http-passwd '\${zope:password}' --post-data '?days:float=0' -O /dev/null
+command = \${buildout:directory}/bin/zeopack -d 0 -h \${hosts:zeo} -p \${ports:zeo} -S 1
+
+# restart zope instance every night
+[zoperestartdaily]
+recipe = z3c.recipe.usercrontab
+times = \${crons:zope-restart}
+#if $with_supervisor
+command = \${buildout:directory}/bin/supervisorctl restart instance1
+#else
+#command = \${buildout:directory}/bin/supervisorctl instance1 restart
+#command = \${buildout:directory}/bin/instance1 restart
+#end if
+
+[logrotate.conf]
+recipe = collective.recipe.template
+input =  \${buildout:directory}/etc/templates/logrotate.conf.template
+output = \${buildout:directory}/etc/logrotate.conf
+
+
+# HA STUFF
+[haproxy-build]
+recipe = plone.recipe.haproxy
+url =  http://gentoo.tiscali.nl/distfiles/haproxy-1.4.24.tar.gz
+target = generic
+
+[supervisor]
+recipe = collective.recipe.supervisor
+port = \${hosts:supervisor}:\${ports:supervisor}
+user = \${supervisor-webadmin:user}
+password = \${supervisor-webadmin:password}
+serverurl = http://\${hosts:supervisor}:\${ports:supervisor}
+haproxy-path=\${buildout:directory}/bin/haproxy
+programs =
+
+[supervisor-initd]
+recipe = collective.recipe.template
+input =  \${buildout:directory}/etc/templates/supervisor.initd
+output =  \${buildout:directory}/etc/init.d/supervisor.initd
+mode = 750
+
+[balancer.config]
+recipe = collective.recipe.template
+input =  \${buildout:directory}/etc/templates/balancer.conf.template
+output = \${buildout:directory}/etc/loadbalancing/balancer.conf
+
+\# vim:set ft=cfg:

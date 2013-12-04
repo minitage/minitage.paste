@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-${varnish-build:location}/bin/varnishlog -n ${varnish:name} $@
+${locations:varnish-build}/bin/varnishlog -n ${varnish:name} $@
 # vim:set et sts=4 ts=4 tw=80:

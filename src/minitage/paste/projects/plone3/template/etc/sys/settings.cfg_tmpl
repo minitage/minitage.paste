@@ -1,158 +1,171 @@
 # Sysadmin settings like hosts, credentials, paths, cache settings, and loglevels
 #if $with_ploneproduct_sgdcg
-#set $sgdgcomment=''
+#set $sgdgcomment = ''
 #else
-#set $sgdgcomment='#'
+#set $sgdgcomment = '#'
 #end if
 
 #if $with_haproxy
-#set $hapcomment=''
+#set $hapcomment = ''
 #else:
-#set $hapcomment='#'
+#set $hapcomment = '#'
 #end if
 
 #if $with_ploneproduct_etherpad
-#set $etherpadcomment=''
+#set $etherpadcomment = ''
 #else:
-#set $etherpadcomment='#'
+#set $etherpadcomment = '#'
 #end if
+
+#if $with_supervisor_instance1
+#set $si1='true'
+#else:
+#set $si1='false'
+#end if
+#if $with_supervisor_instance2
+#set $si2='true'
+#else:
+#set $si2='false'
+#end if
+#if $with_supervisor_instance3
+#set $si3='true'
+#else:
+#set $si3='false'
+#end if
+#if $with_supervisor_instance4
+#set $si4='true'
+#else:
+#set $si4='false'
+#end if 
+[buildout]
+versions=versions
 
 [v]
-debug=true
-project=${project}
-proxycache_size=256M
-anon_cache_time=600s
-varnish-debug=\${varnish:debug}
+debug = true
+project = ${project}
+proxycache_size = 256M
+anon_cache_time = 600s
+varnish-debug = \${varnish:debug}
+autostart_instance1 = $si1
+autostart_instance2 = $si2
+autostart_instance3 = $si3
+autostart_instance4 = $si4
+autostart_instancesg = true
+autostart_instancewk = true
+verbose-security = off
 
 [varnish]
-rewrite-max-age=false
-debug=true
+rewrite-max-age = false
+debug = true
 
 [reverse_proxy]
-listen=*
-scheme=$reverseproxy_scheme
-host=$reverseproxy_host
-edit-host=$reverseproxy_edit_host
-port=$reverseproxy_port
+listen = *
+scheme = $reverseproxy_scheme
+host = $reverseproxy_host
+edit-host = $reverseproxy_edit_host
+port = $reverseproxy_port
 
 [hosts]
-ip=127.0.0.1
-address=$address
-supervisor= \${hosts:ip}
+ip = 127.0.0.1
+address = $address
+supervisor = \${hosts:ip}
 zeo = \${hosts:ip}
-supervisor= \${hosts:ip}
-balancer= \${hosts:ip}
+supervisor = \${hosts:ip}
+balancer = \${hosts:ip}
 syslog = \${hosts:ip}
 varnish = \${hosts:ip}
-instance= \${hosts:address}
-instance1=\${hosts:address}
-instance2=\${hosts:address}
-instance3=\${hosts:address}
-instance4=\${hosts:address}
-${etherpadcomment}etherpad=\${hosts:address}
-webdav=\${hosts:address}
-instance-worker=\${hosts:address}
-instance-newsletter=\${hosts:address}
+instance = \${hosts:address}
+instance1 = \${hosts:address}
+instance2 = \${hosts:address}
+instance3 = \${hosts:address}
+instance4 = \${hosts:address}
+${etherpadcomment}etherpad = \${hosts:address}
+webdav = \${hosts:address}
+instance-worker = \${hosts:address}
+instance-newsletter = \${hosts:address}
 #if $with_cache_support
-zope-front=\${hosts:varnish}
-#zope-front=\${hosts:balancer}
-#zope-front=\${hosts:instance1}
+zope-front = \${hosts:varnish}
+#zope-front = \${hosts:balancer}
+#zope-front = \${hosts:instance1}
 #else if $with_haproxy
-zope-front=\${hosts:balancer}
-#zope-front=\${hosts:instance1}
-#zope-front=\${hosts:varnish}
+zope-front = \${hosts:balancer}
+#zope-front = \${hosts:instance1}
+#zope-front = \${hosts:varnish}
 #else
-zope-front=\${hosts:instance1}
-#zope-front=\${hosts:balancer}
-#zope-front=\${hosts:varnish}
+zope-front = \${hosts:instance1}
+#zope-front = \${hosts:balancer}
+#zope-front = \${hosts:varnish}
 #end if
 #if $with_haproxy
-cache-backend=\${hosts:balancer}
-#cache-backend=\${hosts:instance1}
+cache-backend = \${hosts:balancer}
+#cache-backend = \${hosts:instance1}
 #else
-cache-backend=\${hosts:instance1}
-#cache-backend=\${hosts:balancer}
+cache-backend = \${hosts:instance1}
+#cache-backend = \${hosts:balancer}
 #end if
 
 [ports]
-supervisor=$http_port
+supervisor = $http_port
 zeo = $http_port1
-balancer=$http_port2
-instance=$http_port3
-instance1=$http_port4
-instance2=$http_port5
-instance3=$http_port6
-instance4=$http_port7
-instance-worker=$http_port8
-instance-newsletter=$http_port9
+balancer = $http_port2
+instance = $http_port3
+instance1 = $http_port4
+instance2 = $http_port5
+instance3 = $http_port6
+instance4 = $http_port7
+instance-worker = $http_port8
+instance-newsletter = $http_port9
 webdav = $http_port10
-workermonitor=$http_port11
-${etherpadcomment}etherpad=$http_port12
-varnish=$http_port13
-varnish-telnet=$http_port14
+workermonitor = $http_port11
+${etherpadcomment}etherpad = $http_port12
+varnish = $http_port13
+varnish-telnet = $http_port14
 #if $with_cache_support
-zope-front=\${ports:varnish}
-#zope-front=\${ports:balancer}
-#zope-front=\${ports:instance1}
+zope-front = \${ports:varnish}
+#zope-front = \${ports:balancer}
+#zope-front = \${ports:instance1}
 #else if $with_haproxy
-zope-front=\${ports:balancer}
-#zope-front=\${ports:instance1}
-#zope-front=\${ports:varnish}
+zope-front = \${ports:balancer}
+#zope-front = \${ports:instance1}
+#zope-front = \${ports:varnish}
 #else
-zope-front=\${ports:instance1}
-#zope-front=\${ports:balancer}
-#zope-front=\${ports:varnish}
+zope-front = \${ports:instance1}
+#zope-front = \${ports:balancer}
+#zope-front = \${ports:varnish}
 #end if
 #if $with_haproxy
-cache-backend=\${ports:balancer}
-#cache-backend=\${ports:instance1}
+cache-backend = \${ports:balancer}
+#cache-backend = \${ports:instance1}
 #else
-cache-backend=\${ports:instance1}
-#cache-backend=\${ports:balancer}
+cache-backend = \${ports:instance1}
+#cache-backend = \${ports:balancer}
 #end if
 
 [crons]
 # at 3:00am NO WHITESPACE!!!
 # at 1:03am
-zope-restart=15 1 * * *
-zope-pack=30 1 * * *
+zope-restart = 15 1 * * *
+zope-pack = 30 1 * * *
 # at 1:05am
-repozo-daily=05 1 * * *
+repozo-daily = 05 1 * * *
 # only sunday at 1:10am
-repozo-weekly=10 1 * * 6
+repozo-weekly = 10 1 * * 6
 # number of backups to rotate
-nb_backups_to_keep=35
+nb_backups_to_keep = 35
 # number of  fimm backups to rotate
-nb_fullbackups_to_keep=5
-
-#if 'relstorage' in $mode:
-[database]
-\#for non standart port use host:port
-host=$relstorage_host
-port=$relstorage_port
-dbname=$relstorage_dbname
-user=$relstorage_dbuser
-password=$relstorage_password
-#else
-\#for non standart port use host:port
-#host=$relstorage_host
-#port=$relstorage_port
-#dbname=$relstorage_dbname
-#user=$relstorage_dbuser
-#password=$relstorage_password
-#end if
+nb_fullbackups_to_keep = 5
 
 [zope]
-user=$zope_user
-password=$zope_password
-debug-mode=OFF
-verbose-security=off
-z2-log-level=INFO
-event-log-level=INFO
+user = $zope_user
+password = $zope_password
+debug-mode = OFF
+verbose-security = off
+z2-log-level = INFO
+event-log-level = INFO
 
 [cache]
 zeo-client-cache-size = 80MB
-session-timeout-minutes=90
+session-timeout-minutes = 90
 
 [plone]
 # Site ID
@@ -160,30 +173,30 @@ site = $plonesite
 
 [users]
 #system user & group
-zope=\${env:USER}
-group=\${grp:GROUP}
+zope = \${env:USER}
+group = \${grp:GROUP}
 
 [supervisor-webadmin]
-user=\${zope:user}
-password=\${zope:password}
+user = \${zope:user}
+password = \${zope:password}
 
 [locations]
 # aboslute paths to avoid buildout auto build of reffered part
-tmp=\${buildout:directory}/var/tmp
-blob-storage=\${buildout:directory}/var/blobstorage/storage
-blob-backup=\${buildout:directory}/var/blobstorage/backup
-testfss-backup=  \${buildout:directory}/parts/instance/var/fss_backup
-testfss-storage= \${buildout:directory}/parts/instance/var/fss_storage
-fss=\${buildout:directory}/var/fss
-global-fss-backup=  \${locations:fss}/fss_backup_global
-global-fss-storage= \${locations:fss}/fss_storage_global
-fss-backup=  \${locations:fss}/fss_backup_${project}
-fss-storage= \${locations:fss}/fss_storage_${project}
-${sgdgcomment}testfss-backup-newsletter= \${buildout:directory}/parts/instance-newsletter/var/fss_backup
-${sgdgcomment}testfss-storage-newsletter=\${buildout:directory}/parts/instance-newsletter/var/fss_storage
-${sgdgcomment}fss-backup-newsletter= \${buildout:directory}/var/fss/fss_backupnewsletter_${project}
-${sgdgcomment}fss-storage-newsletter=\${buildout:directory}/var/fss/fss_storagenewsletter_${project}
-blob-backups=\${buildout:directory}/var/blobbackups
-fss-backups=\${buildout:directory}/var/fssbackups
+tmp = \${buildout:directory}/var/tmp
+blob-storage = \${buildout:directory}/var/blobstorage/storage
+blob-backup = \${buildout:directory}/var/blobstorage/backup
+testfss-backup =  \${buildout:directory}/parts/instance/var/fss_backup
+testfss-storage = \${buildout:directory}/parts/instance/var/fss_storage
+fss = \${buildout:directory}/var/fss
+global-fss-backup =  \${locations:fss}/fss_backup_global
+global-fss-storage = \${locations:fss}/fss_storage_global
+fss-backup =  \${locations:fss}/fss_backup_${project}
+fss-storage = \${locations:fss}/fss_storage_${project}
+${sgdgcomment}testfss-backup-newsletter = \${buildout:directory}/parts/instance-newsletter/var/fss_backup
+${sgdgcomment}testfss-storage-newsletter = \${buildout:directory}/parts/instance-newsletter/var/fss_storage
+${sgdgcomment}fss-backup-newsletter = \${buildout:directory}/var/fss/fss_backupnewsletter_${project}
+${sgdgcomment}fss-storage-newsletter = \${buildout:directory}/var/fss/fss_storagenewsletter_${project}
+blob-backups = \${buildout:directory}/var/blobbackups
+fss-backups = \${buildout:directory}/var/fssbackups
 
 # vim:set ft=cfg:

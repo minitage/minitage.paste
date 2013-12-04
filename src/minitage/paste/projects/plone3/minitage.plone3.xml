@@ -494,8 +494,6 @@
     <version p="ipython"                 v="0.13"    name="IPython py2.4 compatible version"/>
 
     <!-- purged on p4 +-->
-    <version p="cssutils"                v="0.9.5.1" name="break S D - http://groups.google.com/group/singing-dancing/browse_thread/thread/568de0b8226184f6"/>
-    <version p="StoneageHTML"            v="0.1.5"   name="break S D"/>
     <version p='Cheetah'                 v='2.2.1'   name='Markdown crazy stuff'/> 
     <version p='Products.Archetypes'     v='1.5.16'  name='Needed for fixing https://dev.plone.org/plone/ticket/10088'/>
     <version p='Products.DataGridField'  v='1.6'     name='Needed for work on plone before 4'/>

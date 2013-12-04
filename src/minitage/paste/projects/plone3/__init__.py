@@ -98,9 +98,7 @@ class Template(common.Template):
             '\tPlone 3 needs a python 2.4 to run:\n'
             '\t * if you do not fill anything, it will use minitage or system\'s one\n'
             '\t * if you do not provide one explicitly, it will use minitage or system\'s one\n'
-            '\t * Bindings will be automaticly included when you choose for example relstorage/mysql or plone ldap support.\n'
             '\tAditionnaly you ll got two buildouts for production (buildout.cfg) and develoment mode (dev.cfg).\n'
-            '\tYou can also activate or safely ignore questions about zeoserver and relstorage if you do not use them.\n'
             '---------------------------------------------------------\n'
         ),
     )
@@ -142,7 +140,7 @@ class Template(common.Template):
                     print msg
         vars = common.Template.read_vars(self, command)
         for i, var in enumerate(vars[:]):
-            if var.name in ['deliverance_project', 'relstorage_dbname', 'relstorage_dbuser'] and command:
+            if var.name in ['deliverance_project',]  and command:
                 sane_name = common.SPECIALCHARS.sub('', command.args[0])
                 vars[i].default = sane_name
             if var.name in ['reverseproxy_host',] and command:
@@ -180,6 +178,7 @@ class Template(common.Template):
 
     def pre(self, command, output_dir, vars):
         """register catogory, and roll in common,"""
+        vars['mode'] = 'zeo'
         if not 'with_ploneproduct_paasync' in vars:
             vars['with_ploneproduct_paasync'] = False
         if not 'with_ploneproduct_fss' in vars:
@@ -302,21 +301,21 @@ class Template(common.Template):
         #    vars['opt_deps'] += ' %s' % search_latest('htmldoc-\d\.\d*', vars['minilays'])
 
         # relstorage
-        if 'relstorage' in vars['mode']:
-            vars['additional_eggs'].append('#Relstorage')
-            vars['additional_eggs'].append('Relstorage')
-            for db in [var.replace('with_database_', '')
-                        for var in vars
-                        if 'with_database_' in var]:
-                if db in vars['relstorage_type']:
-                    vars['additional_eggs'].extend(
-                        [a
-                         for a in eggs_mappings['with_database_%s'%db]
-                         if not a in vars['additional_eggs']
-                        ]
-                    )
-                    #if db in minitage_dbs and vars['inside_minitage']:
-                    #    vars['opt_deps'] += ' %s' % search_latest('%s-\d\.\d*'% db, vars['minilays'])
+        #if 'relstorage' in vars['mode']:
+        #    vars['additional_eggs'].append('#Relstorage')
+        #    vars['additional_eggs'].append('Relstorage')
+        #    for db in [var.replace('with_database_', '')
+        #                for var in vars
+        #                if 'with_database_' in var]:
+        #        if db in vars['relstorage_type']:
+        #            vars['additional_eggs'].extend(
+        #                [a
+        #                 for a in eggs_mappings['with_database_%s'%db]
+        #                 if not a in vars['additional_eggs']
+        #                ]
+        #            )
+        #            #if db in minitage_dbs and vars['inside_minitage']:
+        #            #    vars['opt_deps'] += ' %s' % search_latest('%s-\d\.\d*'% db, vars['minilays'])
 
         # do we need some pinned version
         vars['plone_versions'] = []
@@ -342,8 +341,8 @@ class Template(common.Template):
                             pin_added.append(pin)
                             vars['plone_versions'].append(pin)
 
-        if not vars['mode'] in ['zodb', 'relstorage', 'zeo']:
-            raise Exception('Invalid mode (not in zeo, zodb, relstorage')
+        if not vars['mode'] in ['zeo']:
+            raise Exception('Invalid mode (not in zeo')
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir)
 
@@ -575,19 +574,18 @@ sd_str = '%s' % (
 )
 plone_vars = [pvar('address', 'Address to listen on', default = 'localhost',),
               pvar('http_port', 'Port to listen to', default = '8081',),
-              pvar('mode', 'Mode to use : zodb|relstorage|zeo', default = 'zeo'),
-              pvar('devmode', 'Mode to use in development mode: zodb|relstorage|zeo', default = 'zeo'),
+              #pvar('devmode', 'Mode to use in development mode: zodb|relstorage|zeo', default = 'zeo'),
               pvar('zeo_host', 'Address for the zeoserver (zeo mode only)', default = 'localhost',),
               #pvar('zeo_port', 'Port for the zeoserver (zeo mode only)', default = '8100',),
               pvar('with_zeo_socket', 'Use socket for zeo, y/n', default = 'n',),
               pvar('zope_user', 'Administrator login', default = 'admin',),
               pvar('zope_password', 'Admin Password in the ZMI', default = 'secret',),
-              pvar('relstorage_type', 'Relstorage database type (only useful for relstorage mode)', default = 'postgresql',),
-              pvar('relstorage_host', 'Relstorage database host (only useful for relstorage mode)', default = 'localhost',),
-              pvar('relstorage_port', 'Relstorage databse port (only useful for relstorage mode). (postgresql : 5432, mysql : 3306)', default = '5432',),
-              pvar('relstorage_dbname', 'Relstorage database name (only useful for relstorage mode)', default = 'minitagedb',),
-              pvar('relstorage_dbuser', 'Relstorage user (only useful for relstorage mode)', default = common.running_user),
-              pvar('relstorage_password', 'Relstorage password (only useful for relstorage mode)', default = 'secret',),
+              #pvar('relstorage_type', 'Relstorage database type (only useful for relstorage mode)', default = 'postgresql',),
+              #pvar('relstorage_host', 'Relstorage database host (only useful for relstorage mode)', default = 'localhost',),
+              #pvar('relstorage_port', 'Relstorage databse port (only useful for relstorage mode). (postgresql : 5432, mysql : 3306)', default = '5432',),
+              #pvar('relstorage_dbname', 'Relstorage database name (only useful for relstorage mode)', default = 'minitagedb',),
+              #pvar('relstorage_dbuser', 'Relstorage user (only useful for relstorage mode)', default = common.running_user),
+              #pvar('relstorage_password', 'Relstorage password (only useful for relstorage mode)', default = 'secret',),
               #pvar('solr_host', 'Solr host (only useful if you want solr)', default = '127.0.0.1',),
               #pvar('solr_port', 'Solr port (only useful if you want solr)', default = '8983',),
               #pvar('solr_path', 'Solr path (only useful if you want solr)', default = '/solr',),
