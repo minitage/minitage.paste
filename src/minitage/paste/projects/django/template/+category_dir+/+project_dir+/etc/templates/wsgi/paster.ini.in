@@ -41,7 +41,7 @@ use=egg:Paste#printdebug
 [filter:exc]
 use=egg:dj.paste#weberror
 debug = true
-error_email = mpa@makina-corpus.com
+error_email = freesoftware@makina-corpus.com
 from_address = mobyle@test.com
 ;show_exceptions_in_wsgi_errors = true
 smtp_server = localhost

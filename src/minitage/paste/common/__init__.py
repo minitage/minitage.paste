@@ -1,4 +1,4 @@
-# Copyright (C) 2009, Mathieu PASQUET <kiorky@cryptelium.net>
+# Copyright (C) 2009, Makina Corpus <freesoftware@makina-corpus.com>
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -47,7 +47,7 @@ SPECIALCHARS = re.compile('[-._@|{(\[|)\]}]', re_flags)
 __HEADER__ = """\
 %(comment)s!/usr/bin/env bash
 %(comment)s
-%(comment)s Copyright (C) 2008, Mathieu PASQUET <kiorky@cryptelium.net>
+%(comment)s Copyright (C) 2008, Makina Corpus <freesoftware@makina-corpus.com>
 %(comment)s This program is free software; you can redistribute it and/or modify
 %(comment)s it under the terms of the GNU General Public License as published by
 %(comment)s the Free Software Foundation; either version 2 of the License, or
